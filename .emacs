@@ -15,6 +15,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes (quote (wombat)))
+ '(custom-safe-themes
+   (quote
+    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
@@ -73,8 +76,7 @@
 ;; emacs ido for M-x (ESC-x aka META-x)
 (autoload 'smex "smex"
   "Smex is a M-x enhancement for Emacs, it provides a convenient interface to
-your recently and most frequently used commands.")
-
+  your recently and most frequently used commands.")
 (global-set-key (kbd "M-x") 'smex)
 
 ;; start auto-complete with emacs
@@ -120,11 +122,16 @@ your recently and most frequently used commands.")
 (require 'dummy-h-mode)		      
 (add-to-list 'auto-mode-alist '("\\.mm\\'" . objc-mode))
 
+;; configure ggtags in c/c++/java mode for faster code navigations.
 (require 'ggtags)
 (add-hook 'c-mode-common-hook
           (lambda ()
             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
               (ggtags-mode 1))))
+
+;; change the mode line in emacs
+;; (sml/setup)
+;; (setq sml/theme 'light)
 
 ;; Backups at .saves folder in the current folder
 (setq backup-by-copying t      ; don't clobber symlinks
