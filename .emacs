@@ -21,7 +21,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (magit xcscope xcode-project which-key smex objc-font-lock ninja-mode neotree markdown-mode iedit ggtags elpy dummy-h-mode cmake-mode autopair auto-complete-c-headers))))
+    (swiper header2 magit xcscope xcode-project which-key smex objc-font-lock ninja-mode neotree markdown-mode iedit ggtags elpy dummy-h-mode cmake-mode autopair auto-complete-c-headers))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -114,9 +114,12 @@
 ;; (setq neo-window-fixed-size nil)
 (setq neo-smart-open t)
 
-;; enable auto pair mode
+;; enable auto pair mode to automatically insert closing parenthesis.
 (require 'autopair)
 (autopair-global-mode 1)
+
+;; Show matching parenthensis
+(show-paren-mode 1)
 
 ;; Support for Objective-C mode
 (require 'dummy-h-mode)		      
@@ -141,3 +144,42 @@
       kept-new-versions 6
       kept-old-versions 2
       version-control t)       ; use versioned backups
+
+;; Add copyright and file header
+;; (autoload 'auto-make-header "header2")
+;; (add-hook 'emacs-lisp-mode-hook 'auto-make-header)
+;; (add-hook 'c-mode-common-hook   'auto-make-header)
+;; (defun copyright() (
+;; 		    insert "/* Copyright (c) 2017 Amazon.com */\n\n"))
+;; (add-hook 'make-header-hook 'copyright)
+;; (add-hook 'c-mode-common-hook 'copyright)
+
+;; configure tabbar
+;; (require 'tabbar)
+;; (tabbar-mode 1)
+
+;; configure swipper for easy searching and navigations.
+;; counsel is required for the C-x C-f to work. swiper
+;; does install the counsel but need require line to
+;; make it work.
+(require 'counsel)
+(require 'swiper)
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
+(global-set-key "\C-s" 'swiper)
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "<f6>") 'ivy-resume)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "<f1> f") 'counsel-describe-function)
+(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+(global-set-key (kbd "<f1> l") 'counsel-find-library)
+(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
+(global-set-key (kbd "C-c k") 'counsel-ag)
+(global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+(define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
