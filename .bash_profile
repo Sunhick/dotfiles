@@ -34,4 +34,4 @@ export PATH=$PATH:/Users/Sunny/prv/google/depot_tools/
 export GTAGSLABEL=ctags
 
 # load git auto completion file.
-source ~/.git-complete
+source ~/.git-complete.sh
