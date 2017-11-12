@@ -39,10 +39,18 @@
 ;; (set-default-font "Ubuntu Mono-14")
 
 ;; add MELPA to repository list
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.milkbox.net/packages/"))
 ;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 ;; initialize package.el
 (package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(use-package try
+  :ensure t)
 
 ;; configure which key for help on key strokes
 (require 'which-key)
@@ -113,7 +121,7 @@
 (require 'ggtags)
 (add-hook 'c-mode-common-hook
           (lambda ()
-            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'Objective-C)
               (ggtags-mode 1))))
 
 ;; Backups at .saves folder in the current folder
@@ -186,7 +194,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (auto-complete ac-emacs-eclim auto-complete-clang xcscope xcode-project which-key spacemacs-theme smooth-scrolling smex rich-minority org objc-font-lock ninja-mode neotree markdown-mode magit iedit header2 ggtags elpy dummy-h-mode counsel cmake-mode autopair auto-complete-c-headers))))
+    (org-bullets try use-package auto-complete ac-emacs-eclim auto-complete-clang xcscope xcode-project which-key spacemacs-theme smooth-scrolling smex rich-minority org objc-font-lock ninja-mode neotree markdown-mode magit iedit header2 ggtags elpy dummy-h-mode counsel cmake-mode autopair auto-complete-c-headers))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -233,3 +241,9 @@
 
 ;; set the magit repository
 (setq magit-repository-directories '( "~/prv/github/"))
+
+;; configure emacs org mode
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
