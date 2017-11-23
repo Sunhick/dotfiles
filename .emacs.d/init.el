@@ -104,6 +104,7 @@
 (neotree-toggle)
 ;; (setq neo-window-fixed-size nil)
 (setq neo-smart-open t)
+(setq neo-hidden-regexp-list '("^\\." "\\.cs\\.meta$" "\\.pyc$" "~$" "^#.*#$" "\\.elc$" "\\.o$"))
 (global-set-key [f8] 'neotree-toggle)
 
 ;; enable auto pair mode to automatically insert closing parenthesis.
