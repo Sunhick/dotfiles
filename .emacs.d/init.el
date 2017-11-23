@@ -180,14 +180,45 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
  '(custom-enabled-themes (quote (spacemacs-dark)))
  '(custom-safe-themes
    (quote
-    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+    ("6ee6f99dc6219b65f67e04149c79ea316ca4bcd769a9e904030d38908fd7ccf9" "eea01f540a0f3bc7c755410ea146943688c4e29bea74a29568635670ab22f9bc" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "31e64af34ba56d5a3e85e4bebefe2fb8d9d431d4244c6e6d95369a643786a40e" "4b207752aa69c0b182c6c3b8e810bbf3afa429ff06f274c8ca52f8df7623eb60" "60668f4b17b8b8780d50976c0788abed190353d21d3371b8f244dd44c103b0ea" "10e3d04d524c42b71496e6c2e770c8e18b153fcfcc838947094dad8e5aa02cef" "759416a7a5f5cb6b8cb26e6db2cf70026aa2324083a888015ee2cad0320f7f19" "d2c61aa11872e2977a07969f92630a49e30975220a079cd39bec361b773b4eb3" "4a7abcca7cfa2ccdf4d7804f1162dd0353ce766b1277e8ee2ac7ee27bfbb408f" "ff7625ad8aa2615eae96d6b4469fcc7d3d20b2e1ebc63b761a349bebbb9d23cb" "1db337246ebc9c083be0d728f8d20913a0f46edc0a00277746ba411c149d7fe5" "d5b121d69e48e0f2a84c8e4580f0ba230423391a78fcb4001ccb35d02494d79e" "2a739405edf418b8581dcd176aaf695d319f99e3488224a3c495cb0f9fd814e3" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" default)))
+ '(fci-rule-color "#2e2e2e")
  '(inhibit-startup-screen t)
+ '(nrepl-message-colors
+   (quote
+    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (counsel-projectile projectile org-bullets try use-package auto-complete ac-emacs-eclim auto-complete-clang xcscope xcode-project which-key spacemacs-theme smooth-scrolling smex rich-minority org objc-font-lock ninja-mode neotree markdown-mode magit iedit header2 ggtags elpy dummy-h-mode counsel cmake-mode autopair auto-complete-c-headers))))
+    (switch-window nlinum powerline spacemacs-theme counsel-projectile projectile org-bullets try use-package auto-complete ac-emacs-eclim auto-complete-clang xcscope xcode-project which-key smooth-scrolling smex rich-minority org objc-font-lock neotree markdown-mode magit iedit header2 ggtags elpy dummy-h-mode counsel cmake-mode autopair auto-complete-c-headers)))
+ '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
+ '(vc-annotate-background "#3b3b3b")
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#dd5542")
+     (40 . "#CC5542")
+     (60 . "#fb8512")
+     (80 . "#baba36")
+     (100 . "#bdbc61")
+     (120 . "#7d7c61")
+     (140 . "#6abd50")
+     (160 . "#6aaf50")
+     (180 . "#6aa350")
+     (200 . "#6a9550")
+     (220 . "#6a8550")
+     (240 . "#6a7550")
+     (260 . "#9b55c3")
+     (280 . "#6CA0A3")
+     (300 . "#528fd1")
+     (320 . "#5180b3")
+     (340 . "#6380b3")
+     (360 . "#DC8CC3"))))
+ '(vc-annotate-very-old-color "#DC8CC3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -250,13 +281,14 @@
   :ensure t
   :config
   (projectile-global-mode)
-(setq projectile-completion-system 'ivy))
+  (setq projectile-completion-system 'ivy))
 
 (use-package counsel-projectile
   :ensure t
   :config
   (counsel-projectile-on))
 
+(global-set-key (kbd "C-x w") 'switch-window)
 ;; Backups at .saves folder in the current folder
 (setq backup-by-copying t      ; don't clobber symlinks
       backup-directory-alist
@@ -265,3 +297,4 @@
       kept-new-versions 6
       kept-old-versions 2
       version-control t)       ; use versioned backups
+
