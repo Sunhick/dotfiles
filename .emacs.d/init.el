@@ -289,6 +289,14 @@
   :config
   (counsel-projectile-on))
 
+;; configure google c style mode
+(require 'google-c-style)
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-common-hook 'google-make-newline-indent)
+
+;; open the header files in cc mode by default
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
 (global-set-key (kbd "C-x w") 'switch-window)
 ;; Backups at .saves folder in the current folder
 (setq backup-by-copying t      ; don't clobber symlinks
