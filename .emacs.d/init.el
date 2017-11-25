@@ -24,6 +24,12 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 1)
 
+;; (global-visual-line-mode 1)
+(global-linum-mode 1)
+
+;; configure mouse wheel scroll amonut on MacOSX
+;; (setq mouse-wheel-scroll-amount (quote (0.01)))
+
 ;; turn off annoying bell sound in Mac OS
 (setq visible-bell nil)
 (setq ring-bell-function 'ignore)
@@ -36,11 +42,11 @@
 ;; Set the display font to ubuntu. On Os's that doesn't have ubuntu font
 ;; download and the link below and extract the files to your system font folder.
 ;; You can freely download ubuntu fonts from http://font.ubuntu.com/
-;; (set-default-font "Ubuntu Mono-14")
+(set-default-font "Ubuntu Mono-14")
 
 ;; add MELPA to repository list
 (add-to-list 'package-archives
-	     '("melpa" . "http://melpa.milkbox.net/packages/"))
+             '("melpa" . "http://melpa.milkbox.net/packages/"))
 ;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 ;; initialize package.el
 (package-initialize)
@@ -122,7 +128,7 @@
 (require 'ggtags)
 (add-hook 'c-mode-common-hook
           (lambda ()
-            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'Objective-C)
+            (when (derived-mode-p 'c-mode 'python-mode 'c++-mode 'java-mode 'Objective-C)
               (ggtags-mode 1))))
 
 ;; Add copyright and file header
@@ -188,15 +194,10 @@
  '(custom-enabled-themes (quote (spacemacs-dark)))
  '(custom-safe-themes
    (quote
-    ("6ee6f99dc6219b65f67e04149c79ea316ca4bcd769a9e904030d38908fd7ccf9" "eea01f540a0f3bc7c755410ea146943688c4e29bea74a29568635670ab22f9bc" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "31e64af34ba56d5a3e85e4bebefe2fb8d9d431d4244c6e6d95369a643786a40e" "4b207752aa69c0b182c6c3b8e810bbf3afa429ff06f274c8ca52f8df7623eb60" "60668f4b17b8b8780d50976c0788abed190353d21d3371b8f244dd44c103b0ea" "10e3d04d524c42b71496e6c2e770c8e18b153fcfcc838947094dad8e5aa02cef" "759416a7a5f5cb6b8cb26e6db2cf70026aa2324083a888015ee2cad0320f7f19" "d2c61aa11872e2977a07969f92630a49e30975220a079cd39bec361b773b4eb3" "4a7abcca7cfa2ccdf4d7804f1162dd0353ce766b1277e8ee2ac7ee27bfbb408f" "ff7625ad8aa2615eae96d6b4469fcc7d3d20b2e1ebc63b761a349bebbb9d23cb" "1db337246ebc9c083be0d728f8d20913a0f46edc0a00277746ba411c149d7fe5" "d5b121d69e48e0f2a84c8e4580f0ba230423391a78fcb4001ccb35d02494d79e" "2a739405edf418b8581dcd176aaf695d319f99e3488224a3c495cb0f9fd814e3" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" default)))
- '(fci-rule-color "#2e2e2e")
- '(inhibit-startup-screen t)
- '(nrepl-message-colors
-   (quote
-    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
+    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
  '(package-selected-packages
    (quote
-    (switch-window nlinum powerline spacemacs-theme counsel-projectile projectile org-bullets try use-package auto-complete ac-emacs-eclim auto-complete-clang xcscope xcode-project which-key smooth-scrolling smex rich-minority org objc-font-lock neotree markdown-mode magit iedit header2 ggtags elpy dummy-h-mode counsel cmake-mode autopair auto-complete-c-headers)))
+    (swift-mode cmake-project switch-window nlinum powerline spacemacs-theme counsel-projectile projectile org-bullets try use-package auto-complete ac-emacs-eclim auto-complete-clang xcscope xcode-project which-key smooth-scrolling smex rich-minority org objc-font-lock neotree markdown-mode magit iedit header2 ggtags elpy dummy-h-mode counsel cmake-mode autopair auto-complete-c-headers)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(vc-annotate-background "#3b3b3b")
  '(vc-annotate-color-map
@@ -250,16 +251,16 @@
   (my-ac-config)
 
   (setq ac-clang-flags
-	(mapcar (lambda (item)(concat "-I" item))
-		(split-string
-		 "
+        (mapcar (lambda (item)(concat "-I" item))
+                (split-string
+                 "
  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1
  /usr/local/include
  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include
  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
  /usr/include
 "
-		 ))))
+                 ))))
 
 ;; configure and bind the keystroke
 ;; for magit.
@@ -289,13 +290,39 @@
   :config
   (counsel-projectile-on))
 
-;; configure google c style mode
-(require 'google-c-style)
-(add-hook 'c-mode-common-hook 'google-set-c-style)
-(add-hook 'c-mode-common-hook 'google-make-newline-indent)
+;; cmake project
+(require 'cmake-project)
 
-;; open the header files in cc mode by default
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+;; ;; style I want to use in c++ mode
+;; (c-add-style "my-style" 
+;; 	     '("stroustrup"
+;; 	       (indent-tabs-mode . nil)        ; use spaces rather than tabs
+;; 	       (c-basic-offset . 4)            ; indent by four spaces
+;; 	       (c-offsets-alist . ((inline-open . 0)  ; custom indentation rules
+;; 				   (brace-list-open . 0)
+;; 				   (statement-case-open . +)))))
+
+;; (defun my-c++-mode-hook ()
+;;   (c-set-style "my-style")        ; use my-style defined above
+;;   (auto-fill-mode)         
+;;   (c-toggle-auto-hungry-state 1))
+;; (add-hook 'c++-mode-hook 'my-c++-mode-hook)
+
+(setq-default c-indent-tabs-mode t     ; Pressing TAB should cause indentation
+              c-indent-level 4         ; A TAB is equivilent to four spaces
+              c-argdecl-indent 0       ; Do not indent argument decl's extra
+              c-tab-always-indent t
+              backward-delete-function nil) ; DO NOT expand tabs when deleting
+(c-add-style "my-c-style" '((c-continued-statement-offset 4))) ; If a statement continues on the next line, indent the continuation by 4
+(defun my-c-mode-hook ()
+  (c-set-style "my-c-style")
+  (c-set-offset 'substatement-open '0) ; brackets should be at same indentation level as the statements they open
+  (c-set-offset 'inline-open '+)
+  (c-set-offset 'block-open '+)
+  (c-set-offset 'brace-list-open '+)   ; all "opens" should be indented by the c-indent-level
+  (c-set-offset 'case-label '+))       ; indent case labels by c-indent-level, too
+(add-hook 'c-mode-hook 'my-c-mode-hook)
+(add-hook 'c++-mode-hook 'my-c-mode-hook)
 
 (global-set-key (kbd "C-x w") 'switch-window)
 ;; Backups at .saves folder in the current folder
@@ -306,4 +333,3 @@
       kept-new-versions 6
       kept-old-versions 2
       version-control t)       ; use versioned backups
-
