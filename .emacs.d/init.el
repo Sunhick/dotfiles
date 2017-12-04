@@ -55,9 +55,6 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(use-package try
-  :ensure t)
-
 ;; configure which key for help on key strokes
 (require 'which-key)
 (which-key-mode)
@@ -176,72 +173,54 @@
 ;; Don't make new frames when opening a new file with Emacs
 (setq ns-pop-up-frames nil)
 
-(use-package smooth-scrolling
-  :ensure t
-  :config
-  (smooth-scrolling-mode 1))
+(smooth-scrolling-mode 1)
 
-(use-package auto-complete-clang
-  :ensure t
-  :config
-  (setq ac-auto-start nil)
-  (setq ac-quick-help-delay 0.5)
-  (ac-set-trigger-key "TAB")
-  ;; (define-key ac-mode-map  [(control tab)] 'auto-complete)
-  ;; (define-key ac-mode-map  [(control tab)] 'auto-complete)
-  (defun my-ac-config ()
-    (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
-    (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
-    ;; (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
-    (add-hook 'ruby-mode-hook 'ac-ruby-mode-setup)
-    (add-hook 'css-mode-hook 'ac-css-mode-setup)
-    (add-hook 'auto-complete-mode-hook 'ac-common-setup)
-    (global-auto-complete-mode t))
-  (defun my-ac-cc-mode-setup ()
-    (setq ac-sources (append '(ac-source-clang ac-source-yasnippet) ac-sources)))
-  (add-hook 'c-mode-common-hook 'my-ac-cc-mode-setup)
-  ;; ac-source-gtags
-  (my-ac-config)
+(setq ac-auto-start nil)
+(setq ac-quick-help-delay 0.5)
+(ac-set-trigger-key "TAB")
+;; (define-key ac-mode-map  [(control tab)] 'auto-complete)
+;; (define-key ac-mode-map  [(control tab)] 'auto-complete)
+(defun my-ac-config ()
+  (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
+  (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
+  ;; (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
+  (add-hook 'ruby-mode-hook 'ac-ruby-mode-setup)
+  (add-hook 'css-mode-hook 'ac-css-mode-setup)
+  (add-hook 'auto-complete-mode-hook 'ac-common-setup)
+  (global-auto-complete-mode t))
+(defun my-ac-cc-mode-setup ()
+  (setq ac-sources (append '(ac-source-clang ac-source-yasnippet) ac-sources)))
+(add-hook 'c-mode-common-hook 'my-ac-cc-mode-setup)
+;; ac-source-gtags
+(my-ac-config)
 
-  (setq ac-clang-flags
-        (mapcar (lambda (item)(concat "-I" item))
-                (split-string
-                 "
+(setq ac-clang-flags
+      (mapcar (lambda (item)(concat "-I" item))
+	      (split-string
+	       "
  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1
  /usr/local/include
  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include
  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
  /usr/include
 "
-                 ))))
+	       )))
 
 ;; configure and bind the keystroke
 ;; for magit.
-(use-package magit
-  :ensure t
-  :config
-  (global-set-key(kbd "C-x g") 'magit-status)
+(global-set-key(kbd "C-x g") 'magit-status)
 
-  ;; set the magit repository
-  (setq magit-repository-directories '( "~/prv/github/")))
+;; set the magit repository
+(setq magit-repository-directories '( "~/prv/github/"))
 
 ;; configure emacs org mode
-(use-package org-bullets
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 ;; configure projectile
-(use-package projectile
-  :ensure t
-  :config
-  (projectile-global-mode)
-  (setq projectile-completion-system 'ivy))
+(projectile-global-mode)
+(setq projectile-completion-system 'ivy)
 
-(use-package counsel-projectile
-  :ensure t
-  :config
-  (counsel-projectile-on))
+(counsel-projectile-on)
 
 ;; cmake project
 (require 'cmake-project)
@@ -289,6 +268,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(custom-enabled-themes (quote (atom-one-dark)))
+ '(custom-safe-themes
+   (quote
+    ("a4c9e536d86666d4494ef7f43c84807162d9bd29b0dfd39bdf2c3d845dcc7b2e" default)))
  '(flymake-google-cpplint-command "/usr/local/bin/cpplint")
  '(package-selected-packages
    (quote
