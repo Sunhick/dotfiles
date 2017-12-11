@@ -24,8 +24,8 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 1)
 
-(global-visual-line-mode 1)
-(global-linum-mode 1)
+;; (global-visual-line-mode 1)
+;; (global-linum-mode 1)
 
 ;; configure mouse wheel scroll amonut on MacOSX
 ;; (setq mouse-wheel-scroll-amount (quote (0.01)))
@@ -270,14 +270,41 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes (quote (atom-one-dark)))
+ '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
-    ("a4c9e536d86666d4494ef7f43c84807162d9bd29b0dfd39bdf2c3d845dcc7b2e" default)))
+    ("a25bd2ca94d2d4b86b2e2a6aa16528a47880784f4b09168a37c540e2dd721753" "b34636117b62837b3c0c149260dfebe12c5dad3d1177a758bb41c4b15259ed7e" "2a739405edf418b8581dcd176aaf695d319f99e3488224a3c495cb0f9fd814e3" "a4c9e536d86666d4494ef7f43c84807162d9bd29b0dfd39bdf2c3d845dcc7b2e" default)))
+ '(fci-rule-color "#3E4451")
  '(flymake-google-cpplint-command "/usr/local/bin/cpplint")
+ '(nrepl-message-colors
+   (quote
+    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (clang-format atom-one-dark-theme flymake-cursor flymake-google-cpplint xcscope xcode-project which-key use-package try switch-window swift-mode smooth-scrolling smex rich-minority org-bullets org objc-font-lock nlinum neotree markdown-mode magit irony iedit header2 google-c-style gitignore-mode ggtags flycheck elpy dummy-h-mode counsel-projectile cmake-project cmake-mode autopair auto-complete-clang auto-complete-c-headers ac-emacs-eclim))))
+    (unicode-whitespace clang-format atom-one-dark-theme flymake-cursor flymake-google-cpplint xcscope xcode-project which-key use-package try switch-window swift-mode smooth-scrolling smex rich-minority org-bullets org objc-font-lock nlinum neotree markdown-mode magit irony iedit header2 google-c-style gitignore-mode ggtags flycheck elpy dummy-h-mode counsel-projectile cmake-project cmake-mode autopair auto-complete-clang auto-complete-c-headers ac-emacs-eclim)))
+ '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
+ '(vc-annotate-background "#2B2B2B")
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#BC8383")
+     (40 . "#CC9393")
+     (60 . "#DFAF8F")
+     (80 . "#D0BF8F")
+     (100 . "#E0CF9F")
+     (120 . "#F0DFAF")
+     (140 . "#5F7F5F")
+     (160 . "#7F9F7F")
+     (180 . "#8FB28F")
+     (200 . "#9FC59F")
+     (220 . "#AFD8AF")
+     (240 . "#BFEBBF")
+     (260 . "#93E0E3")
+     (280 . "#6CA0A3")
+     (300 . "#7CB8BB")
+     (320 . "#8CD0D3")
+     (340 . "#94BFF3")
+     (360 . "#DC8CC3"))))
+ '(vc-annotate-very-old-color "#DC8CC3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -291,3 +318,9 @@
 ;; 		  (format-time-string "%Y" (current-time))
 ;; 		  " "
 ;;                   user-full-name)))
+
+;; use spaces instead of TABS.
+(setq-default indent-tabs-mode nil)
+
+;; apply local variables without prompting.
+;; (setq enable-local-variables :safe)
