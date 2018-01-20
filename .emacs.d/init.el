@@ -68,10 +68,11 @@
 
 ;; configure emacs smex package. This is basically
 ;; emacs ido for M-x (ESC-x aka META-x)
-(autoload 'smex "smex"
-  "Smex is a M-x enhancement for Emacs, it provides a convenient interface to
-  your recently and most frequently used commands.")
-(global-set-key (kbd "M-x") 'smex)
+;; (autoload 'smex "smex"
+;;  "Smex is a M-x enhancement for Emacs, it provides a convenient interface to
+;;  your recently and most frequently used commands.")
+;; (global-set-key (kbd "M-x") 'smex)
+;; This was overwritten by swiper
 
 ;; start auto-complete with emacs
 (require 'auto-complete)
