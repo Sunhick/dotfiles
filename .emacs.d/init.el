@@ -22,7 +22,7 @@
 ;; bother me. Whereas the toolbar i never use it and just
 ;; occupies space.
 (tool-bar-mode 0)
-(scroll-bar-mode 1)
+(scroll-bar-mode 0)
 
 ;; (global-visual-line-mode 1)
 ;; (global-linum-mode 1)
@@ -75,10 +75,6 @@
 
 ;; start auto-complete with emacs
 (require 'auto-complete)
-
-;; do default config for auto-complete
-(require 'auto-complete-config)
-(ac-config-default)
 
 ;; start yasnippet with emacs
 (require 'yasnippet)
@@ -175,10 +171,15 @@
 
 (smooth-scrolling-mode 1)
 
+;; do default config for auto-complete
+(require 'auto-complete-config)
+(ac-config-default)
+
+(require 'auto-complete-clang)
+;; start yasnippet with emacs
 (setq ac-auto-start nil)
 (setq ac-quick-help-delay 0.5)
-(ac-set-trigger-key "TAB")
-;; (define-key ac-mode-map  [(control tab)] 'auto-complete)
+(define-key ac-mode-map  [(control tab)] 'auto-complete)
 ;; (define-key ac-mode-map  [(control tab)] 'auto-complete)
 (defun my-ac-config ()
   (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
@@ -198,12 +199,15 @@
       (mapcar (lambda (item)(concat "-I" item))
 	      (split-string
 	       "
- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1
- /usr/local/include
- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include
- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
- /usr/include
-"
+         /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1
+         /usr/local/include
+         /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include
+         /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
+         /usr/include
+         /System/Library/Frameworks
+         /Library/Frameworks
+         ../include
+          "
 	       )))
 
 ;; configure and bind the keystroke
@@ -220,7 +224,7 @@
 (projectile-global-mode)
 (setq projectile-completion-system 'ivy)
 
-(counsel-projectile-on)
+;; (counsel-projectile-on)
 
 ;; cmake project
 (require 'cmake-project)
@@ -235,6 +239,14 @@
 ;; flymake google
 ;; (add-hook 'c-mode-hook 'my:flymake-google-init)
 ;; (add-hook 'c++-mode-hook 'my:flymake-google-init)
+
+(add-hook 'c++-mode-hook
+            (lambda ()
+              (setq flycheck-clang-language-standard "c++14")
+              (setq flycheck-gcc-language-standard "c++14")
+              (setq company-clang-arguments '("-std=c++14"))
+            )
+            )
 
 ;; Google C/C++ style
 (require 'google-c-style)
@@ -256,68 +268,11 @@
       kept-old-versions 2
       version-control t)       ; use versioned backups
 
-
 ;; configure clang format
 (require 'clang-format)
 ;; (global-set-key (kbd "C-c i") 'clang-format-region)
 (global-set-key (kbd "C-c u") 'clang-format-buffer)
 (setq clang-format-style-option "Google")
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes (quote (wombat)))
- '(custom-safe-themes
-   (quote
-    ("a25bd2ca94d2d4b86b2e2a6aa16528a47880784f4b09168a37c540e2dd721753" "b34636117b62837b3c0c149260dfebe12c5dad3d1177a758bb41c4b15259ed7e" "2a739405edf418b8581dcd176aaf695d319f99e3488224a3c495cb0f9fd814e3" "a4c9e536d86666d4494ef7f43c84807162d9bd29b0dfd39bdf2c3d845dcc7b2e" default)))
- '(fci-rule-color "#3E4451")
- '(flymake-google-cpplint-command "/usr/local/bin/cpplint")
- '(nrepl-message-colors
-   (quote
-    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
- '(package-selected-packages
-   (quote
-    (groovy-mode unicode-whitespace clang-format flymake-cursor flymake-google-cpplint xcscope xcode-project which-key use-package try switch-window swift-mode smooth-scrolling smex rich-minority org-bullets org objc-font-lock nlinum neotree markdown-mode magit irony iedit header2 google-c-style gitignore-mode ggtags flycheck elpy dummy-h-mode counsel-projectile cmake-project cmake-mode autopair auto-complete-clang auto-complete-c-headers ac-emacs-eclim)))
- '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
- '(safe-local-variable-values
-   (quote
-    ((eval add-hook
-           (quote c++-mode-hook)
-           (quote my:flymake-google-init)))))
- '(vc-annotate-background "#2B2B2B")
- '(vc-annotate-color-map
-   (quote
-    ((20 . "#BC8383")
-     (40 . "#CC9393")
-     (60 . "#DFAF8F")
-     (80 . "#D0BF8F")
-     (100 . "#E0CF9F")
-     (120 . "#F0DFAF")
-     (140 . "#5F7F5F")
-     (160 . "#7F9F7F")
-     (180 . "#8FB28F")
-     (200 . "#9FC59F")
-     (220 . "#AFD8AF")
-     (240 . "#BFEBBF")
-     (260 . "#93E0E3")
-     (280 . "#6CA0A3")
-     (300 . "#7CB8BB")
-     (320 . "#8CD0D3")
-     (340 . "#94BFF3")
-     (360 . "#DC8CC3"))))
- '(vc-annotate-very-old-color "#DC8CC3"))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 ;; (defun copyright ()
 ;;   (interactive)
@@ -331,3 +286,18 @@
 
 ;; apply local variables without prompting.
 ;; (setq enable-local-variables :safe)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (wombat)))
+ '(package-selected-packages
+   (quote
+    (helm helm-core anything bind-key dash eclim epl find-file-in-project flymake-easy ghub git-commit highlight-indentation let-alist list-utils pcache persistent-soft pkg-info popup projectile pyvenv s ucs-utils with-editor ac-helm company ac-c-headers yasnippet-snippets async auto-complete counsel ivy magit-popup swiper yasnippet xcscope xcode-project which-key use-package unicode-whitespace try switch-window swift-mode smooth-scrolling smex rich-minority org-bullets org objc-font-lock nlinum neotree markdown-mode magit irony iedit header2 groovy-mode google-c-style gitignore-mode ggtags flymake-google-cpplint flymake-cursor flycheck elpy dummy-h-mode dockerfile-mode diminish counsel-projectile cmake-project cmake-mode clang-format autopair auto-complete-clang-async auto-complete-clang auto-complete-c-headers ac-emacs-eclim))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
