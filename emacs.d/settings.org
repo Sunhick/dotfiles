@@ -104,7 +104,7 @@
       (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
 
       ;; configure projectile
-      (projectile-global-mode)
+      (projectile-mode)
       (setq projectile-completion-system 'ivy)
 
     #+END_SRC
@@ -253,7 +253,7 @@
         (add-hook 'ruby-mode-hook 'ac-ruby-mode-setup)
         (add-hook 'css-mode-hook 'ac-css-mode-setup)
         (add-hook 'auto-complete-mode-hook 'ac-common-setup)
-        (global-auto-complete-mode t))
+        (global-auto-complete-mode))
       (defun my-ac-cc-mode-setup ()
         (setq ac-sources (append '(ac-source-clang ac-source-yasnippet) ac-sources)))
       (add-hook 'c-mode-common-hook 'my-ac-cc-mode-setup)
@@ -285,7 +285,7 @@
 
       (use-package smooth-scrolling
         :ensure t)
-      (smooth-scrolling-mode 1)
+      (smooth-scrolling-mode)
 
       ;; Support for Objective-C mode
       (use-package dummy-h-mode
@@ -325,4 +325,8 @@
         "Byte-compile all your dotfiles."
         (interactive)
         (byte-recompile-directory user-emacs-directory 0))
+
+      ;; Don't call byte compile here. It will compile every single time emacs is loaded.
+      ;; which defeats the purpose. call it only once.
+      ;; (byte-compile-init-dir)
     #+END_SRC
