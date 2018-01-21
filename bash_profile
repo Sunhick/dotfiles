@@ -4,6 +4,8 @@
 #
 #######################################################
 
+export CONF_VERSION=1.0
+
 # gradle
 # export GRADLE_PATH=/Users/Sunny/test/gradle-4.4.1/bin
 # export PATH=$GRADLE_PATH:$PATH

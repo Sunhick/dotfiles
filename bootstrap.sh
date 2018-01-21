@@ -59,10 +59,24 @@ function uninstall() {
 
 opt=$1
 case $opt in
-    -h | --help) help ;;
-    -v | --version) version ;;
-    -i | --install) install ;;
-    -u | --uninstall) uninstall ;;
-    *) echo "Incorrect argument. Exiting..."
-    exit
+    -h | --help)
+	help
+	;;
+    
+    -v | --version)
+	version
+	;;
+    
+    -i | --install)
+	install
+	;;
+    
+    -u | --uninstall)
+	uninstall
+	;;
+    
+    *)
+	echo "Incorrect argument."
+	help
+	exit
 esac
