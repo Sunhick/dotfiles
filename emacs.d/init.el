@@ -47,7 +47,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (auto-complete company-c-headers org-bullets org-bullets-mode clang-format magit iedit autopair which-key counsel-projectile counsel use-package))))
+    (async auto-complete-c-headers auto-complete-clang bind-key dash dummy-h-mode epl ggtags ghub git-commit ivy let-alist magit-popup neotree pkg-info popup projectile smooth-scrolling swiper switch-window with-editor yasnippet yasnippet-snippets auto-complete company-c-headers org-bullets org-bullets-mode clang-format magit iedit autopair which-key counsel-projectile counsel use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
