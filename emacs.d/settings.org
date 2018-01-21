@@ -1,4 +1,6 @@
-* File Header
+* Emacs configuration settings
+
+** File Header
 #+BEGIN_SRC emacs-lisp
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -16,7 +18,7 @@
 #+END_SRC
 
 
-* Visual tweaks
+** Visual tweaks
 #+BEGIN_SRC emacs-lisp
   ;; Get rid of tool bar and menu bar
   ;; (menu-bar-mode 0)
@@ -34,7 +36,7 @@
 #+END_SRC
 
 
-* Auto completion
+** Auto completion
 #+BEGIN_SRC emacs-lisp
   ;; 
   ;; use company mode to auto complete.
@@ -47,7 +49,7 @@
 #+END_SRC
 
 
-* Magit
+** Magit
 #+BEGIN_SRC emacs-lisp
   ;; 
   ;; configure and bind the keystroke for magit.
@@ -63,7 +65,7 @@
 #+END_SRC
 
 
-* Counsel & Swiper
+** Counsel & Swiper
 #+BEGIN_SRC emacs-lisp
   ;;
   ;; configure swipper for easy searching and navigations.
@@ -106,7 +108,7 @@
 #+END_SRC
 
 
-* Back-up
+** Back-up
 
 #+BEGIN_SRC emacs-lisp
   ;; configure which key for help on key strokes
