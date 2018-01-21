@@ -1,6 +1,6 @@
 * Emacs configuration settings
-
-** File Header
+  
+*** File Header
 #+BEGIN_SRC emacs-lisp
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -17,8 +17,8 @@
 
 #+END_SRC
 
-
-** Visual tweaks
+    
+*** Visual tweaks
 #+BEGIN_SRC emacs-lisp
   ;; Get rid of tool bar and menu bar
   ;; (menu-bar-mode 0)
@@ -35,8 +35,8 @@
 
 #+END_SRC
 
-
-** Auto completion
+    
+*** Auto completion
 #+BEGIN_SRC emacs-lisp
   ;; 
   ;; use company mode to auto complete.
@@ -48,8 +48,8 @@
 
 #+END_SRC
 
-
-** Magit
+    
+*** Magit
 #+BEGIN_SRC emacs-lisp
   ;; 
   ;; configure and bind the keystroke for magit.
@@ -64,8 +64,8 @@
 
 #+END_SRC
 
-
-** Counsel & Swiper
+    
+*** Counsel & Swiper
 #+BEGIN_SRC emacs-lisp
   ;;
   ;; configure swipper for easy searching and navigations.
@@ -107,10 +107,12 @@
 
 #+END_SRC
 
-
-** Back-up
-
+*** Misc
 #+BEGIN_SRC emacs-lisp
+  ;;
+  ;; Easy navigations & typing.
+  ;;
+
   ;; configure which key for help on key strokes
   (use-package which-key
     :ensure t)
@@ -139,6 +141,13 @@
   (use-package switch-window
     :ensure t)
   (global-set-key (kbd "C-x w") 'switch-window)
+
+
+#+END_SRC
+    
+*** Back-up
+    
+    #+BEGIN_SRC emacs-lisp
 
   ;; configure clang format
   (use-package clang-format
@@ -194,4 +203,4 @@
    ;; If there is more than one, they won't work right.
    )
 
-#+END_SRC
+    #+END_SRC
