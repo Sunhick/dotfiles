@@ -15,16 +15,8 @@
 
 #+END_SRC
 
+
 * Visual tweaks
-
-* Auto completion
-
-* Magit
-
-* Counsel & Swiper
-
-* Back-up
-
 #+BEGIN_SRC emacs-lisp
   ;; Get rid of tool bar and menu bar
   ;; (menu-bar-mode 0)
@@ -39,10 +31,46 @@
   ;; remap yes/no to y/n
   (fset 'yes-or-no-p 'y-or-n-p)
 
+#+END_SRC
+
+
+* Auto completion
+#+BEGIN_SRC emacs-lisp
+  ;; 
+  ;; use company mode to auto complete.
+  ;; 
+  (use-package company
+    :ensure t
+    :pin melpa)
+  (add-hook 'after-init-hook 'global-company-mode)
+
+#+END_SRC
+
+
+* Magit
+#+BEGIN_SRC emacs-lisp
+  ;; 
+  ;; configure and bind the keystroke for magit.
+  ;; 
+  (use-package magit
+    :ensure t)
+  (require 'magit-status)
+  (global-set-key(kbd "C-x g") 'magit-status)
+
+  ;; set the magit repository
+  (setq magit-repository-directories '( "~/prv/github/"))
+
+#+END_SRC
+
+
+* Counsel & Swiper
+#+BEGIN_SRC emacs-lisp
+  ;;
   ;; configure swipper for easy searching and navigations.
   ;; counsel is required for the C-x C-f to work. swiper
   ;; does install the counsel but need require line to
   ;; make it work.
+  ;; 
   (use-package counsel
     :ensure t)
   (use-package swiper
@@ -75,6 +103,12 @@
   (projectile-global-mode)
   (setq projectile-completion-system 'ivy)
 
+#+END_SRC
+
+
+* Back-up
+
+#+BEGIN_SRC emacs-lisp
   ;; configure which key for help on key strokes
   (use-package which-key
     :ensure t)
@@ -98,16 +132,6 @@
   (define-key global-map (kbd "C-c ;") 'iedit-mode)
   ;; Fixing another key binding bug in iedit mode
   (define-key global-map (kbd "C-c o") 'iedit-mode)
-
-  ;; configure and bind the keystroke
-  ;; for magit.
-  (use-package magit
-    :ensure t)
-  (require 'magit-status)
-  (global-set-key(kbd "C-x g") 'magit-status)
-
-  ;; set the magit repository
-  (setq magit-repository-directories '( "~/prv/github/"))
 
   ;; switch window configuration
   (use-package switch-window
