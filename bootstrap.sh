@@ -30,6 +30,7 @@ function install() {
     ln -sf $(pwd)/emacs.d/settings.org $HOME/.emacs.d/
 
     # create symlinks for bash_profile settings
+    ln -sf $(pwd)/bashrc $HOME/.bashrc
     ln -sf $(pwd)/bash_profile $HOME/.bash_profile
     ln -sf $(pwd)/git-complete.sh $HOME/.git-complete
     echo "Configuration settings installed!"
@@ -52,6 +53,7 @@ function backup() {
 ############################################
 function uninstall() {
     rm -rf $HOME/.emacs.d/
+    rm -ff $HOME/.bashrc
     rm -rf $HOME/.bash_profile
     rm -rf $HOME/.git-complete
     echo "Configuration settings uninstalled!"
