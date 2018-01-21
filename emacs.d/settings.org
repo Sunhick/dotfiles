@@ -1,5 +1,4 @@
 * Emacs configuration settings
-  
 *** File Header
 #+BEGIN_SRC emacs-lisp
 
@@ -17,7 +16,6 @@
 
 #+END_SRC
 
-    
 *** Visual tweaks
 #+BEGIN_SRC emacs-lisp
   ;; Get rid of tool bar and menu bar
@@ -35,7 +33,6 @@
 
 #+END_SRC
 
-    
 *** Auto completion
 #+BEGIN_SRC emacs-lisp
   ;; 
@@ -48,7 +45,6 @@
 
 #+END_SRC
 
-    
 *** Magit
 #+BEGIN_SRC emacs-lisp
   ;; 
@@ -63,8 +59,7 @@
   (setq magit-repository-directories '( "~/prv/github/"))
 
 #+END_SRC
-
-    
+  
 *** Counsel & Swiper
 #+BEGIN_SRC emacs-lisp
   ;;
@@ -145,10 +140,8 @@
 
 #+END_SRC
     
-*** Back-up
-    
-    #+BEGIN_SRC emacs-lisp
-
+*** Clang format
+#+BEGIN_SRC emacs-lisp
   ;; configure clang format
   (use-package clang-format
     :ensure t)
@@ -158,23 +151,15 @@
   (global-set-key (kbd "C-c u") 'clang-format-buffer)
   (setq clang-format-style-option "Google")
 
+#+END_SRC
+*** Back-up
+    
+    #+BEGIN_SRC emacs-lisp
   ;; configure emacs org mode
   (use-package org-bullets
     :ensure t)
   (require 'org-bullets)
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-
-  (use-package yasnippet-snippets
-    :ensure t)
-
-  ;; configure ggtags in c/c++/java mode for faster code navigations.
-  (use-package ggtags
-    :ensure t)
-  (require 'ggtags)
-  (add-hook 'c-mode-common-hook
-            (lambda ()
-              (when (derived-mode-p 'c-mode 'python-mode 'c++-mode 'java-mode 'Objective-C)
-                (ggtags-mode 1))))
 
   ;; Backups at .saves folder in the current folder
   (setq backup-by-copying t      ; don't clobber symlinks
@@ -204,3 +189,22 @@
    )
 
     #+END_SRC
+*** Programming
+#+BEGIN_SRC emacs-lisp
+  ;;
+  ;; configuration for programming
+  ;; 
+  (use-package yasnippet-snippets
+    :ensure t)
+
+  ;; configure ggtags in c/c++/java mode for faster code navigations.
+  (use-package ggtags
+    :ensure t)
+  (require 'ggtags)
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              (when (derived-mode-p 'c-mode 'python-mode 'c++-mode 'java-mode 'Objective-C)
+                (ggtags-mode 1))))
+
+
+#+END_SRC
