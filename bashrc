@@ -66,9 +66,3 @@ weather() {
 
     curl http://wttr.in/$location?lang=en
 }
-
-# load private configurations
-if [ -e ~/.bash_profile_local ]
-then
-  source ~/.bash_profile_local
-fi

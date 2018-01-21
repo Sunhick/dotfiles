@@ -22,11 +22,9 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/"))
 
-(when (not package-archive-contents)
-    (package-refresh-contents))
-
 (dolist (package '(use-package))
-   (unless (package-installed-p package)
+  (unless (package-installed-p package)
+    (package-refresh-contents)
      (package-install package)))
 
 (use-package org
