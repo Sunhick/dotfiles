@@ -33,6 +33,8 @@
     :ensure org)
 
 (require 'org)
+
+(setq vc-follow-symlinks t)
 (org-babel-load-file
  (expand-file-name "settings.org"
                    user-emacs-directory))
@@ -41,11 +43,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (tango-dark)))
+ '(custom-enabled-themes (quote (wombat)))
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (org-bullets org-bullets-mode clang-format magit iedit autopair which-key counsel-projectile counsel use-package))))
+    (auto-complete company-c-headers org-bullets org-bullets-mode clang-format magit iedit autopair which-key counsel-projectile counsel use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
