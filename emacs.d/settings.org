@@ -343,3 +343,13 @@
       ;; which defeats the purpose. call it only once.
       ;; (byte-compile-init-dir)
     #+END_SRC
+
+*** Google C/C++ style 
+    #+BEGIN_SRC emacs-lisp
+      ;; Google C/C++ style
+      (use-package google-c-style
+        :ensure t)
+      (require 'google-c-style)
+      (add-hook 'c-mode-common-hook 'google-set-c-style)
+      (add-hook 'c-mode-common-hook 'google-make-newline-indent)
+    #+END_SRC
