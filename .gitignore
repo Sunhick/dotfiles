@@ -13,3 +13,7 @@
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# untrack the bashrc file. If you add a generic functionality
+# then force add the file and checkin.
+bashrc
