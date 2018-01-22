@@ -20,7 +20,7 @@
 
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;; 
-      ;; init.el - AUTO GENERATED FILE
+      ;; settings.el - AUTO GENERATED FILE
       ;; 
       ;; Author : Sunil <sunhick@gmail.com>
       ;; Emacs customization file
