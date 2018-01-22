@@ -37,7 +37,7 @@
  (expand-file-name "settings.org"
                    user-emacs-directory))
 
-(use-package monokai
+(use-package monokai-theme
   :ensure t)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
