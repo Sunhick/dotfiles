@@ -30,9 +30,16 @@ function install() {
     ln -sf $(pwd)/emacs.d/settings.org $HOME/.emacs.d/
 
     # create symlinks for bash_profile settings
-    ln -sf $(pwd)/bashrc $HOME/.bashrc
     ln -sf $(pwd)/bash_profile $HOME/.bash_profile
     ln -sf $(pwd)/git-complete.sh $HOME/.git-complete
+
+    if ! grep -Fxq "source $(pwd)/bashrc" $HOME/.bashrc
+    then 
+        echo "\n# Invoke the bashrc from github config project." >> $HOME/.bashrc
+        echo "# Use config/bashrc to modify. " >> $HOME/.bashrc
+        echo "source " $(pwd)/bashrc >> $HOME/.bashrc
+    fi
+
     echo "Configuration settings installed!"
 }
 
@@ -53,9 +60,10 @@ function backup() {
 ############################################
 function uninstall() {
     rm -rf $HOME/.emacs.d/
-    rm -ff $HOME/.bashrc
     rm -rf $HOME/.bash_profile
     rm -rf $HOME/.git-complete
+    lineno=`grep -xFn "source  $(pwd)/bashrc" $HOME/.bashrc | sed -n 's/^\([0-9]*\)[:].*/\1/p'`
+    sed -i -e "$lineno d" $HOME/.bashrc
     echo "Configuration settings uninstalled!"
 }
 

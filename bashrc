@@ -2,6 +2,13 @@
 #
 # Author: Sunil 
 #
+# Keep this file contents pretty generic so that it will
+# work on all systems. This shouldn't override the contents
+# already defined in $HOME/.bashrc. This will be invoked
+# after $HOME/.bashrc. .bashrc will point to this file.
+# 
+# $HOME/.bashrc -> $(pwd)/bashrc
+#
 #######################################################
 export CONF_VERSION=1.0
 
