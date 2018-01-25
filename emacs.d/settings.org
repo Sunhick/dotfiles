@@ -320,7 +320,7 @@
       (use-package neotree
         :ensure t)
       (require 'neotree)
-      (setq-default neo-theme 'arrow)
+      (setq-default neo-theme 'plusminus)
       (neotree-toggle)
       ;; (setq neo-window-fixed-size nil)
       (setq neo-smart-open t)
