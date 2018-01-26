@@ -353,3 +353,10 @@
       (add-hook 'c-mode-common-hook 'google-set-c-style)
       (add-hook 'c-mode-common-hook 'google-make-newline-indent)
     #+END_SRC
+    
+*** CMake mode
+    #+BEGIN_SRC emacs-lisp
+      (use-package cmake-mode
+        :ensure t)
+
+    #+END_SRC
