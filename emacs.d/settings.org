@@ -301,12 +301,6 @@
         :ensure t)
       (smooth-scrolling-mode)
 
-      ;; Support for Objective-C mode
-      (use-package dummy-h-mode
-        :ensure t)
-      (require 'dummy-h-mode)
-      (add-to-list 'auto-mode-alist '("\\.mm\\'" . objc-mode))
-
     #+END_SRC
     
 *** Custom variables
