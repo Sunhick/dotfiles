@@ -50,7 +50,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (neotree company-c-headers org-bullets org-bullets-mode clang-format magit iedit autopair which-key counsel-projectile counsel use-package))))
+    (gradle-mode neotree company-c-headers org-bullets org-bullets-mode clang-format magit iedit autopair which-key counsel-projectile counsel use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
