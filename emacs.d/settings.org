@@ -65,7 +65,13 @@
        )
 
     #+END_SRC
-    
+
+*** Buffers
+    #+BEGIN_SRC emacs-lisp
+      (defalias 'list-buffers 'ibuffer)
+
+    #+END_SRC
+
 *** Magit
     #+BEGIN_SRC emacs-lisp
       ;; 
