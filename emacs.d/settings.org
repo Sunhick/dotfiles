@@ -370,3 +370,12 @@
         :ensure t)
       (setq multi-term-program "/bin/bash")
     #+END_SRC
+
+*** Groovy & Gradle
+    #+BEGIN_SRC emacs-lisp
+      (use-package groovy-mode
+        :ensure t)
+      (use-package gradle-mode
+        :ensure t)
+
+    #+END_SRC
