@@ -319,16 +319,16 @@
     
 *** Neo tree
     #+BEGIN_SRC emacs-lisp
-      ;; Enable neo tree view by default
-      (use-package neotree
-        :ensure t)
-      (require 'neotree)
-      (setq-default neo-theme 'plusminus)
-      (neotree-toggle)
-      ;; (setq neo-window-fixed-size nil)
-      (setq neo-smart-open t)
-      (setq neo-hidden-regexp-list '("^\\." "\\.cs\\.meta$" "\\.pyc$" "~$" "^#.*#$" "\\.elc$" "\\.o$"))
-      (global-set-key [f8] 'neotree-toggle)
+      ;;;; Enable neo tree view by default
+      ;; (use-package neotree
+      ;;   :ensure t)
+      ;; (require 'neotree)
+      ;; (setq-default neo-theme 'plusminus)
+      ;; (neotree-toggle)
+      ;;;; (setq neo-window-fixed-size nil)
+      ;; (setq neo-smart-open t)
+      ;; (setq neo-hidden-regexp-list '("^\\." "\\.cs\\.meta$" "\\.pyc$" "~$" "^#.*#$" "\\.elc$" "\\.o$"))
+      ;; (global-set-key [f8] 'neotree-toggle)
     #+END_SRC
 
 *** Compile .emacs.d/
