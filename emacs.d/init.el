@@ -37,23 +37,23 @@
  (expand-file-name "settings.org"
                    user-emacs-directory))
 
-(use-package monokai-theme
+(use-package ample-zen-theme
           :ensure t)
-        (custom-set-variables
-         ;; custom-set-variables was added by Custom.
-         ;; If you edit it by hand, you could mess it up, so be careful.
-         ;; Your init file should contain only one such instance.
-         ;; If there is more than one, they won't work right.
-         '(ansi-color-names-vector
-           ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
-         '(custom-enabled-themes (quote (monokai)))
-         '(inhibit-startup-screen t)
-         '(package-selected-packages
-           (quote
-            (gradle-mode neotree company-c-headers org-bullets org-bullets-mode clang-format magit iedit autopair which-key counsel-projectile counsel use-package))))
-        (custom-set-faces
-         ;; custom-set-faces was added by Custom.
-         ;; If you edit it by hand, you could mess it up, so be careful.
-         ;; Your init file should contain only one such instance.
-         ;; If there is more than one, they won't work right.
-         )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(custom-enabled-themes (quote (ample-zen)))
+ '(inhibit-startup-screen t)
+ '(package-selected-packages
+   (quote
+    (gradle-mode neotree company-c-headers org-bullets org-bullets-mode clang-format magit iedit autopair which-key counsel-projectile counsel use-package))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
