@@ -51,6 +51,12 @@
         (global-visual-line-mode 1)
     #+END_SRC
 
+*** Mac OS tweaks
+    #+BEGIN_SRC emacs-lisp
+      (when (string= system-type "darwin")       
+	(setq dired-use-ls-dired nil))
+    #+END_SRC
+
 *** Buffers
     #+BEGIN_SRC emacs-lisp
       (defalias 'list-buffers 'ibuffer)
