@@ -391,6 +391,7 @@
       (diminish 'ivy-mode)
       (diminish 'visual-line-mode)
       (diminish 'auto-revert-mode)
+      (diminish 'autopair-mode)
     #+END_SRC
 
 *** Avy jump mode
