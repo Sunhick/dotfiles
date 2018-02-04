@@ -46,6 +46,9 @@
         ;; me with yes/no and i type 'y' or 'n' in a hurry
         ;; remap yes/no to y/n
         (fset 'yes-or-no-p 'y-or-n-p)
+        
+        ;; Enable visual line mode
+        (visual-line-mode 1)
     #+END_SRC
 
 *** Buffers
