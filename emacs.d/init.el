@@ -37,7 +37,7 @@
  (expand-file-name "settings.org"
                    user-emacs-directory))
 
-(use-package ample-zen-theme
+(use-package dracula-theme
           :ensure t)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -46,7 +46,7 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes (quote (ample-zen)))
+ '(custom-enabled-themes (quote (dracula)))
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
