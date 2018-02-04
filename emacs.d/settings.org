@@ -388,3 +388,13 @@
       (require 'diminish)
       (diminish 'projectile-mode)
     #+END_SRC
+
+*** Avy jump mode
+    Ace jump mode is dead. use Avy instead.
+    #+BEGIN_SRC emacs-lisp
+      (use-package avy
+        :ensure t)
+      (require 'avy)
+      (global-set-key (kbd "C-:") 'avy-goto-char)
+
+    #+END_SRC
