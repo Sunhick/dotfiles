@@ -374,6 +374,14 @@
 *** Org mode
     #+BEGIN_SRC emacs-lisp
       (use-package org
-        :ensure org)
+        :ensure t)
       (require 'org)
+    #+END_SRC
+
+*** Unclutter modeline
+    #+BEGIN_SRC emacs-lisp
+      (use-package diminish
+        :ensure t)
+      (require 'diminish)
+      (diminish 'projectile-mode)
     #+END_SRC

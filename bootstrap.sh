@@ -60,7 +60,6 @@ function backup() {
 ############################################
 function uninstall() {
     rm -rf $HOME/.emacs.d/
-    rm -rf $HOME/.bash_profile
     rm -rf $HOME/.git-complete
     lineno=`grep -xFn "source  $(pwd)/bashrc" $HOME/.bashrc | sed -n 's/^\([0-9]*\)[:].*/\1/p'`
     sed -i -e "$lineno d" $HOME/.bashrc
