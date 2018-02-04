@@ -396,3 +396,9 @@
       (set-default 'indicate-empty-lines t)
 
     #+END_SRC
+
+*** Compile kbd binding
+    #+BEGIN_SRC emacs-lisp
+      (global-set-key(kbd "C-c C-m") 'compile)
+
+    #+END_SRC
