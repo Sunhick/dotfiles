@@ -48,7 +48,7 @@
         (fset 'yes-or-no-p 'y-or-n-p)
         
         ;; Enable visual line mode
-        (setq line-move-visual t)
+        (global-visual-line-mode 1)
     #+END_SRC
 
 *** Buffers
