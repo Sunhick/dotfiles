@@ -370,3 +370,10 @@
     #+BEGIN_SRC emacs-lisp
       (global-set-key(kbd "C-c C-m") 'compile)
     #+END_SRC
+    
+*** Org mode
+    #+BEGIN_SRC emacs-lisp
+      (use-package org
+        :ensure org)
+      (require 'org)
+    #+END_SRC
