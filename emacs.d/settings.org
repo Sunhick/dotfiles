@@ -388,4 +388,11 @@
       (global-set-key (kbd "C->") 'mc/mark-next-like-this)
       (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
       (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+    #+END_SRC
+
+*** Empty lines indicator
+    #+BEGIN_SRC emacs-lisp
+      (set-default 'indicate-empty-lines t)
+
     #+END_SRC
