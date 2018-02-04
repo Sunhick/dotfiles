@@ -46,27 +46,6 @@
         ;; me with yes/no and i type 'y' or 'n' in a hurry
         ;; remap yes/no to y/n
         (fset 'yes-or-no-p 'y-or-n-p)
-        
-        (use-package monokai-theme
-          :ensure t)
-        (custom-set-variables
-         ;; custom-set-variables was added by Custom.
-         ;; If you edit it by hand, you could mess it up, so be careful.
-         ;; Your init file should contain only one such instance.
-         ;; If there is more than one, they won't work right.
-         '(ansi-color-names-vector
-           ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
-         '(custom-enabled-themes (quote (monokai)))
-         '(inhibit-startup-screen t)
-         '(package-selected-packages
-           (quote
-            (gradle-mode neotree company-c-headers org-bullets org-bullets-mode clang-format magit iedit autopair which-key counsel-projectile counsel use-package))))
-        (custom-set-faces
-         ;; custom-set-faces was added by Custom.
-         ;; If you edit it by hand, you could mess it up, so be careful.
-         ;; Your init file should contain only one such instance.
-         ;; If there is more than one, they won't work right.
-         )
     #+END_SRC
 
 *** Buffers
@@ -185,7 +164,6 @@
 
     #+END_SRC
 *** Back-up
-    
     #+BEGIN_SRC emacs-lisp
       ;; configure emacs org mode
       (use-package org-bullets
@@ -312,11 +290,6 @@
 
     #+END_SRC
     
-*** Custom variables
-    #+BEGIN_SRC emacs-lisp
-      
-    #+END_SRC
-    
 *** Neo tree
     #+BEGIN_SRC emacs-lisp
       ;;;; Enable neo tree view by default
@@ -332,7 +305,6 @@
     #+END_SRC
 
 *** Compile .emacs.d/
-    
     Precompile all the *.el files for faster loading of emacs. But make sure *.elc files aren't stale. If you change *.el files in user directory
     be sure to run M-x byte-compile-init-dir. Emacs will prefer *.elc files over *.el files.
 
@@ -361,7 +333,6 @@
     #+BEGIN_SRC emacs-lisp
       (use-package cmake-mode
         :ensure t)
-
     #+END_SRC
     
 *** Multi term
@@ -377,7 +348,6 @@
         :ensure t)
       (use-package gradle-mode
         :ensure t)
-
     #+END_SRC
     
 *** Multiple cursors
@@ -394,11 +364,9 @@
 *** Empty lines indicator
     #+BEGIN_SRC emacs-lisp
       (set-default 'indicate-empty-lines t)
-
     #+END_SRC
 
 *** Compile kbd binding
     #+BEGIN_SRC emacs-lisp
       (global-set-key(kbd "C-c C-m") 'compile)
-
     #+END_SRC
