@@ -31,12 +31,17 @@
 (org-babel-load-file
  (expand-file-name "settings.org"
                    user-emacs-directory))
+
+(use-package monokai-theme
+          :ensure t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
+ '(custom-enabled-themes (quote (monokai)))
  '(package-selected-packages
    (quote
     (multiple-cursors gradle-mode groovy-mode multi-term cmake-mode google-c-style smooth-scrolling auto-complete-clang auto-complete-c-headers auto-complete ggtags yasnippet-snippets yasnippet org-bullets clang-format switch-window iedit autopair which-key counsel-projectile counsel magit use-package))))
