@@ -49,6 +49,19 @@
         
         ;; Enable visual line mode
         (global-visual-line-mode 1)
+	
+	;; change the fringe 
+	(set-fringe-mode '(nil . 0))
+	
+	;; Trash can support
+	(setq delete-by-moving-to-trash t)
+	
+	;; 80 chars is a good width.
+	(set-default 'fill-column 80)
+	
+	;; Display line & column numbers
+	(setq line-number-mode t)
+	(setq column-number-mode t)
     #+END_SRC
 
 *** Mac OS tweaks
