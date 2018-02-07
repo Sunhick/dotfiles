@@ -430,3 +430,8 @@
       (require 'bazel-mode)
     #+END_SRC
 
+*** Save minibuffer history
+    #+BEGIN_SRC emacs-lisp
+      (savehist-mode t)
+      (setq savehist-file "~/.emacs.d/savehist")
+    #+END_SRC
