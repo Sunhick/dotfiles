@@ -182,7 +182,7 @@
 
       ;; (global-set-key (kbd "C-c i") 'clang-format-region)
       (global-set-key (kbd "C-c u") 'clang-format-buffer)
-      (setq clang-format-style-option "Google")
+      (setq clang-format-style-option "Chromium")
 
     #+END_SRC
 *** Back-up
@@ -439,15 +439,4 @@
 *** Hideshow mode
     #+BEGIN_SRC emacs-lisp
       (add-hook 'prog-mode-hook #'hs-minor-mode)
-    #+END_SRC
-
-*** Markdown mode
-    #+BEGIN_SRC emacs-lisp
-      (use-package markdown-mode
-	:ensure t
-	:commands (markdown-mode gfm-mode)
-	:mode (("README\\.md\\'" . gfm-mode)
-	       ("\\.md\\'" . markdown-mode)
-	       ("\\.markdown\\'" . markdown-mode))
-	:init (setq markdown-command "multimarkdown"))
     #+END_SRC
