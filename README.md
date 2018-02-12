@@ -5,5 +5,7 @@
 
 # Emacs keys
 ```M-``` Meta key (ALT/ESC)
+
 ```C-``` Control key (CTRL)
+
 ```S-``` Shift key
