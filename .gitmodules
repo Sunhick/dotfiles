@@ -1,0 +1,3 @@
+[submodule "emacs.d/vendor/plantuml-mode"]
+	path = emacs.d/vendor/plantuml-mode
+	url = https://github.com/skuro/plantuml-mode.git
