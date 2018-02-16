@@ -31,46 +31,37 @@
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     #+END_SRC
-
-*** Load personal and vendor packages
-    #+BEGIN_SRC emacs-lisp
-      ;; Load personal packages
-      (load "~/.emacs.d/personal/defuns")
-
-      ;; Load vendor packages
-      (add-to-list 'load-path "~/.emacs.d/vendor")
-    #+END_SRC
     
 *** Visual tweaks
     #+BEGIN_SRC emacs-lisp
-        ;; Get rid of tool bar and menu bar
-        ;; (menu-bar-mode 0)
-        ;; Yeah, I'm keeping the text menu at the top. It doesn't
-        ;; bother me. Whereas the toolbar i never use it and just
-        ;; occupies space.
-        (tool-bar-mode 0)
-        (scroll-bar-mode 0)
+      ;; Get rid of tool bar and menu bar
+      ;; (menu-bar-mode 0)
+      ;; Yeah, I'm keeping the text menu at the top. It doesn't
+      ;; bother me. Whereas the toolbar i never use it and just
+      ;; occupies space.
+      (tool-bar-mode 0)
+      (scroll-bar-mode 0)
 
-        ;; I hate typing. Especially when emacs prompts
-        ;; me with yes/no and i type 'y' or 'n' in a hurry
-        ;; remap yes/no to y/n
-        (fset 'yes-or-no-p 'y-or-n-p)
-        
-        ;; Enable visual line mode
-        (global-visual-line-mode 1)
-	
-	;; change the fringe 
-	(set-fringe-mode '(nil . 0))
-	
-	;; Trash can support
-	(setq delete-by-moving-to-trash t)
-	
-	;; 80 chars is a good width.
-	(set-default 'fill-column 80)
-	
-	;; Display line & column numbers
-	(setq line-number-mode t)
-	(setq column-number-mode t)
+      ;; I hate typing. Especially when emacs prompts
+      ;; me with yes/no and i type 'y' or 'n' in a hurry
+      ;; remap yes/no to y/n
+      (fset 'yes-or-no-p 'y-or-n-p)
+
+      ;; Enable visual line mode
+      (global-visual-line-mode 1)
+
+      ;; change the fringe 
+      (set-fringe-mode '(nil . 0))
+
+      ;; Trash can support
+      (setq delete-by-moving-to-trash t)
+
+      ;; 80 chars is a good width.
+      (set-default 'fill-column 80)
+
+      ;; Display line & column numbers
+      (setq line-number-mode t)
+      (setq column-number-mode t)
     #+END_SRC
 
 *** Mac OS tweaks
@@ -248,7 +239,7 @@
         :ensure t)
       (require 'auto-complete-config)
       (ac-config-default)
-
+n
       ;; let's define a function which initializes auto-complete-c-headers and gets called for c/c++ hooks
       (defun my:ac-c-header-init ()
         (require 'auto-complete-c-headers)
@@ -471,17 +462,13 @@
     #+END_SRC
 
 *** Plant UML mode
-    I'm not using ```use-package``` to install ```plantuml mode``` here because then I would have 
-    to manually download the ```plantuml.jar``` file. The plantuml github project already has this jar 
-    in ```plantuml-mode/bin/``` folder. So I added this that git repository as a submodule and will 
-    set the path.
     #+BEGIN_SRC emacs-lisp
-      (vendor 'plantuml-mode)
-
+      (use-package plantuml-mode
+	:ensure t)
       ;; Enable plantuml-mode for PlantUML files
       (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
 
       ;; plantuml preview needs plantuml.jar (C-c C-c)
-      (setq plantuml-jar-path "~/.emacs.d/vendor/plantuml-mode/bin/plantuml.jar")
+      (setq plantuml-jar-path "~/.emacs.d/vendor/bin/plantuml.jar")
     #+END_SRC
 

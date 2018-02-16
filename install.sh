@@ -28,7 +28,6 @@ function install() {
     # create a symbolic links for emacs configurations
     ln -sf $(pwd)/emacs.d/init.el $HOME/.emacs.d/
     ln -sf $(pwd)/emacs.d/settings.org $HOME/.emacs.d/
-    ln -sf $(pwd)/emacs.d/personal $HOME/.emacs.d/
     ln -sf $(pwd)/emacs.d/vendor $HOME/.emacs.d/
 
     # create symlinks for bash_profile settings
