@@ -9,7 +9,7 @@ function version() {
 }
 
 function help() {
-    echo "usage of bootstrap.sh."
+    echo "usage of install.sh."
     echo " -i install the configurations."
     echo " -u uninstall the configurations."
     echo " -v version number of current configuration."
@@ -28,6 +28,8 @@ function install() {
     # create a symbolic links for emacs configurations
     ln -sf $(pwd)/emacs.d/init.el $HOME/.emacs.d/
     ln -sf $(pwd)/emacs.d/settings.org $HOME/.emacs.d/
+    ln -sf $(pwd)/emacs.d/personal $HOME/.emacs.d/
+    ln -sf $(pwd)/emacs.d/vendor $HOME/.emacs.d/
 
     # create symlinks for bash_profile settings
     ln -sf $(pwd)/bash_profile $HOME/.bash_profile

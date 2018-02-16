@@ -31,6 +31,15 @@
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     #+END_SRC
+
+*** Load personal and vendor packages
+    #+BEGIN_SRC emacs-lisp
+      ;; Load personal packages
+      (load "~/.emacs.d/personal/defuns")
+
+      ;; Load vendor packages
+      (add-to-list 'load-path "~/.emacs.d/vendor")
+    #+END_SRC
     
 *** Visual tweaks
     #+BEGIN_SRC emacs-lisp
@@ -460,3 +469,19 @@
 					    tab-width 4
 					    indent-tabs-mode t)))
     #+END_SRC
+
+*** Plant UML mode
+    I'm not using ```use-package``` to install ```plantuml mode``` here because then I would have 
+    to manually download the ```plantuml.jar``` file. The plantuml github project already has this jar 
+    in ```plantuml-mode/bin/``` folder. So I added this that git repository as a submodule and will 
+    set the path.
+    #+BEGIN_SRC emacs-lisp
+      (vendor 'plantuml-mode)
+
+      ;; Enable plantuml-mode for PlantUML files
+      (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
+
+      ;; plantuml preview needs plantuml.jar (C-c C-c)
+      (setq plantuml-jar-path "~/.emacs.d/vendor/plantuml-mode/bin/plantuml.jar")
+    #+END_SRC
+
