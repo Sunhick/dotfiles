@@ -239,7 +239,6 @@
         :ensure t)
       (require 'auto-complete-config)
       (ac-config-default)
-n
       ;; let's define a function which initializes auto-complete-c-headers and gets called for c/c++ hooks
       (defun my:ac-c-header-init ()
         (require 'auto-complete-c-headers)
