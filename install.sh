@@ -3,16 +3,10 @@
 # !!! Note: This script will overwrite your preferences !!!
 # 
 
-VERSION="1.0"
-function version() {
-    echo "config current version" $VERSION
-}
-
 function help() {
     echo "usage of install.sh."
     echo " -i install the configurations."
     echo " -u uninstall the configurations."
-    echo " -v version number of current configuration."
     echo " -h print the help"
 }
 
@@ -71,10 +65,6 @@ opt=$1
 case $opt in
     -h | --help)
 	help
-	;;
-    
-    -v | --version)
-	version
 	;;
     
     -i | --install)
