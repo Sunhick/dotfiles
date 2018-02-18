@@ -471,3 +471,10 @@
       (setq plantuml-jar-path "~/.emacs.d/vendor/bin/plantuml.jar")
     #+END_SRC
 
+*** Expand region 
+    #+BEGIN_SRC emacs-lisp
+      (use-package expand-region
+	:ensure t)
+      (require 'expand-region)
+      (global-set-key (kbd "C-=") 'er/expand-region)
+    #+END_SRC
