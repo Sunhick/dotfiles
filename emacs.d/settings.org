@@ -419,7 +419,7 @@
         :ensure t)
       (require 'avy)
       (global-set-key (kbd "C-:") 'avy-goto-char)
-
+      (global-set-key (kbd "M-g f") 'avy-goto-line)
     #+END_SRC
     
 *** Bazel mode
