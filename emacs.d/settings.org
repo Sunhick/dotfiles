@@ -497,3 +497,9 @@
       (global-set-key [(control c)(j)]        'bc-goto-current)   ;; C-c j for jump to current bookmark
       (global-set-key [(control x)(meta j)]   'bc-list)           ;; C-x M-j for the bookmark menu list
     #+END_SRC
+
+*** Rust mode
+    #+BEGIN_SRC emacs-lisp
+      (use-package rust-mode
+	:ensure t)
+    #+END_SRC
