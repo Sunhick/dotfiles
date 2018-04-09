@@ -62,6 +62,9 @@
       ;; Display line & column numbers
       (setq line-number-mode t)
       (setq column-number-mode t)
+      
+      ;; use whitespaces instead of tabs
+      (setq-default indent-tabs-mode nil)
     #+END_SRC
 
 *** Mac OS tweaks
