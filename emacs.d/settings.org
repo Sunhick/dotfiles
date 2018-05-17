@@ -535,3 +535,11 @@
       ;; (custom-set-variables
       ;;  '(zoom-size '(0.618 . 0.618)))
     #+END_SRC
+
+*** Dimmer mode
+    #+BEGIN_SRC emacs-lisp
+      ;; (use-package dimmer
+      ;;   :ensure t)
+      ;; (require 'dimmer)
+      ;; (dimmer-mode)
+    #+END_SRC
