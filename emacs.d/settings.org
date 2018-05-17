@@ -173,6 +173,12 @@
         :ensure t)
       (global-set-key (kbd "C-x w") 'switch-window)
 
+      ;; electric indentation mode
+      (electric-indent-mode 1)
+
+      ;; subword mode for navigating thought the camelcase or
+      ;;snake casing mode
+      (subword-mode 1)
 
     #+END_SRC
     
@@ -211,7 +217,7 @@
       ;;
       ;; configuration for programming
       ;; 
-      '(use-package yasnippet-snippets
+      (use-package yasnippet-snippets
          :ensure t)
 
       (use-package yasnippet
