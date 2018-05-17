@@ -456,15 +456,15 @@
     Java uses 4 space indentation and Emacs by default uses 2. 
     #+BEGIN_SRC emacs-lisp
       (add-hook 'java-mode-hook (lambda ()
-				      (setq c-basic-offset 4
-					    tab-width 4
-					    indent-tabs-mode t)))
+                                  (setq c-basic-offset 4
+                                        tab-width 4
+                                        indent-tabs-mode t)))
     #+END_SRC
 
 *** Plant UML mode
     #+BEGIN_SRC emacs-lisp
       (use-package plantuml-mode
-	:ensure t)
+        :ensure t)
       ;; Enable plantuml-mode for PlantUML files
       (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
 
@@ -514,5 +514,24 @@
 *** Swift mode
     #+BEGIN_SRC emacs-lisp
       (use-package swift3-mode
-	:ensure t)
+        :ensure t)
+    #+END_SRC
+
+*** Emacs dashboard
+    #+BEGIN_SRC emacs-lisp
+      ;; (use-package dashboard
+      ;;   :ensure t
+      ;;   :config
+      ;;   (dashboard-setup-startup-hook))
+    #+END_SRC
+
+*** Emacs Zoom
+    #+BEGIN_SRC emacs-lisp
+      ;; (use-package zoom
+      ;;   :ensure t)
+      ;; (require 'zoom)
+      ;; (custom-set-variables
+      ;;  '(zoom-mode t))
+      ;; (custom-set-variables
+      ;;  '(zoom-size '(0.618 . 0.618)))
     #+END_SRC
