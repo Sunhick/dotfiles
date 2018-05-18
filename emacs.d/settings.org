@@ -176,8 +176,7 @@
       ;; electric indentation mode
       (electric-indent-mode 1)
 
-      ;; subword mode for navigating thought the camelcase or
-      ;;snake casing mode
+      ;; subword mode for navigating thought the camelcase or snake casing mode
       (subword-mode 1)
 
     #+END_SRC
@@ -542,4 +541,12 @@
       ;;   :ensure t)
       ;; (require 'dimmer)
       ;; (dimmer-mode)
+    #+END_SRC
+
+*** Aggressive indentation
+    #+BEGIN_SRC emacs-lisp
+      ;; (use-package aggressive-indent
+      ;;   :ensure t)
+      ;; (require 'aggressive-indent)
+      ;; (global-aggressive-indent-mode 1)
     #+END_SRC
