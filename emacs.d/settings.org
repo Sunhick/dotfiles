@@ -550,3 +550,9 @@
       ;; (require 'aggressive-indent)
       ;; (global-aggressive-indent-mode 1)
     #+END_SRC
+
+*** Emacs Control key rebindings
+    #+BEGIN_SRC emacs-lisp
+      ;; To rebind caps lock for control key on OSX go to Apple System preferences
+      ;; keyboard settings -> modifier keys -> remap caps lock to control key
+    #+END_SRC
