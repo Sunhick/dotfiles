@@ -15,9 +15,8 @@
 #+STARTUP: showeverything
 
 * Emacs configuration settings
-*** File Header
+*** COMMENT File Header
     #+BEGIN_SRC emacs-lisp
-
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;; 
       ;; settings.el - AUTO GENERATED FILE
@@ -62,7 +61,7 @@
       ;; Display line & column numbers
       (setq line-number-mode t)
       (setq column-number-mode t)
-      
+
       ;; use whitespaces instead of tabs
       (setq-default indent-tabs-mode nil)
     #+END_SRC
@@ -76,7 +75,6 @@
 *** Buffers
     #+BEGIN_SRC emacs-lisp
       (defalias 'list-buffers 'ibuffer)
-
     #+END_SRC
 
 *** Magit
