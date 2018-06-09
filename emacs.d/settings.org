@@ -175,8 +175,7 @@
       (electric-indent-mode 1)
 
       ;; subword mode for navigating thought the camelcase or snake casing mode
-      (subword-mode 1)
-
+      (global-subword-mode 1)
     #+END_SRC
     
 *** Clang format
