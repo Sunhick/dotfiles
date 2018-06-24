@@ -32,7 +32,7 @@
  (expand-file-name "settings.org"
                    user-emacs-directory))
 
-(use-package arjen-grey
+(use-package arjen-grey-theme
   :ensure t)
 
 (custom-set-variables
