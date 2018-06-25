@@ -554,3 +554,14 @@
       ;; To rebind caps lock for control key on OSX go to Apple System preferences
       ;; keyboard settings -> modifier keys -> remap caps lock to control key
     #+END_SRC
+
+*** fzf key bindings
+    #+BEGIN_SRC emacs-lisp
+      ;; fzf emacs key bindings
+      (use-package fzf
+         :ensure t)
+      (global-set-key (kbd "C-c f f") 'fzf-git-files)
+      (global-set-key (kbd "C-c f g") 'fzf-git)
+      (global-set-key (kbd "C-c f d") 'fzf-directory)
+      (global-set-key (kbd "C-c f g") 'fzf-git-grep)
+    #+END_SRC
