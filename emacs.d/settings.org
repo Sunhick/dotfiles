@@ -563,5 +563,6 @@
       (global-set-key (kbd "C-c f f") 'fzf-git-files)
       (global-set-key (kbd "C-c f g") 'fzf-git)
       (global-set-key (kbd "C-c f d") 'fzf-directory)
-      (global-set-key (kbd "C-c f g") 'fzf-git-grep)
+      (global-set-key (kbd "C-c f s") 'fzf-git-grep)
+      (global-set-key (kbd "C-c f p") 'fzf-projectile)
     #+END_SRC
