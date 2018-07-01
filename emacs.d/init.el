@@ -18,6 +18,9 @@
 ;; start package.el with emacs
 (require 'package)
 
+;; Emacs dark title bar
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+
 ;; add MELPA to repository list
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/"))
