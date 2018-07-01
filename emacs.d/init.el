@@ -18,8 +18,11 @@
 ;; start package.el with emacs
 (require 'package)
 
-;; Emacs dark title bar
+;; Emacs title bar customizations
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
+(setq ns-use-proxy-icon nil)
+(setq frame-title-format nil)
 
 ;; add MELPA to repository list
 (add-to-list 'package-archives
