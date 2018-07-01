@@ -31,7 +31,7 @@
 
     #+END_SRC
 
-*** Visual tweaks
+*** COMMENT Visual tweaks
     #+BEGIN_SRC emacs-lisp
       ;; Get rid of tool bar and menu bar
       ;; (menu-bar-mode 0)
@@ -65,12 +65,15 @@
       ;; use whitespaces instead of tabs
       (setq-default indent-tabs-mode nil)
       (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+      ;; Emacs dark title bar
+      (add-to-list 'default-frame-alist '(ns-appearance . dark))
     #+END_SRC
 
 *** Mac OS tweaks
     #+BEGIN_SRC emacs-lisp
       (when (string= system-type "darwin")
-	(setq dired-use-ls-dired nil))
+        (setq dired-use-ls-dired nil))
     #+END_SRC
 
 *** Buffers
