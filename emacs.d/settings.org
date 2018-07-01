@@ -65,9 +65,6 @@
       ;; use whitespaces instead of tabs
       (setq-default indent-tabs-mode nil)
       (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-      ;; Emacs dark title bar
-      (add-to-list 'default-frame-alist '(ns-appearance . dark))
     #+END_SRC
 
 *** Mac OS tweaks
