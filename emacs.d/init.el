@@ -55,11 +55,11 @@
  '(custom-enabled-themes (quote (nova)))
  '(custom-safe-themes
    (quote
-    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+    ("e3e7e5003380eba6a2a6c54fd57b43ce001affc7b0b4658424143b28b1889d6f" default)))
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (yaml-mode haskell-mode expand-region plantuml-mode markdown-mode diminish multiple-cursors gradle-mode groovy-mode multi-term cmake-mode google-c-style smooth-scrolling auto-complete-clang auto-complete-c-headers auto-complete ggtags yasnippet-snippets yasnippet org-bullets clang-format switch-window iedit autopair which-key counsel-projectile counsel magit use-package))))
+    (nova-theme yaml-mode haskell-mode expand-region plantuml-mode markdown-mode diminish multiple-cursors gradle-mode groovy-mode multi-term cmake-mode google-c-style smooth-scrolling auto-complete-clang auto-complete-c-headers auto-complete ggtags yasnippet-snippets yasnippet org-bullets clang-format switch-window iedit autopair which-key counsel-projectile counsel magit use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
