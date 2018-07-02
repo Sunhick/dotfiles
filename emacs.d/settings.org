@@ -597,13 +597,14 @@
         :ensure t)
       ;; Default binding for workgroup C-c z
       (setq wg-prefix-key (kbd "s-b"))
-      
+
       ;; Change workgroups session file
       (setq wg-session-file "~/.emacs.d/.emacs_workgroups")
 
       (global-set-key (kbd "C-S-<pause>") 'wg-save-session)
       (global-set-key (kbd "s-z") 'wg-switch-to-workgroup)
       (global-set-key (kbd "s-/") 'wg-switch-to-previous-workgroup)
+      ;; (global-set-key (kbd "s-b l") #'wg-workgroup-names)
 
       (workgroups-mode 1)
     #+END_SRC
