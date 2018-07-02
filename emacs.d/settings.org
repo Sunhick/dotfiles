@@ -595,10 +595,9 @@
     #+BEGIN_SRC emacs-lisp
       (use-package workgroups2
         :ensure t)
-
+      ;; Default binding for workgroup C-c z
       ;; Change workgroups session file
       (setq wg-session-file "~/.emacs.d/.emacs_workgroups")
-      (setq wg-prefix-key (kbd "s-b"))
 
       (global-set-key (kbd "C-S-<pause>") 'wg-save-session)
       (global-set-key (kbd "s-z") 'wg-switch-to-workgroup)
