@@ -573,3 +573,20 @@
       (global-set-key (kbd "C-c f s") 'fzf-git-grep)
       (global-set-key (kbd "C-c f p") 'fzf-projectile)
     #+END_SRC
+
+*** Origami Folding
+    #+BEGIN_SRC emacs-lisp
+      (use-package yafolding
+        :ensure t)
+      (defvar yafolding-mode-map
+        (let ((map (make-sparse-keymap)))
+          (define-key map (kbd "<C-S-return>") #'yafolding-hide-parent-element)
+          (define-key map (kbd "<C-M-return>") #'yafolding-toggle-all)
+          (define-key map (kbd "<C-return>") #'yafolding-toggle-element)
+          map))
+      (add-hook 'prog-mode-hook
+                (lambda () (yafolding-mode)))
+      (lambda ()
+        (yafolding-show-all)
+        (delete-trailing-whitespace))
+    #+END_SRC
