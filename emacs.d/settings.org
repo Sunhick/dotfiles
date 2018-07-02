@@ -608,3 +608,10 @@
 
       (workgroups-mode 1)
     #+END_SRC
+
+*** Rainbow delimiters
+    #+BEGIN_SRC emacs-lisp
+      ;; (use-package rainbow-delimiters
+      ;;   :ensure t)
+      ;; (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+    #+END_SRC
