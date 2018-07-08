@@ -93,3 +93,15 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+export TOOLBOX_PATH=$HOME/.toolbox/bin
+export BAZEL_PATH=/Users/sunilmur/bin
+export PATH=$PATH:$BAZEL_PATH:$TOOLBOX_PATH
+export TEST_TMPDIR=~/prv/bazel-cache
+
+alias bb=brazil-build
+alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -geometry 180x80"
+alias emacsclient="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c -F\"((width . 180) (height . 80) (top . 0) (left . 0))\""
+alias emacsd="/Applications/Emacs.app/Contents/MacOS/Emacs --daemon"
+alias killemacs="emacsclient -e '(kill-emacs)'"
+alias uml="~/prv/Umlet/umlet.sh > /dev/null &"
