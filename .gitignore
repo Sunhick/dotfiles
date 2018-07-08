@@ -21,3 +21,6 @@ bashrc
 emacs/.emacs.d/elpa/
 emacs/.emacs.d/projectile-bookmarks.eld
 emacs/.emacs.d/settings.el
+emacs/.emacs.d/.emacs_workgroups
+emacs/.emacs.d/ac-comphist.dat
+emacs/.emacs.d/savehist

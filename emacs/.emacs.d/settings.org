@@ -615,3 +615,15 @@
       ;;   :ensure t)
       ;; (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
     #+END_SRC
+
+*** Golang
+    #+BEGIN_SRC emacs-lisp
+      (use-package go-mode
+        :ensure t)
+
+      (add-hook 'go-mode-hook
+                (lambda ()
+                  (add-hook 'before-save-hook 'gofmt-before-save)
+                  (setq tab-width 4)
+                  (setq indent-tabs-mode 1)))
+    #+END_SRC
