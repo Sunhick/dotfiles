@@ -121,3 +121,6 @@ alias uml="~/prv/Umlet/umlet.sh > /dev/null &"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# gtag label is required for cscope to work magically.
+export GTAGSLABEL=ctags
