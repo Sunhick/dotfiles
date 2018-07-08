@@ -16,11 +16,11 @@ use GNU stow to install the configuration files.
 $ brew install stow
 $ git clone repository ~/dotfiles
 $ cd ~/dotfiles
-$ stow .
+$ stow emacs zsh tmux
 ```
 
 To remove/ uninstall
 ```sh
 $ cd cd ~/dotfiles
-$ stow -D .
+$ stow -D emacs zsh tmux
 ```
