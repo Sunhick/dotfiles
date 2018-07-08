@@ -94,9 +94,21 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# export GRADLE_PATH=/Users/Sunny/test/gradle-4.4.1/bin
+# export PATH=$GRADLE_PATH:$PATH
+
+# chromium depot_tools
+# export PATH=$PATH:/Users/Sunny/prv/google/depot_tools
+
+# Add java path
+# export JAVA_HOME=$(/usr/libexec/java_home)
+# export PYTHONPATH=/Users/Sunny/prv/tmp/caffe/python:$PYTHONPATH
+
 export TOOLBOX_PATH=$HOME/.toolbox/bin
-export BAZEL_PATH=/Users/sunilmur/bin
-export PATH=$PATH:$BAZEL_PATH:$TOOLBOX_PATH
+export BAZEL_PATH=$HOME/bin
+export ANDROID_PATH=~/Library/Android/sdk/platform-tools/
+export PATH=$PATH:$BAZEL_PATH:$TOOLBOX_PATH:$ANDROID_PATH
+
 export TEST_TMPDIR=~/prv/bazel-cache
 
 alias bb=brazil-build
@@ -105,3 +117,7 @@ alias emacsclient="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c -F\
 alias emacsd="/Applications/Emacs.app/Contents/MacOS/Emacs --daemon"
 alias killemacs="emacsclient -e '(kill-emacs)'"
 alias uml="~/prv/Umlet/umlet.sh > /dev/null &"
+
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
