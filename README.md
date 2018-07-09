@@ -14,7 +14,7 @@
 use GNU stow to install the configuration files.
 ```sh
 $ brew install stow
-$ git clone repository ~/dotfiles
+$ git clone git@github.com:Sunhick/dotfiles.git ~/dotfiles
 $ cd ~/dotfiles
 $ stow emacs zsh tmux
 ```
