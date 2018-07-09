@@ -1,0 +1,3 @@
+[submodule "emacs/.emacs.d/vendor/breadcrumb"]
+	path = emacs/.emacs.d/vendor/breadcrumb
+	url = git@github.com:pheaver/breadcrumb.git

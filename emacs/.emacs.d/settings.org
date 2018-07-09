@@ -492,7 +492,7 @@
 
 *** Breadcrumbs
     #+BEGIN_SRC emacs-lisp
-      (load "~/.emacs.d/vendor/breadcrumb")
+      (load "~/.emacs.d/vendor/breadcrumb/breadcrumb")
       (require 'breadcrumb)
       (global-set-key (kbd "s-SPC")         'bc-set)            ;; shift-SPACE for set bookmark
       (global-set-key [(meta j)]              'bc-previous)       ;; M-j for jump to previous
