@@ -628,9 +628,9 @@
                   (setq indent-tabs-mode 1)))
     #+END_SRC
 
-*** Popup kill ring
+*** Browse kill ring
     #+BEGIN_SRC emacs-lisp
-      (use-package popup-kill-ring
-        :ensure t
-        :bind("M-y" . popup-kill-ring))
+      (load "~/.emacs.d/vendor/browse-kill-ring/browse-kill-ring")
+      (require 'browse-kill-ring)
+      (global-set-key (kbd "M-y") 'browse-kill-ring)
     #+END_SRC

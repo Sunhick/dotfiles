@@ -1,3 +1,6 @@
 [submodule "emacs/.emacs.d/vendor/breadcrumb"]
 	path = emacs/.emacs.d/vendor/breadcrumb
 	url = git@github.com:pheaver/breadcrumb.git
+[submodule "emacs/.emacs.d/vendor/browse-kill-ring"]
+	path = emacs/.emacs.d/vendor/browse-kill-ring
+	url = git@github.com:browse-kill-ring/browse-kill-ring.git
