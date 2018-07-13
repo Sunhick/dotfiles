@@ -23,6 +23,7 @@
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 (setq ns-use-proxy-icon nil)
 (setq frame-title-format nil)
+(setq frame-resize-pixelwise t)
 
 ;; add MELPA to repository list
 (add-to-list 'package-archives
