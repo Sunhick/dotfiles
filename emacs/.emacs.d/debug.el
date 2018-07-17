@@ -33,6 +33,12 @@
     (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
 (package-initialize)
 
+;; Emacs title bar customizations
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+(setq ns-use-proxy-icon nil)
+(setq frame-title-format nil)
+(setq frame-resize-pixelwise t)
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 (set-default 'indicate-empty-lines t)
