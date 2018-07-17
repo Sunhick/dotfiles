@@ -4,3 +4,6 @@
 [submodule "emacs/.emacs.d/vendor/browse-kill-ring"]
 	path = emacs/.emacs.d/vendor/browse-kill-ring
 	url = git@github.com:browse-kill-ring/browse-kill-ring.git
+[submodule "emacs/.emacs.d/twilight-theme"]
+	path = emacs/.emacs.d/twilight-theme
+	url = git@github.com:Sunhick/twilight-theme.git
