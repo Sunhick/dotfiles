@@ -4,7 +4,7 @@
 * [fzf fuzzy finder](https://github.com/junegunn/fzf)
 * [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
   * Plugins: auto-suggesstions, git
-* Emacs for macosx
+* [Emacs for macosx](https://emacsformacosx.com)
 * [Tmux](https://github.com/tmux/tmux)
 * [stow](https://www.gnu.org/software/stow/manual/stow.html)
 
