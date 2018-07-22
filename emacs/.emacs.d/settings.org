@@ -634,3 +634,9 @@
       (require 'browse-kill-ring)
       (global-set-key (kbd "M-y") 'browse-kill-ring)
     #+END_SRC
+
+*** gitignore mode
+    #+BEGIN_SRC emacs-lisp
+      (use-package gitignore-mode
+        :ensure t)
+    #+END_SRC
