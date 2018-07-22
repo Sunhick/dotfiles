@@ -6,6 +6,7 @@
   * Plugins: auto-suggesstions, git
 * Emacs for macosx
 * [Tmux](https://github.com/tmux/tmux)
+* [stow](https://www.gnu.org/software/stow/manual/stow.html)
 
 ### Installation
 Download and install the latest stable version of [emacs](https://emacsformacosx.com/).
