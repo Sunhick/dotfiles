@@ -667,5 +667,5 @@
       (use-package linum-relative
         :ensure t)
       (global-linum-mode 1)
-      (linum-on)
+      (linum-relative-on)
     #+END_SRC
