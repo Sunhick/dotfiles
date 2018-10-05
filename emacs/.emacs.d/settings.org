@@ -653,3 +653,11 @@
         :ensure t)
       (dumb-jump-mode)
     #+END_SRC
+
+*** Git grep
+    #+BEGIN_SRC emacs-lisp
+      (defun git-grep (regexp)
+        (interactive "sgit grep: ")
+        (grep (format "GIT_PAGER='' git grep -nH --no-color -i \"%s\" -- $(git rev-parse --show-toplevel)" regexp)))
+      (global-set-key (kbd "C-x ?") 'git-grep)
+    #+END_SRC
