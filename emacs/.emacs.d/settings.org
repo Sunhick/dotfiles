@@ -661,3 +661,11 @@
         (grep (format "GIT_PAGER='' git grep -nH --no-color -i \"%s\" -- $(git rev-parse --show-toplevel)" regexp)))
       (global-set-key (kbd "C-x ?") 'git-grep)
     #+END_SRC
+
+*** Relative linum mode
+    #+BEGIN_SRC emacs-lisp
+      (use-package linum-relative
+        :ensure t)
+      (global-linum-mode 1)
+      (linum-on)
+    #+END_SRC
