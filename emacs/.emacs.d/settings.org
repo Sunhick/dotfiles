@@ -65,6 +65,10 @@
       ;; use whitespaces instead of tabs
       (setq-default indent-tabs-mode nil)
       (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+      ;; bind key for hippie-expand to auto complete
+      ;; files and paths along with word completions
+      (global-set-key (kbd "M-/") 'hippie-expand)
     #+END_SRC
 
 *** Mac OS tweaks
