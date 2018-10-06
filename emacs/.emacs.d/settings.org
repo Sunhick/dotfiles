@@ -377,7 +377,8 @@
     #+BEGIN_SRC emacs-lisp
       (use-package multi-term
         :ensure t)
-      (setq multi-term-program "/bin/bash")
+      ;; use zsh by default
+      (setq multi-term-program "/bin/zsh")
     #+END_SRC
 
 *** Multiple cursors
