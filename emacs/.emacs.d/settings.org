@@ -430,6 +430,7 @@
       (require 'avy)
       (global-set-key (kbd "C-:") 'avy-goto-char)
       (global-set-key (kbd "M-g f") 'avy-goto-line)
+      (global-set-key (kbd "M-g w") 'avy-goto-word-1)
     #+END_SRC
 
 *** Bazel mode
@@ -673,4 +674,16 @@
         :ensure t)
       (global-linum-mode 1)
       (linum-relative-on)
+    #+END_SRC
+
+*** Groovy mode
+    #+BEGIN_SRC emacs-lisp
+      (use-package groovy-mode
+        :ensure t)
+    #+END_SRC
+
+*** REST client
+    #+BEGIN_SRC emacs-lisp
+      (use-package restclient
+        :ensure t)
     #+END_SRC
