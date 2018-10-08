@@ -25,3 +25,8 @@ emacs/.emacs.d/.emacs_workgroups
 emacs/.emacs.d/ac-comphist.dat
 emacs/.emacs.d/savehist
 emacs/.emacs.d/recentf
+
+# Machine specific customizations
+work
+personal
+home
