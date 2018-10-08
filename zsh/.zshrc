@@ -118,11 +118,11 @@ export PATH=$PATH:$BAZEL_PATH:$TOOLBOX_PATH:$ANDROID_PATH
 
 alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -geometry 180x80"
 alias ec="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c -F\"((width . 180) (height . 80) (top . 0) (left . 0))\""
-alias emacsd="/Applications/Emacs.app/Contents/MacOS/Emacs --daemon"
+alias ed="/Applications/Emacs.app/Contents/MacOS/Emacs --daemon"
 alias killemacs="emacsclient -e '(kill-emacs)'"
 alias uml="~/prv/Umlet/umlet.sh > /dev/null &"
 
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
+# export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 
 # gtag label is required for cscope to work magically.
 export GTAGSLABEL=ctags
