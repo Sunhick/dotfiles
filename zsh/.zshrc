@@ -61,6 +61,8 @@ ZSH_THEME="robbyrussell"
 plugins=(
   git
   zsh-autosuggestions
+  emacs
+  tmux
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -124,3 +126,4 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 
 # gtag label is required for cscope to work magically.
 export GTAGSLABEL=ctags
+export EDITOR="emacs"
