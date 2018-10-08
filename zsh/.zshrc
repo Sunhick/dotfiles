@@ -130,5 +130,5 @@ export EDITOR="emacs"
 
 # include other sources
 include ~/.fzf.zsh
-include .prv/work
-include .prv/home
+include ~/.prv/work
+include ~/.prv/home
