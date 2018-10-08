@@ -116,6 +116,8 @@ export BAZEL_PATH=$HOME/bin
 export ANDROID_PATH=~/Library/Android/sdk/platform-tools/
 export PATH=$PATH:$BAZEL_PATH:$TOOLBOX_PATH:$ANDROID_PATH
 
+alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -geometry 180x80"
+alias ec="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c -F\"((width . 180) (height . 80) (top . 0) (left . 0))\""
 alias emacsd="/Applications/Emacs.app/Contents/MacOS/Emacs --daemon"
 alias killemacs="emacsclient -e '(kill-emacs)'"
 alias uml="~/prv/Umlet/umlet.sh > /dev/null &"
