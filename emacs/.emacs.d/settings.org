@@ -163,6 +163,12 @@
       (autopair-global-mode 1)
 
       ;; Show matching parenthensis
+      ;; C-M-f     Move forward over a balanced expression
+      ;; C-M-b     Move backward over a balanced expression
+      ;; C-M-k     Kill balanced expression forward
+      ;; C-M-SPC   put the mark at the end of the sexp.
+      ;; C-M-n  Move forward over a parenthetical group
+      ;; C-M-p  Move backward over a parenthetical group
       (show-paren-mode 1)
 
       ;; install iedit
