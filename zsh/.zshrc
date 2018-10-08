@@ -129,6 +129,6 @@ export GTAGSLABEL=ctags
 export EDITOR="emacs"
 
 # include other sources
-include "~/.fzf.zsh"
-include "work"
-include "home"
+include ~/.fzf.zsh
+include work
+include home
