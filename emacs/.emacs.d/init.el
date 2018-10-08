@@ -39,15 +39,15 @@
  (expand-file-name "settings.org"
                    user-emacs-directory))
 
-;; Path to our custom theme
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+;; ;; Path to our custom theme
+;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
-(if (daemonp)
-    (add-hook 'after-make-frame-functions
-              (lambda (frame)
-                (with-selected-frame frame
-                  (load-theme 'midnight t))))
-  (load-theme 'midnight t))
+;; (if (daemonp)
+;;     (add-hook 'after-make-frame-functions
+;;               (lambda (frame)
+;;                 (with-selected-frame frame
+;;                   (load-theme 'midnight t))))
+;;   (load-theme 'midnight t))
 
 ;; disable bold and weights when we are in wombat theme
 ;; manually do it for now.
