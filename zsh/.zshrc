@@ -102,8 +102,13 @@ source $ZSH/oh-my-zsh.sh
 # chromium depot_tools
 # export PATH=$PATH:/Users/Sunny/prv/google/depot_tools
 
+# include other sources
+include () {
+    [[ -f "$1" ]] && source "$1"
+}
+
 # Add java path
-# export JAVA_HOME=$(/usr/libexec/java_home)
+export JAVA_HOME=$(/usr/libexec/java_home)
 # export PYTHONPATH=/Users/Sunny/prv/tmp/caffe/python:$PYTHONPATH
 
 export TOOLBOX_PATH=$HOME/.toolbox/bin
@@ -111,9 +116,6 @@ export BAZEL_PATH=$HOME/bin
 export ANDROID_PATH=~/Library/Android/sdk/platform-tools/
 export PATH=$PATH:$BAZEL_PATH:$TOOLBOX_PATH:$ANDROID_PATH
 
-export TEST_TMPDIR=~/prv/bazel-cache
-
-alias bb=brazil-build
 alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -geometry 180x80"
 alias ec="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c -F\"((width . 180) (height . 80) (top . 0) (left . 0))\""
 alias emacsd="/Applications/Emacs.app/Contents/MacOS/Emacs --daemon"
@@ -122,8 +124,11 @@ alias uml="~/prv/Umlet/umlet.sh > /dev/null &"
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # gtag label is required for cscope to work magically.
 export GTAGSLABEL=ctags
 export EDITOR="emacs"
+
+# include other sources
+include "~/.fzf.zsh"
+include "work"
+include "home"
