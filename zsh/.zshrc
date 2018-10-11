@@ -121,6 +121,7 @@ alias ec="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c -F\"((width 
 alias ed="/Applications/Emacs.app/Contents/MacOS/Emacs --daemon"
 alias killemacs="emacsclient -e '(kill-emacs)'"
 alias uml="~/prv/Umlet/umlet.sh > /dev/null &"
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 
 # export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 
