@@ -57,7 +57,7 @@
           (set-face-attribute face nil :weight 'normal)))
  (face-list))
 
-(set-default-font "Monaco 11")
+(set-default-font "Monaco 12")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
