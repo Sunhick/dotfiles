@@ -533,41 +533,6 @@
         :ensure t)
     #+END_SRC
 
-*** Emacs dashboard
-    #+BEGIN_SRC emacs-lisp
-      ;; (use-package dashboard
-      ;;   :ensure t
-      ;;   :config
-      ;;   (dashboard-setup-startup-hook))
-    #+END_SRC
-
-*** Emacs Zoom
-    #+BEGIN_SRC emacs-lisp
-      ;; (use-package zoom
-      ;;   :ensure t)
-      ;; (require 'zoom)
-      ;; (custom-set-variables
-      ;;  '(zoom-mode t))
-      ;; (custom-set-variables
-      ;;  '(zoom-size '(0.618 . 0.618)))
-    #+END_SRC
-
-*** Dimmer mode
-    #+BEGIN_SRC emacs-lisp
-      ;; (use-package dimmer
-      ;;   :ensure t)
-      ;; (require 'dimmer)
-      ;; (dimmer-mode)
-    #+END_SRC
-
-*** Aggressive indentation
-    #+BEGIN_SRC emacs-lisp
-      ;; (use-package aggressive-indent
-      ;;   :ensure t)
-      ;; (require 'aggressive-indent)
-      ;; (global-aggressive-indent-mode 1)
-    #+END_SRC
-
 *** Emacs Control key rebindings
     #+BEGIN_SRC emacs-lisp
       ;; To rebind caps lock for control key on OSX go to Apple System preferences
@@ -685,11 +650,5 @@
 *** Groovy mode
     #+BEGIN_SRC emacs-lisp
       (use-package groovy-mode
-        :ensure t)
-    #+END_SRC
-
-*** REST client
-    #+BEGIN_SRC emacs-lisp
-      (use-package restclient
         :ensure t)
     #+END_SRC
