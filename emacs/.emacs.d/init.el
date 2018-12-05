@@ -58,20 +58,22 @@
  (face-list))
 
 (set-default-font "Monaco 12")
+(use-package twilight-theme
+  :ensure t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (wombat)))
+ '(custom-enabled-themes (quote (twilight)))
  '(custom-safe-themes
    (quote
     ("e93ae6d348e29a5aa5637201babf4b1b64444083cdeb234ba5bda2c36ca50391" default)))
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (focus gtags dumb-jump dump-jump protobuf evil protobuf-mode gitignore-mode dockerfile-mode yaml-mode haskell-mode expand-region plantuml-mode markdown-mode diminish multiple-cursors gradle-mode groovy-mode multi-term cmake-mode google-c-style smooth-scrolling auto-complete-clang auto-complete-c-headers auto-complete ggtags yasnippet-snippets yasnippet org-bullets clang-format switch-window iedit autopair which-key counsel-projectile counsel magit use-package))))
+    (twlight-theme focus gtags dumb-jump dump-jump protobuf evil protobuf-mode gitignore-mode dockerfile-mode yaml-mode haskell-mode expand-region plantuml-mode markdown-mode diminish multiple-cursors gradle-mode groovy-mode multi-term cmake-mode google-c-style smooth-scrolling auto-complete-clang auto-complete-c-headers auto-complete ggtags yasnippet-snippets yasnippet org-bullets clang-format switch-window iedit autopair which-key counsel-projectile counsel magit use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
