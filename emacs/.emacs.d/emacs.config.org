@@ -3,8 +3,8 @@
    #+BEGIN_SRC emacs-lisp
      (dolist (package '(use-package))
        (unless (package-installed-p package)
-	 (package-refresh-contents)
-	 (package-install package)))
+         (package-refresh-contents)
+         (package-install package)))
    #+END_SRC
 ** UI customization
    #+BEGIN_SRC emacs-lisp
