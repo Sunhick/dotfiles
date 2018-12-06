@@ -180,13 +180,28 @@
            kept-old-versions 2
            version-control t)       ; use versioned backups
    #+END_SRC
-* Window Manager
+* Window Management
 ** switch window
    #+BEGIN_SRC emacs-lisp
      ;; switch window configuration
      (use-package switch-window
        :ensure t
        :bind ("C-x w" . switch-window))
+   #+END_SRC
+** Sessions
+   #+BEGIN_SRC emacs-lisp
+     (use-package workgroups2
+       :ensure t
+       :init
+       ;; Default binding for workgroup C-c z
+       (setq wg-prefix-key (kbd "s-b"))
+       ;; Change workgroups session file
+       (setq wg-session-file "~/.emacs.d/.emacs_workgroups")
+       :config
+       (workgroups-mode 1)
+       :bind (("C-S-<pause>" . wg-save-session)
+              ("s-z" . wg-switch-to-workgroup)
+              ("s-/" . wg-switch-to-previous-workgroup)))
    #+END_SRC
 * Programming configurations
 ** customizations
