@@ -18,62 +18,23 @@
 ;; start package.el with emacs
 (require 'package)
 
-;; Emacs title bar customizations
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-(add-to-list 'default-frame-alist '(ns-appearance . dark))
-(setq ns-use-proxy-icon nil)
-(setq frame-title-format nil)
-(setq frame-resize-pixelwise t)
-
 ;; add MELPA to repository list
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/"))
 
-(dolist (package '(use-package))
-  (unless (package-installed-p package)
-    (package-refresh-contents)
-    (package-install package)))
-
-(setq vc-follow-symlinks t)
 (org-babel-load-file
  (expand-file-name "settings.org"
                    user-emacs-directory))
-
-;; ;; Path to our custom theme
-;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-
-;; (if (daemonp)
-;;     (add-hook 'after-make-frame-functions
-;;               (lambda (frame)
-;;                 (with-selected-frame frame
-;;                   (load-theme 'midnight t))))
-;;   (load-theme 'midnight t))
-
-;; disable bold and weights when we are in wombat theme
-;; manually do it for now.
-(mapc
- (lambda (face)
-        (when (eq (face-attribute face :weight) 'bold)
-          (set-face-attribute face nil :weight 'normal)))
- (face-list))
-
-(set-default-font "Monaco 12")
-(use-package twilight-theme
-  :ensure t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (twilight)))
- '(custom-safe-themes
-   (quote
-    ("e93ae6d348e29a5aa5637201babf4b1b64444083cdeb234ba5bda2c36ca50391" default)))
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (twlight-theme focus gtags dumb-jump dump-jump protobuf evil protobuf-mode gitignore-mode dockerfile-mode yaml-mode haskell-mode expand-region plantuml-mode markdown-mode diminish multiple-cursors gradle-mode groovy-mode multi-term cmake-mode google-c-style smooth-scrolling auto-complete-clang auto-complete-c-headers auto-complete ggtags yasnippet-snippets yasnippet org-bullets clang-format switch-window iedit autopair which-key counsel-projectile counsel magit use-package))))
+    (groovy-mode linum-relative dumb-jump protobuf-mode gitignore-mode go-mode workgroups2 yafolding fzf swift3-mode yaml-mode rust-mode haskell-mode expand-region plantuml-mode markdown-mode bazel-mode avy diminish multiple-cursors multi-term cmake-mode google-c-style smooth-scrolling auto-complete-clang auto-complete-c-headers auto-complete ggtags yasnippet-snippets org-bullets clang-format switch-window iedit autopair which-key flx counsel-projectile counsel magit twilight-theme use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
