@@ -23,7 +23,7 @@
              '("melpa" . "http://melpa.milkbox.net/packages/"))
 
 (org-babel-load-file
- (expand-file-name "settings.org"
+ (expand-file-name "emacs.config.org"
                    user-emacs-directory))
 
 (custom-set-variables
@@ -32,12 +32,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
- '(package-selected-packages
-   (quote
-    (groovy-mode linum-relative dumb-jump protobuf-mode gitignore-mode go-mode workgroups2 yafolding fzf swift3-mode yaml-mode rust-mode haskell-mode expand-region plantuml-mode markdown-mode bazel-mode avy diminish multiple-cursors multi-term cmake-mode google-c-style smooth-scrolling auto-complete-clang auto-complete-c-headers auto-complete ggtags yasnippet-snippets org-bullets clang-format switch-window iedit autopair which-key flx counsel-projectile counsel magit twilight-theme use-package))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  )

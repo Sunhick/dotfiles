@@ -235,9 +235,6 @@
 * Programming configurations
 ** customizations
    #+BEGIN_SRC emacs-lisp
-     ;; subword mode for navigating thought the camelcase or snake casing mode
-     (global-subword-mode 1)
-
      ;; electric indentation mode
      (electric-indent-mode 1)
    #+END_SRC
