@@ -206,6 +206,14 @@
        (diminish 'auto-revert-mode)
        (diminish 'autopair-mode))
    #+END_SRC
+** Text jumping
+   #+BEGIN_SRC emacs-lisp
+     (use-package avy
+       :ensure t
+       :bind (("C-:" . avy-goto-char)
+              ("M-g f" . avy-goto-line)
+              ("M-g w" . avy-goto-word-1)))
+   #+END_SRC
 ** Backups
    #+BEGIN_SRC emacs-lisp
      ;; Backups at .saves folder in the current folder
