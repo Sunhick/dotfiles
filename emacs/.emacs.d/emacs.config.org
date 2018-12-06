@@ -79,8 +79,8 @@
      (use-package org
        :ensure t)
      (use-package org-bullets
-       :ensure nil
-       :config
+       :ensure t
+       :init
        (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
    #+END_SRC
 ** Buffers
@@ -95,5 +95,59 @@
        (global-set-key(kbd "C-x g") 'magit-status)
        ;; set the magit repository
        (setq magit-repository-directories '( "~/prv/github/")))
+   #+END_SRC
+** Which key
+   #+BEGIN_SRC emacs-lisp
+     ;; configure which key for help on key strokes
+     (use-package which-key
+       :ensure t
+       :config
+       (which-key-mode))
+   #+END_SRC
+** AutoPair
+   #+BEGIN_SRC emacs-lisp
+     ;; enable auto pair mode to automatically insert closing parenthesis.
+     (use-package autopair
+       :ensure t
+       :config
+       (autopair-global-mode 1)
+
+       ;; Show matching parenthensis
+       ;; C-M-f     Move forward over a balanced expression
+       ;; C-M-b     Move backward over a balanced expression
+       ;; C-M-k     Kill balanced expression forward
+       ;; C-M-SPC   put the mark at the end of the sexp.
+       ;; C-M-n  Move forward over a parenthetical group
+       ;; C-M-p  Move backward over a parenthetical group
+       (show-paren-mode 1))
+   #+END_SRC
+** Counsel & swiper
+   #+BEGIN_SRC emacs-lisp
+     (use-package counsel
+       :ensure t)
+     (use-package swiper
+       :ensure t)
+     (use-package counsel-projectile
+       :ensure t)
+     (use-package flx
+       :ensure t)
+     ;; Enable fuzzy search in swiper. You can disable fuzzy
+     ;; in swiper by M-r (toggle between fuzzy and complete match)
+     (setq ivy-re-builders-alist
+           '((swiper . ivy--regex-fuzzy)
+             (t . ivy--regex-fuzzy)))
+     (ivy-mode 1)
+
+     (setq ivy-use-virtual-buffers t)
+     (setq enable-recursive-minibuffers t)
+
+     ;; custom key bindings for swiper and counsel
+     (global-set-key "\C-s" 'swiper)
+     (global-set-key (kbd "M-x") 'counsel-M-x)
+     (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+
+     ;; configure projectile
+     (projectile-mode)
+     (setq projectile-completion-system 'ivy)
    #+END_SRC
 * Programming configurations
