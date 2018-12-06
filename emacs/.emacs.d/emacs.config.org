@@ -186,6 +186,26 @@
        (smooth-scrolling-mode))
 
    #+END_SRC
+** Multiple cursors
+   #+BEGIN_SRC emacs-lisp
+     (use-package multiple-cursors
+       :ensure t
+       :bind (("C->" . mc/mark-next-like-this)
+              ("C-<" . mc/mark-previous-like-this)
+              ("C-c C-<" . mc/mark-all-like-this)))
+   #+END_SRC
+** Unclutter Modeline
+   #+BEGIN_SRC emacs-lisp
+     (use-package diminish
+       :ensure t
+       :config
+       (diminish 'projectile-mode)
+       (diminish 'abbrev-mode)
+       (diminish 'ivy-mode)
+       (diminish 'visual-line-mode)
+       (diminish 'auto-revert-mode)
+       (diminish 'autopair-mode))
+   #+END_SRC
 ** Backups
    #+BEGIN_SRC emacs-lisp
      ;; Backups at .saves folder in the current folder
@@ -262,4 +282,24 @@
      (use-package auto-complete-clang
        :ensure t
        :pin melpa)
+   #+END_SRC
+** Useful Modes
+   #+BEGIN_SRC emacs-lisp
+     (use-package yaml-mode
+       :ensure t)
+     (use-package gitignore-mode
+       :ensure t)
+     (use-package protobuf-mode
+       :ensure t)
+     (use-package groovy-mode
+       :ensure t)
+     (use-package cmake-mode
+       :ensure t)
+     (use-package markdown-mode
+       :ensure t
+       :commands (markdown-mode gfm-mode)
+       :mode (("README\\.md\\'" . gfm-mode)
+              ("\\.md\\'" . markdown-mode)
+              ("\\.markdown\\'" . markdown-mode))
+       :init (setq markdown-command "multimarkdown"))
    #+END_SRC
