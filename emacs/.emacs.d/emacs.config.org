@@ -124,11 +124,20 @@
 ** Counsel & swiper
    #+BEGIN_SRC emacs-lisp
      (use-package counsel
-       :ensure t)
+       :ensure t
+       :bind (("\M-x" . counsel-M-x)
+              ("\C-x \C-f" . counsel-find-file)))
+
      (use-package swiper
-       :ensure t)
+       :ensure t
+       :bind (("\C-s" . swiper)))
+
      (use-package counsel-projectile
-       :ensure t)
+       :ensure t
+       :config
+       (projectile-mode)
+       (setq projectile-completion-system 'ivy))
+
      (use-package flx
        :ensure t)
      ;; Enable fuzzy search in swiper. You can disable fuzzy
@@ -140,14 +149,5 @@
 
      (setq ivy-use-virtual-buffers t)
      (setq enable-recursive-minibuffers t)
-
-     ;; custom key bindings for swiper and counsel
-     (global-set-key "\C-s" 'swiper)
-     (global-set-key (kbd "M-x") 'counsel-M-x)
-     (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-
-     ;; configure projectile
-     (projectile-mode)
-     (setq projectile-completion-system 'ivy)
    #+END_SRC
 * Programming configurations
