@@ -14,7 +14,7 @@
 #+SELECT_TAGS: export
 #+STARTUP: showeverything
 
-* Emacs configurations
+* Base configurations
 ** use-package
    #+BEGIN_SRC emacs-lisp
      (dolist (package '(use-package))
@@ -70,6 +70,9 @@
      ;; use whitespaces instead of tabs
      (setq-default indent-tabs-mode nil)
      (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+     ;; Show empty lines indicator
+     (set-default 'indicate-empty-lines t)
    #+END_SRC
 ** org mode
    #+BEGIN_SRC emacs-lisp
@@ -93,3 +96,4 @@
        ;; set the magit repository
        (setq magit-repository-directories '( "~/prv/github/")))
    #+END_SRC
+* Programming configurations
