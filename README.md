@@ -8,7 +8,7 @@
 * [Tmux](https://github.com/tmux/tmux)
 * [stow](https://www.gnu.org/software/stow/manual/stow.html)
 
-### Installation
+### Installation (MacOS)
 Download and install the latest stable version of [emacs](https://emacsformacosx.com/).
 
 

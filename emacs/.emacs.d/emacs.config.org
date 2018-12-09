@@ -134,15 +134,19 @@
 
      (use-package flx
        :ensure t)
-     ;; Enable fuzzy search in swiper. You can disable fuzzy
-     ;; in swiper by M-r (toggle between fuzzy and complete match)
-     (setq ivy-re-builders-alist
-           '((swiper . ivy--regex-fuzzy)
-             (t . ivy--regex-fuzzy)))
-     (ivy-mode 1)
 
-     (setq ivy-use-virtual-buffers t)
-     (setq enable-recursive-minibuffers t)
+     (use-package ivy
+       :ensure t
+       :init
+       ;; Enable fuzzy search in swiper. You can disable fuzzy
+       ;; in swiper by M-r (toggle between fuzzy and complete match)
+       (setq ivy-re-builders-alist
+             '((swiper . ivy--regex-fuzzy)
+               (t . ivy--regex-fuzzy)))
+       (ivy-mode 1)
+
+       (setq ivy-use-virtual-buffers t)
+       (setq enable-recursive-minibuffers t))
    #+END_SRC
 ** Relative line numbers
    #+BEGIN_SRC emacs-lisp
