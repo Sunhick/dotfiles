@@ -211,7 +211,7 @@
      (use-package avy
        :ensure t
        :bind (("C-:" . avy-goto-char)
-              ("M-g f" . avy-goto-line)
+              ("M-g l" . avy-goto-line)
               ("M-g w" . avy-goto-word-1)))
    #+END_SRC
 ** Backups
@@ -307,4 +307,19 @@
               ("\\.md\\'" . markdown-mode)
               ("\\.markdown\\'" . markdown-mode))
        :init (setq markdown-command "multimarkdown"))
+   #+END_SRC
+** Clang format
+   #+BEGIN_SRC emacs-lisp
+     ;; configure clang format
+     (use-package clang-format
+       :commands clang-format-mode
+       :ensure t
+       :init
+       (setq clang-format-style-option "Google")
+       :hook ((c++-mode-hook . clang-format-mode)
+              (c-mode-hook . clang-format-mode))
+       :bind (:map c-mode-map
+              :map c++-mode-map
+              ("C-c u" . clang-format-buffer)))
+
    #+END_SRC
