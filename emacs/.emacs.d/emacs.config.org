@@ -132,12 +132,6 @@
        :ensure t
        :bind ("C-s" . swiper))
 
-     (use-package counsel-projectile
-       :ensure t
-       :config
-       (projectile-mode)
-       (setq projectile-completion-system 'ivy))
-
      (use-package flx
        :ensure t)
      ;; Enable fuzzy search in swiper. You can disable fuzzy
