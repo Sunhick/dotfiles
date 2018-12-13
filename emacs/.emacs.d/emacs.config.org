@@ -223,6 +223,14 @@
            kept-old-versions 2
            version-control t)       ; use versioned backups
    #+END_SRC
+** Window move
+   #+BEGIN_SRC emacs-lisp
+     (use-package windmove
+       :ensure t
+       :config
+       (windmove-default-keybindings 'super)
+       (setq windmove-wrap-around t))
+   #+END_SRC
 * Window Management
 ** switch window
    #+BEGIN_SRC emacs-lisp
