@@ -35,10 +35,15 @@
      ;; Emacs font and themes
      (set-default-font "Hack:pixelsize=12")
 
-     (use-package twilight-theme
+     ;; (use-package twilight-theme
+     ;;   :ensure t
+     ;;   :init
+     ;;   (load-theme 'twilight 'no-confirm))
+
+     (use-package zenburn-theme
        :ensure t
        :init
-       (load-theme 'twilight 'no-confirm))
+       (load-theme 'zenburn 'no-confirm))
 
      ;; Get rid of tool bar and menu bar
      (menu-bar-mode 0)
@@ -110,7 +115,9 @@
 ** ParEdit
    #+BEGIN_SRC emacs-lisp
      (use-package paredit
-       :ensure t)
+       :ensure t
+       :config
+       (add-hook 'prog-mode-hook #'paredit-mode))
    #+END_SRC
 ** Counsel & swiper
    #+BEGIN_SRC emacs-lisp
