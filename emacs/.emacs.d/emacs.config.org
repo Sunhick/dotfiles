@@ -151,7 +151,7 @@
      ;; use native relative line numbering(faster than linum-relative package)
      ;; Builtin package also fixes the issues with code folding.
      (global-display-line-numbers-mode)
-     (setq-default display-line-numbers-type 'relative
+     (setq-default display-line-numbers-type 'visual
                    display-line-numbers-current-absolute nil
                    display-line-numbers-width 2
                    display-line-numbers-widen t)
