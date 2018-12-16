@@ -22,7 +22,7 @@ $ stow emacs zsh tmux
 
 To remove/ uninstall
 ```sh
-$ cd cd ~/.dotfiles
+$ cd ~/.dotfiles
 $ stow -D emacs zsh tmux
 ```
 
