@@ -22,7 +22,7 @@ $ stow emacs zsh tmux
 
 To remove/ uninstall
 ```sh
-$ cd cd ~/.dotfiles
+$ cd ~/.dotfiles
 $ stow -D emacs zsh tmux
 ```
 
@@ -38,7 +38,7 @@ Make sure that change you perform on these files shouldn't be committed to the r
 running -
 
 ``` sh
-$ git git update-index --skip-worktree zsh/.prv
+$ git update-index --skip-worktree zsh/.prv
 ```
 
 or you can also run ```git update-index --assume-unchanged zsh/.prv/*``` and ```git update-index --no-assume-unchanged zsh/.prv/*``` to undo the previous command and start tracking the changes to these files again.
