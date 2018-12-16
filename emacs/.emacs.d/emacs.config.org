@@ -234,6 +234,16 @@
        (windmove-default-keybindings 'super)
        (setq windmove-wrap-around t))
    #+END_SRC
+** Notes
+   #+BEGIN_SRC emacs-lisp
+     (use-package deft
+       :ensure t
+       :bind ("<f8>" . deft)
+       :commands (deft)
+       :config (setq deft-directory "~/.emacs.d/notes"
+                     deft-extensions '("md" "org" "txt")
+                     deft-default-extension "org"))
+   #+END_SRC
 * Window Management
 ** switch window
    #+BEGIN_SRC emacs-lisp
