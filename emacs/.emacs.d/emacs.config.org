@@ -148,11 +148,9 @@
    #+END_SRC
 ** Relative line numbers
    #+BEGIN_SRC emacs-lisp
-     (use-package linum-relative
-       :ensure t
-       :config
-       (global-linum-mode 1)
-       (linum-relative-on))
+     ;;; use native relative line numbering(faster than linum-relative package)
+     ;;; Builtin package also fixes the issues with code folding.
+     (setq display-line-numbers 'visual)
    #+END_SRC
 ** fzf
    #+BEGIN_SRC emacs-lisp
