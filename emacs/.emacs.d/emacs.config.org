@@ -33,7 +33,7 @@
      (setq frame-resize-pixelwise t)
 
      ;; Emacs font and themes
-     (set-default-font "Monaco 12")
+     (set-default-font "Hack:pixelsize=12")
      (use-package twilight-theme
        :ensure t)
 
@@ -327,5 +327,10 @@
        :bind (:map c-mode-map
               :map c++-mode-map
               ("C-c u" . clang-format-buffer)))
-
+   #+END_SRC
+** Expand region
+   #+BEGIN_SRC emacs-lisp
+     (use-package expand-region
+       :ensure t
+       :bind (("C-=" . er/expand-region)))
    #+END_SRC
