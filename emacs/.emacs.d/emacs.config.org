@@ -1,4 +1,4 @@
-#+TITLE: Emacs org
+#+title: Emacs org
 #+DATE: <2018-12-05 Wed>
 #+AUTHOR: Sunil
 #+EMAIL: sunhick@gmail.com
@@ -34,8 +34,11 @@
 
      ;; Emacs font and themes
      (set-default-font "Hack:pixelsize=12")
+
      (use-package twilight-theme
-       :ensure t)
+       :ensure t
+       :init
+       (load-theme 'twilight 'no-confirm))
 
      ;; Get rid of tool bar and menu bar
      (menu-bar-mode 0)
