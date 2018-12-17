@@ -24,6 +24,8 @@
    #+END_SRC
 ** UI customization
    #+BEGIN_SRC emacs-lisp
+     (setq gc-cons-threshold 20000000)
+
      ;; Emacs title bar customizations
      (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
      (add-to-list 'default-frame-alist '(ns-appearance . dark))
@@ -240,6 +242,10 @@
        (guide-key-mode 1)
        (setq guide-key/recursive-key-sequence-flag t)
        (setq guide-key/popup-window-position 'bottom))
+   #+END_SRC
+** Save Place
+   #+BEGIN_SRC emacs-lisp
+     (save-place-mode 1)
    #+END_SRC
 * Window Management
 ** switch window
