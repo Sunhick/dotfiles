@@ -177,26 +177,15 @@
            kept-old-versions 2
            version-control t)       ; use versioned backups
    #+END_SRC
-** Notes
-   #+BEGIN_SRC emacs-lisp
-     (use-package deft
-       :ensure t
-       :bind ("<f8>" . deft)
-       :commands (deft)
-       :config (setq deft-directory "~/.emacs.d/notes"
-                     deft-extensions '("md" "org" "txt")
-                     deft-default-extension "org"))
-   #+END_SRC
 ** Diminish
    #+BEGIN_SRC emacs-lisp
      (use-package diminish
        :ensure t
        :config
-       (diminish 'projectile-mode)
        (diminish 'abbrev-mode)
-       (diminish 'ivy-mode)
        (diminish 'visual-line-mode)
-       (diminish 'auto-revert-mode))
+       (diminish 'auto-revert-mode)
+       (diminish 'smartparens-mode))
    #+END_SRC
 * Window Management
 ** switch window
@@ -251,6 +240,13 @@
 ** Completions
    #+BEGIN_SRC emacs-lisp
      (use-package auto-complete
+       :ensure t
+       :pin melpa)
+     (use-package auto-complete-c-headers
+       :ensure t
+       :config
+       (ac-config-default))
+     (use-package auto-complete-clang
        :ensure t
        :pin melpa)
    #+END_SRC
