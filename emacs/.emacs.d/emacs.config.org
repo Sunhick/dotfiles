@@ -35,11 +35,6 @@
      ;; Emacs font and themes
      (set-default-font "Hack:pixelsize=12")
 
-     ;; (use-package twilight-theme
-     ;;   :ensure t
-     ;;   :init
-     ;;   (load-theme 'twilight 'no-confirm))
-
      (use-package zenburn-theme
        :ensure t
        :init
@@ -117,6 +112,7 @@
      (use-package paredit
        :ensure t
        :config
+       (show-paren-mode)
        (add-hook 'prog-mode-hook #'paredit-mode))
    #+END_SRC
 ** Counsel & swiper
@@ -126,9 +122,10 @@
        :bind (("M-x" . counsel-M-x)
               ("C-x C-f" . counsel-find-file)))
 
-     (use-package swiper
-       :ensure t
-       :bind ("C-s" . swiper))
+     ;; swiper has become slow. line number mode ?
+     ;; (use-package swiper
+     ;;   :ensure t
+     ;;   :bind ("C-s" . swiper))
 
      (use-package flx
        :ensure t)
@@ -153,9 +150,7 @@
      ;; Builtin package also fixes the issues with code folding.
      (global-display-line-numbers-mode)
      (setq-default display-line-numbers-type 'visual
-                   display-line-numbers-current-absolute nil
-                   display-line-numbers-width 2
-                   display-line-numbers-widen t)
+                   display-line-numbers-current-absolute nil)
    #+END_SRC
 ** fzf
    #+BEGIN_SRC emacs-lisp
@@ -193,18 +188,6 @@
               ("C-<" . mc/mark-previous-like-this)
               ("C-c C-<" . mc/mark-all-like-this)))
    #+END_SRC
-** Unclutter Modeline
-   #+BEGIN_SRC emacs-lisp
-     (use-package diminish
-       :ensure t
-       :config
-       (diminish 'projectile-mode)
-       (diminish 'abbrev-mode)
-       (diminish 'ivy-mode)
-       (diminish 'visual-line-mode)
-       (diminish 'auto-revert-mode)
-       (diminish 'autopair-mode))
-   #+END_SRC
 ** Text jumping
    #+BEGIN_SRC emacs-lisp
      (use-package avy
@@ -241,6 +224,17 @@
        :config (setq deft-directory "~/.emacs.d/notes"
                      deft-extensions '("md" "org" "txt")
                      deft-default-extension "org"))
+   #+END_SRC
+** Diminish
+   #+BEGIN_SRC emacs-lisp
+     (use-package diminish
+       :ensure t
+       :config
+       (diminish 'projectile-mode)
+       (diminish 'abbrev-mode)
+       (diminish 'ivy-mode)
+       (diminish 'visual-line-mode)
+       (diminish 'auto-revert-mode))
    #+END_SRC
 * Window Management
 ** switch window
