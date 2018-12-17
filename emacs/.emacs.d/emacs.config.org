@@ -93,15 +93,6 @@
    #+BEGIN_SRC emacs-lisp
      (defalias 'list-buffers 'ibuffer)
    #+END_SRC
-** Magit
-   #+BEGIN_SRC emacs-lisp
-     (use-package magit
-       :ensure t
-       :config
-       (global-set-key(kbd "C-x g") 'magit-status)
-       ;; set the magit repository
-       (setq magit-repository-directories '( "~/prv/github/")))
-   #+END_SRC
 ** Smartparens
    #+BEGIN_SRC emacs-lisp
      (use-package smartparens
