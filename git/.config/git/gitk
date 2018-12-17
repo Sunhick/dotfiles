@@ -22,9 +22,9 @@ set bgcolor white
 set fgcolor black
 set uifgcolor black
 set uifgdisabledcolor #999
-set colors {lime red blue magenta darkgrey brown orange}
+set colors {"#00ff00" red blue magenta darkgrey brown orange}
 set diffcolors {red "#00a000" blue}
-set mergecolors {red blue lime purple brown "#009090" magenta "#808000" "#009000" "#ff0080" cyan "#b07070" "#70b0f0" "#70f0b0" "#f0b070" "#ff70b0"}
+set mergecolors {red blue "#00ff00" purple brown "#009090" magenta "#808000" "#009000" "#ff0080" cyan "#b07070" "#70b0f0" "#70f0b0" "#f0b070" "#ff70b0"}
 set markbgcolor #e0e0ff
 set diffcontext 3
 set selectbgcolor gray85
@@ -32,7 +32,7 @@ set foundbgcolor yellow
 set currentsearchhitbgcolor orange
 set extdifftool opendiff
 set perfile_attrs 0
-set headbgcolor lime
+set headbgcolor #00ff00
 set headfgcolor black
 set headoutlinecolor black
 set remotebgcolor #ffddaa
@@ -47,16 +47,16 @@ set linehoverfgcolor black
 set linehoveroutlinecolor black
 set mainheadcirclecolor yellow
 set workingfilescirclecolor red
-set indexcirclecolor lime
+set indexcirclecolor #00ff00
 set circlecolors {white blue gray blue blue}
 set linkfgcolor blue
 set circleoutlinecolor black
-set geometry(main) 1121x700+5+28
+set geometry(main) 1115x620+5+27
 set geometry(state) normal
-set geometry(topwidth) 1121
-set geometry(topheight) 354
-set geometry(pwsash0) "579 1"
-set geometry(pwsash1) "853 1"
-set geometry(botwidth) 587
-set geometry(botheight) 341
+set geometry(topwidth) 1115
+set geometry(topheight) 165
+set geometry(pwsash0) "320 1"
+set geometry(pwsash1) "480 1"
+set geometry(botwidth) 400
+set geometry(botheight) 450
 set permviews {}
