@@ -129,9 +129,9 @@
               ("C-x C-f" . counsel-find-file)))
 
      ;; swiper has become slow. line number mode ?
-     ;; (use-package swiper
-     ;;   :ensure t
-     ;;   :bind ("C-s" . swiper))
+     (use-package swiper
+       :ensure t
+       :bind ("C-s" . swiper))
 
      (use-package flx
        :ensure t)
@@ -151,12 +151,17 @@
    #+END_SRC
 ** Relative line numbers
    #+BEGIN_SRC emacs-lisp
-     ;; Works only with emacs >= 26
-     ;; use native relative line numbering(faster than linum-relative package)
-     ;; Builtin package also fixes the issues with code folding.
-     (global-display-line-numbers-mode)
-     (setq-default display-line-numbers-type 'visual
-                   display-line-numbers-current-absolute nil)
+     (use-package linum-relative
+       :ensure t
+       :config
+       (global-linum-mode 1)
+       (linum-relative-on))
+     ;; ;; Works only with emacs >= 26
+     ;; ;; use native relative line numbering(faster than linum-relative package)
+     ;; ;; Builtin package also fixes the issues with code folding.
+     ;; (global-display-line-numbers-mode)
+     ;; (setq-default display-line-numbers-type 'visual
+     ;;               display-line-numbers-current-absolute nil)
    #+END_SRC
 ** fzf
    #+BEGIN_SRC emacs-lisp
