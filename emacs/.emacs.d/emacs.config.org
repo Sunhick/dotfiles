@@ -183,6 +183,50 @@
      (eval-after-load "autopair" '(diminish 'autopair-mode))
      (eval-after-load "eldoc" '(diminish 'eldoc-mode))
    #+END_SRC
+** Flx & Ido
+   #+BEGIN_SRC emacs-lisp
+     (use-package ido
+       :config
+       (setq ido-enable-flex-matching t)
+       (setq ido-use-faces nil)
+       (ido-everywhere t)
+       (ido-mode 1))
+
+     (use-package flx-ido
+       :ensure t
+       :init
+       (progn
+         (ido-mode 1)
+         (ido-everywhere 1)
+         (flx-ido-mode 1)
+         ;; disable ido faces to see flx highlights.
+         (setq ido-enable-flex-matching t)
+         (setq ido-use-faces nil)))
+
+     (use-package ido-vertical-mode
+       :ensure t
+       :init
+       (ido-mode 1)
+       (ido-vertical-mode 1)
+       (setq ido-vertical-define-keys 'C-n-and-C-p-only))
+   #+END_SRC
+** smex
+   #+BEGIN_SRC emacs-lisp
+     (use-package smex
+       :defer t
+       :bind (("M-x" . smex)
+              ("M-X" . smex-major-mode-commands))
+       :config
+       (progn
+         (smex-initialize)))
+   #+END_SRC
+** Magit
+   #+BEGIN_SRC emacs-lisp
+     (use-package magit
+       :ensure t
+       :config
+       (global-set-key(kbd "C-x g") 'magit-status))
+   #+END_SRC
 * Window Management
 ** switch window
    #+BEGIN_SRC emacs-lisp
