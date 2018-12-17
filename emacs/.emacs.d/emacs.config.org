@@ -195,13 +195,12 @@
      (use-package flx-ido
        :ensure t
        :init
-       (progn
-         (ido-mode 1)
-         (ido-everywhere 1)
-         (flx-ido-mode 1)
-         ;; disable ido faces to see flx highlights.
-         (setq ido-enable-flex-matching t)
-         (setq ido-use-faces nil)))
+       (ido-mode 1)
+       (ido-everywhere 1)
+       (flx-ido-mode 1)
+       ;; disable ido faces to see flx highlights.
+       (setq ido-enable-flex-matching t)
+       (setq ido-use-faces nil))
 
      (use-package ido-vertical-mode
        :ensure t
@@ -209,6 +208,11 @@
        (ido-mode 1)
        (ido-vertical-mode 1)
        (setq ido-vertical-define-keys 'C-n-and-C-p-only))
+
+     (use-package ido-completing-read+
+       :ensure t
+       :init
+       (ido-ubiquitous-mode 1))
    #+END_SRC
 ** smex
    #+BEGIN_SRC emacs-lisp
