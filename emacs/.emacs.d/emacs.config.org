@@ -28,6 +28,9 @@
      (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
      (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
+     ;; remove all alarms from emacs
+     (setq ring-bell-function 'ignore)
+
      (setq ns-use-proxy-icon nil)
      (setq frame-title-format nil)
      (setq frame-resize-pixelwise t)
@@ -107,13 +110,16 @@
        :config
        (which-key-mode))
    #+END_SRC
-** ParEdit
+** Smartparens
    #+BEGIN_SRC emacs-lisp
-     (use-package paredit
+     (use-package smartparens
        :ensure t
+       :commands
+       (smartparens-mode smartparens-strict-mode)
        :config
-       (show-paren-mode)
-       (add-hook 'prog-mode-hook #'paredit-mode))
+       (require 'smartparens-config)
+       :init
+       (smartparens-global-mode))
    #+END_SRC
 ** Counsel & swiper
    #+BEGIN_SRC emacs-lisp
