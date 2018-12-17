@@ -38,10 +38,10 @@
      ;; Emacs font and themes
      (set-default-font "Hack:pixelsize=12")
 
-     (use-package zenburn-theme
+     (use-package twilight-theme
        :ensure t
        :init
-       (load-theme 'zenburn 'no-confirm))
+       (load-theme 'twilight 'no-confirm))
 
      ;; Get rid of tool bar and menu bar
      (menu-bar-mode 0)
