@@ -102,14 +102,6 @@
        ;; set the magit repository
        (setq magit-repository-directories '( "~/prv/github/")))
    #+END_SRC
-** Which key
-   #+BEGIN_SRC emacs-lisp
-     ;; configure which key for help on key strokes
-     (use-package which-key
-       :ensure t
-       :config
-       (which-key-mode))
-   #+END_SRC
 ** Smartparens
    #+BEGIN_SRC emacs-lisp
      (use-package smartparens
@@ -120,34 +112,6 @@
        (require 'smartparens-config)
        :init
        (smartparens-global-mode))
-   #+END_SRC
-** Counsel & swiper
-   #+BEGIN_SRC emacs-lisp
-     (use-package counsel
-       :ensure t
-       :bind (("M-x" . counsel-M-x)
-              ("C-x C-f" . counsel-find-file)))
-
-     ;; swiper has become slow. line number mode ?
-     ;; (use-package swiper
-     ;;   :ensure t
-     ;;   :bind ("C-s" . swiper))
-
-     (use-package flx
-       :ensure t)
-
-     (use-package ivy
-       :ensure t
-       :init
-       ;; Enable fuzzy search in swiper. You can disable fuzzy
-       ;; in swiper by M-r (toggle between fuzzy and complete match)
-       (setq ivy-re-builders-alist
-             '((swiper . ivy--regex-fuzzy)
-               (t . ivy--regex-fuzzy)))
-       (ivy-mode 1)
-
-       (setq ivy-use-virtual-buffers t)
-       (setq enable-recursive-minibuffers t))
    #+END_SRC
 ** Relative line numbers
    #+BEGIN_SRC emacs-lisp
@@ -212,14 +176,6 @@
            kept-new-versions 6
            kept-old-versions 2
            version-control t)       ; use versioned backups
-   #+END_SRC
-** Window move
-   #+BEGIN_SRC emacs-lisp
-     (use-package windmove
-       :ensure t
-       :config
-       (windmove-default-keybindings 'super)
-       (setq windmove-wrap-around t))
    #+END_SRC
 ** Notes
    #+BEGIN_SRC emacs-lisp
@@ -297,13 +253,6 @@
      (use-package auto-complete
        :ensure t
        :pin melpa)
-     (use-package auto-complete-c-headers
-       :ensure t
-       :config
-       (ac-config-default))
-     (use-package auto-complete-clang
-       :ensure t
-       :pin melpa)
    #+END_SRC
 ** Useful Modes
    #+BEGIN_SRC emacs-lisp
@@ -324,20 +273,6 @@
               ("\\.md\\'" . markdown-mode)
               ("\\.markdown\\'" . markdown-mode))
        :init (setq markdown-command "multimarkdown"))
-   #+END_SRC
-** Clang format
-   #+BEGIN_SRC emacs-lisp
-     ;; configure clang format
-     (use-package clang-format
-       :commands clang-format-mode
-       :ensure t
-       :init
-       (setq clang-format-style-option "Google")
-       :hook ((c++-mode-hook . clang-format-mode)
-              (c-mode-hook . clang-format-mode))
-       :bind (:map c-mode-map
-              :map c++-mode-map
-              ("C-c u" . clang-format-buffer)))
    #+END_SRC
 ** Expand region
    #+BEGIN_SRC emacs-lisp
