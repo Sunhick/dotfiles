@@ -93,16 +93,22 @@
    #+BEGIN_SRC emacs-lisp
      (defalias 'list-buffers 'ibuffer)
    #+END_SRC
-** Smartparens
+** AutoPair
    #+BEGIN_SRC emacs-lisp
-     (use-package smartparens
+     ;; enable auto pair mode to automatically insert closing parenthesis.
+     (use-package autopair
        :ensure t
-       :commands
-       (smartparens-mode smartparens-strict-mode)
-       :config
-       (require 'smartparens-config)
        :init
-       (smartparens-global-mode))
+       (autopair-global-mode 1)
+
+       ;; Show matching parenthensis
+       ;; C-M-f     Move forward over a balanced expression
+       ;; C-M-b     Move backward over a balanced expression
+       ;; C-M-k     Kill balanced expression forward
+       ;; C-M-SPC   put the mark at the end of the sexp.
+       ;; C-M-n  Move forward over a parenthetical group
+       ;; C-M-p  Move backward over a parenthetical group
+       (show-paren-mode 1))
    #+END_SRC
 ** Relative line numbers
    #+BEGIN_SRC emacs-lisp
@@ -171,12 +177,11 @@
 ** Diminish
    #+BEGIN_SRC emacs-lisp
      (use-package diminish
-       :ensure t
-       :config
-       (diminish 'abbrev-mode)
-       (diminish 'visual-line-mode)
-       (diminish 'auto-revert-mode)
-       (diminish 'smartparens-mode))
+       :ensure t)
+
+     (diminish 'visual-line-mode)
+     (eval-after-load "autopair" '(diminish 'autopair-mode))
+     (eval-after-load "eldoc" '(diminish 'eldoc-mode))
    #+END_SRC
 * Window Management
 ** switch window
