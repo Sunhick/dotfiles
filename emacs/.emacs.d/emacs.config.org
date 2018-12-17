@@ -306,16 +306,11 @@
    #+END_SRC
 ** Useful Modes
    #+BEGIN_SRC emacs-lisp
-     (use-package yaml-mode
-       :ensure t)
-     (use-package gitignore-mode
-       :ensure t)
-     (use-package protobuf-mode
-       :ensure t)
-     (use-package groovy-mode
-       :ensure t)
-     (use-package cmake-mode
-       :ensure t)
+     (use-package yaml-mode :ensure t)
+     (use-package gitignore-mode :ensure t)
+     (use-package protobuf-mode :ensure t)
+     (use-package groovy-mode :ensure t)
+     (use-package cmake-mode :ensure t)
      (use-package markdown-mode
        :ensure t
        :commands (markdown-mode gfm-mode)
