@@ -213,7 +213,7 @@
 ** smex
    #+BEGIN_SRC emacs-lisp
      (use-package smex
-       :defer t
+       :ensure t
        :bind (("M-x" . smex)
               ("M-X" . smex-major-mode-commands))
        :config
