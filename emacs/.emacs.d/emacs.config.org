@@ -40,10 +40,10 @@
      ;; Emacs font and themes
      (set-default-font "Hack:pixelsize=12")
 
-     (use-package twilight-theme
+     (use-package zenburn-theme
        :ensure t
        :init
-       (load-theme 'twilight 'no-confirm))
+       (load-theme 'zenburn 'no-confirm))
 
      ;; Get rid of tool bar and menu bar
      (menu-bar-mode 0)
@@ -271,11 +271,17 @@
 ** Config file (this file)
    #+BEGIN_SRC emacs-lisp
      (defun find-user-init-file ()
-       "Edit the `user-init-file', in another window."
        (interactive)
        (find-file-other-window "~/.emacs.d/emacs.config.org"))
 
      (global-set-key (kbd "C-c I") #'find-user-init-file)
+   #+END_SRC
+** Re-builder
+   #+BEGIN_SRC emacs-lisp
+     ;; I don't want to deal with extra backslashes
+     ;; while building building regex
+     (require 're-builder)
+     (setq reb-re-syntax 'string)
    #+END_SRC
 * Window Management
 ** switch window
