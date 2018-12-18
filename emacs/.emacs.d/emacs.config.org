@@ -38,7 +38,7 @@
      (setq frame-resize-pixelwise t)
 
      ;; Emacs font and themes
-     (set-default-font "Hack:pixelsize=12")
+     (set-default-font "Menlo:pixelsize=12")
 
      (use-package zenburn-theme
        :ensure t
