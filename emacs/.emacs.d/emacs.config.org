@@ -97,20 +97,41 @@
    #+END_SRC
 ** AutoPair
    #+BEGIN_SRC emacs-lisp
-     ;; enable auto pair mode to automatically insert closing parenthesis.
-     (use-package autopair
+     (use-package smartparens
        :ensure t
-       :init
-       (autopair-global-mode 1)
-
-       ;; Show matching parenthensis
-       ;; C-M-f     Move forward over a balanced expression
-       ;; C-M-b     Move backward over a balanced expression
-       ;; C-M-k     Kill balanced expression forward
-       ;; C-M-SPC   put the mark at the end of the sexp.
-       ;; C-M-n  Move forward over a parenthetical group
-       ;; C-M-p  Move backward over a parenthetical group
-       (show-paren-mode 1))
+       :demand t
+       :bind* (("M-m m j" . sp-down-sexp)
+               ("M-m m k" . sp-backward-up-sexp)
+               ("M-m m h" . sp-backward-down-sexp)
+               ("M-m m l" . sp-up-sexp)
+               ("M-m m f" . sp-forward-sexp)
+               ("M-m m b" . sp-backward-sexp)
+               ("M-m m a" . sp-beginning-of-sexp)
+               ("M-m m e" . sp-end-of-sexp)
+               ("M-m m n" . sp-next-sexp)
+               ("M-m m p" . sp-previous-sexp)
+               ("M-m m >" . sp-forward-barf-sexp)
+               ("M-m m <" . sp-backward-barf-sexp)
+               ("M-m m )" . sp-forward-slurp-sexp)
+               ("M-m m (" . sp-backward-slurp-sexp)
+               ("M-m m x" . sp-transpose-sexp)
+               ("M-m m d" . sp-kill-sexp)
+               ("M-m m y" . sp-copy-sexp)
+               ("M-m m u" . sp-unwrap-sexp)
+               ("M-m m U" . sp-backward-unwrap-sexp)
+               ("M-m m C" . sp-convolute-sexp)
+               ("M-m m r" . sp-raise-sexp)
+               ("M-m m s" . sp-split-sexp)
+               ("M-m m R" . sp-rewrap-sexp)
+               ("M-m m S" . sp-splice-sexp)
+               ("M-m m F" . sp-splice-sexp-killing-forward)
+               ("M-m m B" . sp-splice-sexp-killing-backward)
+               ("M-m m A" . sp-splice-sexp-killing-around))
+       :diminish smartparens-mode
+       :diminish smartparens-strict-mode
+       :config
+       (require 'smartparens-config)
+       (smartparens-global-mode))
    #+END_SRC
 ** Relative line numbers
    #+BEGIN_SRC emacs-lisp
@@ -238,7 +259,7 @@
      (use-package guide-key
        :ensure t
        :init
-       (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-x v" "C-x 8" "C-x +"))
+       (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-x v" "C-x 8" "C-x +" "M-m m"))
        (guide-key-mode 1)
        (setq guide-key/recursive-key-sequence-flag t)
        (setq guide-key/popup-window-position 'bottom))
@@ -246,6 +267,15 @@
 ** Save Place
    #+BEGIN_SRC emacs-lisp
      (save-place-mode 1)
+   #+END_SRC
+** Config file (this file)
+   #+BEGIN_SRC emacs-lisp
+     (defun find-user-init-file ()
+       "Edit the `user-init-file', in another window."
+       (interactive)
+       (find-file-other-window "~/.emacs.d/emacs.config.org"))
+
+     (global-set-key (kbd "C-c I") #'find-user-init-file)
    #+END_SRC
 * Window Management
 ** switch window
