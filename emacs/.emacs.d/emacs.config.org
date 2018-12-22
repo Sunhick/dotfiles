@@ -97,6 +97,7 @@
    #+END_SRC
 ** AutoPair
    #+BEGIN_SRC emacs-lisp
+     (show-paren-mode 1)
      (use-package smartparens
        :ensure t
        :demand t
