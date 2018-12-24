@@ -1,4 +1,4 @@
-;;; pkg-multiple-cursors.el --- base init configurations
+;;; pkg-multiple-cursors.el --- multiple cursors configurations
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

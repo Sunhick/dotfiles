@@ -1,4 +1,4 @@
-;;; pkg-switch-windows.el --- base init configurations
+;;; pkg-switch-windows.el --- switch window configurations
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

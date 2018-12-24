@@ -1,4 +1,4 @@
-;;; base-ui.el --- base init configurations
+;;; base-ui.el --- base ui configurations
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

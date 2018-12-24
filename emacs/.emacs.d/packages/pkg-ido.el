@@ -1,4 +1,4 @@
-;;; pkg-ido.el --- base init configurations
+;;; pkg-ido.el --- Ido configurations
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

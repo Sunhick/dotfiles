@@ -1,4 +1,4 @@
-1;;; pkg-initializer.el --- base init configurations
+1;;; pkg-initializer.el --- package initializer
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

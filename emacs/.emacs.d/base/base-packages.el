@@ -1,4 +1,4 @@
-;;; base-packages.el --- base init configurations
+;;; base-packages.el --- base package configurations
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

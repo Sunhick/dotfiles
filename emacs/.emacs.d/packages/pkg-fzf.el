@@ -1,4 +1,4 @@
-;;; pkg-fzf.el --- fzf
+;;; pkg-fzf.el --- fuzzy finder
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
