@@ -31,6 +31,11 @@
 
 (require 'diminish)
 
+;; customs in a separate file
+(setq custom-file "~/.emacs.d/.customs.el")
+(if (file-exists-p custom-file)
+    (load custom-file))
+
 ;; gc to run when memory reaches 20MB
 (setq gc-cons-threshold 20000000)
 
