@@ -29,8 +29,6 @@
 
 ;;; Code:
 
-(message "setup-theme")
-
 (load-theme 'zenburn 'no-confirm)
 (provide 'setup-theme)
 

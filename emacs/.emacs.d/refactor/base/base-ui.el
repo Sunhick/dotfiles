@@ -81,6 +81,16 @@
 ;; Show empty lines indicator
 (set-default 'indicate-empty-lines t)
 
+;; ibuffer is a better choice
+(defalias 'list-buffers 'ibuffer)
+
+;; Works only with emacs >= 26
+;; use native relative line numbering(faster than linum-relative package)
+;; Builtin package also fixes the issues with code folding.
+(global-display-line-numbers-mode)
+(setq-default display-line-numbers-type 'visual
+              display-line-numbers-current-absolute nil)
+
 (provide 'base-ui)
 
 ;;; base-ui.el ends here

@@ -29,7 +29,6 @@
 
 ;;; Code:
 
-(message "user-setup")
 (setq user-full-name "Sunil"
       user-mail-address "sunhick@gmail.com")
 

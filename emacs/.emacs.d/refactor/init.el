@@ -41,12 +41,18 @@
 (defvar emacs-themes-dir (expand-file-name "themes" emacs-dir)
   "Directory hosting the themes for emacs")
 
+(defvar emacs-packages-dir (expand-file-name "packages" emacs-dir)
+  "Emacs packages directory boostrapping the installed packages.
+Most of them will be keybindings for packages installed by default.")
+
 (add-to-list 'load-path emacs-base-dir)
 (add-to-list 'load-path emacs-user-dir)
 (add-to-list 'load-path emacs-themes-dir)
+(add-to-list 'load-path emacs-packages-dir)
 
 (require 'base-init)
 (require 'user-setup)
 (require 'setup-theme)
 
+(require 'pkg-fzf)
 ;;; init.el ends here
