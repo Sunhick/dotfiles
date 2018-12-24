@@ -100,6 +100,7 @@
 ;; show matching parens
 (show-paren-mode 1)
 
+(setq dired-use-ls-dired nil)
 (provide 'base-ui)
 
 ;;; base-ui.el ends here

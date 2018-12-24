@@ -45,28 +45,19 @@
   "Emacs packages directory boostrapping the installed packages.
 Most of them will be keybindings for packages installed by default.")
 
+(defvar emacs-vendor-dir (expand-file-name "vendor" emacs-dir)
+  "Emacs vendor packages. Forked from other github repositories")
+
 (add-to-list 'load-path emacs-base-dir)
 (add-to-list 'load-path emacs-user-dir)
 (add-to-list 'load-path emacs-themes-dir)
 (add-to-list 'load-path emacs-packages-dir)
+(add-to-list 'load-path emacs-vendor-dir)
 
 (require 'base-init)
 (require 'user-setup)
 (require 'setup-theme)
 (require 'pkg-initializer)
+(require 'vendor-init)
 
 ;;; init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (diminish auto-complete switch-window guide-key smartparens multiple-cursors magit ido-completing-read+ ido-vertical-mode flx-ido fzf zenburn-theme))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
