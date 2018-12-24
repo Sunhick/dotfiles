@@ -94,13 +94,6 @@
 (setq-default display-line-numbers-type 'visual
               display-line-numbers-current-absolute nil)
 
-;; save the previous locations of opened files
-(save-place-mode 1)
-
-;; show matching parens
-(show-paren-mode 1)
-
-(setq dired-use-ls-dired nil)
 (provide 'base-ui)
 
 ;;; base-ui.el ends here

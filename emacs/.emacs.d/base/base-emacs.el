@@ -1,4 +1,4 @@
-;;; base-init.el --- base init configurations
+;;; base-emacs.el --- base emacs editor behaviour
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -29,10 +29,24 @@
 
 ;;; Code:
 
-(require 'base-ui)
-(require 'base-packages)
-(require 'base-emacs)
+(require 'diminish)
 
-(provide 'base-init)
+;; gc to run when memory reaches 20MB
+(setq gc-cons-threshold 20000000)
 
-;;; base-init.el ends here
+;; save the previous locations of opened files
+(save-place-mode 1)
+
+;; show matching parens
+(show-paren-mode 1)
+
+;; specific to macos
+(setq dired-use-ls-dired nil)
+
+;; diminish unwanted minor modes from modeline
+(diminish 'visual-line-mode)
+(eval-after-load "eldoc" '(diminish 'eldoc-mode))
+
+(provide 'base-emacs)
+
+;;; base-emacs.el ends here

@@ -29,8 +29,12 @@
 
 ;;; Code:
 
+(require 'diminish)
+
 ;; enable autocomplete
 (ac-config-default)
+
+(diminish 'auto-complete-mode)
 
 (provide 'pkg-autocomplete)
 

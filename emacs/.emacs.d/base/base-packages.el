@@ -40,6 +40,7 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/"))
 
+;; do not bloat this list of packages
 (defvar base-packages
   '(zenburn-theme
     fzf
@@ -62,7 +63,6 @@
   "Install the list of base packages"
   (dolist (pkg base-packages)
     (unless (package-installed-p pkg)
-      (message "Installing pkg: %s" pkg)
       (package-refresh-contents)
       (package-install pkg))))
 

@@ -61,8 +61,8 @@
 ;; (global-set-key (kbd "M-m m B") 'sp-splice-sexp-killing-backward)
 ;; (global-set-key (kbd "M-m m A") 'sp-splice-sexp-killing-around)
 
-(diminish smartparens-mode)
-(diminish smartparens-strict-mode)
+(diminish 'smartparens-mode)
+(diminish 'smartparens-strict-mode)
 
 (smartparens-global-mode)
 
