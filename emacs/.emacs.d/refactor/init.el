@@ -45,6 +45,7 @@
   "Emacs packages directory boostrapping the installed packages.
 Most of them will be keybindings for packages installed by default.")
 
+(add-to-list 'load-path emacs-dir)
 (add-to-list 'load-path emacs-base-dir)
 (add-to-list 'load-path emacs-user-dir)
 (add-to-list 'load-path emacs-themes-dir)
@@ -53,6 +54,6 @@ Most of them will be keybindings for packages installed by default.")
 (require 'base-init)
 (require 'user-setup)
 (require 'setup-theme)
-
 (require 'pkg-initializer)
+
 ;;; init.el ends here

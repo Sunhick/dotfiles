@@ -1,4 +1,4 @@
-;;; pkg-initializer.el --- base init configurations
+;;; pkg-multiple-cursors.el --- base init configurations
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -29,11 +29,10 @@
 
 ;;; Code:
 
-(require 'pkg-fzf)
-(require 'pkg-ido)
-(require 'pkg-magit)
-(require 'pkg-multiple-cursors)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-(provide 'pkg-initializer)
+(provide 'pkg-multiple-cursors)
 
-;;; pkg-initializer.el ends here
+;;; pkg-multiple-cursors.el ends here

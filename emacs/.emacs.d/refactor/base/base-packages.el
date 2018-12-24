@@ -48,6 +48,13 @@
     ido-vertical-mode
     ido-completing-read+
     magit
+
+    ;; yet to configured
+    diminish
+    multiple-cursors
+    guide-key
+    switch-window
+    auto-complete
     )
   "Base emacs packages to be installed from melpa")
 

@@ -36,6 +36,9 @@
 ;; remove all alarms from emacs
 (setq ring-bell-function 'ignore)
 
+;; no start up screen please
+(setq inhibit-startup-screen t)
+
 ;; no title on the title bar
 (setq ns-use-proxy-icon nil)
 (setq frame-title-format nil)
@@ -90,6 +93,9 @@
 (global-display-line-numbers-mode)
 (setq-default display-line-numbers-type 'visual
               display-line-numbers-current-absolute nil)
+
+;; save the previous locations of opened files
+(save-place-mode 1)
 
 (provide 'base-ui)
 
