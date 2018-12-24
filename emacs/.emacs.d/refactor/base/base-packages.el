@@ -48,10 +48,11 @@
     ido-vertical-mode
     ido-completing-read+
     magit
+    multiple-cursors
+    smartparens
 
     ;; yet to configured
     diminish
-    multiple-cursors
     guide-key
     switch-window
     auto-complete
@@ -62,6 +63,7 @@
   "Install the list of base packages"
   (dolist (pkg base-packages)
     (unless (package-installed-p pkg)
+      (message "Installing pkg: %s" pkg)
       (package-refresh-contents)
       (package-install pkg))))
 

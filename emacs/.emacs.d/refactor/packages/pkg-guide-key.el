@@ -1,4 +1,4 @@
-;;; pkg-initializer.el --- base init configurations
+;;; pkg-guide-key.el --- guide key configurations
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -29,13 +29,15 @@
 
 ;;; Code:
 
-(require 'pkg-fzf)
-(require 'pkg-ido)
-(require 'pkg-magit)
-(require 'pkg-multiple-cursors)
-(require 'pkg-guide-key)
-(require 'pkg-smartparens)
+(require 'guide-key)
+(require 'diminish)
 
-(provide 'pkg-initializer)
+(setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-x v" "C-x 8" "C-x +" "M-m m"))
+(guide-key-mode 1)
+(setq guide-key/recursive-key-sequence-flag t)
+(setq guide-key/popup-window-position 'bottom)
+(diminish 'guide-key-mode)
 
-;;; pkg-initializer.el ends here
+(provide 'pkg-guide-key)
+
+;;; pkg-guide-key.el ends here
