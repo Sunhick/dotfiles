@@ -1,4 +1,4 @@
-1;;; pkg-initializer.el --- base init configurations
+;;; pkg-org-mode.el --- org mode configurations
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -29,16 +29,11 @@
 
 ;;; Code:
 
-(require 'pkg-fzf)
-(require 'pkg-ido)
-(require 'pkg-magit)
-(require 'pkg-multiple-cursors)
-(require 'pkg-guide-key)
-(require 'pkg-smartparens)
-(require 'pkg-switch-windows)
-(require 'pkg-autocomplete)
-(require 'pkg-org-mode)
+(require org)
+(require org-bullets)
 
-(provide 'pkg-initializer)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
-;;; pkg-initializer.el ends here
+(provide 'pkg-org-mode)
+
+;;; pkg-org-mode.el ends here

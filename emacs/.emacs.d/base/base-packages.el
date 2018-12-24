@@ -53,6 +53,8 @@
     guide-key
     switch-window
     auto-complete
+    org
+    org-bullets
     diminish)
   "Base emacs packages to be installed from melpa")
 
