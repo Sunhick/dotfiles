@@ -1,4 +1,4 @@
-;;; base-packages.el --- base init configurations
+;;; pkg-magit.el --- magit configurations
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -29,37 +29,9 @@
 
 ;;; Code:
 
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-(package-initialize)
+(require 'magit)
+(global-set-key(kbd "C-x g") 'magit-status)
 
-(require 'package)
+(provide 'pkg-magit)
 
-;; add melpa to repository list
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/"))
-
-(defvar base-packages
-  '(zenburn-theme
-    fzf
-    ido
-    flx-ido
-    ido-vertical-mode
-    ido-completing-read+
-    magit
-    )
-  "Base emacs packages to be installed from melpa")
-
-(defun install-base-packages ()
-  "Install the list of base packages"
-  (dolist (pkg base-packages)
-    (unless (package-installed-p pkg)
-      (package-refresh-contents)
-      (package-install pkg))))
-
-(install-base-packages)
-
-(provide 'base-packages)
-
-;;; base-packages.el ends here
+;;; pkg-magit.el ends here

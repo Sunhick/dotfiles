@@ -1,4 +1,4 @@
-;;; base-packages.el --- base init configurations
+;;; pkg-ido.el --- base init configurations
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -29,37 +29,34 @@
 
 ;;; Code:
 
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-(package-initialize)
+(require 'ido)
+(require 'flx-ido)
+(require  'ido-vertical-mode)
+(require 'ido-completing-read+)
 
-(require 'package)
+;; configure ido
+(setq ido-enable-flex-matching t)
+(setq ido-use-faces nil)
+(ido-everywhere t)
+(ido-mode 1)
 
-;; add melpa to repository list
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/"))
+;; configure flx-ido
+(ido-mode 1)
+(ido-everywhere 1)
+(flx-ido-mode 1)
 
-(defvar base-packages
-  '(zenburn-theme
-    fzf
-    ido
-    flx-ido
-    ido-vertical-mode
-    ido-completing-read+
-    magit
-    )
-  "Base emacs packages to be installed from melpa")
+;; disable ido faces to see flx highlights.
+(setq ido-enable-flex-matching t)
+(setq ido-use-faces nil)
 
-(defun install-base-packages ()
-  "Install the list of base packages"
-  (dolist (pkg base-packages)
-    (unless (package-installed-p pkg)
-      (package-refresh-contents)
-      (package-install pkg))))
+;; configure ido vertical mode
+(ido-mode 1)
+(ido-vertical-mode 1)
+(setq ido-vertical-define-keys 'C-n-and-C-p-only)
 
-(install-base-packages)
+;; configure ido-completing-read+
+(ido-ubiquitous-mode 1)
 
-(provide 'base-packages)
+(provide 'pkg-ido)
 
-;;; base-packages.el ends here
+;;; pkg-ido.el ends here

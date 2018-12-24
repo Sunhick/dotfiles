@@ -54,5 +54,5 @@ Most of them will be keybindings for packages installed by default.")
 (require 'user-setup)
 (require 'setup-theme)
 
-(require 'pkg-fzf)
+(require 'pkg-initializer)
 ;;; init.el ends here
