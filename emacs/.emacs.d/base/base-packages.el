@@ -43,6 +43,7 @@
 ;; do not bloat this list of packages
 (defvar base-packages
   '(zenburn-theme
+    flatland-theme
     fzf
     ido
     flx-ido

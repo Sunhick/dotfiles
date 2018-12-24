@@ -29,7 +29,7 @@
 
 ;;; Code:
 
-(load-theme 'zenburn 'no-confirm)
+(load-theme 'flatland 'no-confirm)
 (provide 'setup-theme)
 
 ;;; setup-theme.el ends here
