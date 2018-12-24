@@ -41,8 +41,17 @@
              '("melpa" . "http://melpa.milkbox.net/packages/"))
 
 (defvar base-packages
-  '()
+  '(zenburn-theme)
   "Base emacs packages to be installed from melpa")
+
+(defun install-base-packages ()
+  "Install the list of base packages"
+  (dolist (pkg base-packages)
+    (unless (package-installed-p pkg)
+      (package-refresh-contents)
+      (package-install pkg))))
+
+(install-base-packages)
 
 (provide 'base-packages)
 
