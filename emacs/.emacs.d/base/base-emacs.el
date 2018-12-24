@@ -47,8 +47,10 @@
 ;; show matching parens
 (show-paren-mode 1)
 
-;; specific to macos
+;; Dired -- specific to macos
 (setq dired-use-ls-dired nil)
+;; revert dired buffer on re-visting
+(setq dired-auto-revert-buffer t)
 
 ;; diminish unwanted minor modes from modeline
 (diminish 'visual-line-mode)

@@ -2,7 +2,7 @@
 ;; debug.el - is only for debugging purposes and shouldn't be
 ;;        taken as a replacement for init.el or settings.org.
 ;;
-;; $ emacs -q --load emacs.d/debug.el
+;; $ emacs -q --load path/to/debug.el
 ;;
 ;; Author : Sunil
 ;; Email : sunhick@gmail.com
