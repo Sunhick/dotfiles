@@ -5,5 +5,5 @@
 	path = emacs/.emacs.d/vendor/browse-kill-ring
 	url = git@github.com:browse-kill-ring/browse-kill-ring.git
 [submodule "emacs/.emacs.d/themes"]
-	path = emacs/.emacs.d/themes
+	path = emacs/.emacs.d/themes/midnight
 	url = git@github.com:Sunhick/midnight-theme.git
