@@ -1,4 +1,4 @@
-1;;; pkg-initializer.el --- base init configurations
+;;; pkg-switch-windows.el --- base init configurations
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -29,15 +29,9 @@
 
 ;;; Code:
 
-(require 'pkg-fzf)
-(require 'pkg-ido)
-(require 'pkg-magit)
-(require 'pkg-multiple-cursors)
-(require 'pkg-guide-key)
-(require 'pkg-smartparens)
-(require 'pkg-switch-windows)
-(require 'pkg-autocomplete)
+(require 'switch-window)
+(global-set-key (kbd "C-x w") 'switch-window)
 
-(provide 'pkg-initializer)
+(provide 'pkg-switch-windows)
 
-;;; pkg-initializer.el ends here
+;;; pkg-switch-windows.el ends here

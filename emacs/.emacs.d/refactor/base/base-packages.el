@@ -50,13 +50,10 @@
     magit
     multiple-cursors
     smartparens
-
-    ;; yet to configured
-    diminish
     guide-key
     switch-window
     auto-complete
-    )
+    diminish)
   "Base emacs packages to be installed from melpa")
 
 (defun install-base-packages ()

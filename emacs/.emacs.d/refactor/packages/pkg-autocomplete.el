@@ -1,4 +1,4 @@
-1;;; pkg-initializer.el --- base init configurations
+;;; pkg-autocomplete.el --- base init configurations
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -29,15 +29,9 @@
 
 ;;; Code:
 
-(require 'pkg-fzf)
-(require 'pkg-ido)
-(require 'pkg-magit)
-(require 'pkg-multiple-cursors)
-(require 'pkg-guide-key)
-(require 'pkg-smartparens)
-(require 'pkg-switch-windows)
-(require 'pkg-autocomplete)
+;; enable autocomplete
+(ac-config-default)
 
-(provide 'pkg-initializer)
+(provide 'pkg-autocomplete)
 
-;;; pkg-initializer.el ends here
+;;; pkg-autocomplete.el ends here
