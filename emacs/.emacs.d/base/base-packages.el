@@ -38,7 +38,7 @@
 
 ;; add melpa to repository list
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/"))
+             '("melpa" . "https://melpa.org/packages/"))
 
 ;; do not bloat this list of packages
 (defvar base-packages
