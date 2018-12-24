@@ -40,7 +40,9 @@
 (setq gc-cons-threshold 20000000)
 
 ;; save the previous locations of opened files
-(save-place-mode 1)
+(require 'saveplace)
+(setq-default save-place t)
+(setq save-place-file (expand-file-name ".places" user-emacs-directory))
 
 ;; show matching parens
 (show-paren-mode 1)
@@ -51,6 +53,10 @@
 ;; diminish unwanted minor modes from modeline
 (diminish 'visual-line-mode)
 (eval-after-load "eldoc" '(diminish 'eldoc-mode))
+
+;; osx move deleted files to trash can
+(setq delete-by-moving-to-trash t)
+(setq trash-directory "~/.Trash")
 
 (provide 'base-emacs)
 
