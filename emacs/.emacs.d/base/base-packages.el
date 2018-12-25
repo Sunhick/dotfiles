@@ -42,21 +42,23 @@
 
 ;; do not bloat this list of packages
 (defvar base-packages
-  '(zenburn-theme
-    fzf
-    ido
+  '(auto-complete
+    diminish
     flx-ido
-    ido-vertical-mode
+    fzf
+    gruvbox-theme
+    guide-key
+    ido
     ido-completing-read+
+    ido-vertical-mode
     magit
     multiple-cursors
-    smartparens
-    guide-key
-    switch-window
-    auto-complete
     org
     org-bullets
-    diminish)
+    smartparens
+    switch-window
+    ;twilight-theme
+    ;zenburn-theme)
   "Base emacs packages to be installed from melpa")
 
 (defun install-base-packages ()
