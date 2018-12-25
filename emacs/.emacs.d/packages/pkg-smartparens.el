@@ -64,7 +64,7 @@
 (diminish 'smartparens-mode)
 (diminish 'smartparens-strict-mode)
 
-(smartparens-global-mode)
+(smartparens-global-mode t)
 
 (provide 'pkg-smartparens)
 
