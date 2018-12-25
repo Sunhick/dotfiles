@@ -35,6 +35,7 @@
 (package-initialize)
 
 (require 'package)
+(require 'base-ensure)
 
 ;; add melpa to repository list
 (add-to-list 'package-archives
@@ -65,9 +66,7 @@
 (defun install-base-packages ()
   "Install the list of base packages"
   (dolist (pkg base-packages)
-    (unless (package-installed-p pkg)
-      (package-refresh-contents)
-      (package-install pkg))))
+    (ensure-pkg pkg)))
 
 (install-base-packages)
 

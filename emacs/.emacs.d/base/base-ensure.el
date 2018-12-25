@@ -1,4 +1,4 @@
-;;; pkg-initializer.el --- package initializer
+;;; base-ensure.el --- Ensure packages are installed
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -29,20 +29,12 @@
 
 ;;; Code:
 
-;; Base packages setup
-(require 'pkg-fzf)
-(require 'pkg-ido)
-(require 'pkg-magit)
-(require 'pkg-multiple-cursors)
-(require 'pkg-guide-key)
-(require 'pkg-smartparens)
-(require 'pkg-switch-windows)
-(require 'pkg-autocomplete)
-(require 'pkg-org-mode)
+(defun ensure-pkg (pkg)
+  "Ensure the given pkg is installed"
+  (unless (package-installed-p pkg)
+    (package-refresh-contents)
+    (package-install pkg)))
 
-;; Add-on packages
-;; (require 'pkg-programming-mode)
+(provide 'base-ensure)
 
-(provide 'pkg-initializer)
-
-;;; pkg-initializer.el ends here
+;;; base-ensure.el ends here

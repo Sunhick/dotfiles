@@ -1,4 +1,4 @@
-;;; pkg-initializer.el --- package initializer
+;;; pkg-programming-mode.el --- package initializer
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -29,20 +29,24 @@
 
 ;;; Code:
 
-;; Base packages setup
-(require 'pkg-fzf)
-(require 'pkg-ido)
-(require 'pkg-magit)
-(require 'pkg-multiple-cursors)
-(require 'pkg-guide-key)
-(require 'pkg-smartparens)
-(require 'pkg-switch-windows)
-(require 'pkg-autocomplete)
-(require 'pkg-org-mode)
+(require 'base-ensure)
 
-;; Add-on packages
-;; (require 'pkg-programming-mode)
+(defvar programming-pkgs
+  '(yaml-mode
+    gitignore-mode
+    protobuf-mode
+    groovy-mode
+    cmake-mode
+    markdown-mode)
+  "Support for programming in emacs")
 
-(provide 'pkg-initializer)
+(defun install-programming-pkgs ()
+  "Install programming packages"
+  (dolist (pkg programming-pkgs)
+    (ensure-pkg pkg)))
 
-;;; pkg-initializer.el ends here
+(install-programming-pkgs)
+
+(provide 'pkg-programming-mode)
+
+;;; pkg-programming-mode.el ends here
