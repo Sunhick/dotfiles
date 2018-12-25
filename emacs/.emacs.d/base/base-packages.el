@@ -57,8 +57,9 @@
     org-bullets
     smartparens
     switch-window
-    ;twilight-theme
-    ;zenburn-theme)
+    ;;twilight-theme
+    ;;zenburn-theme
+    )
   "Base emacs packages to be installed from melpa")
 
 (defun install-base-packages ()
