@@ -40,8 +40,8 @@
 (require 'pkg-autocomplete)
 (require 'pkg-org-mode)
 
-;; Add-on packages
-;; (require 'pkg-programming-mode)
+;; Add-on packages (uncomment if required)
+;; (require 'pkg-slim-programming-mode)
 
 (provide 'pkg-initializer)
 

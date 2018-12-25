@@ -1,4 +1,4 @@
-;;; pkg-programming-mode.el --- package initializer
+;;; pkg-slim-programming-mode.el --- package initializer
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -47,6 +47,6 @@
 
 (install-programming-pkgs)
 
-(provide 'pkg-programming-mode)
+(provide 'pkg-slim-programming-mode)
 
-;;; pkg-programming-mode.el ends here
+;;; pkg-slim-programming-mode.el ends here
