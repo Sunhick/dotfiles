@@ -43,12 +43,14 @@ and configured")
   "Emacs vendor directory hosting the packages that are installed
 externally")
 
+(defconst melpa-archive '("melpa" . "https://melpa.org/packages/"))
+
 (mapc (lambda (dir) (add-to-list 'load-path dir))
       `(,emacs-slim-dir ,emacs-theme-dir ,emacs-vendor-dir))
 
 (require 'slim-configurator)
 
-(let ((emacs (slim-configurator)))
+(let ((emacs (slim-configurator :archives melpa-archive)))
   (slim-configure emacs))
 
 ;;; init.el ends here

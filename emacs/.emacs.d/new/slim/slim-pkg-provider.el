@@ -1,4 +1,4 @@
-;;; slim-pkg.el --- base package configurations
+;;; slim-pkg-provider.el --- Slim pkg provider
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -30,33 +30,21 @@
 ;;; Code:
 
 (require 'eieio)
+(require 'slim-pkg)
 
-(defclass slim-pkg ()
-  ((name
-    :type symbol
-    :initarg :name
-    :documentation "package name")
+(defvar slim-pkg-lists
+  `(,(slim-pkg :name 'ido)
+    ,(slim-pkg :name 'ido-completing-read+)
+    ,(slim-pkg :name 'ido-vertical-mode)
+    ,(slim-pkg :name 'magit))
+  "slim package list")
 
-   (version
-    :type string
-    :initarg :version
-    :initform "latest"
-    :documentation "version of this package. Defaults to latest if
-nothing is specified")
+(cl-defstruct slim-pkg-provider "Slim package provider.
+These package come preinstalled with this configuration")
 
-   (source
-    :type symbol
-    :initarg :source
-    :initform :melpa
-    :documentation "Where this package should be installed from.
-Defaults to stable melpa respository"))
+(cl-defmethod provider-pkg-list ((p slim-pkg-provider))
+  slim-pkg-lists)
 
-  "Slim package class. Captures the package, version, source of
-installation e.g. Melpa, Gnu, Org etc")
+(provide 'slim-pkg-provider)
 
-(cl-defgeneric slim-pkg-configure ((pkg slim-pkg))
-  "configure the given package")
-
-(provide 'slim-pkg)
-
-;;; slim-pkg.el ends here
+;;; slim-pkg-provider.el ends here

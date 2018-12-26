@@ -1,4 +1,4 @@
-;;; slim-pkg.el --- base package configurations
+;;; pkg-provider.el --- emacs configuration entry point
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -31,32 +31,16 @@
 
 (require 'eieio)
 
-(defclass slim-pkg ()
-  ((name
-    :type symbol
-    :initarg :name
-    :documentation "package name")
+(cl-defstruct pkg-provider "Package provider")
 
-   (version
-    :type string
-    :initarg :version
-    :initform "latest"
-    :documentation "version of this package. Defaults to latest if
-nothing is specified")
+(cl-defgeneric provider-pkg-list ((p pkg-provider))
+  "List of packages to be installed if not installed at emacs start up.")
 
-   (source
-    :type symbol
-    :initarg :source
-    :initform :melpa
-    :documentation "Where this package should be installed from.
-Defaults to stable melpa respository"))
+;; FIXME: may not be required
+(cl-defgeneric provider-configure ((p pkg-provider))
+  "Configure the provider which in turn may configure packages or other
+providers.")
 
-  "Slim package class. Captures the package, version, source of
-installation e.g. Melpa, Gnu, Org etc")
+(provide 'pkg-provider)
 
-(cl-defgeneric slim-pkg-configure ((pkg slim-pkg))
-  "configure the given package")
-
-(provide 'slim-pkg)
-
-;;; slim-pkg.el ends here
+;;; pkg-provider.el ends here

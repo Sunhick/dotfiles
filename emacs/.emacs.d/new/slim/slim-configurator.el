@@ -39,20 +39,44 @@
 
 ;; FIXME: Automatic discovery of providers.
 ;; for now let's just hard code the providers
-;; (require 'slim-pkg-provider)
+(require 'slim-pkg-provider)
 
 (defclass slim-configurator ()
-  (())
+  ((archives
+    :type cons
+    :initarg :archives
+    :documentation "Archives to be add package-archives")
+
+   (providers
+    :type list
+    :initarg :providers
+    :initform (lambda () (slim--init-providers))
+    :documentation "List of package providers"))
   "Slim emacs configurator / setup")
+
+(cl-defmethod slim--ensure-pkg-installed ((spkg slim-pkg))
+  "Ensure the given pkg is installed"
+  (let ((pkg (oref spkg name)))
+    (message "Installing.... : [%s]" pkg)
+    (unless (package-installed-p pkg)
+      (package-refresh-contents)
+      (package-install pkg))))
+
+(defun slim--init-providers ()
+  `(,(make-slim-pkg-provider)))
 
 (cl-defmethod slim--add-install-repo ((c slim-configurator))
   ;; add melpa to repository list
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/")))
+  (add-to-list 'package-archives (oref c archives)))
+
+(cl-defmethod slim--install-pkgs ((c slim-configurator))
+  (dolist (provider (slim--init-providers))
+    (mapc #'slim--ensure-pkg-installed (provider-pkg-list provider))))
 
 (cl-defmethod slim-configure ((c slim-configurator))
   "setup the emacs editor"
-  (slim--add-install-repo c))
+  (slim--add-install-repo c)
+  (slim--install-pkgs c))
 
 (provide 'slim-configurator)
 
