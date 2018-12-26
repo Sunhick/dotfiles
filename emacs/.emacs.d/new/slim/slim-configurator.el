@@ -1,4 +1,4 @@
-;;; init.el --- emacs configuration entry point
+;;; slim-configurator.el --- Slim configurator
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -29,26 +29,31 @@
 
 ;;; Code:
 
-(defvar emacs-dir (file-name-directory load-file-name)
-  "Emacs configuration root directory")
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+(package-initialize)
 
-(defvar emacs-slim-dir (expand-file-name "slim" emacs-dir)
-  "Emacs slim directory that hosts the base packages to be installed
-and configured")
+(require 'eieio)
+(require 'package)
 
-(defvar emacs-theme-dir (expand-file-name "themes" emacs-dir)
-  "Emacs themes provider directory")
+;; FIXME: Automatic discovery of providers.
+;; for now let's just hard code the providers
+;; (require 'slim-pkg-provider)
 
-(defvar emacs-vendor-dir (expand-file-name "vendor" emacs-dir)
-  "Emacs vendor directory hosting the packages that are installed
-externally")
+(defclass slim-configurator ()
+  (())
+  "Slim emacs configurator / setup")
 
-(mapc (lambda (dir) (add-to-list 'load-path dir))
-      `(,emacs-slim-dir ,emacs-theme-dir ,emacs-vendor-dir))
+(cl-defmethod slim--add-install-repo ((c slim-configurator))
+  ;; add melpa to repository list
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/")))
 
-(require 'slim-configurator)
+(cl-defmethod slim-configure ((c slim-configurator))
+  "setup the emacs editor"
+  (slim--add-install-repo c))
 
-(let ((emacs (slim-configurator)))
-  (slim-configure emacs))
+(provide 'slim-configurator)
 
-;;; init.el ends here
+;;; slim-configurator.el ends here
