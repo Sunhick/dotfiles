@@ -54,6 +54,11 @@
 (ido-vertical-mode 1)
 (setq ido-vertical-define-keys 'C-n-and-C-p-only)
 
+;; Stop searching for files in other directories. when all i want
+;; is just create a new file. If i want to search i will fzf or
+;; revert to dired buffers.
+(setq ido-auto-merge-work-directories-length -1)
+
 ;; configure ido-completing-read+
 (ido-ubiquitous-mode 1)
 
