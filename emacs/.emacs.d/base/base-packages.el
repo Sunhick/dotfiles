@@ -57,9 +57,10 @@
     org
     org-bullets
     smartparens
-    switch-window
-    ;;twilight-theme
-    ;;zenburn-theme
+    ;; switch-window
+    windmove
+    ;; twilight-theme
+    ;; zenburn-theme
     )
   "Base emacs packages to be installed from melpa")
 

@@ -1,4 +1,4 @@
-;;; pkg-initializer.el --- package initializer
+;;; pkg-windmove.el --- window movement made easy with windmove
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -29,21 +29,11 @@
 
 ;;; Code:
 
-;; Base packages setup
-(require 'pkg-fzf)
-(require 'pkg-ido)
-(require 'pkg-magit)
-(require 'pkg-multiple-cursors)
-(require 'pkg-guide-key)
-(require 'pkg-smartparens)
-;; (require 'pkg-switch-windows)
-(require 'pkg-windmove)
-(require 'pkg-autocomplete)
-(require 'pkg-org-mode)
+(require 'windmove)
 
-;; Add-on packages (uncomment if required)
-;; (require 'pkg-slim-programming-mode)
+(windmove-default-keybindings 'super)
+(setq windmove-wrap-around t)
 
-(provide 'pkg-initializer)
+(provide 'pkg-windmove)
 
-;;; pkg-initializer.el ends here
+;;; pkg-windmove.el ends here
