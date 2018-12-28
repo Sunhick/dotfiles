@@ -96,40 +96,19 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# export GRADLE_PATH=/Users/Sunny/test/gradle-4.4.1/bin
-# export PATH=$GRADLE_PATH:$PATH
-
-# chromium depot_tools
-# export PATH=$PATH:/Users/Sunny/prv/google/depot_tools
+# export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 
 # include other sources
-include () {
+function include () {
     [[ -f "$1" ]] && source "$1"
 }
 
 # Add java path
 export JAVA_HOME=$(/usr/libexec/java_home)
-# export PYTHONPATH=/Users/Sunny/prv/tmp/caffe/python:$PYTHONPATH
-
-export TOOLBOX_PATH=$HOME/.toolbox/bin
-export BAZEL_PATH=$HOME/bin
-export ANDROID_PATH=~/Library/Android/sdk/platform-tools/
-export PATH=$PATH:$BAZEL_PATH:$TOOLBOX_PATH:$ANDROID_PATH
-
-alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -geometry 180x80"
-alias ec="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c -F\"((width . 180) (height . 80) (top . 0) (left . 0))\""
-alias ed="/Applications/Emacs.app/Contents/MacOS/Emacs --daemon"
-alias killemacs="emacsclient -e '(kill-emacs)'"
-alias uml="~/prv/Umlet/umlet.sh > /dev/null &"
-alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
-
-# export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
-
-# gtag label is required for cscope to work magically.
-export GTAGSLABEL=ctags
 export EDITOR="emacs"
 
 # include other sources
 include ~/.fzf.zsh
-include ~/.prv/work
-include ~/.prv/home
+
+# source machine specific customizations
+include ~/.dotfiles/zshrc.local
