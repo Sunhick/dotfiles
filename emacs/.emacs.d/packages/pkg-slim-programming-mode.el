@@ -34,9 +34,9 @@
 (defvar programming-pkgs
   '(yaml-mode
     gitignore-mode
-    protobuf-mode
+    ;; protobuf-mode
     groovy-mode
-    cmake-mode
+    ;; cmake-mode
     markdown-mode)
   "Support for programming in emacs")
 

@@ -42,7 +42,7 @@
 (require 'pkg-org-mode)
 
 ;; Add-on packages (uncomment if required)
-;; (require 'pkg-slim-programming-mode)
+(require 'pkg-slim-programming-mode)
 
 (provide 'pkg-initializer)
 
