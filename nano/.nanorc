@@ -1,3 +1,13 @@
 # GNU Nano configuration file
+set smooth
+set autoindent
+set historylog
+set morespace
+set tabstospaces
+set smarthome
+
+# set nohelp
+# set backup
+
 include "~/.nano-highlight/c.nanorc"
 include "~/.nano-highlight/bash.nanorc"
