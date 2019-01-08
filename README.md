@@ -21,13 +21,13 @@ $ cd ~/.dotfiles
 $ touch zshrc.local         # for local machine changes
 
 $ cd ~/.dotfiles/dotfiles
-$ stow emacs zsh tmux
+$ stow emacs zsh tmux nano -t ~/
 ```
 
 To remove/ uninstall
 ```sh
-$ cd ~/.dotfiles
-$ stow -D emacs zsh tmux
+$ cd ~/.dotfiles/dotfiles
+$ stow -D emacs zsh tmux -t ~/
 ```
 
 See [Wiki](https://github.com/Sunhick/dotfiles/wiki) for installation & other information.
