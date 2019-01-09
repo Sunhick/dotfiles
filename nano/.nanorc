@@ -6,7 +6,7 @@ set morespace
 set tabstospaces
 set smarthome
 
-# set nohelp
+set nohelp
 # set backup
 
 include "~/.nano-highlight/c.nanorc"
