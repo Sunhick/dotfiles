@@ -60,6 +60,9 @@
 (setq delete-by-moving-to-trash t)
 (setq trash-directory "~/.Trash")
 
+;; set file encoding format
+(setq default-buffer-file-coding-system 'utf-8-unix)
+
 (provide 'base-emacs)
 
 ;;; base-emacs.el ends here
