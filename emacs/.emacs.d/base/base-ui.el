@@ -29,6 +29,9 @@
 
 ;;; Code:
 
+(when (window-system)
+  (require 'base-window))
+
 ;; Emacs title bar customizations
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
@@ -50,12 +53,6 @@
 ;; Get rid of tool bar and menu bar
 (menu-bar-mode 0)
 
-;; Yeah, I'm keeping the text menu at the top. It doesn't
-;; bother me. Whereas the toolbar i never use it and just
-;; occupies space.
-(tool-bar-mode 0)
-(scroll-bar-mode 0)
-
 ;; I hate typing. Especially when emacs prompts
 ;; me with yes/no and i type 'y' or 'n' in a hurry
 ;; remap yes/no to y/n
@@ -63,9 +60,6 @@
 
 ;; Enable visual line mode
 (global-visual-line-mode 1)
-
-;; change the fringe
-(set-fringe-mode '(nil . 0))
 
 ;; Trash can support
 (setq delete-by-moving-to-trash t)
