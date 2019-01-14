@@ -7,3 +7,8 @@
 * Turn this package into a zero-configuration package. Anyone who want to use this should fork or ```git clone``` this and be able to use it.
 * Get rid of MacOS dependencies.
 * Should also support curl install script.
+
+
+## References
+* [Prelude](https://github.com/bbatsov/prelude)
+* [emacs.d - Magnars](https://github.com/magnars/.emacs.d)
