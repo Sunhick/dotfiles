@@ -43,6 +43,7 @@
 
 ;; Add-on packages (uncomment if required)
 (require 'pkg-slim-programming-mode)
+(require 'pkg-go-mode)
 
 (provide 'pkg-initializer)
 
