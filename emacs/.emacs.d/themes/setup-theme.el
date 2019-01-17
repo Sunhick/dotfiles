@@ -30,6 +30,11 @@
 ;;; Code:
 
 (load-theme 'gruvbox 'no-confirm)
+
+;; change the mode-line buffer name to brown
+(custom-set-faces
+ '(mode-line-buffer-id ((t (:weight bold :foreground "orange")))))
+
 (provide 'setup-theme)
 
 ;;; setup-theme.el ends here
