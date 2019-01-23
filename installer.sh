@@ -11,8 +11,8 @@ SRC_PATH=${HOME}
 git_download() {
     (
         local srcDir=${SRC_PATH}/.dotfiles/dotfiles
-        mkdir -p srcDir
-        cd srcDir
+        mkdir -p ${srcDir}
+        cd ${srcDir}
         git clone https://github.com/Sunhick/dotfiles.git .
         git checkout tags/${STABLE_RELEASE}
     )
