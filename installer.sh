@@ -14,11 +14,13 @@ git_download() {
 }
 
 wget_download() {
-    wget https://github.com/Sunhick/dotfiles/archive/${STABLE_RELEASE}.tar.gz -o ${SRC_PATH}/.dotfiles/dotfiles
+    echo "Not supported yet"
+    # wget https://github.com/Sunhick/dotfiles/archive/${STABLE_RELEASE}.tar.gz -o ${SRC_PATH}/.dotfiles/dotfiles
 }
 
 curl_download() {
     # figure out curl CLI for dowloading
+    echo "Not supported yet"
 }
 
 download() {
@@ -30,7 +32,7 @@ download() {
 install() {
     # install the dotfiles using stow
     (
-        cd ${SRC_PATH}
+        cd ${SRC_PATH}/.dotfiles/dotfiles
         stow emacs zsh tmux nano --target ${HOME}
     )
 }
