@@ -8,10 +8,15 @@
 * [Tmux](https://github.com/tmux/tmux)
 * [stow](https://www.gnu.org/software/stow/manual/stow.html)
 
-### Installation (MacOS)
-Download and install the latest stable version of [emacs](https://emacsformacosx.com/).
+### Installation
 
+#### One-liner:
 
+```shell
+$ wget -O - https://raw.githubusercontent.com/Sunhick/dotfiles/installer/installer.sh | bash
+```
+
+#### Git lovers'
 use GNU stow to install the configuration files.
 ```sh
 $ brew install stow
@@ -21,13 +26,15 @@ $ cd ~/.dotfiles
 $ touch zshrc.local         # for local machine changes
 
 $ cd ~/.dotfiles/dotfiles
-$ stow emacs zsh tmux nano -t ~/
+
+# Install what you want. By default installs all.
+$ stow emacs zsh tmux nano git -t ~/
 ```
 
 To remove/ uninstall
 ```sh
 $ cd ~/.dotfiles/dotfiles
-$ stow -D emacs zsh tmux -t ~/
+$ stow -D emacs zsh tmux nano git -t ~/
 ```
 
 See [Wiki](https://github.com/Sunhick/dotfiles/wiki) for installation & other information.
