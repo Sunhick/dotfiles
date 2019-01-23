@@ -84,7 +84,7 @@
 ;; Works only with emacs >= 26
 ;; use native relative line numbering(faster than linum-relative package)
 ;; Builtin package also fixes the issues with code folding.
-(when (not (version< emacs-version "25.0"))
+(when (not (version< emacs-version "26.0"))
   (progn
     (global-display-line-numbers-mode)
     (setq-default display-line-numbers-type 'visual
