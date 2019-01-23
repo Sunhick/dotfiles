@@ -8,6 +8,9 @@ STABLE_RELEASE="v1.3"
 DEV_RELEASE=
 SRC_PATH=${HOME}
 
+COMPLETE_INSTALL="emacs zsh tmux git nano iterm2"
+MINIMALISTIC_INSTALL="emacs zsh tmux"
+
 git_download() {
     (
         local srcDir=${SRC_PATH}/.dotfiles/dotfiles
@@ -38,7 +41,7 @@ install() {
     # install the dotfiles using stow
     (
         cd ${SRC_PATH}/.dotfiles/dotfiles
-        stow emacs zsh tmux nano --target ${HOME}
+        stow ${MINIMALISTIC_INSTALL} --target ${HOME}
     )
 }
 
