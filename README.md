@@ -15,7 +15,7 @@ Download and install the latest stable version of [emacs](https://emacsformacosx
 use GNU stow to install the configuration files.
 ```sh
 $ brew install stow
-$ git clone --recursive git@github.com:Sunhick/dotfiles.git ~/.dotfiles/dotfiles
+$ git clone --recursive https://github.com/Sunhick/dotfiles.git ~/.dotfiles/dotfiles
 
 $ cd ~/.dotfiles
 $ touch zshrc.local         # for local machine changes
