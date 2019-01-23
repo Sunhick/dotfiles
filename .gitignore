@@ -1,0 +1,32 @@
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+*~
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# untrack the bashrc file. If you add a generic functionality
+# then force add the file and checkin.
+bashrc
+
+emacs/.emacs.d/elpa/
+emacs/.emacs.d/projectile-bookmarks.eld
+emacs/.emacs.d/settings.el
+emacs/.emacs.d/.emacs_workgroups
+emacs/.emacs.d/ac-comphist.dat
+emacs/.emacs.d/savehist
+emacs/.emacs.d/recentf
+emacs/.emacs.d/emacs.config.el
+
+# Deft - notes
+notes/
+.customs.el
