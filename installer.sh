@@ -4,7 +4,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-STABLE_RELEASE="v1.5"
+STABLE_RELEASE="v1.6"
 DEV_RELEASE=
 SRC_PATH=${HOME}
 
