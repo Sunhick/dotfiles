@@ -32,6 +32,9 @@
 (when (window-system)
   (require 'base-window))
 
+;; Apply host settings
+(require 'base-host)
+
 ;; Emacs title bar customizations
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
@@ -46,9 +49,6 @@
 (setq ns-use-proxy-icon nil)
 (setq frame-title-format nil)
 (setq frame-resize-pixelwise t)
-
-;; Emacs font and themes
-(set-default-font "Menlo:pixelsize=12")
 
 ;; Get rid of tool bar and menu bar
 (menu-bar-mode 0)
