@@ -9,8 +9,13 @@ DEV_RELEASE=
 SRC_PATH=${HOME}
 
 git_download() {
-    git clone https://github.com/Sunhick/dotfiles.git ${SRC_PATH}/.dotfiles/dotfiles
-    git checkout ${STABLE_RELEASE}
+    (
+        local srcDir=${SRC_PATH}/.dotfiles/dotfiles
+        mkdir -p srcDir
+        cd srcDir
+        git clone https://github.com/Sunhick/dotfiles.git .
+        git checkout tags/${STABLE_RELEASE}
+    )
 }
 
 wget_download() {
