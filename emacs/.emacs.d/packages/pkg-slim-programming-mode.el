@@ -37,6 +37,7 @@
     ;; protobuf-mode
     groovy-mode
     ;; cmake-mode
+    rjsx-mode
     markdown-mode)
   "Support for programming in emacs")
 

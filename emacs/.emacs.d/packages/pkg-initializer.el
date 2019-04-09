@@ -44,6 +44,7 @@
 ;; Add-on packages (uncomment if required)
 (require 'pkg-slim-programming-mode)
 (require 'pkg-go-mode)
+(require 'pkg-react-native)
 
 (provide 'pkg-initializer)
 

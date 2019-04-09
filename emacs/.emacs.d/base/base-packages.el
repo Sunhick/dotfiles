@@ -61,7 +61,6 @@
     windmove
     ;; twilight-theme
     ;; zenburn-theme
-    rjsx-mode
     )
   "Base emacs packages to be installed from melpa")
 
