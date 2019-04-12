@@ -1,0 +1,16 @@
+{
+    "workbench.sideBar.location": "right",
+    "workbench.activityBar.visible": true,
+    "editor.minimap.enabled": false,
+    "breadcrumbs.enabled": false,
+    "workbench.colorTheme": "Gruvbox Dark (Hard)",
+    "editor.renderLineHighlight": "none",
+    "editor.cursorStyle": "block",
+
+
+    "workbench.colorCustomizations": {
+        "statusBar.background" : "#1A1A1A",
+        "statusBar.noFolderBackground" : "#212121",
+        "statusBar.debuggingBackground": "#263238"
+    }
+}
