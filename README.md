@@ -7,6 +7,7 @@
 * [Emacs for macosx](https://emacsformacosx.com)
 * [Tmux](https://github.com/tmux/tmux)
 * [stow](https://www.gnu.org/software/stow/manual/stow.html)
+* [i3 -- Linux only](https://i3wm.org)
 
 ## Installation
 
