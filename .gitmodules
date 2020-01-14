@@ -1,3 +1,6 @@
 [submodule "emacs/.emacs.d/vendor/browse-kill-ring"]
 	path = emacs/.emacs.d/vendor/browse-kill-ring
 	url = https://github.com/browse-kill-ring/browse-kill-ring.git
+[submodule "tmux/.tmux/plugins/tpm"]
+       path = tmux/.tmux/plugins/tpm
+       url = https://github.com/tmux-plugins/tpm
