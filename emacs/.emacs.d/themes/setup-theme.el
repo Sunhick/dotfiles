@@ -29,7 +29,7 @@
 
 ;;; Code:
 
-(load-theme 'gruvbox 'no-confirm)
+(load-theme 'solarized-zenburn 'no-confirm)
 
 ;; change the mode-line buffer name to brown
 (custom-set-faces
