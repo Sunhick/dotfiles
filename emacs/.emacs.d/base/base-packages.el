@@ -47,7 +47,8 @@
     diminish
     flx-ido
     fzf
-    gruvbox-theme
+    ;; gruvbox-theme
+    solarized-theme
     guide-key
     ido
     ido-completing-read+
