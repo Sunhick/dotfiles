@@ -1,0 +1,19 @@
+# -*- mode: shell-script -*-
+#!/usr/bin/env bash
+
+source ~/.dotfiles/dotfiles/bash/.colors
+
+PROMPT_COMMAND=prompt_command
+
+function prompt_command {
+    local last_exit_code="$?"
+    PS1=""
+
+    if [ ${last_exit_code} != 0 ]; then
+        PS1+="${bold_red}→ ${reset_color}"
+    else
+        PS1+="${bold_green}→ ${reset_color}"
+    fi
+
+    PS1+="${bold_green}\W ${reset_color} "
+}
