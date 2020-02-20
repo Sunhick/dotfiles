@@ -18,3 +18,6 @@ include ~/.dotfiles/dotfiles/bash/.${pfile}
 
 # Include any local overrides specific customizations per host
 include ~/.dotfiles/.${pfile}
+
+# provide custom bash prompt
+include ~/.dotfiles/dotfiles/bash/.bash_prompt
