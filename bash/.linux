@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-# Invoke host machine specific
+# Colorize the ls output
+alias ls="ls --color=auto"
+alias ll="ls -la"

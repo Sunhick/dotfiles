@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
 export JAVA_HOME=$(/usr/libexec/java_home)
+
+alias emacs=/Applications/Emacs.app/Contents/MacOS/Emacs
+
+# Colorize the ls output
+alias ls="ls -G"
+alias ll="ls -lG"

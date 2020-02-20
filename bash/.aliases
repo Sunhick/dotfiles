@@ -6,10 +6,6 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
-# Colorize the ls output
-alias ls="ls --color=auto"
-alias ll="ls -la"
-
 # colorize grep
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
