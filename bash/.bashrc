@@ -5,6 +5,12 @@ function include () {
     [[ -f "$1" ]] && source "$1"
 }
 
+if [ -f /.dockerenv ]; then
+    # Inside the docker. Don't use host .bashrc if the home folder is mounted.
+    include ~/.dotfiles/.dockerrc
+    return
+fi
+
 # Add java path
 export EDITOR="emacs"
 
