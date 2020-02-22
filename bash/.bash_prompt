@@ -1,7 +1,7 @@
 # -*- mode: shell-script -*-
 #!/usr/bin/env bash
 
-source ~/.dotfiles/dotfiles/bash/.colors
+source ${DOTFILES_ROOT}dotfiles/bash/.colors
 
 function prompt_command {
     local last_exit_code="$?"
