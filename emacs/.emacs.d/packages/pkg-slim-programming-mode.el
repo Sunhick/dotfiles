@@ -38,7 +38,9 @@
     groovy-mode
     ;; cmake-mode
     rjsx-mode
-    markdown-mode)
+    markdown-mode
+    gn-mode
+    )
   "Support for programming in emacs")
 
 (defun install-programming-pkgs ()

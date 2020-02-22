@@ -3,8 +3,6 @@
 
 source ~/.dotfiles/dotfiles/bash/.colors
 
-PROMPT_COMMAND=prompt_command
-
 function prompt_command {
     local last_exit_code="$?"
     PS1=""
@@ -17,3 +15,5 @@ function prompt_command {
 
     PS1+="${bold_green}\W ${reset_color} "
 }
+
+PROMPT_COMMAND=prompt_command

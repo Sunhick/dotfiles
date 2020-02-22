@@ -46,6 +46,8 @@
 (require 'pkg-go-mode)
 (require 'pkg-react-native)
 
+(require 'pkg-gn-mode)
+
 (provide 'pkg-initializer)
 
 ;;; pkg-initializer.el ends here
