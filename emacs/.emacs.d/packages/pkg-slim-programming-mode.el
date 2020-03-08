@@ -40,6 +40,7 @@
     rjsx-mode
     markdown-mode
     gn-mode
+    google-c-style
     )
   "Support for programming in emacs")
 
