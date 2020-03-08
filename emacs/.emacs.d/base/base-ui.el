@@ -40,7 +40,11 @@
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
 ;; remove all alarms from emacs
-(setq ring-bell-function 'ignore)
+;; https://www.emacswiki.org/emacs/EmacsNiftyTricks
+(setq ring-bell-function `(lambda ()
+                            (let ((face-background (face-background 'default)))
+                              (set-face-background 'default "DodgerBlue")
+                              (set-face-background 'default face-background))))
 
 ;; no start up screen please
 (setq inhibit-startup-screen t)
