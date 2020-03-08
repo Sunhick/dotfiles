@@ -40,6 +40,7 @@
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
 ;; remove all alarms from emacs
+(setq visible-bell nil)
 ;; https://www.emacswiki.org/emacs/EmacsNiftyTricks
 (setq ring-bell-function `(lambda ()
                             (let ((face-background (face-background 'default)))
