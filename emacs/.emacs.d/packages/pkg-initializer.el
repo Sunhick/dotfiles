@@ -45,8 +45,8 @@
 (require 'pkg-slim-programming-mode)
 (require 'pkg-go-mode)
 (require 'pkg-react-native)
-
 (require 'pkg-gn-mode)
+(require 'pkg-google-c-style)
 
 (provide 'pkg-initializer)
 
