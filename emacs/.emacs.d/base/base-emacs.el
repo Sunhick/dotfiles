@@ -63,6 +63,9 @@
 ;; set file encoding format
 (setq default-buffer-file-coding-system 'utf-8-unix)
 
+;; cycle through amounts of spacing
+(global-set-key (kbd "M-SPC") 'cycle-spacing)
+
 (provide 'base-emacs)
 
 ;;; base-emacs.el ends here
