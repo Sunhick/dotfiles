@@ -69,6 +69,12 @@
 ;; keep cursor at same position when scrolling
 (setq scroll-preserve-screen-position 1)
 
+;; Enable mouse support
+(xterm-mouse-mode 1)
+(unless window-system
+  (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
+  (global-set-key (kbd "<mouse-5>") 'scroll-up-line))
+
 (provide 'base-emacs)
 
 ;;; base-emacs.el ends here
