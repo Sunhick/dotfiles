@@ -33,6 +33,6 @@
 
 (setq-default typescript-indent-level 2)
 
-(provide 'pkg-react-native)
+(provide 'pkg-typescript-mode)
 
 ;;; pkg-react-native.el ends here
