@@ -66,6 +66,9 @@
 ;; cycle through amounts of spacing
 (global-set-key (kbd "M-SPC") 'cycle-spacing)
 
+;; keep cursor at same position when scrolling
+(setq scroll-preserve-screen-position 1)
+
 (provide 'base-emacs)
 
 ;;; base-emacs.el ends here
