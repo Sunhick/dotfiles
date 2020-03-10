@@ -1,6 +1,6 @@
-;;; pkg-slim-programming-mode.el --- package initializer
+;;; pkg-typescript-mode.el --- typescript
 ;;
-;; Copyright (c) 2018-2019 Sunil
+;; Copyright (c) 2020-2021 Sunil
 ;;
 ;; Author: Sunil <sunhick@gmail.com>
 
@@ -29,29 +29,10 @@
 
 ;;; Code:
 
-(require 'base-ensure)
+(require 'typescript-mode)
 
-(defvar programming-pkgs
-  '(yaml-mode
-    gitignore-mode
-    protobuf-mode
-    groovy-mode
-    ;; cmake-mode
-    ;; rjsx-mode
-    markdown-mode
-    gn-mode
-    google-c-style
-    typescript-mode
-    )
-  "Support for programming in emacs")
+(setq-default typescript-indent-level 2)
 
-(defun install-programming-pkgs ()
-  "Install programming packages"
-  (dolist (pkg programming-pkgs)
-    (ensure-pkg pkg)))
+(provide 'pkg-react-native)
 
-(install-programming-pkgs)
-
-(provide 'pkg-slim-programming-mode)
-
-;;; pkg-slim-programming-mode.el ends here
+;;; pkg-react-native.el ends here

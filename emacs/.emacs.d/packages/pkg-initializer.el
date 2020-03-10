@@ -44,7 +44,8 @@
 ;; Add-on packages (uncomment if required)
 (require 'pkg-slim-programming-mode)
 (require 'pkg-go-mode)
-(require 'pkg-react-native)
+;; (require 'pkg-react-native)
+(require 'pkg-typescript-mode)
 (require 'pkg-gn-mode)
 (require 'pkg-google-c-style)
 
