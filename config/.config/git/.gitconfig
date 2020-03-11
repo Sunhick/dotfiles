@@ -1,0 +1,38 @@
+######################################################################################
+# To consume this file simply add the below two lines in your $HOME/.gitconfig file. #
+# [include]                                                                          #
+#         path = ~/.config/git/.gitconfig                                            #
+######################################################################################
+
+[core]
+	precomposeUnicode = true
+	editor = emacs
+        # Speed up commands involving untracked files such as `git status`.
+	# https://git-scm.com/docs/git-update-index#_untracked_cache
+        untrackedCache = true
+        pager = less -F -X
+
+[merge]
+	tool = emerge
+
+[help]
+	# Automatically correct and execute mistyped commands
+	autocorrect = 1
+
+[diff]
+        tool = ediff
+
+[diff]
+        colorMoved = zebra
+
+# Contract for whoever includes this gitconfig: Define for difftool and merge based on the host.
+# I tried to avoid this contract but found nothing really satisfying to my needs. I tried Shell
+# script (didn't work), environment variable (works only with EDITOR variable, possibly VISUAL
+# as well). or try providing a small wrapper for emacs that links to right path based on host
+# machine. Find good approach send a pr, please?
+#
+# [difftool "ediff"]
+#         cmd = emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
+#
+# [mergetool "emerge"]
+#         cmd = emacs $@
