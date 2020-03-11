@@ -36,12 +36,12 @@ $ stow emacs zsh tmux nano git -t ~/
 ## Uninstall
 ```sh
 $ cd ~/.dotfiles/dotfiles
-$ stow -D emacs zsh tmux nano git -t ~/
+$ stow -D emacs zsh tmux nano config -t ~/
 ```
 
 Or if you want to uninstall completely then run,
 ````sh
-$ rm -rf ~/.dotfiles/dotfiles .emacs.d .zshrc .tmux.conf .nano .git
+$ rm -rf ~/.dotfiles/dotfiles .emacs.d .zshrc .tmux.conf .nano .config
 ````
 
 ## More
