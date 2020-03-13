@@ -61,7 +61,7 @@
     ;; switch-window
     windmove
     ;; twilight-theme
-    ;; zenburn-theme
+    zenburn-theme
     ag
     )
   "Base emacs packages to be installed from melpa")
