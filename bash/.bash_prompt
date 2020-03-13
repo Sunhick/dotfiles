@@ -3,14 +3,16 @@
 
 source ${DOTFILES_ROOT}dotfiles/bash/.colors
 
+glyph=$(echo -e "\\u2192") # single arrow unicode
+
 function prompt_command {
     local last_exit_code="$?"
     PS1=""
 
     if [ ${last_exit_code} != 0 ]; then
-        PS1+="${bold_red}→ ${reset_color}"
+        PS1+="${bold_red}${glyph} ${reset_color}"
     else
-        PS1+="${bold_green}→ ${reset_color}"
+        PS1+="${bold_green}${glyph} ${reset_color}"
     fi
 
     PS1+="${bold_green}\W ${reset_color} "
