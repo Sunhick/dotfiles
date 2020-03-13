@@ -72,6 +72,9 @@
 ;; 80 chars is a good width.
 (set-default 'fill-column 80)
 
+;; No blinking cursor
+(blink-cursor-mode 0)
+
 ;; Display line & column numbers
 (setq line-number-mode t)
 (setq column-number-mode t)
