@@ -18,16 +18,25 @@
 [help]
 	# Automatically correct and execute mistyped commands
 	autocorrect = 1
-
+	
+[color]
+        ui = auto
+	
 [diff]
         tool = ediff
 
 [diff]
         colorMoved = zebra
+	
+[grep]
+        linenumber = true
 
 [alias]
 	l1 = log --pretty=format:'%C(yellow)%h %Cred%d %<|(90)%Creset%s%Cblue %<(15)%cn %C(dim white)%ar' --decorate --date=short
 
+ [oh-my-zsh]
+        hide-status = 1
+  
 # Contract for whoever includes this gitconfig: Define for difftool and merge based on the host.
 # I tried to avoid this contract but found nothing really satisfying to my needs. I tried Shell
 # script (didn't work), environment variable (works only with EDITOR variable, possibly VISUAL
