@@ -8,5 +8,6 @@ alias emacs="Emacs"
 alias ls="ls -G"
 alias ll="ls -lG"
 
-EMACS=/Applications/Emacs.app/Contents/MacOS
-export PATH=$PATH:$EMACS
+EMACS="/Applications/Emacs.app/Contents/MacOS"
+# Override emacs from macos 
+export PATH=$EMACS:$PATH
