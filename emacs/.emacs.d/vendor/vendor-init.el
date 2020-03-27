@@ -37,6 +37,11 @@
 (require 'browse-kill-ring)
 (global-set-key (kbd "M-y") 'browse-kill-ring)
 
+(when (display-graphic-p)
+  (load "~/.emacs.d/vendor/framemove/framemove")
+  (require 'framemove)
+  (framemove-default-keybindings))
+
 (provide 'vendor-init)
 
 ;;; vendor-init.el ends here

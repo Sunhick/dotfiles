@@ -31,7 +31,7 @@
 
 (require 'windmove)
 
-(windmove-default-keybindings 'super)
+(windmove-default-keybindings)
 (setq windmove-wrap-around t)
 
 (provide 'pkg-windmove)
