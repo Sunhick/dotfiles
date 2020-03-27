@@ -20,4 +20,11 @@ function prompt_command {
     PS1+="${bold_green}\W ${reset_color} "
 }
 
-PROMPT_COMMAND=prompt_command
+case "$TERM" in
+    "dumb")
+        PS1="> "
+        ;;
+    *)
+        PROMPT_COMMAND=prompt_command
+        ;;
+esac
