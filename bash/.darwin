@@ -2,12 +2,12 @@
 
 export JAVA_HOME=$(/usr/libexec/java_home)
 
-alias emacs="Emacs"
+alias emacs="Emacs -geometry 180x76"
 
 # Colorize the ls output
 alias ls="ls -G"
 alias ll="ls -lG"
 
 EMACS="/Applications/Emacs.app/Contents/MacOS"
-# Override emacs from macos 
+# Override emacs from macos
 export PATH=$EMACS:$PATH
