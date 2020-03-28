@@ -26,6 +26,7 @@ emacs/.emacs.d/ac-comphist.dat
 emacs/.emacs.d/savehist
 emacs/.emacs.d/recentf
 emacs/.emacs.d/emacs.config.el
+emacs/.emacs.d/tramp
 
 # Deft - notes
 notes/
