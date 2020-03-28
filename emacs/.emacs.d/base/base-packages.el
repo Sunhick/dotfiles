@@ -49,7 +49,7 @@
     fzf
     ;; gruvbox-theme
     solarized-theme
-    guide-key
+    which-key
     ido
     ido-completing-read+
     ido-vertical-mode

@@ -1,6 +1,6 @@
-;;; pkg-initializer.el --- package initializer
+;;; pkg-ripgrep.el --- rip grep
 ;;
-;; Copyright (c) 2018-2019 Sunil
+;; Copyright (c) 2019-2020 Sunil
 ;;
 ;; Author: Sunil <sunhick@gmail.com>
 
@@ -29,29 +29,11 @@
 
 ;;; Code:
 
-;; Base packages setup
-(require 'pkg-fzf)
-(require 'pkg-ido)
-(require 'pkg-magit)
-(require 'pkg-multiple-cursors)
-;; (require 'pkg-guide-key)
-(require 'pkg-which-key)
-(require 'pkg-ripgrep)
-(require 'pkg-smartparens)
-;; (require 'pkg-switch-windows)
-(require 'pkg-windmove)
-(require 'pkg-autocomplete)
-(require 'pkg-org-mode)
+(require 'rg)
 
-;; Add-on packages (uncomment if required)
-(require 'pkg-slim-programming-mode)
-(require 'pkg-go-mode)
-;; (require 'pkg-react-native)
-(require 'pkg-typescript-mode)
-(require 'pkg-gn-mode)
-(require 'pkg-google-c-style)
+;; enable maggit like interface for riprep
+(rg-enable-menu)
 
+(provide 'pkg-ripgrep)
 
-(provide 'pkg-initializer)
-
-;;; pkg-initializer.el ends here
+;;; pkg-ripgrep.el ends here

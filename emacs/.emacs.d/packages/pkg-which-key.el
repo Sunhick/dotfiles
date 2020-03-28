@@ -1,6 +1,6 @@
-;;; pkg-initializer.el --- package initializer
+;;; pkg-which-key.el --- which key
 ;;
-;; Copyright (c) 2018-2019 Sunil
+;; Copyright (c) 2019-2020 Sunil
 ;;
 ;; Author: Sunil <sunhick@gmail.com>
 
@@ -29,29 +29,18 @@
 
 ;;; Code:
 
-;; Base packages setup
-(require 'pkg-fzf)
-(require 'pkg-ido)
-(require 'pkg-magit)
-(require 'pkg-multiple-cursors)
-;; (require 'pkg-guide-key)
-(require 'pkg-which-key)
-(require 'pkg-ripgrep)
-(require 'pkg-smartparens)
-;; (require 'pkg-switch-windows)
-(require 'pkg-windmove)
-(require 'pkg-autocomplete)
-(require 'pkg-org-mode)
+(require 'which-key)
+(setq which-key-popup-type 'minibuffer)
 
-;; Add-on packages (uncomment if required)
-(require 'pkg-slim-programming-mode)
-(require 'pkg-go-mode)
-;; (require 'pkg-react-native)
-(require 'pkg-typescript-mode)
-(require 'pkg-gn-mode)
-(require 'pkg-google-c-style)
+;; Allow C-h to trigger which-key before it is done automatically
+(setq which-key-show-early-on-C-h t)
+;; make sure which-key doesn't show normally but refreshes quickly after it is
+;; triggered.
+(setq which-key-idle-delay 10000)
+(setq which-key-idle-secondary-delay 0.05)
 
+(which-key-mode)
 
-(provide 'pkg-initializer)
+(provide 'pkg-which-key)
 
-;;; pkg-initializer.el ends here
+;;; pkg-which-key.el ends here
