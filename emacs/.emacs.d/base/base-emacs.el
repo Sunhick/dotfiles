@@ -75,6 +75,11 @@
   (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
   (global-set-key (kbd "<mouse-5>") 'scroll-up-line))
 
+;; setup tramp
+(require 'tramp)
+(setq tramp-default-method "ssh")
+;; (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+
 (provide 'base-emacs)
 
 ;;; base-emacs.el ends here
