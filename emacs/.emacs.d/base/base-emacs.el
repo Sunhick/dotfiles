@@ -31,6 +31,9 @@
 
 (require 'diminish)
 
+;; follow unix EOF 
+(setq require-final-newline t)
+
 ;; customs in a separate file
 (setq custom-file "~/.emacs.d/.customs.el")
 (if (file-exists-p custom-file)
