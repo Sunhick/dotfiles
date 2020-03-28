@@ -8,7 +8,7 @@
 * [Tmux](https://github.com/tmux/tmux)
 * [stow](https://www.gnu.org/software/stow/manual/stow.html)
 * [i3 -- Linux only](https://i3wm.org)
-* [ag -- silver search](https://github.com/ggreer/the_silver_searcher)
+* [rg -- ripgrep](https://github.com/BurntSushi/ripgrep)
 
 ## Installation
 
