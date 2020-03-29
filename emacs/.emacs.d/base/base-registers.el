@@ -1,6 +1,6 @@
-;;; base-init.el --- base init configurations
+;;; base-registers.el --- base registers configurations
 ;;
-;; Copyright (c) 2018-2019 Sunil
+;; Copyright (c) 2019-2020 Sunil
 ;;
 ;; Author: Sunil <sunhick@gmail.com>
 
@@ -29,11 +29,15 @@
 
 ;;; Code:
 
-(require 'base-ui)
-(require 'base-packages)
-(require 'base-emacs)
-(require 'base-registers)
+;; https://www.emacswiki.org/emacs/Registers
+;; key bind: C-x r j e
+(set-register ?e '(file . "~/.emacs.d"))
+(set-register ?b '(file . "~/.bashrc"))
 
-(provide 'base-init)
+;; use dir-locals.el to configure registers on per project needs
+;; you can also have two git repos inside same folder using --git-dir
+;; to version control dir-locals
 
-;;; base-init.el ends here
+(provide 'base-registers)
+
+;;; base-registers.el ends here

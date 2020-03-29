@@ -31,7 +31,7 @@
 
 (require 'diminish)
 
-;; follow unix EOF 
+;; follow unix EOF
 (setq require-final-newline t)
 
 ;; customs in a separate file
@@ -82,6 +82,9 @@
 (require 'tramp)
 (setq tramp-default-method "ssh")
 ;; (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+
+;; follow symbolic links to the actual files when editing
+(setq vc-follow-symlinks t)
 
 (provide 'base-emacs)
 
