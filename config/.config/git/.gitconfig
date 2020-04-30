@@ -33,6 +33,9 @@
 
 [alias]
 	l1 = log --pretty=format:'%C(yellow)%h %Cred%d %<|(90)%Creset%s%Cblue %<(15)%cn %C(dim white)%ar' --decorate --date=short
+	
+[alias]
+	commit-message = log --format=%B -n 1
 
  [oh-my-zsh]
         hide-status = 1
