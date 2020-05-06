@@ -46,5 +46,3 @@ $ rm -rf ~/.dotfiles/dotfiles .emacs.d .zshrc .tmux.conf .nano .config
 
 ## More
 See [Wiki](https://github.com/Sunhick/dotfiles/wiki) for installation & other information.
-
-checkout the [screenshots](https://github.com/Sunhick/dotfiles/wiki/screenshots)
