@@ -7,6 +7,9 @@ function include () {
     [[ -f "$1" ]] && source "$1"
 }
 
+# Ignore dups in .bash_history
+export HISTCONTROL=ignoredups
+
 if [ -f /.dockerenv ]; then
     # Inside the docker. Don't use host .bashrc if the home folder is mounted.
     include ${DOTFILES_ROOT}.dockerrc
