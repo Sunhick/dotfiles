@@ -39,6 +39,10 @@
 
  [oh-my-zsh]
         hide-status = 1
+	
+# https://git-scm.com/docs/diff-config#Documentation/diff-config.txt-diffwsErrorHighlight
+[diff]
+        wsErrorHighlight = all
   
 # Contract for whoever includes this gitconfig: Define for difftool and merge based on the host.
 # I tried to avoid this contract but found nothing really satisfying to my needs. I tried Shell
