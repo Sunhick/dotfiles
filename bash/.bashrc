@@ -16,6 +16,9 @@ fi
 export EDITOR="emacs"
 export FCEDIT=${EDITOR}
 
+# bash history configurations
+include ${DOTFILES_ROOT}dotfiles/bash/.bash_history
+
 # include other sources
 include ~/.fzf.bash
 include ${DOTFILES_ROOT}dotfiles/bash/.aliases
