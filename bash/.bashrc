@@ -13,8 +13,8 @@ if [ -f /.dockerenv ]; then
     return
 fi
 
-# Add java path
 export EDITOR="emacs"
+export FCEDIT=${EDITOR}
 
 # include other sources
 include ~/.fzf.bash
