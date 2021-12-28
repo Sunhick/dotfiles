@@ -8,7 +8,6 @@ source ${DOTFILES_ROOT}dotfiles/bash/.colors
 glyph="→"
 
 function prompt_command {
-    include ${DOTFILES_ROOT}dotfiles/bash/.bash_history
     local last_exit_code="$?"
     PS1=""
 
