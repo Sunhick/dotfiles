@@ -64,6 +64,8 @@
     zenburn-theme
     ;; ag
     rg
+    ;; emacs postman
+    restclient
     )
   "Base emacs packages to be installed from melpa")
 

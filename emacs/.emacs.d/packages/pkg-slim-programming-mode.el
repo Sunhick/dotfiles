@@ -33,7 +33,7 @@
 
 (defvar programming-pkgs
   '(yaml-mode
-    gitignore-mode
+    ;; gitignore-mode
     protobuf-mode
     groovy-mode
     ;; cmake-mode
