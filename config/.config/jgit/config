@@ -1,3 +1,0 @@
-[filesystem "Oracle Corporation|16.0.2|/dev/disk1s2"]
-	timestampResolution = 4000 nanoseconds
-	minRacyThreshold = 0 nanoseconds

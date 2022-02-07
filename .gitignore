@@ -37,6 +37,7 @@ notes/
 /emacs/.emacs.d/bookmarks
 /emacs/.emacs.d/init.elc
 /emacs/.emacs.d/init.org
+/emacs/.emacs.d/url/
 
 # conigstore
 config/.config/configstore/
