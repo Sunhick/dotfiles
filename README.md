@@ -24,25 +24,18 @@ use GNU stow to install the configuration files.
 $ brew install stow
 $ git clone --recursive https://github.com/Sunhick/dotfiles.git ~/.dotfiles/dotfiles
 
-$ cd ~/.dotfiles
-$ touch zshrc.local         # for local machine changes
-
 $ cd ~/.dotfiles/dotfiles
 
-# Install what you want. By default installs all.
-$ stow emacs zsh tmux nano git -t ~/
+$ stow -t ~ stow
+$ stow bash emacs git htop i3 iterm2 nano tmux
 ```
 
 ## Uninstall
 ```sh
 $ cd ~/.dotfiles/dotfiles
-$ stow -D emacs zsh tmux nano config -t ~/
+$ stow -D bash emacs git htop i3 iterm2 nano tmux
+$ stow -D -t ~ stow
 ```
-
-Or if you want to uninstall completely then run,
-````sh
-$ rm -rf ~/.dotfiles/dotfiles .emacs.d .zshrc .tmux.conf .nano .config
-````
 
 ## More
 See [Wiki](https://github.com/Sunhick/dotfiles/wiki) for installation & other information.
