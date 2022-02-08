@@ -1,0 +1,6 @@
+[user]
+        email = sunhick@gmail.com
+        name = Sunil
+
+[include]
+        path = ~/.config/git/.gitconfig
