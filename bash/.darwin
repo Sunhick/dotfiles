@@ -9,8 +9,11 @@ alias emacsclient="emacsclient -c"
 alias ls="ls -G"
 alias ll="ls -lG"
 
+# vscode alias
+VSCODE="/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
 EMACS="/Applications/Emacs.app/Contents/MacOS"
 EMACS_CLIENT="${EMACS}/bin"
 
 # Override emacs from macos
-export PATH=$EMACS:$EMACS_CLIENT:$PATH
+export PATH=$EMACS:$EMACS_CLIENT:$VSCODE:$PATH
