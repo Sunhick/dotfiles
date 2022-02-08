@@ -1,0 +1,2 @@
+# Ignore everything except bashrc and  bash_profile
+^(?!\.(bashrc|bash_profile))(.*)
