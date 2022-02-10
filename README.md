@@ -26,6 +26,7 @@ $ git clone --recursive https://github.com/Sunhick/dotfiles.git ~/.dotfiles/dotf
 
 $ cd ~/.dotfiles/dotfiles
 
+# You want to use --no-folding option with stow to avoid clobbering git directory
 $ stow -t ~ stow
 $ stow bash emacs git htop i3 iterm2 nano tmux
 ```
