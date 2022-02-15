@@ -13,8 +13,8 @@ if [ -f /.dockerenv ]; then
     return
 fi
 
-export EDITOR="emacs"
-export FCEDIT=${EDITOR}
+# bash exports
+include ${DOTFILES_ROOT}dotfiles/bash/.bash_export
 
 # bash history configurations
 include ${DOTFILES_ROOT}dotfiles/bash/.bash_history

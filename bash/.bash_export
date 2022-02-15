@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export EDITOR="emacs"
+export FCEDIT=${EDITOR}
+export GPG_TTY=$(tty)
