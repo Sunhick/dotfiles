@@ -1,6 +1,6 @@
-;;; pkg-initializer.el --- package initializer
+;;; pkg-vertico.el --- package vertico
 ;;
-;; Copyright (c) 2018-2019 Sunil
+;; Copyright (c) 2022-2023 Sunil
 ;;
 ;; Author: Sunil <sunhick@gmail.com>
 
@@ -29,30 +29,19 @@
 
 ;;; Code:
 
-;; Base packages setup
-(require 'pkg-fzf)
-;; (require 'pkg-ido)
-;; (require 'pkg-magit)
-(require 'pkg-vertico)
-(require 'pkg-multiple-cursors)
-;; (require 'pkg-guide-key)
-;; (require 'pkg-which-key)
-(require 'pkg-ripgrep)
-(require 'pkg-smartparens)
-;; (require 'pkg-switch-windows)
-(require 'pkg-windmove)
-(require 'pkg-autocomplete)
-(require 'pkg-org-mode)
+(require 'vertico)
+(require 'marginalia)
+(require 'orderless)
 
-;; Add-on packages (uncomment if required)
-(require 'pkg-slim-programming-mode)
-(require 'pkg-go-mode)
-;; (require 'pkg-react-native)
-(require 'pkg-typescript-mode)
-(require 'pkg-gn-mode)
-(require 'pkg-google-c-style)
+;; configure vertico, orderless & marginalia
+(vertico-mode)
 
+(setq completion-styles '(orderless)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion))))
 
-(provide 'pkg-initializer)
+(marginalia-mode)
 
-;;; pkg-initializer.el ends here
+(provide 'pkg-vertico)
+
+;;; pkg-vertico.el ends here

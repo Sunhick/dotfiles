@@ -45,15 +45,18 @@
 (defvar base-packages
   '(auto-complete
     diminish
-    flx-ido
+    ;; flx-ido
     fzf
     ;; gruvbox-theme
-    solarized-theme
-    which-key
-    ido
-    ido-completing-read+
-    ido-vertical-mode
-    magit
+    ;; solarized-theme
+    ;; which-key
+    ;; ido
+    ;; ido-completing-read+
+    ;; ido-vertical-mode
+    ;; magit
+    vertico
+    marginalia
+    orderless
     multiple-cursors
     org
     org-bullets
