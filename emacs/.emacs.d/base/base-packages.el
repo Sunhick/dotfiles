@@ -45,15 +45,7 @@
 (defvar base-packages
   '(auto-complete
     diminish
-    ;; flx-ido
     fzf
-    ;; gruvbox-theme
-    ;; solarized-theme
-    ;; which-key
-    ;; ido
-    ;; ido-completing-read+
-    ;; ido-vertical-mode
-    ;; magit
     vertico
     marginalia
     orderless
@@ -61,14 +53,21 @@
     org
     org-bullets
     smartparens
-    ;; switch-window
     windmove
-    ;; twilight-theme
     zenburn-theme
-    ;; ag
     rg
-    ;; emacs postman
     restclient
+    ;; flx-ido
+    ;; gruvbox-theme
+    ;; solarized-theme
+    ;; which-key
+    ;; ido
+    ;; ido-completing-read+
+    ;; ido-vertical-mode
+    ;; magit
+    ;; ag
+    ;; switch-window
+    ;; twilight-theme
     )
   "Base emacs packages to be installed from melpa")
 
