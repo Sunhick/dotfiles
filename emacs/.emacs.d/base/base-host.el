@@ -31,7 +31,7 @@
 
 (when (string-equal system-type "darwin")
   ;; Emacs font and themes
-  (set-frame-font "Menlo:pixelsize=12"))
+  (set-frame-font "Iosevka Term:pixelsize=14"))
 
 (provide 'base-host)
 
