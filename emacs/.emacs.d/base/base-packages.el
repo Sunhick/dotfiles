@@ -57,6 +57,7 @@
     zenburn-theme
     rg
     restclient
+    magit
     ;; flx-ido
     ;; gruvbox-theme
     ;; solarized-theme
@@ -64,7 +65,6 @@
     ;; ido
     ;; ido-completing-read+
     ;; ido-vertical-mode
-    ;; magit
     ;; ag
     ;; switch-window
     ;; twilight-theme
