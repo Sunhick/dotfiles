@@ -29,8 +29,8 @@
 
 ;;; Code:
 
-(load-theme 'zenburn 'no-confirm)
-
+;; (load-theme 'zenburn 'no-confirm)
+(load-theme 'modus-vivendi 'no-confirm)
 
 (provide 'setup-theme)
 
