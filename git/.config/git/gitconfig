@@ -5,44 +5,47 @@
 ######################################################################################
 
 [core]
-	precomposeUnicode = true
-	editor = emacs
+    precomposeUnicode = true
+    editor = emacs
     # Speed up commands involving untracked files such as `git status`.
-	# https://git-scm.com/docs/git-update-index#_untracked_cache
+    # https://git-scm.com/docs/git-update-index#_untracked_cache
     untrackedCache = true
     pager = less -FMRiX
 
 [merge]
-	tool = emerge
+    tool = emerge
 
 [help]
-	# Automatically correct and execute mistyped commands
-	autocorrect = 0
+    # Automatically correct and execute mistyped commands
+    autocorrect = 0
 
 [color]
     ui = auto
 
 [diff]
     tool = ediff
-	colorMoved = zebra
+    colorMoved = zebra
 
 [grep]
     linenumber = true
 
 [pull]
-	ff = only
+    ff = only
 
 [push]
-	default = simple
+    default = simple
 	
 [alias]
-	l1 = log --pretty=format:'%C(yellow)%h %Cred%d %<|(90)%Creset%s%Cblue %<(15)%cn %C(dim white)%ar' --decorate --date=short
-	commit-message = log --format=%B -n 1
-	dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
+    l1 = log --pretty=format:'%C(yellow)%h %Cred%d %<|(90)%Creset%s%Cblue %<(15)%cn %C(dim white)%ar' --decorate --date=short
+    commit-message = log --format=%B -n 1
+    dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
 
 # https://git-scm.com/docs/diff-config#Documentation/diff-config.txt-diffwsErrorHighlight
 [diff]
     wsErrorHighlight = all
+    
+[log]
+    showSignature = true
 
 # Contract for whoever includes this gitconfig: Define for difftool and merge based on the host.
 # I tried to avoid this contract but found nothing really satisfying to my needs. I tried Shell
@@ -51,7 +54,7 @@
 # machine. Find good approach send a pr, please?
 #
 # [difftool "ediff"]
-#         cmd = emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
+#      cmd = emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
 #
 # [mergetool "emerge"]
-#         cmd = emacs $@
+#      cmd = emacs $@
