@@ -44,8 +44,8 @@
 [diff]
     wsErrorHighlight = all
     
-[log]
-    showSignature = true
+# [log]
+#     showSignature = true
 
 # Contract for whoever includes this gitconfig: Define for difftool and merge based on the host.
 # I tried to avoid this contract but found nothing really satisfying to my needs. I tried Shell
