@@ -10,6 +10,10 @@ function prompt_command {
     local last_exit_code="$?"
     PS1=""
 
+    if [[ -n "$AWS_PROFILE" ]]; then
+        PS1+="${bold_orange}${AWS_PROFILE}${reset_color} "
+    fi
+
     if [ ${last_exit_code} != 0 ]; then
         PS1+="${bold_red}${glyph_arrow} ${reset_color}"
     else
