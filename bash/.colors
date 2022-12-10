@@ -17,3 +17,6 @@ bold_purple="\[\e[35;1m\]"
 bold_cyan="\[\e[36;1m\]"
 bold_white="\[\e[37;1m\]"
 bold_orange="\[\e[91;1m\]"
+
+orange_bg="\[\033[30;48;5;208m\]"
+bg_reset="\[\033[0m\]"
