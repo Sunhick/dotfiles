@@ -1,26 +1,42 @@
-# Beware! This file is rewritten by htop when settings are changed in the interface.
-# The parser is also very primitive, and not human-friendly.
-fields=0 48 17 18 38 39 2 46 47 49 1
-sort_key=46
-sort_direction=1
-hide_threads=0
-hide_kernel_threads=1
-hide_userland_threads=0
-shadow_other_users=0
-show_thread_names=0
-show_program_path=1
-highlight_base_name=0
-highlight_megabytes=1
-highlight_threads=1
-tree_view=1
-header_margin=1
-detailed_cpu_time=0
-cpu_count_from_zero=0
-update_process_names=0
-account_guest_in_cpu_meter=0
-color_scheme=0
-delay=15
-left_meters=LeftCPUs Memory Swap
-left_meter_modes=1 1 1
-right_meters=RightCPUs Tasks LoadAverage Uptime
-right_meter_modes=1 2 2 2
+# htop Configuration File
+# WARNING: This file is rewritten by htop when settings are changed in the interface.
+# The parser is not human-friendly and settings may get overwritten.
+
+# Process Display Settings
+fields=0 48 17 18 38 39 2 46 47 49 1  # Order of fields to display: PID, user, memory, CPU usage, etc.
+sort_key=46                            # Default sorting key (field 46, which might be memory or CPU usage)
+sort_direction=1                       # Sort direction (1 for ascending, 0 for descending)
+hide_threads=0                         # Show threads (0 = show all, 1 = hide threads)
+hide_kernel_threads=1                  # Hide kernel threads (0 = show, 1 = hide)
+hide_userland_threads=0                # Show userland threads (0 = show, 1 = hide)
+show_thread_names=0                    # Show thread names (0 = no, 1 = yes)
+
+# Visual & Layout Settings
+tree_view=1                            # Display process tree view (1 = yes, 0 = no)
+header_margin=1                         # Space between header and process list
+highlight_megabytes=1                   # Highlight memory values that are in MB
+highlight_threads=1                     # Highlight threads to differentiate them from processes
+highlight_base_name=0                   # Highlight base program names (0 = no, 1 = yes)
+show_program_path=1                     # Show the full path of the program (1 = yes, 0 = no)
+
+# Sorting and Filtering
+update_process_names=0                  # Do not update process names dynamically (0 = no, 1 = yes)
+account_guest_in_cpu_meter=0            # Exclude guest processes from the CPU meter (0 = no, 1 = yes)
+
+# Display Settings
+cpu_count_from_zero=0                   # Start CPU count from 0 (1 = yes, 0 = no)
+detailed_cpu_time=0                     # Show detailed CPU time for each process (0 = no, 1 = yes)
+color_scheme=0                          # Use default color scheme (adjust as needed)
+delay=15                                # Update delay in seconds (default is 15)
+
+# Meter Settings
+left_meters=LeftCPUs Memory Swap        # Left panel meters: CPU usage, memory usage, swap usage
+left_meter_modes=1 1 1                  # Modes for the left meters (1 = bar style)
+right_meters=RightCPUs Tasks LoadAverage Uptime  # Right panel meters: CPU usage, tasks, load average, uptime
+right_meter_modes=1 2 2 2              # Modes for the right meters (1 = bar style, 2 = graph style)
+
+# Hide Other User Processes
+shadow_other_users=0                    # Show processes from other users as shadowed (0 = no, 1 = yes)
+
+# Miscellaneous Options
+account_guest_in_cpu_meter=0            # Exclude guest users from CPU usage meter (0 = no, 1 = yes)
