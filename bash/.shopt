@@ -1,17 +1,26 @@
 # -*- mode: shell-script -*-
 
-# Avoid duplicates
+# Avoid duplicate commands in history
 HISTCONTROL=ignoredups:erasedups
 
-# When the shell exits, append to the history file instead of overwriting it
+# Append to history rather than overwriting it on shell exit
 shopt -s histappend
 
-# Autocorrect typos in path names when using `cd`
+# Automatically correct typos in path names when using `cd`
 shopt -s cdspell
 
-# Enable some Bash 4 features when possible:
-# * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
-# * Recursive globbing, e.g. `echo **/*.txt`
+# Enable some useful Bash 4 features
+# 1. `autocd` - Automatically change to a directory if the name matches a folder (e.g., `mydir` -> `cd mydir`).
+# 2. `globstar` - Enable recursive globbing, which allows for `**/*.txt` (all `.txt` files in subdirectories).
 for option in autocd globstar; do
-	shopt -s "$option" 2> /dev/null
+    shopt -s "$option" 2>/dev/null  # Ignore errors if the option is unavailable (for older Bash versions)
 done
+
+# Enable intelligent case-insensitive file name completion
+shopt -s nocaseglob
+
+# Allow changing to the last visited directory with `cd -`
+shopt -s cdable_vars
+
+# Ensure `cd` remembers the last directory in the session
+export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
