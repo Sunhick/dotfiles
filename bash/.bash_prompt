@@ -1,31 +1,49 @@
 # -*- mode: shell-script -*-
 #!/usr/bin/env bash
 
-source ${DOTFILES_ROOT}dotfiles/bash/.colors
+# Ensure DOTFILES_ROOT ends with a slash
+DOTFILES_ROOT="${DOTFILES_ROOT%/}/"
 
-# glyph_arrow="»"
-glyph_arrow=$(echo -e '\u2192')
+# Load color definitions
+source "${DOTFILES_ROOT}dotfiles/bash/.colors"
 
-function prompt_command {
-    local last_exit_code="$?"
-    PS1=""
+# Arrow glyph
+glyph_arrow=$'\u2192'  # Unicode arrow
 
+prompt_command() {
+    local last_exit_code=$?
+    local cwd="\W"
+    local prompt=""
+
+    # Optional: Show AWS profile if set
     if [[ -n "$AWS_PROFILE" ]]; then
-        PS1+="${bold_orange}${AWS_PROFILE}${reset_color} "
+        prompt+="${bold_orange}${AWS_PROFILE}${reset_color} "
     fi
 
-    if [ ${last_exit_code} != 0 ]; then
-        PS1+="${bold_red}${glyph_arrow} ${reset_color}"
+    # Status indicator based on last exit code
+    if [[ "$last_exit_code" -ne 0 ]]; then
+        prompt+="${bold_red}${glyph_arrow} ${reset_color}"
     else
-        PS1+="${bold_green}${glyph_arrow} ${reset_color}"
+        prompt+="${bold_green}${glyph_arrow} ${reset_color}"
     fi
 
-    PS1+="${bold_green}\W ${reset_color} "
+    # Optional: include Git branch
+    # local git_branch
+    # git_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    # if [[ -n "$git_branch" ]]; then
+    #     prompt+="${bold_blue}(${git_branch})${reset_color} "
+    # fi
+
+    # Current working directory
+    prompt+="${bold_green}${cwd}${reset_color} "
+
+    PS1="$prompt"
     PS2="${bold_yellow}>${reset_color} "
 }
 
+# Fallback for 'dumb' terminals
 case "$TERM" in
-    "dumb")
+    dumb)
         PS1="> "
         ;;
     *)

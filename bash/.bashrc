@@ -1,34 +1,32 @@
 #!/usr/bin/env bash
 
-eval DOTFILES_ROOT="~/.dotfiles/"
+# Define the root of your dotfiles
+DOTFILES_ROOT="${HOME}/.dotfiles/"
 
-# include other sources
-function include () {
+# Safe source function
+include() {
     [[ -f "$1" ]] && source "$1"
 }
 
-if [ -f /.dockerenv ]; then
-    # Inside the docker. Don't use host .bashrc if the home folder is mounted.
-    include ${DOTFILES_ROOT}.dockerrc
+# Detect Docker environment
+if [[ -f "/.dockerenv" ]]; then
+    # Inside Docker – use container-specific rc
+    include "${DOTFILES_ROOT}.dockerrc"
     return
 fi
 
-# bash exports
-include ${DOTFILES_ROOT}dotfiles/bash/.bash_export
+# Include base configurations
+include "${DOTFILES_ROOT}dotfiles/bash/.bash_export"
+include "${DOTFILES_ROOT}dotfiles/bash/.bash_history"
+include "${DOTFILES_ROOT}dotfiles/bash/.aliases"
+include "${DOTFILES_ROOT}dotfiles/bash/.bash_prompt"
 
-# bash history configurations
-include ${DOTFILES_ROOT}dotfiles/bash/.bash_history
+# Include fuzzy finder if installed
+include "${HOME}/.fzf.bash"
 
-# include other sources
-include ~/.fzf.bash
-include ${DOTFILES_ROOT}dotfiles/bash/.aliases
+# Load OS-specific configuration
+os_name="$(uname | tr '[:upper:]' '[:lower:]')"
+include "${DOTFILES_ROOT}dotfiles/bash/.${os_name}"
 
-# Invoke host specific common script
-pfile=$(echo $(uname) | tr '[:upper:]' '[:lower:]')
-include ${DOTFILES_ROOT}dotfiles/bash/.${pfile}
-
-# Include any local overrides specific customizations per host
-include ${DOTFILES_ROOT}.${pfile}
-
-# provide custom bash prompt
-include ${DOTFILES_ROOT}dotfiles/bash/.bash_prompt
+# Load local machine-specific overrides
+include "${DOTFILES_ROOT}.${os_name}"
