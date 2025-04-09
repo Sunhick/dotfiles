@@ -1,1 +1,13 @@
- --target=~
+# .stowrc configuration file
+
+# Set the target directory for symlinks (default: ~)
+target=~
+
+# Enable verbose output by default
+verbose=true
+
+# Don't overwrite files that already exist
+adopt=true
+
+# Enable "restowing" (re-link existing symlinks)
+restow=true
