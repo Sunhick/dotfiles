@@ -1,12 +1,11 @@
 # -*- mode: shell-script -*-
 #!/usr/bin/env bash
 
+vibrant_colors='
 # Vibrant and high-contrast color theme
-# Rich standard colors
 red="\[\e[38;5;196m\]"       # vivid red
 green="\[\e[38;5;40m\]"      # strong green
 
-# High-contrast "bold" colors (actually rich hues)
 bold_black="\[\e[38;5;238m\]"     # charcoal gray
 bold_red="\[\e[38;5;203m\]"       # tomato red
 bold_green="\[\e[38;5;77m\]"      # emerald
@@ -17,57 +16,49 @@ bold_cyan="\[\e[38;5;81m\]"       # cyan with pop
 bold_white="\[\e[38;5;255m\]"     # bright white
 bold_orange="\[\e[38;5;208m\]"    # vivid orange
 
-# Background highlight (orange)
 orange_bg="\[\e[48;5;208m\]\[\e[38;5;232m\]"  # black text on vivid orange
 bg_reset="\[\e[0m\]"
-
-# Reset
 reset_color="\[\e[0m\]"
-
-###################################################################################
+'
+original_colors='
 # Original color theme
-# # Foreground colors
-# red="\[\e[0;31m\]"
-# green="\[\e[0;32m\]"
+red="\[\e[0;31m\]"
+green="\[\e[0;32m\]"
 
-# # Bold foreground colors
-# bold_black="\[\e[30;1m\]"
-# bold_red="\[\e[31;1m\]"
-# bold_green="\[\e[32;1m\]"
-# bold_yellow="\[\e[33;1m\]"
-# bold_blue="\[\e[34;1m\]"
-# bold_purple="\[\e[35;1m\]"
-# bold_cyan="\[\e[36;1m\]"
-# bold_white="\[\e[37;1m\]"
-# bold_orange="\[\e[91;1m\]"
+bold_black="\[\e[30;1m\]"
+bold_red="\[\e[31;1m\]"
+bold_green="\[\e[32;1m\]"
+bold_yellow="\[\e[33;1m\]"
+bold_blue="\[\e[34;1m\]"
+bold_purple="\[\e[35;1m\]"
+bold_cyan="\[\e[36;1m\]"
+bold_white="\[\e[37;1m\]"
+bold_orange="\[\e[91;1m\]"
 
-# # Background styles
-# orange_bg="\[\033[30;48;5;208m\]"  # black text on orange background
-# bg_reset="\[\033[0m\]"
+orange_bg="\[\033[30;48;5;208m\]"  # black text on orange background
+bg_reset="\[\033[0m\]"
+reset_color="\[\e[0m\]"
+'
 
-# # Reset
-# reset_color="\[\e[0m\]"
-
-###################################################################################
+muted_colors='
 # Muted color theme
-# # Muted foreground colors
-# red="\[\e[38;5;131m\]"       # dusty red
-# green="\[\e[38;5;108m\]"     # sage green
+red="\[\e[38;5;131m\]"       # dusty red
+green="\[\e[38;5;108m\]"     # sage green
 
-# # Muted bold foreground colors
-# bold_black="\[\e[38;5;240m\]"      # soft black/gray
-# bold_red="\[\e[38;5;131m\]"        # muted red
-# bold_green="\[\e[38;5;108m\]"      # muted green
-# bold_yellow="\[\e[38;5;180m\]"     # desaturated yellow
-# bold_blue="\[\e[38;5;110m\]"       # muted blue
-# bold_purple="\[\e[38;5;139m\]"     # violet/mauve
-# bold_cyan="\[\e[38;5;109m\]"       # teal blue
-# bold_white="\[\e[38;5;250m\]"      # soft white/gray
-# bold_orange="\[\e[38;5;173m\]"     # rust orange
+bold_black="\[\e[38;5;240m\]"      # soft black/gray
+bold_red="\[\e[38;5;131m\]"        # muted red
+bold_green="\[\e[38;5;108m\]"      # muted green
+bold_yellow="\[\e[38;5;180m\]"     # desaturated yellow
+bold_blue="\[\e[38;5;110m\]"       # muted blue
+bold_purple="\[\e[38;5;139m\]"     # violet/mauve
+bold_cyan="\[\e[38;5;109m\]"       # teal blue
+bold_white="\[\e[38;5;250m\]"      # soft white/gray
+bold_orange="\[\e[38;5;173m\]"     # rust orange
 
-# # Background styles
-# orange_bg="\[\e[48;5;208m\]\[\e[38;5;232m\]"  # dark text on orange background
-# bg_reset="\[\e[0m\]"
+orange_bg="\[\e[48;5;208m\]\[\e[38;5;232m\]"  # dark text on orange background
+bg_reset="\[\e[0m\]"
+reset_color="\[\e[0m\]"
+'
 
-# # Reset
-# reset_color="\[\e[0m\]"
+# Apply color theme
+eval "$vibrant_colors"
