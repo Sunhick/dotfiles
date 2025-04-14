@@ -25,6 +25,8 @@
 [diff]
     tool = ediff
     colorMoved = zebra
+    # https://git-scm.com/docs/diff-config#Documentation/diff-config.txt-diffwsErrorHighlight
+    wsErrorHighlight = all
 
 [grep]
     linenumber = true
@@ -38,12 +40,12 @@
 [alias]
     l1 = log --pretty=format:'%C(yellow)%h %Cred%d %<|(90)%Creset%s%Cblue %<(15)%cn %C(dim white)%ar' --decorate --date=short
     commit-message = log --format=%B -n 1
-    dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
+    dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)"%an" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
 
-# https://git-scm.com/docs/diff-config#Documentation/diff-config.txt-diffwsErrorHighlight
-[diff]
-    wsErrorHighlight = all
-    
+[blame]
+    showEmail = true
+    coloring = highlightRecent
+
 # [log]
 #     showSignature = true
 
