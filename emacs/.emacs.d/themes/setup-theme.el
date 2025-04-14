@@ -30,10 +30,10 @@
 ;;; Code:
 
 ;; zenburn
-;; (load-theme 'zenburn 'no-confirm)
+(load-theme 'zenburn 'no-confirm)
 
 ;; modus vivendi builtin theme
-(load-theme 'modus-vivendi 'no-confirm)
+;; (load-theme 'modus-vivendi 'no-confirm)
 
 (provide 'setup-theme)
 

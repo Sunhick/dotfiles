@@ -32,7 +32,7 @@
 ;; https://gitlab.com/protesilaos/iosevka-comfy
 (when (string-equal system-type "darwin")
   ;; Emacs font and themes
-  (set-frame-font "Iosevka Comfy:pixelsize=14"))
+  (set-frame-font "Menlo:pixelsize=14"))
 
 (provide 'base-host)
 
