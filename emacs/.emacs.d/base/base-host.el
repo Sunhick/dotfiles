@@ -32,7 +32,10 @@
 ;; https://gitlab.com/protesilaos/iosevka-comfy
 (when (string-equal system-type "darwin")
   ;; Emacs font and themes
-  (set-frame-font "Ubuntu Mono:pixelsize=15"))
+  (set-frame-font "Iosevka Comfy:pixelsize=15"))
+
+;; Improve vertical spacing
+(setq-default line-spacing 2)
 
 (provide 'base-host)
 
