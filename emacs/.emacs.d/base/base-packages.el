@@ -58,7 +58,7 @@
     rg
     restclient
     magit
-    modus-themes
+    ;; modus-themes
     ;; flx-ido
     ;; gruvbox-theme
     ;; solarized-theme
