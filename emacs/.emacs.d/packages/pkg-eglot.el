@@ -1,6 +1,6 @@
-;;; pkg-initializer.el --- package initializer
+;;; pkg-eglot.el --- Eglot
 ;;
-;; Copyright (c) 2018-2019 Sunil
+;; Copyright (c) 2024-2025 Sunil
 ;;
 ;; Author: Sunil <sunhick@gmail.com>
 
@@ -29,31 +29,17 @@
 
 ;;; Code:
 
-;; Base packages setup
-(require 'pkg-fzf)
-;; (require 'pkg-ido)
-;; (require 'pkg-magit)
-(require 'pkg-vertico)
-(require 'pkg-multiple-cursors)
-;; (require 'pkg-guide-key)
-;; (require 'pkg-which-key)
-(require 'pkg-ripgrep)
-(require 'pkg-smartparens)
-;; (require 'pkg-switch-windows)
-(require 'pkg-windmove)
-(require 'pkg-autocomplete)
-(require 'pkg-eglot)
-(require 'pkg-org-mode)
+;; Enable Eglot for certain programming modes
+(add-hook 'python-mode-hook #'eglot-ensure)
+;; (add-hook 'rust-mode-hook #'eglot-ensure)
+;; (add-hook 'js-mode-hook #'eglot-ensure)
+;; (add-hook 'typescript-mode-hook #'eglot-ensure)
+;; (add-hook 'c-mode-hook #'eglot-ensure)
 
-;; Add-on packages (uncomment if required)
-(require 'pkg-slim-programming-mode)
-(require 'pkg-go-mode)
-;; (require 'pkg-react-native)
-(require 'pkg-typescript-mode)
-(require 'pkg-gn-mode)
-(require 'pkg-google-c-style)
+;; Optional: UI improvements
+(setq eglot-autoshutdown t)            ; shuts down LSP server when no longer needed
+(setq eglot-extend-to-xref t)          ; enable xref-based navigation even without project
+(add-hook 'eglot-managed-mode-hook #'eldoc-mode)
 
-
-(provide 'pkg-initializer)
-
-;;; pkg-initializer.el ends here
+(provide 'pkg-eglot)
+;;; pkg-eglot.el ends here
