@@ -17,3 +17,5 @@ EMACS_CLIENT="${EMACS}/bin"
 
 # Override emacs from macos
 export PATH=$EMACS:$EMACS_CLIENT:$VSCODE:$PATH
+
+include "$HOME/.cargo/env"

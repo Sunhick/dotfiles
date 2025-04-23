@@ -31,6 +31,7 @@
 
 ;; Enable Eglot for certain programming modes
 (add-hook 'python-mode-hook #'eglot-ensure)
+(add-hook 'emacs-lisp-mode-hook #'eglot-ensure)
 ;; (add-hook 'rust-mode-hook #'eglot-ensure)
 ;; (add-hook 'js-mode-hook #'eglot-ensure)
 ;; (add-hook 'typescript-mode-hook #'eglot-ensure)
