@@ -36,6 +36,7 @@
     ;; gitignore-mode
     protobuf-mode
     groovy-mode
+    rust-mode
     ;; cmake-mode
     ;; rjsx-mode
     markdown-mode

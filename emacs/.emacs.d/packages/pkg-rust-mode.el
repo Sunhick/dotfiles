@@ -1,6 +1,6 @@
-;;; pkg-initializer.el --- package initializer
+;;; pkg-rust-mode.el --- go mode
 ;;
-;; Copyright (c) 2018-2019 Sunil
+;; Copyright (c) 2024-2025 Sunil
 ;;
 ;; Author: Sunil <sunhick@gmail.com>
 
@@ -29,32 +29,22 @@
 
 ;;; Code:
 
-;; Base packages setup
-(require 'pkg-fzf)
-;; (require 'pkg-ido)
-;; (require 'pkg-magit)
-(require 'pkg-vertico)
-(require 'pkg-multiple-cursors)
-;; (require 'pkg-guide-key)
-;; (require 'pkg-which-key)
-(require 'pkg-ripgrep)
-(require 'pkg-smartparens)
-;; (require 'pkg-switch-windows)
-(require 'pkg-windmove)
-(require 'pkg-autocomplete)
-(require 'pkg-eglot)
-(require 'pkg-org-mode)
+(require 'base-ensure)
 
-;; Add-on packages (uncomment if required)
-(require 'pkg-slim-programming-mode)
-(require 'pkg-go-mode)
-;; (require 'pkg-react-native)
-(require 'pkg-typescript-mode)
-(require 'pkg-gn-mode)
-(require 'pkg-google-c-style)
-(require 'pkg-rust-mode)
+;; Load rust-mode for .rs files
+(require 'rust-mode)
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+
+;; Enable eglot for Rust
+(add-hook 'rust-mode-hook #'eglot-ensure)
+
+;; Optional: format Rust code on save
+(add-hook 'rust-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode nil)
+            (setq rust-format-on-save t)))
 
 
-(provide 'pkg-initializer)
+(provide 'pkg-rust-mode)
 
-;;; pkg-initializer.el ends here
+;;; pkg-rust-mode.el ends here
