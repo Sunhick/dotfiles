@@ -30,7 +30,12 @@
 ;;; Code:
 
 (when (window-system)
-  (require 'base-window))
+  (require 'base-window)
+  (setq initial-frame-alist
+        '((top . 0)
+          (left . 50)
+          (width . 205)
+          (height . 67))))
 
 ;; Apply host settings
 (require 'base-host)

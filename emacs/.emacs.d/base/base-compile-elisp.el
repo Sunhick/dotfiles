@@ -1,6 +1,6 @@
-;;; base-init.el --- base init configurations
+;;; base-compile-elisp.el --- base init configurations
 ;;
-;; Copyright (c) 2018-2019 Sunil
+;; Copyright (c) 2025-2026 Sunil
 ;;
 ;; Author: Sunil <sunhick@gmail.com>
 
@@ -29,14 +29,13 @@
 
 ;;; Code:
 
-;; Emacs 30 on macos still isnt' available from the installer repo.
-;; At this point, i would have to compile from sources myself or wait.
-;; (require 'base-compile-elisp)
-(require 'base-ui)
-(require 'base-packages)
-(require 'base-emacs)
-(require 'base-registers)
+(defun compile-emacs-d-native ()
+  (let ((default-directory "~/.emacs.d/"))
+    (dolist (file (directory-files default-directory t "\\.el$"))
+      (native-compile-file file))))
 
-(provide 'base-init)
+(add-hook 'emacs-startup-hook 'compile-emacs-d-native)
 
-;;; base-init.el ends here
+(provide 'base-compile-elisp)
+
+;;; base-compile-elisp.el ends here

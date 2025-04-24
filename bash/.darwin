@@ -2,13 +2,6 @@
 
 export JAVA_HOME=$(/usr/libexec/java_home)
 
-alias emacs="Emacs -geometry 180x76"
-alias emacsclient="emacsclient -c"
-
-# Colorize the ls output
-alias ls="ls -G"
-alias ll="ls -lG"
-
 # vscode alias
 VSCODE="/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
@@ -19,3 +12,9 @@ EMACS_CLIENT="${EMACS}/bin"
 export PATH=$EMACS:$EMACS_CLIENT:$VSCODE:$PATH
 
 include "$HOME/.cargo/env"
+
+# MacOS Specific aliases
+alias emacs="open -a Emacs"
+alias emacsclient="emacsclient -c"
+alias ls="ls -G"
+alias ll="ls -lG"
