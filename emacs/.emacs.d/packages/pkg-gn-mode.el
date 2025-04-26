@@ -1,4 +1,4 @@
-;;; pkg-slim-programming-mode.el --- package initializer
+;;; pkg-slim-programming-mode.el --- package initializer  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2020-2021 Sunil
 ;;

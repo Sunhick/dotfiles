@@ -1,4 +1,4 @@
-;;; pkg-fzf.el --- fuzzy finder
+;;; pkg-fzf.el --- fuzzy finder  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

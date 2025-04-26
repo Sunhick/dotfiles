@@ -1,4 +1,4 @@
-;;; pkg-react-native.el --- React native development
+;;; pkg-react-native.el --- React native development  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

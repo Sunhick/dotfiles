@@ -1,4 +1,4 @@
-;;; base-window.el --- base window configurations
+;;; base-window.el --- base window configurations  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2019-2020 Sunil
 ;;

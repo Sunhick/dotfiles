@@ -1,4 +1,4 @@
-;;; pkg-ripgrep.el --- rip grep
+;;; pkg-ripgrep.el --- rip grep  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2019-2020 Sunil
 ;;

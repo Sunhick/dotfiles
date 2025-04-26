@@ -1,4 +1,4 @@
-;;; base-host.el --- base host configurations
+;;; base-host.el --- base host configurations  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2019-2020 Sunil
 ;;

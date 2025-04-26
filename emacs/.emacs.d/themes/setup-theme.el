@@ -1,4 +1,4 @@
-;;; setup-theme.el --- Emacs theme
+;;; setup-theme.el --- Emacs theme  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

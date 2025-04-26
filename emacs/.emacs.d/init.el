@@ -1,4 +1,4 @@
-;;; init.el --- emacs configurations
+;;; init.el --- emacs configurations  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -58,6 +58,6 @@ Most of them will be keybindings for packages installed by default.")
 (require 'user-setup)
 (require 'setup-theme)
 (require 'pkg-initializer)
-(require 'vendor-init)
+;; (require 'vendor-init)
 
 ;;; init.el ends here

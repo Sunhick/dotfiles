@@ -1,4 +1,4 @@
-;;; pkg-magit.el --- magit configurations
+;;; pkg-magit.el --- magit configurations  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

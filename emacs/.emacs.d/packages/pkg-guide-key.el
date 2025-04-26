@@ -1,4 +1,4 @@
-;;; pkg-guide-key.el --- guide key configurations
+;;; pkg-guide-key.el --- guide key configurations  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

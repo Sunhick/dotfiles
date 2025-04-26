@@ -1,4 +1,4 @@
-;;; base-init.el --- base init configurations
+;;; base-init.el --- base init configurations  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -31,7 +31,7 @@
 
 ;; Emacs 30 on macos still isnt' available from the installer repo.
 ;; At this point, i would have to compile from sources myself or wait.
-;; (require 'base-compile-elisp)
+(require 'base-compile-elisp)
 (require 'base-ui)
 (require 'base-packages)
 (require 'base-emacs)

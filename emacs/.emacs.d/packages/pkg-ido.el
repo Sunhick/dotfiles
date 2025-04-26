@@ -1,4 +1,4 @@
-;;; pkg-ido.el --- Ido configurations
+;;; pkg-ido.el --- Ido configurations  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

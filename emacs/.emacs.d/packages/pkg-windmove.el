@@ -1,4 +1,4 @@
-;;; pkg-windmove.el --- window movement made easy with windmove
+;;; pkg-windmove.el --- window movement made easy with windmove  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

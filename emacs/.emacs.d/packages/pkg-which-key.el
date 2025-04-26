@@ -1,4 +1,4 @@
-;;; pkg-which-key.el --- which key
+;;; pkg-which-key.el --- which key  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2019-2020 Sunil
 ;;

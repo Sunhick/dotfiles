@@ -1,4 +1,4 @@
-;;; pkg-autocomplete.el --- AC configurations
+;;; pkg-autocomplete.el --- AC configurations  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

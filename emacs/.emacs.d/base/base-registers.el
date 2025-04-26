@@ -1,4 +1,4 @@
-;;; base-registers.el --- base registers configurations
+;;; base-registers.el --- base registers configurations  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2019-2020 Sunil
 ;;

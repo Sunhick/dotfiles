@@ -1,4 +1,4 @@
-;;; base-compile-elisp.el --- base init configurations
+;;; base-compile-elisp.el --- base init configurations -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2025-2026 Sunil
 ;;
@@ -30,11 +30,11 @@
 ;;; Code:
 
 (defun compile-emacs-d-native ()
-  (let ((default-directory "~/.emacs.d/"))
-    (dolist (file (directory-files default-directory t "\\.el$"))
-      (native-compile-file file))))
+  "Native compile all .el files under ~/.emacs.d recursively."
+  (interactive)
+  (native-compile-async "~/.emacs.d" 'recursively))
 
-(add-hook 'emacs-startup-hook 'compile-emacs-d-native)
+(add-hook 'emacs-startup-hook #'compile-emacs-d-native)
 
 (provide 'base-compile-elisp)
 

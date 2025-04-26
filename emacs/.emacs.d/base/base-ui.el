@@ -1,4 +1,4 @@
-;;; base-ui.el --- base ui configurations
+;;; base-ui.el --- base ui configurations  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;
@@ -29,13 +29,17 @@
 
 ;;; Code:
 
-(when (window-system)
-  (require 'base-window)
-  (setq initial-frame-alist
-        '((top . 0)
-          (left . 50)
-          (width . 205)
-          (height . 67))))
+;; (when (window-system)
+;;   (require 'base-window)
+;;   (setq initial-frame-alist
+;;         '((top . 0)
+;;           (left . 50)
+;;           (width . 205)
+;;           (height . 67))))
+(add-hook 'after-init-hook
+          (lambda ()
+            (set-frame-size (selected-frame) 205 67))
+          (set-frame-position (selected-frame) 50 50))
 
 ;; Apply host settings
 (require 'base-host)
@@ -61,7 +65,9 @@
 (setq frame-resize-pixelwise t)
 
 ;; Get rid of tool bar and menu bar
-(menu-bar-mode 0)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
 
 ;; I hate typing. Especially when emacs prompts
 ;; me with yes/no and i type 'y' or 'n' in a hurry

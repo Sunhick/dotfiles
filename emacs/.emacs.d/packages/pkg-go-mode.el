@@ -1,4 +1,4 @@
-;;; pkg-go-mode.el --- go mode
+;;; pkg-go-mode.el --- go mode  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2019-2020 Sunil
 ;;

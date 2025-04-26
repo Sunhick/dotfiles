@@ -1,4 +1,4 @@
-;;; base-emacs.el --- base emacs editor behaviour
+;;; base-emacs.el --- base emacs editor behaviour  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

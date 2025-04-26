@@ -1,4 +1,4 @@
-;;; pkg-vertico.el --- package vertico
+;;; pkg-vertico.el --- package vertico  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2022-2023 Sunil
 ;;

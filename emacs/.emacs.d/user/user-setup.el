@@ -1,4 +1,4 @@
-;;; user-setup.el --- setup user
+;;; user-setup.el --- setup user  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

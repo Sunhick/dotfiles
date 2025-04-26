@@ -1,4 +1,4 @@
-;;; base-packages.el --- base package configurations
+;;; base-packages.el --- base package configurations  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

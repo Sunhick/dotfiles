@@ -1,4 +1,4 @@
-;;; pkg-eglot.el --- Eglot
+;;; pkg-eglot.el --- Eglot  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2024-2025 Sunil
 ;;

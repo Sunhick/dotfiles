@@ -1,4 +1,4 @@
-;;; pkg-switch-windows.el --- switch window configurations
+;;; pkg-switch-windows.el --- switch window configurations  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

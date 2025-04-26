@@ -1,4 +1,4 @@
-;;; pkg-google-c-style.el --- Google C/C++ style guide
+;;; pkg-google-c-style.el --- Google C/C++ style guide  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2020-2021 Sunil
 ;;

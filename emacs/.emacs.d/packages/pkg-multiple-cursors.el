@@ -1,4 +1,4 @@
-;;; pkg-multiple-cursors.el --- multiple cursors configurations
+;;; pkg-multiple-cursors.el --- multiple cursors configurations  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2018-2019 Sunil
 ;;

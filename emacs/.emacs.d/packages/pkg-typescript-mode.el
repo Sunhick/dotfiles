@@ -1,4 +1,4 @@
-;;; pkg-typescript-mode.el --- typescript
+;;; pkg-typescript-mode.el --- typescript  -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2020-2021 Sunil
 ;;
