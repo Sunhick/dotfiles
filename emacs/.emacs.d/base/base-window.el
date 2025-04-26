@@ -32,8 +32,8 @@
 ;; Yeah, I'm keeping the text menu at the top. It doesn't
 ;; bother me. Whereas the toolbar i never use it and just
 ;; occupies space.
-(tool-bar-mode 0)
-(scroll-bar-mode 0)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
 
 ;; change the fringe
 (set-fringe-mode '(nil . 0))
