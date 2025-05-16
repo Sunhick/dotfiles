@@ -35,6 +35,9 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
+(when (fboundp 'pixel-scroll-precision-mode)
+  (pixel-scroll-precision-mode 1))
+
 ;; change the fringe
 (set-fringe-mode '(nil . 0))
 

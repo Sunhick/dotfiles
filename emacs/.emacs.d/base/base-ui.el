@@ -89,24 +89,25 @@
 (setq line-number-mode t)
 (setq column-number-mode t)
 
+(when (version<= "26.0.50" emacs-version)
+  (global-display-line-numbers-mode 1)
+  (setq display-line-numbers-type 'relative))
+
+(setq-default display-line-numbers-current-absolute nil)
+(global-display-line-numbers-mode)
+
 ;; use whitespaces instead of tabs
 (setq-default indent-tabs-mode nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; whitespace visualization
+(setq-default show-trailing-whitespace t)
 
 ;; Show empty lines indicator
 (set-default 'indicate-empty-lines t)
 
 ;; ibuffer is a better choice
 (defalias 'list-buffers 'ibuffer)
-
-;; Works only with emacs >= 26
-;; use native relative line numbering(faster than linum-relative package)
-;; Builtin package also fixes the issues with code folding.
-;; (when (not (version< emacs-version "26.0"))
-;;   (progn
-;;     (global-display-line-numbers-mode)
-;;     (setq-default display-line-numbers-type 'visual
-;;                   display-line-numbers-current-absolute nil)))
 
 (provide 'base-ui)
 

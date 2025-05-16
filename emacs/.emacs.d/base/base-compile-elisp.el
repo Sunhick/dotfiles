@@ -29,12 +29,19 @@
 
 ;;; Code:
 
+;; Enable deferred native compilation
+(setq native-comp-deferred-compilation t)
+
+; ; prioritize compilation speed
+(setq native-comp-speed 3)
+
 (defun compile-emacs-d-native ()
   "Native compile all .el files under ~/.emacs.d recursively."
   (interactive)
-  (native-compile-async "~/.emacs.d" 'recursively))
+  (when (fboundp 'native-compile-async)
+    (native-compile-async "~/.emacs.d" 'recursively)))
 
-(add-hook 'emacs-startup-hook #'compile-emacs-d-native)
+;; (add-hook 'emacs-startup-hook #'compile-emacs-d-native)
 
 (provide 'base-compile-elisp)
 

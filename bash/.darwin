@@ -14,7 +14,7 @@ export PATH=$EMACS:$EMACS_CLIENT:$VSCODE:$PATH
 include "$HOME/.cargo/env"
 
 # MacOS Specific aliases
-alias emacs="open -a Emacs"
+alias emacs="Emacs"
 alias emacsclient="emacsclient -c"
 alias ls="ls -G"
 alias ll="ls -lG"

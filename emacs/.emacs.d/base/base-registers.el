@@ -31,8 +31,8 @@
 
 ;; https://www.emacswiki.org/emacs/Registers
 ;; key bind: C-x r j e
-(set-register ?e '(file . "~/.emacs.d"))
-(set-register ?b '(file . "~/.bashrc"))
+;; (set-register ?e '(file . "~/.emacs.d"))
+;; (set-register ?b '(file . "~/.bashrc"))
 
 ;; use dir-locals.el to configure registers on per project needs
 ;; you can also have two git repos inside same folder using --git-dir

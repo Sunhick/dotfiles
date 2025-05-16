@@ -30,6 +30,10 @@
 ;;; Code:
 
 (require 'magit)
+
+;; Disable Git polling on startup. I need quick emacs load times.
+(setq vc-handled-backends nil)
+
 (global-set-key(kbd "C-x g") 'magit-status)
 
 (provide 'pkg-magit)
