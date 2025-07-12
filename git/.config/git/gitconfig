@@ -1,8 +1,17 @@
 ######################################################################################
 # To consume this file simply add the below two lines in your $HOME/.gitconfig file. #
 # [include]                                                                          #
-#         path = ~/.config/git/.gitconfig                                            #
+#         path = ~/.config/git/gitconfig                                             #
 ######################################################################################
+
+# Include a local, private gitconfig for user-specific settings (e.g., name, email)
+# Create a ~/.config/git/local file and add it to your global .gitignore.
+[include]
+    path = ~/.config/git/local
+
+# Include OS-specific configurations
+[includeIf "os:darwin"]
+    path = ~/.config/git/macOS.gitconfig
 
 [core]
     precomposeUnicode = true
@@ -14,6 +23,10 @@
 
 [merge]
     tool = emerge
+
+[mergetool "emerge"]
+    cmd = emacs --eval "(emerge-files \"$LOCAL\" \"$REMOTE\" nil \"$MERGED\")"
+    trustExitCode = true
 
 [help]
     # Automatically correct and execute mistyped commands
@@ -28,6 +41,9 @@
     # https://git-scm.com/docs/diff-config#Documentation/diff-config.txt-diffwsErrorHighlight
     wsErrorHighlight = all
 
+[difftool "ediff"]
+    cmd = emacs --eval "(ediff-files \"$LOCAL\" \"$REMOTE\")"
+
 [grep]
     linenumber = true
 
@@ -40,19 +56,4 @@
 [alias]
     l1 = log --pretty=format:'%C(yellow)%h %Cred%d %<|(90)%Creset%s%Cblue %<(15)%cn %C(dim white)%ar' --decorate --date=short
     commit-message = log --format=%B -n 1
-    dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)"%an" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
-
-# [log]
-#     showSignature = true
-
-# Contract for whoever includes this gitconfig: Define for difftool and merge based on the host.
-# I tried to avoid this contract but found nothing really satisfying to my needs. I tried Shell
-# script (didn't work), environment variable (works only with EDITOR variable, possibly VISUAL
-# as well). or try providing a small wrapper for emacs that links to right path based on host
-# machine. Find good approach send a pr, please?
-#
-# [difftool "ediff"]
-#      cmd = emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
-#
-# [mergetool "emerge"]
-#      cmd = emacs $@
+    dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
