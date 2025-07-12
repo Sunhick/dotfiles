@@ -12,23 +12,10 @@
 
 ## Installation
 
-### One-liner:
-
 ```shell
-$ wget -O - https://raw.githubusercontent.com/Sunhick/dotfiles/installer/installer.sh | bash
-```
-
-### Git lovers'
-use GNU stow to install the configuration files.
-```sh
-$ brew install stow
-$ git clone --recursive https://github.com/Sunhick/dotfiles.git ~/.dotfiles/dotfiles
-
-$ cd ~/.dotfiles/dotfiles
-
-# You want to use --no-folding option with stow to avoid clobbering git directory
-$ stow -t ~ stow
-$ stow bash emacs git htop i3 iterm2 nano tmux
+git clone --recursive https://github.com/Sunhick/dotfiles.git ~/.dotfiles/dotfiles
+cd ~/.dotfiles/dotfiles
+./installer.sh
 ```
 
 ## Uninstall
