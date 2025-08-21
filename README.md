@@ -2,67 +2,65 @@
 
 A modernized, modular dotfiles configuration with intelligent loading, XDG Base Directory compliance, and cross-platform support.
 
-## ✨ Features
+## Features
 
-- **🚀 Intelligent Module Loading**: Async loading with dependency resolution and feature detection
-- **📦 Advanced Stow Management**: Comprehensive package management with conflict resolution
-- **📁 XDG Base Directory Compliant**: Clean home directory organization following XDG standards
-- **🛡️ Enhanced Error Handling**: Comprehensive logging and graceful degradation
-- **🔧 Cross-Platform**: Works seamlessly on macOS and Linux
-- **⚡ Performance Optimized**: Conditional loading based on available tools
-- **🧩 Modular Architecture**: Easy to extend and customize
-- **🔄 Automated Workflows**: Make targets for common operations
-- **🛠️ Dependency Validation**: Ensures required tools are available
-- **💾 Backup System**: Automatic backups before making changes
+- **Intelligent Module Loading**: Async loading with dependency resolution and feature detection
+- **Advanced Stow Management**: Comprehensive package management with conflict resolution
+- **XDG Base Directory Compliant**: Clean home directory organization following XDG standards
+- **Enhanced Error Handling**: Comprehensive logging and graceful degradation
+- **Cross-Platform**: Works seamlessly on macOS and Linux
+- **Performance Optimized**: Conditional loading based on available tools
+- **Modular Architecture**: Easy to extend and customize
+- **Automated Workflows**: Make targets for common operations
+- **Dependency Validation**: Ensures required tools are available
+- **Backup System**: Automatic backups before making changes
 
-## 🏗️ Architecture
+## Architecture
+
+This dotfiles repository uses a hierarchical package management system organized by category:
 
 ```
 dotfiles/
-├── bash/                           # Bash configuration package
-│   ├── core/                      # Core infrastructure
-│   │   ├── loader.bash           # Module loading system
-│   │   └── error_handler.bash    # Error handling & validation
-│   ├── features/                  # Feature modules
-│   │   └── xdg.bash              # XDG Base Directory support
-│   ├── .bashrc                   # Main bash configuration
-│   ├── .bash_profile             # Bash profile
-│   ├── .aliases                  # Command aliases
-│   ├── .colors                   # Color definitions
-│   ├── .darwin                   # macOS-specific config
-│   ├── .linux                    # Linux-specific config
-│   ├── .stow-dependencies        # Package dependencies
-│   └── .stow-local-ignore        # Package-specific ignores
-├── emacs/                          # Emacs configuration package
-│   ├── .emacs.d/                 # Emacs configuration directory
-│   ├── .stow-dependencies        # Emacs dependencies
-│   └── .stow-local-ignore        # Emacs-specific ignores
-├── git/                            # Git configuration package
-│   ├── .config/git/              # XDG-compliant git config
-│   └── .stow-local-ignore        # Git-specific ignores
-├── tmux/                           # Tmux configuration package
-│   ├── .tmux.conf                # Tmux configuration
-│   └── .stow-dependencies        # Tmux dependencies
-├── zsh/                            # Zsh configuration package
-│   └── .zshrc                    # Zsh configuration
-├── vscode/                         # VS Code configuration package
-│   └── settings.json             # VS Code settings
-├── stow/                           # Stow management configuration
-│   ├── .stowrc                   # Advanced stow configuration
-│   ├── .stow-global-ignore       # Global ignore patterns
-│   ├── .stow-aliases             # Convenient stow aliases
-│   └── .stow-hooks               # Pre/post stow hooks
-├── htop/                           # htop configuration package
-├── i3/                             # i3 window manager package
-├── iterm2/                         # iTerm2 configuration package
-├── nano/                           # nano editor package
-├── gnupg/                          # GnuPG configuration package
-├── Makefile                        # Advanced stow operations
-├── installer.sh                    # Installation script
-└── README.md                       # This file
+├── packages/                       # All dotfile packages organized by category
+│   ├── shell/                     # Shell configurations (bash, zsh)
+│   ├── editors/                   # Editor configurations (emacs, nano, vscode)
+│   ├── tools/                     # CLI tools (tmux, htop, gnupg)
+│   ├── desktop/                   # Desktop applications (i3, iterm2)
+│   └── development/               # Development tools (git)
+├── management/                     # Repository management tools
+│   └── stow/                      # Stow configuration and management
+├── .github/                        # GitHub workflows and templates
+├── Makefile                        # Main installation interface
+└── README.md                       # This documentation
 ```
 
-## 📋 Prerequisites
+### Package Categories
+
+**Shell Packages** (`packages/shell/`)
+- Bash, Zsh configurations with aliases, functions, and environment setup
+
+**Editor Packages** (`packages/editors/`)
+- Emacs, Nano, VS Code configurations and customizations
+
+**Tool Packages** (`packages/tools/`)
+- CLI utilities like tmux, htop, gnupg with optimized configurations
+
+**Desktop Packages** (`packages/desktop/`)
+- Desktop environment and terminal application configurations
+
+**Development Packages** (`packages/development/`)
+- Git and other development tool configurations
+
+### Management System
+
+The repository includes a sophisticated management layer:
+
+- **Hierarchical Makefiles**: Each category has its own Makefile for targeted operations
+- **Stow Integration**: Advanced GNU Stow configuration with conflict resolution
+- **Dependency Management**: Automatic validation of package requirements
+- **Cross-Platform Support**: Conditional installation based on operating system
+
+## Prerequisites
 
 ### Required
 - **Bash 5+** (for modern features and associative arrays)
@@ -83,7 +81,7 @@ dotfiles/
 - [stow](https://www.gnu.org/software/stow/manual/stow.html)
 - [i3](https://i3wm.org) (Linux only)
 
-## 🚀 Installation
+## Installation
 
 ### Quick Start
 ```bash
@@ -134,7 +132,7 @@ load_module "git"
 load_module "navigation"
 ```
 
-## 🔧 Configuration
+## Configuration
 
 ### Stow Management
 ```bash
@@ -195,7 +193,7 @@ module_status "git"
 load_deferred_modules
 ```
 
-## 📦 Advanced Stow Management
+## Advanced Stow Management
 
 This dotfiles repository uses an advanced stow setup with intelligent package management:
 
@@ -230,7 +228,7 @@ make clean             # Remove broken symlinks
 make backup            # Create backup of existing files
 ```
 
-## 📁 XDG Base Directory Support
+## XDG Base Directory Support
 
 This configuration automatically migrates your existing dotfiles to XDG-compliant locations:
 
@@ -245,7 +243,7 @@ This configuration automatically migrates your existing dotfiles to XDG-complian
 show_xdg_status
 ```
 
-## 🗑️ Uninstall
+## Uninstall
 
 ### Complete Uninstall
 ```bash
@@ -277,7 +275,7 @@ stow --delete bash tmux
 ## More
 See [Wiki](https://github.com/Sunhick/dotfiles/wiki) for installation & other information.
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Stow Issues
 ```bash
@@ -339,7 +337,7 @@ clear_error_log
 - Install missing tools before stowing packages
 - Use `make install-core` for essential packages first
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/amazing-feature`
@@ -357,23 +355,23 @@ register_module "my_feature" "features/my_feature.bash" "async" "command -v my_t
 ```
 3. Follow error handling patterns using the provided functions
 
-## 📚 Documentation
+## Documentation
 
 - [Wiki](https://github.com/Sunhick/dotfiles/wiki) - Detailed installation and configuration guides
 - [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
 - [Bash Manual](https://www.gnu.org/software/bash/manual/bash.html)
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
 - [Bash Best Practices](https://mywiki.wooledge.org/BashGuide)
 - Community dotfiles repositories for inspiration
 
-## 🔧 Stow Aliases and Shortcuts
+## Stow Aliases and Shortcuts
 
 For convenience, source the stow aliases:
 ```bash
@@ -398,7 +396,7 @@ stow-clean               # Clean broken symlinks
 stow-validate            # Validate packages
 ```
 
-## 📋 Quick Reference
+## Quick Reference
 
 | Command              | Description                   |
 | -------------------- | ----------------------------- |
