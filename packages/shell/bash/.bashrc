@@ -1,32 +1,45 @@
 #!/usr/bin/env bash
 
-# Define the root of your dotfiles
-DOTFILES_ROOT="${HOME}/.dotfiles/"
+# Get the directory where this .bashrc is located
+BASH_CONFIG_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Safe source function
+# Safe source function with error handling
 include() {
-    [[ -f "$1" ]] && source "$1"
+    if [[ -f "$1" ]]; then
+        source "$1"
+    elif [[ "${2:-}" != "optional" ]]; then
+        echo "Warning: Could not source $1" >&2
+    fi
 }
 
-# Detect Docker environment
-if [[ -f "/.dockerenv" ]]; then
-    # Inside Docker – use container-specific rc
-    include "${DOTFILES_ROOT}.dockerrc"
-    return
-fi
+# Load shell options first
+include "${BASH_CONFIG_DIR}/.shopt"
 
-# Include base configurations
-include "${DOTFILES_ROOT}dotfiles/bash/.bash_export"
-include "${DOTFILES_ROOT}dotfiles/bash/.bash_history"
-include "${DOTFILES_ROOT}dotfiles/bash/.aliases"
-include "${DOTFILES_ROOT}dotfiles/bash/.bash_prompt"
+# Load environment variables
+include "${BASH_CONFIG_DIR}/.bash_export"
 
-# Include fuzzy finder if installed
-include "${HOME}/.fzf.bash"
+# Load history configuration
+include "${BASH_CONFIG_DIR}/.bash_history"
+
+# Load colors and prompt
+include "${BASH_CONFIG_DIR}/.colors"
+include "${BASH_CONFIG_DIR}/.bash_prompt"
+
+# Load aliases
+include "${BASH_CONFIG_DIR}/.aliases"
 
 # Load OS-specific configuration
-os_name="$(uname | tr '[:upper:]' '[:lower:]')"
-include "${DOTFILES_ROOT}dotfiles/bash/.${os_name}"
+case "$(uname -s)" in
+    Darwin)
+        include "${BASH_CONFIG_DIR}/.darwin"
+        ;;
+    Linux)
+        include "${BASH_CONFIG_DIR}/.linux"
+        ;;
+esac
 
-# Load local machine-specific overrides
-include "${DOTFILES_ROOT}.${os_name}"
+# Load fuzzy finder if available
+include "${HOME}/.fzf.bash" "optional"
+
+# Load local overrides if they exist
+include "${HOME}/.bashrc.local" "optional"

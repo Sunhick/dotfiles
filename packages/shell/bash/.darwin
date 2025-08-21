@@ -1,26 +1,51 @@
 #!/usr/bin/env bash
 
-export JAVA_HOME=$(/usr/libexec/java_home)
+# Java configuration (if available)
+if [[ -x /usr/libexec/java_home ]]; then
+    export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null)
+fi
 
-# Homebrew PATH
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# Homebrew configuration
+if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
 
-# Add default paths
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+# Application paths
+declare -a app_paths=(
+    "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+    "/Applications/Emacs.app/Contents/MacOS"
+    "/Applications/Emacs.app/Contents/MacOS/bin"
+)
 
-# vscode alias
-VSCODE="/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+for app_path in "${app_paths[@]}"; do
+    if [[ -d "$app_path" && ":$PATH:" != *":$app_path:"* ]]; then
+        export PATH="$app_path:$PATH"
+    fi
+done
 
-EMACS="/Applications/Emacs.app/Contents/MacOS"
-EMACS_CLIENT="${EMACS}/bin"
+# Rust/Cargo environment
+if [[ -f "$HOME/.cargo/env" ]]; then
+    source "$HOME/.cargo/env"
+fi
 
-# Override emacs from macos
-export PATH=$EMACS:$EMACS_CLIENT:$VSCODE:$PATH
-
-include "$HOME/.cargo/env"
-
-# MacOS Specific aliases
-alias emacs="Emacs"
-alias emacsclient="emacsclient -c"
+# macOS-specific aliases
 alias ls="ls -G"
 alias ll="ls -lG"
+alias la="ls -laG"
+
+# Application aliases (if available)
+if [[ -x "/Applications/Emacs.app/Contents/MacOS/Emacs" ]]; then
+    alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
+fi
+
+if command -v emacsclient >/dev/null; then
+    alias ec="emacsclient -c"
+fi
+
+# macOS-specific functions
+if command -v pbcopy >/dev/null; then
+    alias copy="pbcopy"
+    alias paste="pbpaste"
+fi

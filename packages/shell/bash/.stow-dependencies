@@ -1,9 +1,13 @@
 # Dependencies for bash package
 # One dependency per line, comments start with #
 
-# Core shell
+# Required
 bash
 
-# Optional but recommended
+# Recommended for enhanced functionality
 git
 fzf
+bat
+exa
+fd
+ripgrep

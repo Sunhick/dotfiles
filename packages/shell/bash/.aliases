@@ -1,16 +1,54 @@
 #!/usr/bin/env bash
 
-# Navigation
+# Navigation shortcuts
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
+alias ~="cd ~"
+alias -- -="cd -"
 
-# colorize grep
+# List directory contents
+alias l="ls -lah"
+alias la="ls -lAh"
+alias ll="ls -lh"
+alias lsa="ls -lah"
+
+# Colorize output
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-alias kill-emacs='emacsclient -e "(kill-emacs)"'
-
-# colorize tree
 alias tree='tree -C'
+
+# Git shortcuts
+alias g="git"
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git pull"
+alias gd="git diff"
+alias gb="git branch"
+alias gco="git checkout"
+
+# Safety aliases
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
+
+# Utility shortcuts
+alias h="history"
+alias j="jobs"
+alias c="clear"
+alias reload="source ~/.bashrc"
+
+# Modern tool replacements (if available)
+command -v bat >/dev/null && alias cat="bat"
+command -v exa >/dev/null && alias ls="exa"
+command -v fd >/dev/null && alias find="fd"
+command -v rg >/dev/null && alias grep="rg"
+
+# Emacs shortcuts
+alias kill-emacs='emacsclient -e "(kill-emacs)"'
+alias e="emacsclient -n"
+alias ec="emacsclient -c"

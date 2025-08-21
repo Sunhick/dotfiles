@@ -1,52 +1,53 @@
-# -*- mode: shell-script -*-
 #!/usr/bin/env bash
 
-# Ensure DOTFILES_ROOT ends with a slash
-DOTFILES_ROOT="${DOTFILES_ROOT%/}/"
-
-# Load color definitions
-source "${DOTFILES_ROOT}dotfiles/bash/.colors"
-
 # Arrow glyph
-glyph_arrow=$'\u2192'  # Unicode arrow
+glyph_arrow='→'
 
+# Git branch function
+git_branch() {
+    local branch
+    branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    if [[ -n "$branch" ]]; then
+        echo " ${bold_blue}(${branch})${reset_color}"
+    fi
+}
+
+# Prompt command function
 prompt_command() {
     local last_exit_code=$?
-    local cwd="\W"
     local prompt=""
 
-    # Optional: Show AWS profile if set
+    # Show AWS profile if set
     if [[ -n "$AWS_PROFILE" ]]; then
-        prompt+="${bold_orange}${AWS_PROFILE}${reset_color} "
+        prompt+="${bold_orange}[${AWS_PROFILE}]${reset_color} "
     fi
 
     # Status indicator based on last exit code
     if [[ "$last_exit_code" -ne 0 ]]; then
-        prompt+="${bold_red}${glyph_arrow} ${reset_color}"
+        prompt+="${bold_red}${glyph_arrow}${reset_color} "
     else
-        prompt+="${bold_green}${glyph_arrow} ${reset_color}"
+        prompt+="${bold_green}${glyph_arrow}${reset_color} "
     fi
 
-    # Optional: include Git branch
-    # local git_branch
-    # git_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-    # if [[ -n "$git_branch" ]]; then
-    #     prompt+="${bold_blue}(${git_branch})${reset_color} "
-    # fi
-
     # Current working directory
-    prompt+="${bold_green}${cwd}${reset_color} "
+    prompt+="${bold_cyan}\W${reset_color}"
+
+    # Git branch if in a git repository
+    prompt+="$(git_branch)"
+
+    # Final prompt character
+    prompt+=" ${bold_white}\$${reset_color} "
 
     PS1="$prompt"
     PS2="${bold_yellow}>${reset_color} "
 }
 
-# Fallback for 'dumb' terminals
+# Set up prompt based on terminal capability
 case "$TERM" in
-    dumb)
+    dumb|unknown)
         PS1="> "
         ;;
     *)
-        PROMPT_COMMAND=prompt_command
+        PROMPT_COMMAND="prompt_command"
         ;;
 esac

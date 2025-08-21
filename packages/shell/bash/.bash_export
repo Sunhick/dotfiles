@@ -1,5 +1,33 @@
 #!/usr/bin/env bash
 
+# Editor preferences
 export EDITOR="emacs"
-export FCEDIT=${EDITOR}
+export VISUAL="$EDITOR"
+export FCEDIT="$EDITOR"
+
+# Terminal and locale
+export TERM="${TERM:-xterm-256color}"
+export LANG="${LANG:-en_US.UTF-8}"
+export LC_ALL="${LC_ALL:-en_US.UTF-8}"
+
+# GPG configuration
 export GPG_TTY=$(tty)
+
+# Less configuration
+export LESS="-R -F -X"
+export LESSHISTFILE="-"
+
+# History configuration
+export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
+export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
+
+# Development tools
+export GREP_OPTIONS="--color=auto"
+export GREP_COLOR="1;32"
+
+# Path additions (will be prepended if directories exist)
+for dir in "$HOME/.local/bin" "$HOME/bin" "/usr/local/bin"; do
+    if [[ -d "$dir" && ":$PATH:" != *":$dir:"* ]]; then
+        export PATH="$dir:$PATH"
+    fi
+done
