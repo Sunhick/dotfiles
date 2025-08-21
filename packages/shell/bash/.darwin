@@ -2,6 +2,12 @@
 
 export JAVA_HOME=$(/usr/libexec/java_home)
 
+# Homebrew PATH
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Add default paths
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+
 # vscode alias
 VSCODE="/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
