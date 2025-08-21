@@ -1,5 +1,74 @@
+# System files
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
+*~
+.directory
+Thumbs.db
+ehthumbs.db
+
+# Version control
 .git
 .gitignore
-.stow-local-ignore
+.gitmodules
+.gitattributes
+.hg
+.hgignore
+.svn
+
+# Stow files
+.stow-*
+.stowrc
+
+# Documentation
 README.*
+LICENSE*
+CHANGELOG.*
+CONTRIBUTING.*
+CODE_OF_CONDUCT.*
+*.md
+*.org
+*.txt
+*.rst
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+*~
+
+# Temporary files
+*.tmp
+*.temp
+.#*
+\#*#
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS specific
+.Trash-*
+.nfs*
+
+# Package managers
+node_modules/
+.npm/
+.yarn/
+__pycache__/
+*.pyc
+.tox/
+
+# Build artifacts
+dist/
+build/
+target/
+*.o
+*.so
+*.dylib
+*.dll

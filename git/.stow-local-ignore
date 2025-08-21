@@ -1,0 +1,4 @@
+# Git package specific ignores
+README.md
+.gitconfig.local
+.gitignore_global.local

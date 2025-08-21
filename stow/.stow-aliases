@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# Convenient aliases for stow operations
+# Source this file: source stow/.stow-aliases
+
+# Basic stow operations
+alias stow-install='stow --verbose --target="$HOME"'
+alias stow-remove='stow --delete --verbose --target="$HOME"'
+alias stow-update='stow --restow --verbose --target="$HOME"'
+alias stow-test='stow --simulate --verbose --target="$HOME"'
+
+# Batch operations
+alias stow-install-all='make install'
+alias stow-remove-all='make uninstall'
+alias stow-update-all='make restow'
+alias stow-status='make status'
+
+# Safety operations
+alias stow-backup='make backup'
+alias stow-clean='make clean'
+alias stow-validate='make validate'
+
+# Quick package operations
+stow-pkg() {
+    local operation="$1"
+    local package="$2"
+
+    if [[ -z "$package" ]]; then
+        echo "Usage: stow-pkg <install|remove|update|test> <package>"
+        return 1
+    fi
+
+    case "$operation" in
+        install|i) stow-install "$package" ;;
+        remove|r|delete|d) stow-remove "$package" ;;
+        update|u|restow) stow-update "$package" ;;
+        test|t|simulate|s) stow-test "$package" ;;
+        *) echo "Unknown operation: $operation" ;;
+    esac
+}
+
+# Auto-completion for stow-pkg
+_stow_pkg_completion() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    case "$prev" in
+        stow-pkg)
+            COMPREPLY=($(compgen -W "install remove update test" -- "$cur"))
+            ;;
+        install|remove|update|test|i|r|u|t|d|s|delete|restow|simulate)
+            # Complete with available packages
+            local packages=$(find . -maxdepth 1 -type d -not -name '.*' -not -name 'docs' -not -name 'scripts' | sed 's|./||' | sort)
+            COMPREPLY=($(compgen -W "$packages" -- "$cur"))
+            ;;
+    esac
+}
+
+complete -F _stow_pkg_completion stow-pkg

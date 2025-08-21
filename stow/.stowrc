@@ -1,13 +1,77 @@
-# .stowrc configuration file
+# Advanced .stowrc configuration file
 
 # Set the target directory for symlinks (default: ~)
 target=~
 
-# Enable verbose output by default
-verbose=true
+# Enable detailed verbose output
+verbose=2
 
-# Don't overwrite files that already exist
+# Adopt existing files into stow management
 adopt=true
 
 # Enable "restowing" (re-link existing symlinks)
 restow=true
+
+# Simulate operations (useful for testing)
+# simulate=true
+
+# Ignore patterns - files/directories that should never be stowed
+ignore=\.git
+ignore=\.github
+ignore=\.gitignore
+ignore=\.gitmodules
+ignore=\.gitattributes
+ignore=README.*
+ignore=LICENSE.*
+ignore=CHANGELOG.*
+ignore=CONTRIBUTING.*
+ignore=CODE_OF_CONDUCT.*
+ignore=\.DS_Store
+ignore=\.AppleDouble
+ignore=\.LSOverride
+ignore=\._.*
+ignore=.*~$
+ignore=\.stow-.*
+ignore=.*\.md$
+ignore=.*\.org$
+ignore=.*\.txt$
+ignore=.*\.rst$
+ignore=Thumbs\.db
+ignore=ehthumbs\.db
+ignore=\.directory
+
+# Ignore backup and temporary files
+ignore=.*\.bak$
+ignore=.*\.backup$
+ignore=.*\.old$
+ignore=.*\.orig$
+ignore=.*\.tmp$
+ignore=.*\.temp$
+ignore=\.#.*
+ignore=\#.*\#
+
+# Ignore IDE/Editor files
+ignore=\.vscode
+ignore=\.idea
+ignore=.*\.swp$
+ignore=.*\.swo$
+
+# Ignore build artifacts and dependencies
+ignore=node_modules
+ignore=\.npm
+ignore=\.yarn
+ignore=__pycache__
+ignore=.*\.pyc$
+ignore=\.tox
+ignore=dist
+ignore=build
+ignore=target
+
+# Defer processing of files that might be in use
+defer=\.zcompdump.*
+defer=\.lesshst
+defer=\.bash_history.*
+defer=\.zsh_history.*
+defer=\.python_history
+defer=\.mysql_history
+defer=\.psql_history

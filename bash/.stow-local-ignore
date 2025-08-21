@@ -1,2 +1,9 @@
-# Ignore everything except bashrc and  bash_profile
-^(?!\.(bashrc|bash_profile))(.*)
+# Bash package specific ignores
+README.md
+*.bak
+*.backup
+core/
+features/
+.bash_history*
+.bashrc.local
+.bash_profile.local

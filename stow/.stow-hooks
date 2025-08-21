@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+# Stow hooks for pre/post operations
+# Source this file to enable hooks
+
+# Pre-stow hook
+pre_stow_hook() {
+    local package="$1"
+    echo "Pre-stow: $package"
+
+    case "$package" in
+        bash)
+            # Ensure XDG directories exist
+            mkdir -p "$HOME/.local/state/bash"
+            mkdir -p "$HOME/.config/shell"
+            ;;
+        git)
+            # Backup existing git config
+            [[ -f "$HOME/.gitconfig" ]] && cp "$HOME/.gitconfig" "$HOME/.gitconfig.backup"
+            ;;
+        emacs)
+            # Create emacs directories
+            mkdir -p "$HOME/.emacs.d/backups"
+            mkdir -p "$HOME/.emacs.d/auto-save-list"
+            ;;
+    esac
+}
+
+# Post-stow hook
+post_stow_hook() {
+    local package="$1"
+    echo "Post-stow: $package"
+
+    case "$package" in
+        bash)
+            # Source the new bashrc if we're in bash
+            [[ -n "$BASH_VERSION" ]] && source "$HOME/.bashrc" 2>/dev/null || true
+            ;;
+        tmux)
+            # Reload tmux config if tmux is running
+            if command -v tmux &>/dev/null && tmux list-sessions &>/dev/null; then
+                tmux source-file "$HOME/.tmux.conf" 2>/dev/null || true
+            fi
+            ;;
+        git)
+            # Set up git hooks or additional config
+            git config --global core.excludesfile "$HOME/.gitignore_global" 2>/dev/null || true
+            ;;
+    esac
+}
+
+# Enhanced stow wrapper with hooks
+stow_with_hooks() {
+    local operation="$1"
+    shift
+    local packages=("$@")
+
+    for package in "${packages[@]}"; do
+        case "$operation" in
+            "stow"|"install")
+                pre_stow_hook "$package"
+                stow "$package"
+                post_stow_hook "$package"
+                ;;
+            "unstow"|"delete")
+                stow --delete "$package"
+                ;;
+            "restow")
+                pre_stow_hook "$package"
+                stow --restow "$package"
+                post_stow_hook "$package"
+                ;;
+        esac
+    done
+}
+
+# Aliases for convenience
+alias stow-install='stow_with_hooks stow'
+alias stow-remove='stow_with_hooks unstow'
+alias stow-update='stow_with_hooks restow'

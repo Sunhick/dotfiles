@@ -97,12 +97,41 @@ download() {
 }
 
 #
-# Install dotfiles
+# Install dotfiles with advanced stow features
 #
 install() {
     cd "$DOTFILES_HOME" || exit
-    echo "Stowing packages..."
-    stow -v --target="$HOME" $PACKAGES
+
+    # Source stow hooks if available
+    if [ -f "stow/.stow-hooks" ]; then
+        source "stow/.stow-hooks"
+    fi
+
+    echo "Installing core packages first..."
+    CORE_PACKAGES="stow bash git"
+    for pkg in $CORE_PACKAGES; do
+        if [ -d "$pkg" ]; then
+            echo "Stowing $pkg..."
+            stow --verbose --target="$HOME" "$pkg" || {
+                echo "Failed to stow $pkg, trying with --adopt"
+                stow --adopt --verbose --target="$HOME" "$pkg"
+            }
+        fi
+    done
+
+    echo "Installing remaining packages..."
+    REMAINING_PACKAGES=$(echo $PACKAGES | tr ' ' '\n' | grep -v -E "^(stow|bash|git)$" | tr '\n' ' ')
+    for pkg in $REMAINING_PACKAGES; do
+        if [ -d "$pkg" ]; then
+            echo "Stowing $pkg..."
+            stow --verbose --target="$HOME" "$pkg" || {
+                echo "Warning: Failed to stow $pkg (continuing...)"
+            }
+        fi
+    done
+
+    echo "Installation completed!"
+    echo "Run 'make status' to check package status"
 }
 
 #
