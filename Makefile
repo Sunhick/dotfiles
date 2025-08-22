@@ -11,7 +11,7 @@ PACKAGES_DIR := packages
 SHELL_PACKAGES := bash zsh
 EDITOR_PACKAGES := emacs nano vscode
 DEV_PACKAGES := git
-DESKTOP_PACKAGES := i3 iterm2
+DESKTOP_PACKAGES := i3 terminal
 TOOL_PACKAGES := htop tmux gnupg
 MGMT_PACKAGES := stow
 
@@ -227,13 +227,22 @@ uninstall-git:
 	fi
 	@cd $(PACKAGES_DIR)/development && $(STOW) -D git 2>/dev/null || true
 
+uninstall-terminal:
+	@echo "Uninstalling terminal configuration..."
+	@if [ -L "$(HOME)/.config/terminal" ]; then \
+		rm "$(HOME)/.config/terminal"; \
+		echo "Removed ~/.config/terminal symlink"; \
+	fi
+	@cd $(PACKAGES_DIR)/desktop && $(STOW) -D terminal 2>/dev/null || true
+
 i3: check-stow
 	@echo "Installing i3 configuration..."
 	@cd $(PACKAGES_DIR)/desktop && $(STOW) i3
 
-iterm2: check-stow
-	@echo "Installing iterm2 configuration..."
-	@cd $(PACKAGES_DIR)/desktop && $(STOW) iterm2
+terminal: check-stow
+	@echo "Installing terminal configuration..."
+	@mkdir -p "$(HOME)/.config/terminal"
+	@cd $(PACKAGES_DIR)/desktop && $(STOW) terminal
 
 htop: check-stow
 	@echo "Installing htop configuration..."
@@ -255,7 +264,7 @@ stow: check-stow
 shell: bash zsh
 editors: emacs nano vscode
 development: git
-desktop: i3 iterm2
+desktop: i3 terminal
 tools: htop tmux gnupg
 management: stow
 
