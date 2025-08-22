@@ -29,13 +29,14 @@
 
 ;;; Code:
 
+(require 'package)
+(require 'base-ensure)
+
+;; Package initialization happens after XDG directories are set up
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 (package-initialize)
-
-(require 'package)
-(require 'base-ensure)
 
 ;; add melpa to repository list
 (add-to-list 'package-archives

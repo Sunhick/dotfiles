@@ -1,5 +1,6 @@
 # Emacs package specific ignores
 README.md
+.stow-dependencies
 .config/emacs/elpa/
 .config/emacs/auto-save-list/
 .config/emacs/backups/

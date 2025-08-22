@@ -34,18 +34,22 @@
 ;; follow unix EOF
 (setq require-final-newline t)
 
-;; customs in a separate file
-(setq custom-file "~/.emacs.d/.customs.el")
+;; customs in a separate file (XDG compliant)
+(setq custom-file (expand-file-name "emacs/customs.el"
+                                    (or (getenv "XDG_DATA_HOME")
+                                        (expand-file-name "~/.local/share"))))
 (if (file-exists-p custom-file)
     (load custom-file))
 
 ;; gc to run when memory reaches 20MB
 (setq gc-cons-threshold 20000000)
 
-;; save the previous locations of opened files
+;; save the previous locations of opened files (XDG compliant)
 (require 'saveplace)
 (setq-default save-place t)
-(setq save-place-file (expand-file-name ".places" user-emacs-directory))
+(setq save-place-file (expand-file-name "emacs/places"
+                                        (or (getenv "XDG_DATA_HOME")
+                                            (expand-file-name "~/.local/share"))))
 
 ;; show matching parens
 (show-paren-mode 1)
@@ -82,6 +86,12 @@
 (require 'tramp)
 (setq tramp-default-method "ssh")
 ;; (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+
+;; enable savehist for command history
+(savehist-mode 1)
+
+;; enable recentf for recent files
+(recentf-mode 1)
 
 ;; follow symbolic links to the actual files when editing
 (setq vc-follow-symlinks t)

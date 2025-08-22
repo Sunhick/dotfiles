@@ -31,6 +31,7 @@
 
 ;; Emacs 30 on macos still isnt' available from the installer repo.
 ;; At this point, i would have to compile from sources myself or wait.
+(require 'base-xdg)
 (require 'base-compile-elisp)
 (require 'base-ui)
 (require 'base-packages)

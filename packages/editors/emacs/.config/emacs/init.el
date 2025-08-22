@@ -29,6 +29,25 @@
 
 ;;; Code:
 
+;; XDG Base Directory Specification compliance
+(defvar xdg-config-home
+  (or (getenv "XDG_CONFIG_HOME")
+      (expand-file-name "~/.config"))
+  "XDG config directory")
+
+(defvar xdg-data-home
+  (or (getenv "XDG_DATA_HOME")
+      (expand-file-name "~/.local/share"))
+  "XDG data directory")
+
+(defvar xdg-cache-home
+  (or (getenv "XDG_CACHE_HOME")
+      (expand-file-name "~/.cache"))
+  "XDG cache directory")
+
+;; Set user-emacs-directory to XDG data location
+(setq user-emacs-directory (expand-file-name "emacs/" xdg-data-home))
+
 (defvar emacs-dir (file-name-directory load-file-name)
   "Directory hosting the emacs configuration files")
 
