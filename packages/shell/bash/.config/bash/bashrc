@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# XDG Base Directory Specification
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+
+# Bash configuration directory
+BASH_CONFIG_DIR="${XDG_CONFIG_HOME}/bash"
+
+# Safe source function
+include() {
+    if [[ -f "$1" ]]; then
+        source "$1"
+    elif [[ "${2:-}" != "optional" ]]; then
+        echo "Warning: Could not source $1" >&2
+    fi
+}
+
+# Detect Docker environment
+if [[ -f "/.dockerenv" ]]; then
+    # Inside Docker – use container-specific rc
+    include "${XDG_CONFIG_HOME}/bash/dockerrc" "optional"
+    return
+fi
+
+# Load shell options first
+include "${BASH_CONFIG_DIR}/shopt"
+
+# Load environment variables
+include "${BASH_CONFIG_DIR}/exports"
+
+# Load history configuration
+include "${BASH_CONFIG_DIR}/history" "optional"
+
+# Load colors and prompt
+include "${BASH_CONFIG_DIR}/colors"
+include "${BASH_CONFIG_DIR}/prompt"
+
+# Load aliases
+include "${BASH_CONFIG_DIR}/aliases"
+
+# Load OS-specific configuration
+case "$(uname -s)" in
+    Darwin)
+        include "${BASH_CONFIG_DIR}/darwin"
+        ;;
+    Linux)
+        include "${BASH_CONFIG_DIR}/linux"
+        ;;
+esac
+
+# Load fuzzy finder if available
+include "${HOME}/.fzf.bash" "optional"
+
+# Load local machine-specific overrides
+include "${BASH_CONFIG_DIR}/local" "optional"
