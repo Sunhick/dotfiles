@@ -55,4 +55,4 @@ esac
 include "${HOME}/.fzf.bash" "optional"
 
 # Load local machine-specific overrides
-include "${BASH_CONFIG_DIR}/local" "optional"
+include "${BASH_CONFIG_DIR}/work/bash/local" "optional"
