@@ -1,2 +1,2 @@
-# OSX uses bash_profile, source .bashrc instead.
+# OSX uses bash_profile, source .bashrc for compatibility
 source ~/.bashrc

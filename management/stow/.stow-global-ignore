@@ -1,12 +1,11 @@
 # System files
-.DS_Store
-.AppleDouble
-.LSOverride
-._*
-*~
-.directory
-Thumbs.db
-ehthumbs.db
+\.DS_Store
+\.AppleDouble
+\.LSOverride
+\._.*
+\.directory
+Thumbs\.db
+ehthumbs\.db
 
 # Version control
 .git
@@ -22,35 +21,34 @@ ehthumbs.db
 .stowrc
 
 # Documentation
-README.*
-LICENSE*
-CHANGELOG.*
-CONTRIBUTING.*
-CODE_OF_CONDUCT.*
-*.md
-*.org
-*.txt
-*.rst
+README\..*
+LICENSE.*
+CHANGELOG\..*
+CONTRIBUTING\..*
+CODE_OF_CONDUCT\..*
+.*\.md$
+.*\.org$
+.*\.txt$
+.*\.rst$
 
 # Backup files
-*.bak
-*.backup
-*.old
-*.orig
-*~
+.*\.bak$
+.*\.backup$
+.*\.old$
+.*\.orig$
+.*~$
 
 # Temporary files
-*.tmp
-*.temp
-.#*
-\#*#
+.*\.tmp$
+.*\.temp$
+\.#.*
+\#.*#
 
 # IDE/Editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+\.vscode/
+\.idea/
+.*\.swp$
+.*\.swo$
 
 # OS specific
 .Trash-*
@@ -58,17 +56,17 @@ CODE_OF_CONDUCT.*
 
 # Package managers
 node_modules/
-.npm/
-.yarn/
+\.npm/
+\.yarn/
 __pycache__/
-*.pyc
-.tox/
+.*\.pyc$
+\.tox/
 
 # Build artifacts
 dist/
 build/
 target/
-*.o
-*.so
-*.dylib
-*.dll
+.*\.o$
+.*\.so$
+.*\.dylib$
+.*\.dll$

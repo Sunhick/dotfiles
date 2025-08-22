@@ -1,0 +1,10 @@
+# Dependencies for zsh package
+# One dependency per line, comments start with #
+
+# Required
+zsh
+
+# Recommended for enhanced functionality
+oh-my-zsh
+fzf
+git

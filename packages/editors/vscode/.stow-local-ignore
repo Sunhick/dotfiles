@@ -1,0 +1,7 @@
+# VSCode package specific ignores
+README.md
+.config/Code/User/workspaceStorage/
+.config/Code/User/History/
+.config/Code/User/logs/
+.config/Code/CachedExtensions/
+.config/Code/logs/

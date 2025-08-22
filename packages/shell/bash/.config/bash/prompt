@@ -33,7 +33,7 @@ prompt_command() {
     prompt+="${bold_cyan}\W${reset_color}"
 
     # Git branch if in a git repository
-    prompt+="$(git_branch)"
+    # prompt+="$(git_branch)"
 
     # Final prompt character
     prompt+=" ${bold_white}\$${reset_color} "

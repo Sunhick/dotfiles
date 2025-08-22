@@ -1,6 +1,6 @@
-# Dotfiles
+# XDG-Compliant Dotfiles
 
-Personal dotfiles managed with GNU Stow, organized by category for easy installation and maintenance.
+Personal dotfiles managed with GNU Stow, following the XDG Base Directory Specification for clean and organized configuration management.
 
 ## Quick Start
 
@@ -10,16 +10,31 @@ cd ~/.dotfiles
 make install
 ```
 
+## XDG Base Directory Specification
+
+This dotfiles setup follows the XDG Base Directory Specification:
+
+- **`~/.config/`** - Configuration files
+- **`~/.local/share/`** - Data files
+- **`~/.cache/`** - Cache files
+- **`~/.local/state/`** - State files
+
+### Benefits
+- **Clean home directory** - No more dot-file clutter
+- **Standardized locations** - Follows Linux/Unix standards
+- **Better organization** - Logical separation of config, data, cache
+- **Future-proof** - Modern applications expect XDG compliance
+
 ## Structure
 
 ```
 dotfiles/
 ├── packages/
-│   ├── shell/          # bash, zsh
-│   ├── editors/        # emacs, nano, vscode
-│   ├── tools/          # tmux, htop, gnupg
-│   ├── desktop/        # i3, iterm2
-│   └── development/    # git
+│   ├── shell/          # bash (.config/bash/), zsh (.config/zsh/)
+│   ├── editors/        # emacs (.config/emacs/), nano (.config/nano/), vscode (.config/Code/)
+│   ├── tools/          # tmux (.config/tmux/), htop (.config/htop/), gnupg (.gnupg/)
+│   ├── desktop/        # i3 (.config/i3/), iterm2 (.config/)
+│   └── development/    # git (.config/git/)
 ├── management/stow/    # stow configuration
 └── Makefile           # installation commands
 ```
@@ -67,7 +82,7 @@ stow bash
    mkdir packages/tools/mynewpackage
    ```
 
-2. Add your dotfiles:
+2. Add your dotfiles following XDG structure:
    ```bash
    packages/tools/mynewpackage/
    └── .config/
@@ -80,6 +95,12 @@ stow bash
    cd packages/tools
    make install-mynewpackage
    ```
+
+### XDG Guidelines for New Packages
+- Configuration files → `.config/appname/`
+- Data files → `.local/share/appname/`
+- Cache files → `.cache/appname/`
+- State files → `.local/state/appname/`
 
 ## Requirements
 

@@ -4,6 +4,40 @@
 #         path = ~/.config/git/gitconfig                                             #
 ######################################################################################
 
+# Personal projects configuration
+[includeIf "gitdir:~/prv/**"]
+    path = ~/.gitconfig-github
+[includeIf "gitdir/i:~/personal/**"]
+    path = ~/.gitconfig-github
+[includeIf "gitdir:~/projects/personal/**"]
+    path = ~/.gitconfig-github
+
+# Work projects configuration
+[includeIf "gitdir:~/work/**"]
+    path = ~/.gitconfig-work
+[includeIf "gitdir:~/projects/work/**"]
+    path = ~/.gitconfig-work
+[includeIf "gitdir/i:~/company/**"]
+    path = ~/.gitconfig-work
+
+# Configuration switching aliases
+[alias]
+    personal = "!f() { \
+        git config --local include.path ~/.gitconfig-github && \
+        git config --local user.name \"$(git config --file ~/.gitconfig-github user.name)\" && \
+        git config --local user.email \"$(git config --file ~/.gitconfig-github user.email)\" && \
+        echo 'Switched to personal configuration'; \
+    }; f"
+
+    work = "!f() { \
+        git config --local include.path ~/.gitconfig-work && \
+        git config --local user.name \"$(git config --file ~/.gitconfig-work user.name)\" && \
+        git config --local user.email \"$(git config --file ~/.gitconfig-work user.email)\" && \
+        echo 'Switched to work configuration'; \
+    }; f"
+
+    whoami = "!git config user.name && git config user.email"
+
 # Include a local, private gitconfig for user-specific settings (e.g., name, email)
 # Create a ~/.config/git/local file and add it to your global .gitignore.
 [include]

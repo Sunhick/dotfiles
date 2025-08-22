@@ -1,203 +1,269 @@
-# Dotfiles Management with Stow
-# Main interface for package installation and management
+# Dotfiles Management Makefile
+# Uses GNU Stow to create symlinks for configuration files
 
-.PHONY: help install uninstall status clean list deps check-stow test
-.DEFAULT_GOAL := help
-
-# Configuration
-DOTFILES_ROOT := $(CURDIR)
+# Default target directory
 TARGET_DIR := $(HOME)
-BACKUP_DIR := $(HOME)/.dotfiles-backup
 
-# Package categories
-CATEGORIES := shell editors tools desktop development
+# Package directories
+PACKAGES_DIR := packages
 
-help: ## Show help for dotfiles management
-	@echo "Dotfiles Management"
-	@echo "==================="
+# Define package categories and their packages
+SHELL_PACKAGES := bash zsh
+EDITOR_PACKAGES := emacs nano vscode
+DEV_PACKAGES := git
+DESKTOP_PACKAGES := i3 iterm2
+TOOL_PACKAGES := htop tmux gnupg
+MGMT_PACKAGES := stow
+
+# All packages
+ALL_PACKAGES := $(SHELL_PACKAGES) $(EDITOR_PACKAGES) $(DEV_PACKAGES) $(DESKTOP_PACKAGES) $(TOOL_PACKAGES) $(MGMT_PACKAGES)
+
+# Stow command with verbose output
+STOW := stow -v --target="$(TARGET_DIR)"
+
+.PHONY: help install force-install uninstall restow clean check-stow $(ALL_PACKAGES) uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-git
+
+# Default target
+help:
+	@echo "XDG-Compliant Dotfiles Management"
+	@echo "=================================="
 	@echo ""
-	@echo "Main Commands:"
-	@echo "  make install         - Install all packages"
-	@echo "  make uninstall       - Remove all packages"
-	@echo "  make status          - Show package status"
-	@echo "  make test            - Test installation (dry run)"
-	@echo "  make clean           - Remove broken symlinks"
-	@echo "  make list            - List all packages"
-	@echo "  make deps            - Check dependencies"
+	@echo "Available targets:"
+	@echo "  install       - Install all packages (skip conflicts)"
+	@echo "  force-install - Install all packages (overwrite existing files)"
+	@echo "  uninstall     - Uninstall all packages"
+	@echo "  restow        - Restow all packages (uninstall + install)"
+	@echo "  clean         - Remove broken symlinks"
+	@echo "  check-stow    - Check if GNU Stow is installed"
 	@echo ""
-	@echo "Category Commands:"
-	@echo "  make install-shell   - Install shell packages"
-	@echo "  make install-editors - Install editor packages"
-	@echo "  make install-tools   - Install tool packages"
-	@echo "  make install-desktop - Install desktop packages"
-	@echo "  make install-dev     - Install development packages"
+	@echo "Individual packages:"
+	@echo "  $(ALL_PACKAGES)"
 	@echo ""
-	@echo "Individual Package Commands:"
-	@echo "  make install-bash    - Install specific package"
-	@echo "  make uninstall-bash  - Remove specific package"
+	@echo "Individual uninstall targets:"
+	@echo "  uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-vscode uninstall-git"
 	@echo ""
-	@echo "Utility Commands:"
-	@echo "  make backup          - Create backup of existing files"
+	@echo "Package categories:"
+	@echo "  shell       - $(SHELL_PACKAGES)"
+	@echo "  editors     - $(EDITOR_PACKAGES)"
+	@echo "  development - $(DEV_PACKAGES)"
+	@echo "  desktop     - $(DESKTOP_PACKAGES)"
+	@echo "  tools       - $(TOOL_PACKAGES)"
+	@echo "  management  - $(MGMT_PACKAGES)"
 
-check-stow: ## Check if stow is installed
-	@command -v stow >/dev/null 2>&1 || { \
-		echo "ERROR: stow is not installed. Please install it first:"; \
-		echo "  macOS: brew install stow"; \
-		echo "  Ubuntu/Debian: sudo apt install stow"; \
-		echo "  CentOS/RHEL: sudo yum install stow"; \
-		exit 1; \
-	}
+# Check if stow is installed
+check-stow:
+	@which stow > /dev/null || (echo "GNU Stow is not installed. Please install it first." && exit 1)
 
-deps: check-stow ## Check all dependencies
-	@echo "Checking dependencies..."
-	@echo "✓ stow: $(shell command -v stow)"
-	@for category in $(CATEGORIES); do \
-		if [ -d "packages/$$category" ]; then \
-			echo "Checking $$category dependencies:"; \
-			$(MAKE) -C packages/$$category deps 2>/dev/null || true; \
-		fi; \
-	done
-
-install: check-stow install-mgmt install-categories ## Install all packages
-	@echo "✓ All packages installed successfully!"
-	@echo "Run 'make status' to verify installation"
-
-install-mgmt: ## Install management configuration (stow)
-	@echo "Installing management configuration..."
-	@if [ -d "management/stow" ]; then \
-		stow --dir=management --target=$(TARGET_DIR) --verbose stow || { \
-			echo "WARNING: Adopting existing stow configuration..."; \
-			stow --dir=management --target=$(TARGET_DIR) --adopt --verbose stow; \
-		}; \
-	fi
-
-install-categories: $(addprefix install-,$(CATEGORIES)) ## Install all categories
-
-install-shell: ## Install shell packages
-	@$(MAKE) -C packages/shell install
-
-install-editors: ## Install editor packages
-	@$(MAKE) -C packages/editors install
-
-install-tools: ## Install tool packages
-	@$(MAKE) -C packages/tools install
-
-install-desktop: ## Install desktop packages
-	@$(MAKE) -C packages/desktop install
-
-install-dev: ## Install development packages
-	@$(MAKE) -C packages/development install
-
-uninstall: ## Remove all packages
-	@echo "Uninstalling all packages..."
-	@for category in $(CATEGORIES); do \
-		if [ -d "packages/$$category" ]; then \
-			echo "Removing $$category packages..."; \
-			$(MAKE) -C packages/$$category uninstall || true; \
-		fi; \
-	done
-	@if [ -d "management/stow" ]; then \
-		echo "Removing management configuration..."; \
-		stow --dir=management --target=$(TARGET_DIR) --delete --verbose stow || true; \
-	fi
-	@echo "✓ All packages uninstalled"
-
-status: ## Show installation status of all packages
-	@echo "Package Installation Status"
-	@echo "==========================="
-	@for category in $(CATEGORIES); do \
-		if [ -d "packages/$$category" ]; then \
-			echo ""; \
-			$(MAKE) -C packages/$$category status; \
-		fi; \
-	done
-
-list: ## List all available packages
-	@echo "Available Packages by Category"
-	@echo "=============================="
-	@for category in $(CATEGORIES); do \
-		if [ -d "packages/$$category" ]; then \
-			echo ""; \
-			$(MAKE) -C packages/$$category list; \
-		fi; \
-	done
-
-test: check-stow ## Test installation (dry run)
-	@echo "Testing package installation (dry run)..."
-	@for category in $(CATEGORIES); do \
-		if [ -d "packages/$$category" ]; then \
-			echo ""; \
-			echo "Testing $$category packages:"; \
-			$(MAKE) -C packages/$$category test; \
-		fi; \
-	done
-
-clean: ## Remove broken symlinks from home directory
-	@echo "Cleaning broken symlinks..."
-	@for category in $(CATEGORIES); do \
-		if [ -d "packages/$$category" ]; then \
-			$(MAKE) -C packages/$$category clean || true; \
-		fi; \
-	done
-	@echo "✓ Cleanup completed"
-
-backup: ## Create backup of existing dotfiles
-	@backup_dir="$(BACKUP_DIR)/backup-$$(date +%Y%m%d-%H%M%S)"; \
-	echo "Creating backup at $$backup_dir..."; \
-	mkdir -p "$$backup_dir"; \
-	for category in $(CATEGORIES); do \
-		if [ -d "packages/$$category" ]; then \
-			for pkg in packages/$$category/*/; do \
-				if [ -d "$$pkg" ]; then \
-					find "$$pkg" -type f | while read -r file; do \
-						rel_path="$${file#$$pkg/}"; \
-						target_file="$(TARGET_DIR)/$$rel_path"; \
-						if [ -e "$$target_file" ] && [ ! -L "$$target_file" ]; then \
-							backup_file="$$backup_dir/$$rel_path"; \
-							mkdir -p "$$(dirname "$$backup_file")"; \
-							cp -p "$$target_file" "$$backup_file"; \
-							echo "Backed up: $$target_file"; \
-						fi; \
-					done; \
+# Install all packages
+install: check-stow
+	@echo "Installing all dotfiles packages..."
+	@cd $(PACKAGES_DIR) && for category in shell editors development desktop tools management; do \
+		if [ -d "$$category" ]; then \
+			cd "$$category" && \
+			for package in */; do \
+				if [ -d "$$package" ]; then \
+					echo "Installing $$category/$$package..."; \
+					$(STOW) "$$package" || echo "Warning: $$category/$$package had conflicts (use 'make force-install' to override)"; \
 				fi; \
-			done; \
+			done && \
+			cd ..; \
 		fi; \
-	done; \
-	echo "✓ Backup completed at $$backup_dir"
+	done
+	@echo "Installation complete!"
 
-# Individual package installation targets
-install-%: check-stow ## Install specific package (e.g., make install-bash)
-	@pkg=$*; \
-	found=false; \
-	for category in $(CATEGORIES); do \
-		if [ -d "packages/$$category/$$pkg" ]; then \
-			echo "Installing $$pkg from $$category category..."; \
-			$(MAKE) -C packages/$$category install-$$pkg; \
-			found=true; \
-			break; \
+# Force install all packages (overwrites existing files)
+force-install: check-stow
+	@echo "Force installing all dotfiles packages (this will overwrite existing files)..."
+	@cd $(PACKAGES_DIR) && for category in shell editors development desktop tools management; do \
+		if [ -d "$$category" ]; then \
+			cd "$$category" && \
+			for package in */; do \
+				if [ -d "$$package" ]; then \
+					echo "Force installing $$category/$$package..."; \
+					$(STOW) --adopt "$$package"; \
+				fi; \
+			done && \
+			cd ..; \
 		fi; \
-	done; \
-	if [ "$$found" = false ]; then \
-		echo "ERROR: Package $$pkg not found in any category"; \
-		echo "Available packages:"; \
-		$(MAKE) list; \
-		exit 1; \
-	fi
+	done
+	@echo "All packages force installed successfully!"
 
-uninstall-%: check-stow ## Uninstall specific package (e.g., make uninstall-bash)
-	@pkg=$*; \
-	found=false; \
-	for category in $(CATEGORIES); do \
-		if [ -d "packages/$$category/$$pkg" ]; then \
-			echo "Removing $$pkg from $$category category..."; \
-			$(MAKE) -C packages/$$category uninstall-$$pkg; \
-			found=true; \
-			break; \
-		fi; \
-	done; \
-	if [ "$$found" = false ]; then \
-		echo "ERROR: Package $$pkg not found in any category"; \
-		echo "Available packages:"; \
-		$(MAKE) list; \
-		exit 1; \
+# Uninstall all packages
+uninstall: check-stow
+	@echo "Uninstalling all dotfiles packages..."
+	@echo "Removing XDG configuration directories..."
+	@if [ -L "$(HOME)/.config/bash" ]; then \
+		echo "Removing ~/.config/bash symlink"; \
+		rm "$(HOME)/.config/bash"; \
 	fi
+	@if [ -L "$(HOME)/.config/emacs" ]; then \
+		echo "Removing ~/.config/emacs symlink"; \
+		rm "$(HOME)/.config/emacs"; \
+	fi
+	@if [ -L "$(HOME)/.config/git" ]; then \
+		echo "Removing ~/.config/git symlink"; \
+		rm "$(HOME)/.config/git"; \
+	fi
+	@echo "Removing legacy dotfiles..."
+	@if [ -L "$(HOME)/.bashrc" ]; then \
+		echo "Removing ~/.bashrc symlink"; \
+		rm "$(HOME)/.bashrc"; \
+	fi
+	@if [ -L "$(HOME)/.emacs.d" ]; then \
+		echo "Removing ~/.emacs.d symlink"; \
+		rm "$(HOME)/.emacs.d"; \
+	fi
+	@if [ -L "$(HOME)/.gitconfig" ]; then \
+		echo "Removing ~/.gitconfig symlink"; \
+		rm "$(HOME)/.gitconfig"; \
+	fi
+	@echo "Removing stow-managed packages..."
+	@cd $(PACKAGES_DIR) && for category in shell editors development desktop tools management; do \
+		if [ -d "$$category" ]; then \
+			cd "$$category" && \
+			for package in */; do \
+				if [ -d "$$package" ]; then \
+					echo "Uninstalling $$category/$$package..."; \
+					$(STOW) -D "$$package" 2>/dev/null || true; \
+				fi; \
+			done && \
+			cd ..; \
+		fi; \
+	done
+	@echo "All packages uninstalled successfully!"
+
+# Restow (uninstall + install)
+restow: check-stow
+	@echo "Restowing all packages..."
+	@cd $(PACKAGES_DIR) && for category in shell editors development desktop tools management; do \
+		if [ -d "$$category" ]; then \
+			cd "$$category" && \
+			for package in */; do \
+				if [ -d "$$package" ]; then \
+					echo "Restowing $$category/$$package..."; \
+					$(STOW) -R "$$package"; \
+				fi; \
+			done && \
+			cd ..; \
+		fi; \
+	done
+	@echo "All packages restowed successfully!"
+
+# Individual package targets
+bash: check-stow
+	@echo "Installing bash configuration..."
+	@mkdir -p "$(HOME)/.config/bash"
+	@cd $(PACKAGES_DIR)/shell && $(STOW) bash
+
+uninstall-bash:
+	@echo "Uninstalling bash configuration..."
+	@if [ -L "$(HOME)/.config/bash" ]; then \
+		rm "$(HOME)/.config/bash"; \
+		echo "Removed ~/.config/bash symlink"; \
+	fi
+	@if [ -L "$(HOME)/.bashrc" ]; then \
+		rm "$(HOME)/.bashrc"; \
+		echo "Removed ~/.bashrc symlink"; \
+	fi
+	@cd $(PACKAGES_DIR)/shell && $(STOW) -D bash 2>/dev/null || true
+
+zsh: check-stow
+	@echo "Installing zsh configuration..."
+	@mkdir -p "$(HOME)/.config/zsh"
+	@cd $(PACKAGES_DIR)/shell && $(STOW) zsh
+
+uninstall-zsh:
+	@echo "Uninstalling zsh configuration..."
+	@if [ -L "$(HOME)/.config/zsh" ]; then \
+		rm "$(HOME)/.config/zsh"; \
+		echo "Removed ~/.config/zsh symlink"; \
+	fi
+	@cd $(PACKAGES_DIR)/shell && $(STOW) -D zsh 2>/dev/null || true
+
+emacs: check-stow
+	@echo "Installing emacs configuration..."
+	@mkdir -p "$(HOME)/.config"
+	@cd $(PACKAGES_DIR)/editors && $(STOW) emacs
+
+uninstall-emacs:
+	@echo "Uninstalling emacs configuration..."
+	@if [ -L "$(HOME)/.config/emacs" ]; then \
+		rm "$(HOME)/.config/emacs"; \
+		echo "Removed ~/.config/emacs symlink"; \
+	fi
+	@if [ -L "$(HOME)/.emacs.d" ]; then \
+		rm "$(HOME)/.emacs.d"; \
+		echo "Removed ~/.emacs.d symlink"; \
+	fi
+	@cd $(PACKAGES_DIR)/editors && $(STOW) -D emacs 2>/dev/null || true
+
+nano: check-stow
+	@echo "Installing nano configuration..."
+	@cd $(PACKAGES_DIR)/editors && $(STOW) nano
+
+uninstall-nano:
+	@echo "Uninstalling nano configuration..."
+	@cd $(PACKAGES_DIR)/editors && $(STOW) -D nano 2>/dev/null || true
+
+vscode: check-stow
+	@echo "Installing VSCode configuration..."
+	@cd $(PACKAGES_DIR)/editors && $(STOW) vscode
+
+uninstall-vscode:
+	@echo "Uninstalling VSCode configuration..."
+	@cd $(PACKAGES_DIR)/editors && $(STOW) -D vscode 2>/dev/null || true
+
+git: check-stow
+	@echo "Installing git configuration..."
+	@mkdir -p "$(HOME)/.config/git"
+	@cd $(PACKAGES_DIR)/development && $(STOW) git
+
+uninstall-git:
+	@echo "Uninstalling git configuration..."
+	@if [ -L "$(HOME)/.config/git" ]; then \
+		rm "$(HOME)/.config/git"; \
+		echo "Removed ~/.config/git symlink"; \
+	fi
+	@if [ -L "$(HOME)/.gitconfig" ]; then \
+		rm "$(HOME)/.gitconfig"; \
+		echo "Removed ~/.gitconfig symlink"; \
+	fi
+	@cd $(PACKAGES_DIR)/development && $(STOW) -D git 2>/dev/null || true
+
+i3: check-stow
+	@echo "Installing i3 configuration..."
+	@cd $(PACKAGES_DIR)/desktop && $(STOW) i3
+
+iterm2: check-stow
+	@echo "Installing iterm2 configuration..."
+	@cd $(PACKAGES_DIR)/desktop && $(STOW) iterm2
+
+htop: check-stow
+	@echo "Installing htop configuration..."
+	@cd $(PACKAGES_DIR)/tools && $(STOW) htop
+
+tmux: check-stow
+	@echo "Installing tmux configuration..."
+	@cd $(PACKAGES_DIR)/tools && $(STOW) tmux
+
+gnupg: check-stow
+	@echo "Installing gnupg configuration..."
+	@cd $(PACKAGES_DIR)/tools && $(STOW) gnupg
+
+stow: check-stow
+	@echo "Installing stow configuration..."
+	@cd $(PACKAGES_DIR)/../management && $(STOW) stow
+
+# Category targets
+shell: bash zsh
+editors: emacs nano vscode
+development: git
+desktop: i3 iterm2
+tools: htop tmux gnupg
+management: stow
+
+# Clean broken symlinks
+clean:
+	@echo "Cleaning broken symlinks in $(TARGET_DIR)..."
+	@find $(TARGET_DIR) -type l -exec test ! -e {} \; -print -delete 2>/dev/null || true
+	@echo "Cleanup complete!"

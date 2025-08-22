@@ -1,9 +1,11 @@
 # Bash package specific ignores
 README.md
-*.bak
-*.backup
+.*\.bak$
+.*\.backup$
 core/
 features/
-.bash_history*
-.bashrc.local
-.bash_profile.local
+\.bash_history.*
+\.bashrc\.local
+\.bash_profile\.local
+.config/bash/local
+.config/bash/history

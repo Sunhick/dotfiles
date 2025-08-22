@@ -1,6 +1,6 @@
 # Bash Configuration
 
-Modern bash configuration with intelligent loading and cross-platform support.
+XDG-compliant bash configuration with macOS compatibility and intelligent loading.
 
 ## Features
 
@@ -12,16 +12,19 @@ Modern bash configuration with intelligent loading and cross-platform support.
 
 ## Files
 
-- `.bashrc` - Main configuration entry point
+### Compatibility Layer
+- `.bashrc` - Compatibility wrapper that sources XDG-compliant config
 - `.bash_profile` - macOS compatibility (sources .bashrc)
-- `.bash_export` - Environment variables and PATH management
-- `.bash_history` - History configuration and settings
-- `.bash_prompt` - Custom prompt with git integration
-- `.aliases` - Command aliases and shortcuts
-- `.colors` - Color definitions for prompt and output
-- `.shopt` - Shell options and behavior settings
-- `.darwin` - macOS-specific configuration
-- `.linux` - Linux-specific configuration
+
+### XDG-Compliant Configuration (`~/.config/bash/`)
+- `bashrc` - Main XDG-compliant configuration
+- `exports` - Environment variables and PATH management
+- `prompt` - Custom prompt with git integration
+- `aliases` - Command aliases and shortcuts
+- `colors` - Color definitions for prompt and output
+- `shopt` - Shell options and behavior settings
+- `darwin` - macOS-specific configuration
+- `linux` - Linux-specific configuration
 
 ## Installation
 
@@ -33,7 +36,14 @@ make install-bash
 ## Customization
 
 ### Local Overrides
-Create `~/.bashrc.local` for machine-specific customizations that won't be tracked in git.
+Create `~/.config/bash/local` for machine-specific customizations that won't be tracked in git.
+
+### macOS Compatibility
+The setup provides both:
+- `~/.bashrc` - Compatibility wrapper for systems expecting this location
+- `~/.config/bash/bashrc` - XDG-compliant main configuration
+
+This ensures compatibility with macOS while maintaining clean XDG organization.
 
 ### Color Themes
 Edit `.colors` to change the color scheme. Three themes are available:
