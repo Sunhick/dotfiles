@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Arrow glyph
-glyph_arrow='→'
+glyph_arrow='»'
 
 # Git branch function
 git_branch() {
@@ -36,7 +36,7 @@ prompt_command() {
     # prompt+="$(git_branch)"
 
     # Final prompt character
-    prompt+=" ${bold_white}\$${reset_color} "
+    prompt+=" ${bold_white}»${reset_color} "
 
     PS1="$prompt"
     PS2="${bold_yellow}>${reset_color} "

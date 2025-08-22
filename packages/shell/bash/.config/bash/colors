@@ -12,7 +12,7 @@ bold_green="\[\e[38;5;77m\]"      # emerald
 bold_yellow="\[\e[38;5;227m\]"    # butter yellow
 bold_blue="\[\e[38;5;75m\]"       # rich sky blue
 bold_purple="\[\e[38;5;135m\]"    # magenta/violet
-bold_cyan="\[\e[38;5;81m\]"       # cyan with pop
+bold_cyan="\[\e[1;1;38;5;40m\]"   # bright cyan for pop
 bold_white="\[\e[38;5;255m\]"     # bright white
 bold_orange="\[\e[38;5;208m\]"    # vivid orange
 
