@@ -57,7 +57,7 @@ help:
 	@echo "  $(ALL_PACKAGES)"
 	@echo ""
 	@echo "Individual uninstall targets:"
-	@echo "  uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-vscode uninstall-git"
+	@echo "  uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-vscode uninstall-git uninstall-curlrc"
 	@echo ""
 	@echo "Package categories:"
 	@echo "  shell       - $(SHELL_PACKAGES)"
@@ -230,6 +230,10 @@ uninstall: check-stow
 		echo "  UNLINK: .config/Code"; \
 		rm "$(HOME)/.config/Code"; \
 	fi
+	@if [ -L "$(HOME)/.config/.curlrc" ]; then \
+		echo "  UNLINK: .config/.curlrc"; \
+		rm "$(HOME)/.config/.curlrc"; \
+	fi
 	@cd $(PACKAGES_DIR) && for category in shell editors development desktop tools management; do \
 		if [ -d "$$category" ]; then \
 			cd "$$category" && \
@@ -351,6 +355,18 @@ uninstall-terminal:
 	fi
 	@cd $(PACKAGES_DIR)/desktop && $(STOW) -D terminal 2>/dev/null || true
 
+uninstall-curlrc:
+	@echo "Uninstalling curlrc configuration..."
+	@if [ -L "$(HOME)/.config/.curlrc" ]; then \
+		rm "$(HOME)/.config/.curlrc"; \
+		echo "  UNLINK: .config/.curlrc"; \
+	fi
+	@if [ -L "$(HOME)/.config/curl" ]; then \
+		rm "$(HOME)/.config/curl"; \
+		echo "  UNLINK: .config/curl"; \
+	fi
+	@cd $(PACKAGES_DIR)/tools && $(STOW) -D curlrc 2>/dev/null || true
+
 i3: check-stow
 	@echo "Installing i3 configuration..."
 	@cd $(PACKAGES_DIR)/desktop && $(STOW) i3
@@ -375,6 +391,9 @@ gnupg: check-stow
 curlrc: check-stow
 	@echo "Installing curlrc configuration..."
 	@cd $(PACKAGES_DIR)/tools && $(STOW) curlrc
+	@echo "Creating .curlrc symlink in ~/.config/..."
+	@ln -sf "$(HOME)/.config/curl/curlrc" "$(HOME)/.config/.curlrc"
+	@echo "  LINK: .config/.curlrc -> curl/curlrc"
 
 stow: check-stow
 	@echo "Installing stow configuration..."
