@@ -6,3 +6,8 @@ export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 
 # Set ZDOTDIR to use XDG config directory
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
+# Rust cargo environment (if cargo is installed)
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi

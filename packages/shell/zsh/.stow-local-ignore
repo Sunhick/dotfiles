@@ -1,5 +1,6 @@
 # Zsh package specific ignores
 README.md
+.stow-dependencies
 .config/zsh/zshrc.local
 .config/zsh/.zsh_history
 .config/zsh/.zcompdump*

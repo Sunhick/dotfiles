@@ -86,6 +86,7 @@ backup:
 	@if [ -d "$(HOME)/.config/terminal" ]; then cp -r "$(HOME)/.config/terminal" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/terminal/"; fi
 	@if [ -d "$(HOME)/.config/tmux" ]; then cp -r "$(HOME)/.config/tmux" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/tmux/"; fi
 	@if [ -d "$(HOME)/.config/htop" ]; then cp -r "$(HOME)/.config/htop" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/htop/"; fi
+	@if [ -d "$(HOME)/.config/Code" ]; then cp -r "$(HOME)/.config/Code" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/Code/"; fi
 	@# Backup legacy configs
 	@if [ -f "$(HOME)/.gitconfig" ]; then cp "$(HOME)/.gitconfig" "$(BACKUP_DIR)/"; echo "  BACKUP: .gitconfig"; fi
 	@if [ -d "$(HOME)/.emacs.d" ]; then cp -r "$(HOME)/.emacs.d" "$(BACKUP_DIR)/"; echo "  BACKUP: .emacs.d/"; fi
@@ -120,6 +121,7 @@ restore:
 	@if [ -d "$(LATEST_BACKUP)/terminal" ]; then cp -r "$(LATEST_BACKUP)/terminal" "$(HOME)/.config/"; echo "  RESTORE: .config/terminal/"; fi
 	@if [ -d "$(LATEST_BACKUP)/.emacs.d" ]; then cp -r "$(LATEST_BACKUP)/.emacs.d" "$(HOME)/"; echo "  RESTORE: .emacs.d/"; fi
 	@if [ -d "$(LATEST_BACKUP)/.gnupg" ]; then cp -r "$(LATEST_BACKUP)/.gnupg" "$(HOME)/"; echo "  RESTORE: .gnupg/"; fi
+	@if [ -d "$(LATEST_BACKUP)/Code" ]; then cp -r "$(LATEST_BACKUP)/Code" "$(HOME)/.config/"; echo "  RESTORE: .config/Code/"; fi
 	@echo "Restore completed from: $(LATEST_BACKUP)"
 
 # List available backups
@@ -202,6 +204,10 @@ uninstall: check-stow
 	@if [ -L "$(HOME)/.gitconfig" ]; then \
 		echo "  UNLINK: .gitconfig"; \
 		rm "$(HOME)/.gitconfig"; \
+	fi
+	@if [ -L "$(HOME)/.config/Code" ]; then \
+		echo "  UNLINK: .config/Code"; \
+		rm "$(HOME)/.config/Code"; \
 	fi
 	@cd $(PACKAGES_DIR) && for category in shell editors development desktop tools management; do \
 		if [ -d "$$category" ]; then \
@@ -289,10 +295,15 @@ uninstall-nano:
 
 vscode: check-stow
 	@echo "Installing VSCode configuration..."
-	@cd $(PACKAGES_DIR)/editors && $(STOW) vscode
+	@mkdir -p "$(HOME)/.config/Code/User"
+	@cd $(PACKAGES_DIR)/editors && $(STOW) vscode && echo "  LINK: vscode (XDG compliant)"
 
 uninstall-vscode:
 	@echo "Uninstalling VSCode configuration..."
+	@if [ -L "$(HOME)/.config/Code" ]; then \
+		rm "$(HOME)/.config/Code"; \
+		echo "  UNLINK: .config/Code"; \
+	fi
 	@cd $(PACKAGES_DIR)/editors && $(STOW) -D vscode 2>/dev/null || true
 
 git: check-stow

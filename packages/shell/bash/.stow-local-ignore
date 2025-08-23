@@ -1,5 +1,6 @@
 # Bash package specific ignores
 README.md
+.stow-dependencies
 .*\.bak$
 .*\.backup$
 core/

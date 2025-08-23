@@ -1,19 +1,78 @@
 {
+    // UI Layout - Emacs-like minimal interface
     "workbench.sideBar.location": "right",
     "workbench.activityBar.visible": false,
     "editor.minimap.enabled": false,
     "breadcrumbs.enabled": false,
     "editor.renderLineHighlight": "none",
+    "workbench.statusBar.visible": true,
+    "workbench.editor.showTabs": true,
+    "workbench.editor.tabCloseButton": "off",
+    // Cursor and selection - Emacs block cursor
     "editor.cursorStyle": "block",
-
-
-    "workbench.colorCustomizations": {
-        "statusBar.background" : "#1A1A1A",
-        "statusBar.noFolderBackground" : "#212121",
-        "statusBar.debuggingBackground": "#263238"
-    },
-    "workbench.colorTheme": "Gruvbox Dark (Medium)",
-
+    "editor.cursorBlinking": "solid",
+    // Line numbers - Emacs relative line numbers
+    "editor.lineNumbers": "relative",
+    "editor.renderFinalNewline": "on",
+    // Indentation and whitespace - Emacs behavior
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": true,
+    "editor.renderWhitespace": "trailing",
     "editor.trimAutoWhitespace": true,
-    "files.trimTrailingWhitespace": true,  
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    // Word wrap - Emacs visual line mode
+    "editor.wordWrap": "on",
+    "editor.wordWrapColumn": 80,
+    "editor.rulers": [
+        80
+    ],
+    // Search and navigation - Emacs-like behavior
+    "search.useIgnoreFiles": true,
+    "search.smartCase": true,
+    "workbench.list.smoothScrolling": true,
+    "editor.find.addExtraSpaceOnTop": false,
+    // File handling - Emacs-like behavior
+    "files.autoSave": "off",
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "files.exclude": {
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true
+    },
+    // Editor behavior - Emacs-like
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.quickSuggestions": {
+        "other": "off",
+        "comments": "off",
+        "strings": "off"
+    },
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.parameterHints.enabled": false,
+    "editor.hover.enabled": false,
+    "editor.lightbulb.enabled": "off",
+    // Scrolling - Emacs-like smooth scrolling
+    "editor.smoothScrolling": true,
+    "editor.scrollBeyondLastLine": false,
+    "editor.scrollBeyondLastColumn": 5,
+    // Matching brackets - Emacs show-paren-mode
+    "editor.matchBrackets": "always",
+    "editor.guides.bracketPairs": "active",
+    // Theme and colors
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#1A1A1A",
+        "statusBar.noFolderBackground": "#212121",
+        "statusBar.debuggingBackground": "#263238",
+        "editorLineNumber.foreground": "#666666",
+        "editorLineNumber.activeForeground": "#ffffff"
+    },
+    "workbench.colorTheme": "Default Dark+",
+    // Terminal - Emacs-like
+    "terminal.integrated.scrollback": 10000,
+    "terminal.integrated.cursorStyle": "block",
+    "terminal.integrated.cursorBlinking": false,
+    // Keybindings hint
+    "workbench.tips.enabled": false,
+    "workbench.startupEditor": "none"
 }

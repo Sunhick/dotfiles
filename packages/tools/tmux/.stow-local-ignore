@@ -1,2 +1,3 @@
 # Tmux package specific ignores
 README.md
+.stow-dependencies
