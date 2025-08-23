@@ -26,7 +26,7 @@ STOW_DRY_RUN := stow --target="$(TARGET_DIR)" --simulate
 BACKUP_DIR := $(HOME)/.dotfiles-backup/$(shell date +%Y%m%d_%H%M%S)
 LATEST_BACKUP := $(HOME)/.dotfiles-backup/latest
 
-.PHONY: help install force-install uninstall restow clean clean-backups clean-all-backups check-stow backup restore list-backups install-safe dry-run $(ALL_PACKAGES) uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-git
+.PHONY: help install force-install uninstall restow clean-backups clean-all-backups check-stow backup restore list-backups install-safe dry-run $(ALL_PACKAGES) uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-git
 
 # Default target
 help:
@@ -39,7 +39,6 @@ help:
 	@echo "  force-install - Install all packages (overwrite existing files)"
 	@echo "  uninstall     - Uninstall all packages"
 	@echo "  restow        - Restow all packages (uninstall + install)"
-	@echo "  clean         - Remove broken symlinks"
 	@echo "  check-stow    - Check if GNU Stow is installed"
 	@echo "  dry-run       - Preview install operations (no changes made)"
 	@echo ""
@@ -49,7 +48,6 @@ help:
 	@echo "  list-backups  - List available backups"
 	@echo ""
 	@echo "Cleanup targets:"
-	@echo "  clean         - Remove broken symlinks"
 	@echo "  clean-backups - Remove old backups (keep last 5)"
 	@echo "  clean-all-backups - Remove ALL backups (dangerous!)"
 	@echo ""
@@ -251,20 +249,22 @@ uninstall: check-stow
 
 # Restow (uninstall + install)
 restow: check-stow
-	@echo "Restowing all packages..."
 	@cd $(PACKAGES_DIR) && for category in shell editors development desktop tools management; do \
 		if [ -d "$$category" ]; then \
 			cd "$$category" && \
 			for package in */; do \
 				if [ -d "$$package" ]; then \
-					echo "Restowing $$category/$$package..."; \
-					$(STOW) -R "$$package"; \
+					package_name=$${package%/}; \
+					if $(STOW) -R "$$package" 2>/dev/null; then \
+						echo "  RESTOW: $$package_name"; \
+					else \
+						echo "  SKIP: $$package_name (conflicts)"; \
+					fi; \
 				fi; \
 			done && \
 			cd ..; \
 		fi; \
 	done
-	@echo "All packages restowed successfully!"
 
 # Individual package targets
 bash: check-stow
@@ -406,12 +406,6 @@ development: git
 desktop: i3 terminal
 tools: htop tmux gnupg curlrc
 management: stow
-
-# Clean broken symlinks
-clean:
-	@echo "Cleaning broken symlinks in $(TARGET_DIR)..."
-	@find $(TARGET_DIR) -type l -exec test ! -e {} \; -print -delete 2>/dev/null || true
-	@echo "Cleanup complete!"
 
 # Clean old backups (keep last 5)
 clean-backups:
