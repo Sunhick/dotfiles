@@ -20,12 +20,13 @@ ALL_PACKAGES := $(SHELL_PACKAGES) $(EDITOR_PACKAGES) $(DEV_PACKAGES) $(DESKTOP_P
 
 # Stow command with minimal output
 STOW := stow --target="$(TARGET_DIR)"
+STOW_DRY_RUN := stow --target="$(TARGET_DIR)" --simulate
 
 # Backup directory with timestamp
 BACKUP_DIR := $(HOME)/.dotfiles-backup/$(shell date +%Y%m%d_%H%M%S)
 LATEST_BACKUP := $(HOME)/.dotfiles-backup/latest
 
-.PHONY: help install force-install uninstall restow clean clean-backups clean-all-backups check-stow backup restore list-backups install-safe $(ALL_PACKAGES) uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-git
+.PHONY: help install force-install uninstall restow clean clean-backups clean-all-backups check-stow backup restore list-backups install-safe dry-run $(ALL_PACKAGES) uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-git
 
 # Default target
 help:
@@ -40,6 +41,7 @@ help:
 	@echo "  restow        - Restow all packages (uninstall + install)"
 	@echo "  clean         - Remove broken symlinks"
 	@echo "  check-stow    - Check if GNU Stow is installed"
+	@echo "  dry-run       - Preview install operations (no changes made)"
 	@echo ""
 	@echo "Backup targets:"
 	@echo "  backup        - Backup existing configuration files"
@@ -136,6 +138,25 @@ list-backups:
 	else \
 		echo "  No backup directory found"; \
 	fi
+
+# Preview install operations without making changes
+dry-run: check-stow
+	@cd $(PACKAGES_DIR) && for category in shell editors development desktop tools management; do \
+		if [ -d "$$category" ]; then \
+			cd "$$category" && \
+			for package in */; do \
+				if [ -d "$$package" ]; then \
+					package_name=$${package%/}; \
+					if $(STOW_DRY_RUN) "$$package" 2>/dev/null; then \
+						echo "  WOULD LINK: $$package_name"; \
+					else \
+						echo "  WOULD SKIP: $$package_name (conflicts)"; \
+					fi; \
+				fi; \
+			done && \
+			cd ..; \
+		fi; \
+	done
 
 # Safe install - backup first, then install
 install-safe: backup install
