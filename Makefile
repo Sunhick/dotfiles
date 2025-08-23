@@ -21,7 +21,11 @@ ALL_PACKAGES := $(SHELL_PACKAGES) $(EDITOR_PACKAGES) $(DEV_PACKAGES) $(DESKTOP_P
 # Stow command with minimal output
 STOW := stow --target="$(TARGET_DIR)"
 
-.PHONY: help install force-install uninstall restow clean check-stow $(ALL_PACKAGES) uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-git
+# Backup directory with timestamp
+BACKUP_DIR := $(HOME)/.dotfiles-backup/$(shell date +%Y%m%d_%H%M%S)
+LATEST_BACKUP := $(HOME)/.dotfiles-backup/latest
+
+.PHONY: help install force-install uninstall restow clean clean-backups clean-all-backups check-stow backup restore list-backups install-safe $(ALL_PACKAGES) uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-git
 
 # Default target
 help:
@@ -30,11 +34,22 @@ help:
 	@echo ""
 	@echo "Available targets:"
 	@echo "  install       - Install all packages (skip conflicts)"
+	@echo "  install-safe  - Backup existing configs then install"
 	@echo "  force-install - Install all packages (overwrite existing files)"
 	@echo "  uninstall     - Uninstall all packages"
 	@echo "  restow        - Restow all packages (uninstall + install)"
 	@echo "  clean         - Remove broken symlinks"
 	@echo "  check-stow    - Check if GNU Stow is installed"
+	@echo ""
+	@echo "Backup targets:"
+	@echo "  backup        - Backup existing configuration files"
+	@echo "  restore       - Restore from latest backup"
+	@echo "  list-backups  - List available backups"
+	@echo ""
+	@echo "Cleanup targets:"
+	@echo "  clean         - Remove broken symlinks"
+	@echo "  clean-backups - Remove old backups (keep last 5)"
+	@echo "  clean-all-backups - Remove ALL backups (dangerous!)"
 	@echo ""
 	@echo "Individual packages:"
 	@echo "  $(ALL_PACKAGES)"
@@ -53,6 +68,75 @@ help:
 # Check if stow is installed
 check-stow:
 	@which stow > /dev/null || (echo "GNU Stow is not installed. Please install it first." && exit 1)
+
+# Backup existing configuration files
+backup:
+	@echo "Creating backup at $(BACKUP_DIR)..."
+	@mkdir -p "$(BACKUP_DIR)"
+	@echo "Backing up existing configuration files..."
+	@# Backup shell configs
+	@if [ -f "$(HOME)/.bashrc" ]; then cp "$(HOME)/.bashrc" "$(BACKUP_DIR)/"; echo "  BACKUP: .bashrc"; fi
+	@if [ -f "$(HOME)/.zshrc" ]; then cp "$(HOME)/.zshrc" "$(BACKUP_DIR)/"; echo "  BACKUP: .zshrc"; fi
+	@if [ -f "$(HOME)/.zshenv" ]; then cp "$(HOME)/.zshenv" "$(BACKUP_DIR)/"; echo "  BACKUP: .zshenv"; fi
+	@# Backup XDG config directories
+	@if [ -d "$(HOME)/.config/bash" ]; then cp -r "$(HOME)/.config/bash" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/bash/"; fi
+	@if [ -d "$(HOME)/.config/zsh" ]; then cp -r "$(HOME)/.config/zsh" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/zsh/"; fi
+	@if [ -d "$(HOME)/.config/git" ]; then cp -r "$(HOME)/.config/git" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/git/"; fi
+	@if [ -d "$(HOME)/.config/emacs" ]; then cp -r "$(HOME)/.config/emacs" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/emacs/"; fi
+	@if [ -d "$(HOME)/.config/terminal" ]; then cp -r "$(HOME)/.config/terminal" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/terminal/"; fi
+	@if [ -d "$(HOME)/.config/tmux" ]; then cp -r "$(HOME)/.config/tmux" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/tmux/"; fi
+	@if [ -d "$(HOME)/.config/htop" ]; then cp -r "$(HOME)/.config/htop" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/htop/"; fi
+	@# Backup legacy configs
+	@if [ -f "$(HOME)/.gitconfig" ]; then cp "$(HOME)/.gitconfig" "$(BACKUP_DIR)/"; echo "  BACKUP: .gitconfig"; fi
+	@if [ -d "$(HOME)/.emacs.d" ]; then cp -r "$(HOME)/.emacs.d" "$(BACKUP_DIR)/"; echo "  BACKUP: .emacs.d/"; fi
+	@if [ -d "$(HOME)/.gnupg" ]; then cp -r "$(HOME)/.gnupg" "$(BACKUP_DIR)/"; echo "  BACKUP: .gnupg/"; fi
+	@# Create symlink to latest backup
+	@rm -f "$(LATEST_BACKUP)"
+	@ln -sf "$(BACKUP_DIR)" "$(LATEST_BACKUP)"
+	@echo "Backup completed at: $(BACKUP_DIR)"
+	@echo "Latest backup symlink: $(LATEST_BACKUP)"
+
+# Restore from latest backup
+restore:
+	@if [ ! -d "$(LATEST_BACKUP)" ]; then \
+		echo "No backup found at $(LATEST_BACKUP)"; \
+		echo "Available backups:"; \
+		ls -la $(HOME)/.dotfiles-backup/ 2>/dev/null || echo "No backups available"; \
+		exit 1; \
+	fi
+	@echo "Restoring from backup: $(LATEST_BACKUP)"
+	@echo "WARNING: This will overwrite current configurations!"
+	@read -p "Continue? (y/N): " confirm && [ "$$confirm" = "y" ] || exit 1
+	@# Restore files
+	@if [ -f "$(LATEST_BACKUP)/.bashrc" ]; then cp "$(LATEST_BACKUP)/.bashrc" "$(HOME)/"; echo "  RESTORE: .bashrc"; fi
+	@if [ -f "$(LATEST_BACKUP)/.zshrc" ]; then cp "$(LATEST_BACKUP)/.zshrc" "$(HOME)/"; echo "  RESTORE: .zshrc"; fi
+	@if [ -f "$(LATEST_BACKUP)/.zshenv" ]; then cp "$(LATEST_BACKUP)/.zshenv" "$(HOME)/"; echo "  RESTORE: .zshenv"; fi
+	@if [ -f "$(LATEST_BACKUP)/.gitconfig" ]; then cp "$(LATEST_BACKUP)/.gitconfig" "$(HOME)/"; echo "  RESTORE: .gitconfig"; fi
+	@# Restore directories
+	@if [ -d "$(LATEST_BACKUP)/bash" ]; then cp -r "$(LATEST_BACKUP)/bash" "$(HOME)/.config/"; echo "  RESTORE: .config/bash/"; fi
+	@if [ -d "$(LATEST_BACKUP)/zsh" ]; then cp -r "$(LATEST_BACKUP)/zsh" "$(HOME)/.config/"; echo "  RESTORE: .config/zsh/"; fi
+	@if [ -d "$(LATEST_BACKUP)/git" ]; then cp -r "$(LATEST_BACKUP)/git" "$(HOME)/.config/"; echo "  RESTORE: .config/git/"; fi
+	@if [ -d "$(LATEST_BACKUP)/emacs" ]; then cp -r "$(LATEST_BACKUP)/emacs" "$(HOME)/.config/"; echo "  RESTORE: .config/emacs/"; fi
+	@if [ -d "$(LATEST_BACKUP)/terminal" ]; then cp -r "$(LATEST_BACKUP)/terminal" "$(HOME)/.config/"; echo "  RESTORE: .config/terminal/"; fi
+	@if [ -d "$(LATEST_BACKUP)/.emacs.d" ]; then cp -r "$(LATEST_BACKUP)/.emacs.d" "$(HOME)/"; echo "  RESTORE: .emacs.d/"; fi
+	@if [ -d "$(LATEST_BACKUP)/.gnupg" ]; then cp -r "$(LATEST_BACKUP)/.gnupg" "$(HOME)/"; echo "  RESTORE: .gnupg/"; fi
+	@echo "Restore completed from: $(LATEST_BACKUP)"
+
+# List available backups
+list-backups:
+	@echo "Available backups:"
+	@if [ -d "$(HOME)/.dotfiles-backup" ]; then \
+		ls -la "$(HOME)/.dotfiles-backup/" | grep "^d" | awk '{print "  " $$9 " (" $$6 " " $$7 " " $$8 ")"}' | grep -v "^  \." || echo "  No backups found"; \
+		if [ -L "$(LATEST_BACKUP)" ]; then \
+			echo ""; \
+			echo "Latest backup points to: $$(readlink $(LATEST_BACKUP))"; \
+		fi; \
+	else \
+		echo "  No backup directory found"; \
+	fi
+
+# Safe install - backup first, then install
+install-safe: backup install
 
 # Install all packages
 install: check-stow
@@ -273,3 +357,21 @@ clean:
 	@echo "Cleaning broken symlinks in $(TARGET_DIR)..."
 	@find $(TARGET_DIR) -type l -exec test ! -e {} \; -print -delete 2>/dev/null || true
 	@echo "Cleanup complete!"
+
+# Clean old backups (keep last 5)
+clean-backups:
+	@echo "Cleaning old backups (keeping last 5)..."
+	@if [ -d "$(HOME)/.dotfiles-backup" ]; then \
+		cd "$(HOME)/.dotfiles-backup" && \
+		ls -t | grep -E '^[0-9]{8}_[0-9]{6}$$' | tail -n +6 | xargs -r rm -rf && \
+		echo "Old backups cleaned"; \
+	else \
+		echo "No backup directory found"; \
+	fi
+
+# Clean all backups (dangerous!)
+clean-all-backups:
+	@echo "WARNING: This will delete ALL backups!"
+	@read -p "Are you sure? (y/N): " confirm && [ "$$confirm" = "y" ] || exit 1
+	@rm -rf "$(HOME)/.dotfiles-backup"
+	@echo "All backups deleted"
