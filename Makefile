@@ -12,7 +12,7 @@ SHELL_PACKAGES := bash zsh
 EDITOR_PACKAGES := emacs nano vscode
 DEV_PACKAGES := git
 DESKTOP_PACKAGES := i3 terminal
-TOOL_PACKAGES := htop tmux gnupg
+TOOL_PACKAGES := htop tmux gnupg curlrc
 MGMT_PACKAGES := stow
 
 # All packages
@@ -372,6 +372,10 @@ gnupg: check-stow
 	@echo "Installing gnupg configuration..."
 	@cd $(PACKAGES_DIR)/tools && $(STOW) gnupg
 
+curlrc: check-stow
+	@echo "Installing curlrc configuration..."
+	@cd $(PACKAGES_DIR)/tools && $(STOW) curlrc
+
 stow: check-stow
 	@echo "Installing stow configuration..."
 	@cd $(PACKAGES_DIR)/../management && $(STOW) stow
@@ -381,7 +385,7 @@ shell: bash zsh
 editors: emacs nano vscode
 development: git
 desktop: i3 terminal
-tools: htop tmux gnupg
+tools: htop tmux gnupg curlrc
 management: stow
 
 # Clean broken symlinks
