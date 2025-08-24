@@ -12,7 +12,7 @@ SHELL_PACKAGES := bash zsh
 EDITOR_PACKAGES := emacs nano vscode
 DEV_PACKAGES := git
 DESKTOP_PACKAGES := i3 terminal
-TOOL_PACKAGES := htop tmux gnupg curlrc inputrc
+TOOL_PACKAGES := htop tmux gnupg curlrc inputrc ripgrep
 MGMT_PACKAGES := stow
 
 # All packages
@@ -55,7 +55,7 @@ help:
 	@echo "  $(ALL_PACKAGES)"
 	@echo ""
 	@echo "Individual uninstall targets:"
-	@echo "  uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-vscode uninstall-git uninstall-curlrc uninstall-inputrc"
+	@echo "  uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-vscode uninstall-git uninstall-curlrc uninstall-inputrc uninstall-ripgrep"
 	@echo ""
 	@echo "Package categories:"
 	@echo "  shell       - $(SHELL_PACKAGES)"
@@ -423,6 +423,22 @@ uninstall-inputrc:
 	fi
 	@cd $(PACKAGES_DIR)/tools && $(STOW) -D inputrc 2>/dev/null || true
 
+ripgrep: check-stow
+	@echo "Installing ripgrep configuration..."
+	@cd $(PACKAGES_DIR)/tools && $(STOW) ripgrep
+
+uninstall-ripgrep:
+	@echo "Uninstalling ripgrep configuration..."
+	@if [ -L "$(HOME)/.config/ripgrep" ]; then \
+		rm "$(HOME)/.config/ripgrep"; \
+		echo "  UNLINK: .config/ripgrep"; \
+	fi
+	@if [ -L "$(HOME)/.rgignore" ]; then \
+		rm "$(HOME)/.rgignore"; \
+		echo "  UNLINK: .rgignore"; \
+	fi
+	@cd $(PACKAGES_DIR)/tools && $(STOW) -D ripgrep 2>/dev/null || true
+
 stow: check-stow
 	@echo "Installing stow configuration..."
 	@cd $(PACKAGES_DIR)/../management && $(STOW) stow
@@ -432,7 +448,7 @@ shell: bash zsh
 editors: emacs nano vscode
 development: git
 desktop: i3 terminal
-tools: htop tmux gnupg curlrc inputrc
+tools: htop tmux gnupg curlrc inputrc ripgrep
 management: stow
 
 # Clean old backups (keep last 5)

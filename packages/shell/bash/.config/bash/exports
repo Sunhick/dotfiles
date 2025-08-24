@@ -25,6 +25,9 @@ export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;32"
 
+# Ripgrep configuration (XDG compliant)
+export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/ripgrep/config"
+
 # Path additions (will be prepended if directories exist)
 for dir in "$HOME/.local/bin" "$HOME/bin" "/usr/local/bin"; do
     if [[ -d "$dir" && ":$PATH:" != *":$dir:"* ]]; then

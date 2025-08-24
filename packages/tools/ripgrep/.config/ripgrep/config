@@ -1,0 +1,53 @@
+# Ripgrep configuration file
+# XDG Base Directory compliant location: ~/.config/ripgrep/config
+# Set RIPGREP_CONFIG_PATH environment variable to enable automatic loading
+
+# Search options
+--smart-case
+--follow
+--hidden
+
+# Output formatting
+--colors=line:fg:yellow
+--colors=line:style:bold
+--colors=path:fg:green
+--colors=path:style:bold
+
+# Performance
+--max-columns=150
+--max-columns-preview
+
+# File type associations
+--type-add=web:*.{html,css,js,jsx,ts,tsx,vue,svelte}
+--type-add=config:*.{json,yaml,yml,toml,ini,conf,cfg}
+--type-add=docs:*.{md,rst,txt,rtf}
+
+# Global ignore patterns
+--glob=!.git/
+--glob=!node_modules/
+--glob=!.DS_Store
+--glob=!*.min.js
+--glob=!*.min.css
+--glob=!dist/
+--glob=!build/
+--glob=!target/
+--glob=!.next/
+--glob=!.nuxt/
+--glob=!coverage/
+--glob=!*.log
+--glob=!*.tmp
+--glob=!*.temp
+--glob=!*.cache
+--glob=!.vscode/
+--glob=!.idea/
+--glob=!*.swp
+--glob=!*.swo
+--glob=!*~
+--glob=!.env.local
+--glob=!.env.*.local
+
+# Binary file handling
+--binary
+
+# Context lines
+--context=2
