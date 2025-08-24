@@ -30,10 +30,25 @@ if [[ -f "$HOME/.cargo/env" ]]; then
     source "$HOME/.cargo/env"
 fi
 
-# macOS-specific aliases
-alias ls="ls -G"
-alias ll="ls -lG"
-alias la="ls -laG"
+# macOS-specific ls behavior
+# Prefer gls (GNU ls) on macOS for better color support
+if command -v gls >/dev/null 2>&1; then
+    # Use GNU ls with dir_colors support
+    alias ls="gls --color=auto"
+    alias l="gls -lah --color=auto"
+    alias la="gls -lAh --color=auto"
+    alias ll="gls -lh --color=auto"
+    alias lsa="gls -lah --color=auto"
+else
+    # Fallback to BSD ls with LSCOLORS
+    # Gruvbox-inspired LSCOLORS: directories=blue, executables=green, etc.
+    export LSCOLORS="Dxfxcxdxbxegedabagacad"
+    alias ls="ls -G"
+    alias l="ls -lahG"
+    alias la="ls -lAhG"
+    alias ll="ls -lhG"
+    alias lsa="ls -lahG"
+fi
 
 # Application aliases (if available)
 if [[ -x "/Applications/Emacs.app/Contents/MacOS/Emacs" ]]; then

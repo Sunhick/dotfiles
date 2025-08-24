@@ -9,10 +9,27 @@ alias ~="cd ~"
 alias -- -="cd -"
 
 # List directory contents
-alias l="ls -lah"
-alias la="ls -lAh"
-alias ll="ls -lh"
-alias lsa="ls -lah"
+# Prefer GNU ls (gls) if available, fallback to system ls
+if command -v gls >/dev/null 2>&1; then
+    alias ls="gls --color=auto"
+    alias l="gls -lah --color=auto"
+    alias la="gls -lAh --color=auto"
+    alias ll="gls -lh --color=auto"
+    alias lsa="gls -lah --color=auto"
+elif [[ "$(uname -s)" != "Darwin" ]]; then
+    # GNU ls on Linux
+    alias ls="ls --color=auto"
+    alias l="ls -lah"
+    alias la="ls -lAh"
+    alias ll="ls -lh"
+    alias lsa="ls -lah"
+else
+    # BSD ls on macOS (will be overridden by darwin config)
+    alias l="ls -lah"
+    alias la="ls -lAh"
+    alias ll="ls -lh"
+    alias lsa="ls -lah"
+fi
 
 # Colorize output
 alias grep='grep --color=auto'
@@ -44,9 +61,23 @@ alias reload="source ~/.bashrc"
 
 # Modern tool replacements (if available)
 command -v bat >/dev/null && alias cat="bat"
-command -v exa >/dev/null && alias ls="exa"
 command -v fd >/dev/null && alias find="fd"
 command -v rg >/dev/null && alias grep="rg"
+
+# exa/eza override (only if user wants modern ls replacement)
+if command -v eza >/dev/null 2>&1; then
+    alias ls="eza --color=auto"
+    alias l="eza -lah --color=auto"
+    alias la="eza -lAh --color=auto"
+    alias ll="eza -lh --color=auto"
+    alias lsa="eza -lah --color=auto"
+elif command -v exa >/dev/null 2>&1; then
+    alias ls="exa --color=auto"
+    alias l="exa -lah --color=auto"
+    alias la="exa -lAh --color=auto"
+    alias ll="exa -lh --color=auto"
+    alias lsa="exa -lah --color=auto"
+fi
 
 # Emacs shortcuts
 alias kill-emacs='emacsclient -e "(kill-emacs)"'
