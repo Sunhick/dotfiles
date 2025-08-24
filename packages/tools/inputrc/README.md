@@ -14,12 +14,53 @@ GNU Readline configuration for enhanced command line editing (XDG compliant).
 
 ## Key Bindings
 
+### History Navigation
 - `Ctrl+R` / `Ctrl+S`: Incremental history search (reverse/forward)
 - `Up/Down arrows`: History search based on current input
-- `Alt + Left/Right`: Word navigation
-- `Ctrl + Left/Right`: Alternative word navigation
-- `Alt + Delete`: Delete preceding word
+- `Alt+P` / `Alt+N`: Previous/next history
+
+### Line Navigation (Emacs-style)
+- `Ctrl+A`: Beginning of line
+- `Ctrl+E`: End of line
+- `Ctrl+F`: Forward character
+- `Ctrl+B`: Backward character
 - `Home/End`: Beginning/end of line
+
+### Word Navigation
+- `Alt+F` / `Alt+B`: Forward/backward word
+- `Alt + Left/Right`: Word navigation (arrow keys)
+- `Ctrl + Left/Right`: Alternative word navigation
+
+### Text Editing
+- `Ctrl+D`: Delete character forward
+- `Ctrl+H`: Delete character backward (backspace)
+- `Ctrl+K`: Kill (cut) to end of line
+- `Ctrl+U`: Kill (cut) entire line
+- `Ctrl+W`: Kill (cut) word backward
+- `Ctrl+Y`: Yank (paste)
+- `Ctrl+T`: Transpose characters
+
+### Word Operations
+- `Alt+D`: Kill word forward
+- `Alt+Backspace`: Kill word backward
+- `Alt+U`: Uppercase word
+- `Alt+L`: Lowercase word
+- `Alt+C`: Capitalize word
+
+### Completion
+- `Tab`: Complete
+- `Alt+?`: Show possible completions
+- `Alt+*`: Insert all completions
+- `Alt+/`: Complete filename
+- `Alt+~`: Complete username
+- `Alt+$`: Complete variable
+- `Alt+@`: Complete hostname
+
+### Miscellaneous
+- `Ctrl+L`: Clear screen
+- `Ctrl+G`: Abort current operation
+- `Ctrl+X Ctrl+U`: Undo
+- `Ctrl+X Ctrl+R`: Re-read inputrc file
 
 ## Installation
 

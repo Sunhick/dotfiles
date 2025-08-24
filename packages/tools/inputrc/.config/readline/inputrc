@@ -46,6 +46,35 @@ set convert-meta off
 "\C-r": reverse-search-history
 "\C-s": forward-search-history
 
+# Emacs-style line editing
+"\C-a": beginning-of-line
+"\C-e": end-of-line
+"\C-f": forward-char
+"\C-b": backward-char
+"\C-d": delete-char
+"\C-h": backward-delete-char
+"\C-k": kill-line
+"\C-u": unix-line-discard
+"\C-w": unix-word-rubout
+"\C-y": yank
+"\C-t": transpose-chars
+
+# Emacs-style word navigation
+"\ef": forward-word
+"\eb": backward-word
+"\ed": kill-word
+"\e\C-h": backward-kill-word
+"\e\C-?": backward-kill-word
+
+# Emacs-style case conversion
+"\eu": upcase-word
+"\el": downcase-word
+"\ec": capitalize-word
+
+# Emacs-style history navigation
+"\ep": previous-history
+"\en": next-history
+
 # Alt + arrow keys for word navigation
 "\e[1;3C": forward-word
 "\e[1;3D": backward-word
@@ -65,6 +94,22 @@ set convert-meta off
 "\e[5~": history-search-backward
 "\e[6~": history-search-forward
 
+# Additional emacs-style bindings
+"\C-l": clear-screen
+"\C-o": operate-and-get-next
+"\C-g": abort
+"\C-x\C-r": re-read-init-file
+"\C-x\C-u": undo
+"\C-x\C-x": exchange-point-and-mark
+
+# Emacs-style completion
+"\e?": possible-completions
+"\e*": insert-completions
+"\e/": complete-filename
+"\e~": complete-username
+"\e$": complete-variable
+"\e@": complete-hostname
+
 # Enable colored completion prefixes and suffixes
 set colored-completion-prefix on
 set colored-stats on
@@ -72,7 +117,24 @@ set colored-stats on
 # Disable bell on completion
 set bell-style none
 
+# Emacs editing mode (default)
+set editing-mode emacs
+
 # Show mode in prompt for vi mode users (uncomment if you use vi mode)
 # set show-mode-in-prompt on
 # set vi-ins-mode-string "\1\033[6 q\2"
 # set vi-cmd-mode-string "\1\033[2 q\2"
+# set editing-mode vi
+
+# Emacs Key Bindings Reference:
+# Ctrl+A: Beginning of line    Ctrl+E: End of line
+# Ctrl+F: Forward char         Ctrl+B: Backward char
+# Ctrl+D: Delete char          Ctrl+H: Backspace
+# Ctrl+K: Kill to end          Ctrl+U: Kill whole line
+# Ctrl+W: Kill word back       Ctrl+Y: Yank (paste)
+# Ctrl+T: Transpose chars      Ctrl+L: Clear screen
+# Alt+F: Forward word          Alt+B: Backward word
+# Alt+D: Kill word forward     Alt+Backspace: Kill word back
+# Alt+U: Uppercase word        Alt+L: Lowercase word
+# Alt+C: Capitalize word       Alt+P: Previous history
+# Alt+N: Next history
