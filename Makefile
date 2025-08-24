@@ -12,7 +12,7 @@ SHELL_PACKAGES := bash zsh
 EDITOR_PACKAGES := emacs nano vscode
 DEV_PACKAGES := git
 DESKTOP_PACKAGES := i3 terminal
-TOOL_PACKAGES := htop tmux gnupg curlrc
+TOOL_PACKAGES := htop tmux gnupg curlrc inputrc
 MGMT_PACKAGES := stow
 
 # All packages
@@ -55,7 +55,7 @@ help:
 	@echo "  $(ALL_PACKAGES)"
 	@echo ""
 	@echo "Individual uninstall targets:"
-	@echo "  uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-vscode uninstall-git uninstall-curlrc"
+	@echo "  uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-vscode uninstall-git uninstall-curlrc uninstall-inputrc"
 	@echo ""
 	@echo "Package categories:"
 	@echo "  shell       - $(SHELL_PACKAGES)"
@@ -89,6 +89,8 @@ backup:
 	@if [ -d "$(HOME)/.config/Code" ]; then cp -r "$(HOME)/.config/Code" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/Code/"; fi
 	@# Backup legacy configs
 	@if [ -f "$(HOME)/.gitconfig" ]; then cp "$(HOME)/.gitconfig" "$(BACKUP_DIR)/"; echo "  BACKUP: .gitconfig"; fi
+	@if [ -f "$(HOME)/.inputrc" ]; then cp "$(HOME)/.inputrc" "$(BACKUP_DIR)/"; echo "  BACKUP: .inputrc"; fi
+	@if [ -d "$(HOME)/.config/readline" ]; then cp -r "$(HOME)/.config/readline" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/readline/"; fi
 	@if [ -d "$(HOME)/.emacs.d" ]; then cp -r "$(HOME)/.emacs.d" "$(BACKUP_DIR)/"; echo "  BACKUP: .emacs.d/"; fi
 	@if [ -d "$(HOME)/.gnupg" ]; then cp -r "$(HOME)/.gnupg" "$(BACKUP_DIR)/"; echo "  BACKUP: .gnupg/"; fi
 	@# Create symlink to latest backup
@@ -113,6 +115,8 @@ restore:
 	@if [ -f "$(LATEST_BACKUP)/.zshrc" ]; then cp "$(LATEST_BACKUP)/.zshrc" "$(HOME)/"; echo "  RESTORE: .zshrc"; fi
 	@if [ -f "$(LATEST_BACKUP)/.zshenv" ]; then cp "$(LATEST_BACKUP)/.zshenv" "$(HOME)/"; echo "  RESTORE: .zshenv"; fi
 	@if [ -f "$(LATEST_BACKUP)/.gitconfig" ]; then cp "$(LATEST_BACKUP)/.gitconfig" "$(HOME)/"; echo "  RESTORE: .gitconfig"; fi
+	@if [ -f "$(LATEST_BACKUP)/.inputrc" ]; then cp "$(LATEST_BACKUP)/.inputrc" "$(HOME)/"; echo "  RESTORE: .inputrc"; fi
+	@if [ -d "$(LATEST_BACKUP)/readline" ]; then cp -r "$(LATEST_BACKUP)/readline" "$(HOME)/.config/"; echo "  RESTORE: .config/readline/"; fi
 	@# Restore directories
 	@if [ -d "$(LATEST_BACKUP)/bash" ]; then cp -r "$(LATEST_BACKUP)/bash" "$(HOME)/.config/"; echo "  RESTORE: .config/bash/"; fi
 	@if [ -d "$(LATEST_BACKUP)/zsh" ]; then cp -r "$(LATEST_BACKUP)/zsh" "$(HOME)/.config/"; echo "  RESTORE: .config/zsh/"; fi
@@ -223,6 +227,14 @@ uninstall: check-stow
 	@if [ -L "$(HOME)/.gitconfig" ]; then \
 		echo "  UNLINK: .gitconfig"; \
 		rm "$(HOME)/.gitconfig"; \
+	fi
+	@if [ -L "$(HOME)/.inputrc" ]; then \
+		echo "  UNLINK: .inputrc"; \
+		rm "$(HOME)/.inputrc"; \
+	fi
+	@if [ -L "$(HOME)/.config/readline" ]; then \
+		echo "  UNLINK: .config/readline"; \
+		rm "$(HOME)/.config/readline"; \
 	fi
 	@if [ -L "$(HOME)/.config/Code" ]; then \
 		echo "  UNLINK: .config/Code"; \
@@ -395,6 +407,22 @@ curlrc: check-stow
 	@ln -sf "$(HOME)/.config/curl/curlrc" "$(HOME)/.config/.curlrc"
 	@echo "  LINK: .config/.curlrc -> curl/curlrc"
 
+inputrc: check-stow
+	@echo "Installing inputrc configuration..."
+	@cd $(PACKAGES_DIR)/tools && $(STOW) inputrc
+
+uninstall-inputrc:
+	@echo "Uninstalling inputrc configuration..."
+	@if [ -L "$(HOME)/.inputrc" ]; then \
+		rm "$(HOME)/.inputrc"; \
+		echo "  UNLINK: .inputrc"; \
+	fi
+	@if [ -L "$(HOME)/.config/readline" ]; then \
+		rm "$(HOME)/.config/readline"; \
+		echo "  UNLINK: .config/readline"; \
+	fi
+	@cd $(PACKAGES_DIR)/tools && $(STOW) -D inputrc 2>/dev/null || true
+
 stow: check-stow
 	@echo "Installing stow configuration..."
 	@cd $(PACKAGES_DIR)/../management && $(STOW) stow
@@ -404,7 +432,7 @@ shell: bash zsh
 editors: emacs nano vscode
 development: git
 desktop: i3 terminal
-tools: htop tmux gnupg curlrc
+tools: htop tmux gnupg curlrc inputrc
 management: stow
 
 # Clean old backups (keep last 5)

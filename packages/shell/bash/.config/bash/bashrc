@@ -28,6 +28,11 @@ fi
 # Load shell options first
 include "${BASH_CONFIG_DIR}/shopt"
 
+# Load readline configuration (XDG compliant)
+if [[ -f "${XDG_CONFIG_HOME}/readline/inputrc" ]]; then
+    bind -f "${XDG_CONFIG_HOME}/readline/inputrc"
+fi
+
 # Load environment variables
 include "${BASH_CONFIG_DIR}/exports"
 
