@@ -41,24 +41,6 @@ include "${BASH_CONFIG_DIR}/history" "optional"
 
 # Load colors and prompt
 include "${BASH_CONFIG_DIR}/colors"
-
-# Load dir_colors for ls coloring
-if command -v gdircolors >/dev/null 2>&1; then
-    # Use GNU dircolors if available (from coreutils)
-    if [[ -f "${BASH_CONFIG_DIR}/dir_colors" ]]; then
-        eval "$(gdircolors -b "${BASH_CONFIG_DIR}/dir_colors")"
-    else
-        eval "$(gdircolors -b)"
-    fi
-elif command -v dircolors >/dev/null 2>&1; then
-    # Fallback to system dircolors
-    if [[ -f "${BASH_CONFIG_DIR}/dir_colors" ]]; then
-        eval "$(dircolors -b "${BASH_CONFIG_DIR}/dir_colors")"
-    else
-        eval "$(dircolors -b)"
-    fi
-fi
-
 include "${BASH_CONFIG_DIR}/prompt"
 
 # Load aliases
@@ -77,6 +59,23 @@ esac
 # Load fuzzy finder if available
 include "${XDG_CONFIG_HOME}/fzf/fzf.bash" "optional"
 include "${HOME}/.fzf.bash" "optional"
+
+# Load dir_colors for ls coloring
+if command -v gdircolors >/dev/null 2>&1; then
+    # Use GNU dircolors if available (from coreutils)
+    if [[ -f "${BASH_CONFIG_DIR}/dir_colors" ]]; then
+        eval "$(gdircolors -b "${BASH_CONFIG_DIR}/dir_colors")"
+    else
+        eval "$(gdircolors -b)"
+    fi
+elif command -v dircolors >/dev/null 2>&1; then
+    # Fallback to system dircolors
+    if [[ -f "${BASH_CONFIG_DIR}/dir_colors" ]]; then
+        eval "$(dircolors -b "${BASH_CONFIG_DIR}/dir_colors")"
+    else
+        eval "$(dircolors -b)"
+    fi
+fi
 
 # Load local machine-specific overrides
 include "${XDG_CONFIG_HOME}/work/bash/local" "optional"
