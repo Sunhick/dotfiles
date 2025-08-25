@@ -10,7 +10,7 @@ PACKAGE_DIRS := shell editors development desktop tools
 BACKUP_DIR := $(HOME)/.dotfiles-backup/$(shell date +%Y%m%d_%H%M%S)
 LATEST_BACKUP := $(HOME)/.dotfiles-backup/latest
 
-.PHONY: help install uninstall restow list backup restore list-backups clean-backups clean-all-backups check-stow install-safe $(PACKAGE_DIRS) $(addprefix uninstall-,$(PACKAGE_DIRS)) $(addprefix restow-,$(PACKAGE_DIRS))
+.PHONY: help install uninstall restow list backup restore list-backups clean-backups clean-all-backups check-stow install-safe dryrun $(PACKAGE_DIRS) $(addprefix uninstall-,$(PACKAGE_DIRS)) $(addprefix restow-,$(PACKAGE_DIRS)) $(addprefix dryrun-,$(PACKAGE_DIRS))
 
 # Default target
 help:
@@ -20,6 +20,7 @@ help:
 	@echo "Main targets:"
 	@echo "  install       - Install all package categories"
 	@echo "  install-safe  - Backup existing configs then install"
+	@echo "  dryrun        - Preview what would be installed (dry run)"
 	@echo "  uninstall     - Uninstall all package categories"
 	@echo "  restow        - Restow all package categories"
 	@echo "  list          - List all available packages"
@@ -35,6 +36,7 @@ help:
 	@echo "  $(PACKAGE_DIRS)"
 	@echo "  $(addprefix uninstall-,$(PACKAGE_DIRS))"
 	@echo "  $(addprefix restow-,$(PACKAGE_DIRS))"
+	@echo "  $(addprefix dryrun-,$(PACKAGE_DIRS))"
 	@echo ""
 	@echo "Backup targets:"
 	@echo "  backup        - Backup existing configuration files"
@@ -43,6 +45,8 @@ help:
 	@echo "  clean-backups - Remove old backups (keep last 5)"
 	@echo ""
 	@echo "Usage examples:"
+	@echo "  make dryrun          # Preview all changes"
+	@echo "  make dryrun-tools    # Preview tools installation"
 	@echo "  make tools           # Install all tools"
 	@echo "  make uninstall-shell # Uninstall shell configs"
 	@echo "  make restow-tools    # Restow all tools"
@@ -63,6 +67,9 @@ uninstall: $(addprefix uninstall-,$(PACKAGE_DIRS))
 
 # Restow all packages
 restow: $(addprefix restow-,$(PACKAGE_DIRS))
+
+# Dry run - preview what would be installed
+dryrun: check-stow $(addprefix dryrun-,$(PACKAGE_DIRS))
 
 # List all available packages
 list:
@@ -120,6 +127,40 @@ restow-desktop:
 
 restow-tools:
 	@cd packages/tools && $(MAKE) restow
+
+# Dry run category targets
+dryrun-shell: check-stow
+	@cd packages/shell && $(MAKE) dryrun
+
+dryrun-editors: check-stow
+	@cd packages/editors && $(MAKE) dryrun 2>/dev/null || \
+		(for pkg in packages/editors/*/; do \
+			if [ -d "$$pkg" ]; then \
+				pkg_name=$$(basename "$$pkg"); \
+				echo "  WOULD LINK: $$pkg_name"; \
+			fi; \
+		done)
+
+dryrun-development: check-stow
+	@cd packages/development && $(MAKE) dryrun 2>/dev/null || \
+		(for pkg in packages/development/*/; do \
+			if [ -d "$$pkg" ]; then \
+				pkg_name=$$(basename "$$pkg"); \
+				echo "  WOULD LINK: $$pkg_name"; \
+			fi; \
+		done)
+
+dryrun-desktop: check-stow
+	@cd packages/desktop && $(MAKE) dryrun 2>/dev/null || \
+		(for pkg in packages/desktop/*/; do \
+			if [ -d "$$pkg" ]; then \
+				pkg_name=$$(basename "$$pkg"); \
+				echo "  WOULD LINK: $$pkg_name"; \
+			fi; \
+		done)
+
+dryrun-tools: check-stow
+	@cd packages/tools && $(MAKE) dryrun
 
 # Backup existing configuration files
 backup:

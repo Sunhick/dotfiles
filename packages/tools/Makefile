@@ -4,7 +4,7 @@ SHELL := /bin/bash
 # Available tools
 TOOLS := curlrc fzf gnupg htop inputrc ripgrep tmux
 
-.PHONY: all install uninstall restow list $(TOOLS) $(addprefix uninstall-,$(TOOLS)) $(addprefix restow-,$(TOOLS))
+.PHONY: all install uninstall restow list dryrun $(TOOLS) $(addprefix uninstall-,$(TOOLS)) $(addprefix restow-,$(TOOLS)) $(addprefix dryrun-,$(TOOLS))
 
 # Default target
 all: install
@@ -17,6 +17,9 @@ uninstall: $(addprefix uninstall-,$(TOOLS))
 
 # Restow all tools
 restow: $(addprefix restow-,$(TOOLS))
+
+# Dry run all tools
+dryrun: $(addprefix dryrun-,$(TOOLS))
 
 # Individual tool targets
 curlrc:
@@ -83,6 +86,84 @@ restow-ripgrep:
 
 restow-tmux:
 	@cd tmux && stow --target=$(HOME) --restow . && echo "  RESTOW: tmux"
+
+# Dry run targets
+dryrun-curlrc:
+	@if [ -d curlrc ]; then \
+		if cd curlrc && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
+			echo "  WOULD LINK: curlrc"; \
+		else \
+			echo "  WOULD LINK: curlrc (conflicts)"; \
+		fi; \
+	else \
+		echo "  SKIP: curlrc (not found)"; \
+	fi
+
+dryrun-fzf:
+	@if [ -d fzf ]; then \
+		if cd fzf && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
+			echo "  WOULD LINK: fzf"; \
+		else \
+			echo "  WOULD LINK: fzf (conflicts)"; \
+		fi; \
+	else \
+		echo "  SKIP: fzf (not found)"; \
+	fi
+
+dryrun-gnupg:
+	@if [ -d gnupg ]; then \
+		if cd gnupg && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
+			echo "  WOULD LINK: gnupg"; \
+		else \
+			echo "  WOULD LINK: gnupg (conflicts)"; \
+		fi; \
+	else \
+		echo "  SKIP: gnupg (not found)"; \
+	fi
+
+dryrun-htop:
+	@if [ -d htop ]; then \
+		if cd htop && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
+			echo "  WOULD LINK: htop"; \
+		else \
+			echo "  WOULD LINK: htop (conflicts)"; \
+		fi; \
+	else \
+		echo "  SKIP: htop (not found)"; \
+	fi
+
+dryrun-inputrc:
+	@if [ -d inputrc ]; then \
+		if cd inputrc && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
+			echo "  WOULD LINK: inputrc"; \
+		else \
+			echo "  WOULD LINK: inputrc (conflicts)"; \
+		fi; \
+	else \
+		echo "  SKIP: inputrc (not found)"; \
+	fi
+
+dryrun-ripgrep:
+	@if [ -d ripgrep ]; then \
+		if cd ripgrep && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
+			echo "  WOULD LINK: ripgrep"; \
+		else \
+			echo "  WOULD LINK: ripgrep (conflicts)"; \
+		fi; \
+	else \
+		echo "  SKIP: ripgrep (not found)"; \
+	fi
+
+dryrun-tmux:
+	@if [ -d tmux ]; then \
+		if cd tmux && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
+			echo "  WOULD LINK: tmux"; \
+		else \
+			echo "  WOULD LINK: tmux (conflicts)"; \
+		fi; \
+	else \
+		echo "  SKIP: tmux (not found)"; \
+	fi
 
 # List available tools
 list:
