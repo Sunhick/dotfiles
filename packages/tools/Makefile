@@ -1,44 +1,83 @@
-# Tools Makefile
-# Individual tool configurations
+# Tools Package Makefile
+SHELL := /bin/bash
 
-.PHONY: all install-% uninstall-% status-% test-% clean-%
+# Available tools
+TOOLS := curlrc gnupg htop inputrc ripgrep tmux
+
+.PHONY: all install uninstall restow list $(TOOLS) $(addprefix uninstall-,$(TOOLS)) $(addprefix restow-,$(TOOLS))
 
 # Default target
-all: install-curlrc install-gnupg install-htop install-inputrc install-ripgrep install-tmux
+all: install
 
-# Individual package targets
-install-%:
-	@echo "Installing $*..."
-	@cd $* && stow --target=$$HOME --restow .
-	@echo "$* installed successfully"
+# Install all tools
+install: $(TOOLS)
 
-uninstall-%:
-	@echo "Uninstalling $*..."
-	@cd $* && stow --target=$$HOME --delete .
-	@echo "$* uninstalled successfully"
+# Uninstall all tools
+uninstall: $(addprefix uninstall-,$(TOOLS))
 
-status-%:
-	@echo "Status for $*:"
-	@cd $* && stow --target=$$HOME --simulate --verbose=2 . 2>&1 | head -10
+# Restow all tools
+restow: $(addprefix restow-,$(TOOLS))
 
-test-%:
-	@echo "Testing $* (dry run):"
-	@cd $* && stow --target=$$HOME --simulate --no-folding .
+# Individual tool targets
+curlrc:
+	@cd curlrc && stow --target=$(HOME) --restow . && echo "  LINK: curlrc"
 
-clean-%:
-	@echo "Cleaning broken symlinks for $*..."
-	@find $$HOME -type l -exec test ! -e {} \; -print | grep $* || true
+gnupg:
+	@cd gnupg && stow --target=$(HOME) --restow . && echo "  LINK: gnupg"
 
-# Convenience targets
-install-all: all
-uninstall-all: uninstall-curlrc uninstall-gnupg uninstall-htop uninstall-inputrc uninstall-ripgrep uninstall-tmux
+htop:
+	@cd htop && stow --target=$(HOME) --restow . && echo "  LINK: htop"
 
-status-all: status-curlrc status-gnupg status-htop status-inputrc status-ripgrep status-tmux
+inputrc:
+	@cd inputrc && stow --target=$(HOME) --restow . && echo "  LINK: inputrc"
 
-test-all: test-curlrc test-gnupg test-htop test-inputrc test-ripgrep test-tmux
+ripgrep:
+	@cd ripgrep && stow --target=$(HOME) --restow . && echo "  LINK: ripgrep"
 
+tmux:
+	@cd tmux && stow --target=$(HOME) --restow . && echo "  LINK: tmux"
+
+# Uninstall targets
+uninstall-curlrc:
+	@cd curlrc && stow --target=$(HOME) --delete . && echo "  UNLINK: curlrc"
+
+uninstall-gnupg:
+	@cd gnupg && stow --target=$(HOME) --delete . && echo "  UNLINK: gnupg"
+
+uninstall-htop:
+	@cd htop && stow --target=$(HOME) --delete . && echo "  UNLINK: htop"
+
+uninstall-inputrc:
+	@cd inputrc && stow --target=$(HOME) --delete . && echo "  UNLINK: inputrc"
+
+uninstall-ripgrep:
+	@cd ripgrep && stow --target=$(HOME) --delete . && echo "  UNLINK: ripgrep"
+
+uninstall-tmux:
+	@cd tmux && stow --target=$(HOME) --delete . && echo "  UNLINK: tmux"
+
+# Restow targets
+restow-curlrc:
+	@cd curlrc && stow --target=$(HOME) --restow . && echo "  RESTOW: curlrc"
+
+restow-gnupg:
+	@cd gnupg && stow --target=$(HOME) --restow . && echo "  RESTOW: gnupg"
+
+restow-htop:
+	@cd htop && stow --target=$(HOME) --restow . && echo "  RESTOW: htop"
+
+restow-inputrc:
+	@cd inputrc && stow --target=$(HOME) --restow . && echo "  RESTOW: inputrc"
+
+restow-ripgrep:
+	@cd ripgrep && stow --target=$(HOME) --restow . && echo "  RESTOW: ripgrep"
+
+restow-tmux:
+	@cd tmux && stow --target=$(HOME) --restow . && echo "  RESTOW: tmux"
+
+# List available tools
 list:
-	@echo "Available tools packages:"
+	@echo "Available tools:"
 	@echo "  curlrc    - curl configuration"
 	@echo "  gnupg     - GnuPG configuration"
 	@echo "  htop      - htop configuration"

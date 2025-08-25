@@ -1,98 +1,152 @@
 # Dotfiles Management Makefile
-# Uses GNU Stow to create symlinks for configuration files
+# Delegates to individual package Makefiles
 
-# Default target directory
-TARGET_DIR := $(HOME)
+SHELL := /bin/bash
 
-# Package directories
-PACKAGES_DIR := packages
-
-# Define package categories and their packages
-SHELL_PACKAGES := bash zsh
-EDITOR_PACKAGES := emacs nano vscode
-DEV_PACKAGES := git
-DESKTOP_PACKAGES := i3 terminal
-TOOL_PACKAGES := htop tmux gnupg curlrc inputrc ripgrep
-MGMT_PACKAGES := stow
-
-# All packages
-ALL_PACKAGES := $(SHELL_PACKAGES) $(EDITOR_PACKAGES) $(DEV_PACKAGES) $(DESKTOP_PACKAGES) $(TOOL_PACKAGES) $(MGMT_PACKAGES)
-
-# Stow command with minimal output
-STOW := stow --target="$(TARGET_DIR)"
-STOW_DRY_RUN := stow --target="$(TARGET_DIR)" --simulate
+# Package categories
+PACKAGE_DIRS := shell editors development desktop tools
 
 # Backup directory with timestamp
 BACKUP_DIR := $(HOME)/.dotfiles-backup/$(shell date +%Y%m%d_%H%M%S)
 LATEST_BACKUP := $(HOME)/.dotfiles-backup/latest
 
-.PHONY: help install force-install uninstall restow clean-backups clean-all-backups check-stow backup restore list-backups install-safe dry-run $(ALL_PACKAGES) uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-git
+.PHONY: help install uninstall restow list backup restore list-backups clean-backups clean-all-backups check-stow install-safe $(PACKAGE_DIRS) $(addprefix uninstall-,$(PACKAGE_DIRS)) $(addprefix restow-,$(PACKAGE_DIRS))
 
 # Default target
 help:
-	@echo "XDG-Compliant Dotfiles Management"
-	@echo "=================================="
+	@echo "Dotfiles Management System"
+	@echo "=========================="
 	@echo ""
-	@echo "Available targets:"
-	@echo "  install       - Install all packages (skip conflicts)"
+	@echo "Main targets:"
+	@echo "  install       - Install all package categories"
 	@echo "  install-safe  - Backup existing configs then install"
-	@echo "  force-install - Install all packages (overwrite existing files)"
-	@echo "  uninstall     - Uninstall all packages"
-	@echo "  restow        - Restow all packages (uninstall + install)"
-	@echo "  check-stow    - Check if GNU Stow is installed"
-	@echo "  dry-run       - Preview install operations (no changes made)"
+	@echo "  uninstall     - Uninstall all package categories"
+	@echo "  restow        - Restow all package categories"
+	@echo "  list          - List all available packages"
+	@echo ""
+	@echo "Package categories:"
+	@echo "  shell         - Shell configurations (bash, zsh)"
+	@echo "  editors       - Editor configurations (emacs, nano, vscode)"
+	@echo "  development   - Development tools (git)"
+	@echo "  desktop       - Desktop environment (i3, terminal)"
+	@echo "  tools         - Command-line tools (fd, ripgrep, tmux, etc.)"
+	@echo ""
+	@echo "Category targets:"
+	@echo "  $(PACKAGE_DIRS)"
+	@echo "  $(addprefix uninstall-,$(PACKAGE_DIRS))"
+	@echo "  $(addprefix restow-,$(PACKAGE_DIRS))"
 	@echo ""
 	@echo "Backup targets:"
 	@echo "  backup        - Backup existing configuration files"
 	@echo "  restore       - Restore from latest backup"
 	@echo "  list-backups  - List available backups"
-	@echo ""
-	@echo "Cleanup targets:"
 	@echo "  clean-backups - Remove old backups (keep last 5)"
-	@echo "  clean-all-backups - Remove ALL backups (dangerous!)"
 	@echo ""
-	@echo "Individual packages:"
-	@echo "  $(ALL_PACKAGES)"
-	@echo ""
-	@echo "Individual uninstall targets:"
-	@echo "  uninstall-bash uninstall-zsh uninstall-emacs uninstall-nano uninstall-vscode uninstall-git uninstall-curlrc uninstall-inputrc uninstall-ripgrep"
-	@echo ""
-	@echo "Package categories:"
-	@echo "  shell       - $(SHELL_PACKAGES)"
-	@echo "  editors     - $(EDITOR_PACKAGES)"
-	@echo "  development - $(DEV_PACKAGES)"
-	@echo "  desktop     - $(DESKTOP_PACKAGES)"
-	@echo "  tools       - $(TOOL_PACKAGES)"
-	@echo "  management  - $(MGMT_PACKAGES)"
+	@echo "Usage examples:"
+	@echo "  make tools           # Install all tools"
+	@echo "  make uninstall-shell # Uninstall shell configs"
+	@echo "  make restow-tools    # Restow all tools"
+	@echo "  cd packages/tools && make ripgrep  # Install specific tool"
 
 # Check if stow is installed
 check-stow:
 	@which stow > /dev/null || (echo "GNU Stow is not installed. Please install it first." && exit 1)
+
+# Install all packages
+install: check-stow $(PACKAGE_DIRS)
+
+# Safe install - backup first, then install
+install-safe: backup install
+
+# Uninstall all packages
+uninstall: $(addprefix uninstall-,$(PACKAGE_DIRS))
+
+# Restow all packages
+restow: $(addprefix restow-,$(PACKAGE_DIRS))
+
+# List all available packages
+list:
+	@echo "Available package categories:"
+	@for dir in $(PACKAGE_DIRS); do \
+		echo ""; \
+		echo "=== $$dir ==="; \
+		cd packages/$$dir && $(MAKE) list; \
+	done
+
+# Package category targets
+shell: check-stow
+	@cd packages/shell && $(MAKE) install
+
+editors: check-stow
+	@cd packages/editors && $(MAKE) install
+
+development: check-stow
+	@cd packages/development && $(MAKE) install
+
+desktop: check-stow
+	@cd packages/desktop && $(MAKE) install
+
+tools: check-stow
+	@cd packages/tools && $(MAKE) install
+
+# Uninstall category targets
+uninstall-shell:
+	@cd packages/shell && $(MAKE) uninstall
+
+uninstall-editors:
+	@cd packages/editors && $(MAKE) uninstall
+
+uninstall-development:
+	@cd packages/development && $(MAKE) uninstall
+
+uninstall-desktop:
+	@cd packages/desktop && $(MAKE) uninstall
+
+uninstall-tools:
+	@cd packages/tools && $(MAKE) uninstall
+
+# Restow category targets
+restow-shell:
+	@cd packages/shell && $(MAKE) restow
+
+restow-editors:
+	@cd packages/editors && $(MAKE) restow
+
+restow-development:
+	@cd packages/development && $(MAKE) restow
+
+restow-desktop:
+	@cd packages/desktop && $(MAKE) restow
+
+restow-tools:
+	@cd packages/tools && $(MAKE) restow
 
 # Backup existing configuration files
 backup:
 	@echo "Creating backup at $(BACKUP_DIR)..."
 	@mkdir -p "$(BACKUP_DIR)"
 	@echo "Backing up existing configuration files..."
-	@# Backup shell configs
-	@if [ -f "$(HOME)/.bashrc" ]; then cp "$(HOME)/.bashrc" "$(BACKUP_DIR)/"; echo "  BACKUP: .bashrc"; fi
-	@if [ -f "$(HOME)/.zshrc" ]; then cp "$(HOME)/.zshrc" "$(BACKUP_DIR)/"; echo "  BACKUP: .zshrc"; fi
-	@if [ -f "$(HOME)/.zshenv" ]; then cp "$(HOME)/.zshenv" "$(BACKUP_DIR)/"; echo "  BACKUP: .zshenv"; fi
-	@# Backup XDG config directories
-	@if [ -d "$(HOME)/.config/bash" ]; then cp -r "$(HOME)/.config/bash" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/bash/"; fi
-	@if [ -d "$(HOME)/.config/zsh" ]; then cp -r "$(HOME)/.config/zsh" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/zsh/"; fi
-	@if [ -d "$(HOME)/.config/git" ]; then cp -r "$(HOME)/.config/git" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/git/"; fi
-	@if [ -d "$(HOME)/.config/emacs" ]; then cp -r "$(HOME)/.config/emacs" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/emacs/"; fi
-	@if [ -d "$(HOME)/.config/terminal" ]; then cp -r "$(HOME)/.config/terminal" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/terminal/"; fi
-	@if [ -d "$(HOME)/.config/tmux" ]; then cp -r "$(HOME)/.config/tmux" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/tmux/"; fi
-	@if [ -d "$(HOME)/.config/htop" ]; then cp -r "$(HOME)/.config/htop" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/htop/"; fi
-	@if [ -d "$(HOME)/.config/Code" ]; then cp -r "$(HOME)/.config/Code" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/Code/"; fi
-	@# Backup legacy configs
-	@if [ -f "$(HOME)/.gitconfig" ]; then cp "$(HOME)/.gitconfig" "$(BACKUP_DIR)/"; echo "  BACKUP: .gitconfig"; fi
-	@if [ -f "$(HOME)/.inputrc" ]; then cp "$(HOME)/.inputrc" "$(BACKUP_DIR)/"; echo "  BACKUP: .inputrc"; fi
-	@if [ -d "$(HOME)/.config/readline" ]; then cp -r "$(HOME)/.config/readline" "$(BACKUP_DIR)/"; echo "  BACKUP: .config/readline/"; fi
-	@if [ -d "$(HOME)/.emacs.d" ]; then cp -r "$(HOME)/.emacs.d" "$(BACKUP_DIR)/"; echo "  BACKUP: .emacs.d/"; fi
-	@if [ -d "$(HOME)/.gnupg" ]; then cp -r "$(HOME)/.gnupg" "$(BACKUP_DIR)/"; echo "  BACKUP: .gnupg/"; fi
+	@# Backup common config directories
+	@for config in bash zsh git emacs nano terminal tmux htop ripgrep fd curl gnupg Code; do \
+		if [ -d "$(HOME)/.config/$$config" ]; then \
+			cp -r "$(HOME)/.config/$$config" "$(BACKUP_DIR)/"; \
+			echo "  BACKUP: .config/$$config/"; \
+		fi; \
+	done
+	@# Backup common dotfiles
+	@for file in .bashrc .zshrc .zshenv .gitconfig .inputrc; do \
+		if [ -f "$(HOME)/$$file" ]; then \
+			cp "$(HOME)/$$file" "$(BACKUP_DIR)/"; \
+			echo "  BACKUP: $$file"; \
+		fi; \
+	done
+	@# Backup legacy directories
+	@for dir in .emacs.d .gnupg; do \
+		if [ -d "$(HOME)/$$dir" ]; then \
+			cp -r "$(HOME)/$$dir" "$(BACKUP_DIR)/"; \
+			echo "  BACKUP: $$dir/"; \
+		fi; \
+	done
 	@# Create symlink to latest backup
 	@rm -f "$(LATEST_BACKUP)"
 	@ln -sf "$(BACKUP_DIR)" "$(LATEST_BACKUP)"
@@ -110,22 +164,27 @@ restore:
 	@echo "Restoring from backup: $(LATEST_BACKUP)"
 	@echo "WARNING: This will overwrite current configurations!"
 	@read -p "Continue? (y/N): " confirm && [ "$$confirm" = "y" ] || exit 1
-	@# Restore files
-	@if [ -f "$(LATEST_BACKUP)/.bashrc" ]; then cp "$(LATEST_BACKUP)/.bashrc" "$(HOME)/"; echo "  RESTORE: .bashrc"; fi
-	@if [ -f "$(LATEST_BACKUP)/.zshrc" ]; then cp "$(LATEST_BACKUP)/.zshrc" "$(HOME)/"; echo "  RESTORE: .zshrc"; fi
-	@if [ -f "$(LATEST_BACKUP)/.zshenv" ]; then cp "$(LATEST_BACKUP)/.zshenv" "$(HOME)/"; echo "  RESTORE: .zshenv"; fi
-	@if [ -f "$(LATEST_BACKUP)/.gitconfig" ]; then cp "$(LATEST_BACKUP)/.gitconfig" "$(HOME)/"; echo "  RESTORE: .gitconfig"; fi
-	@if [ -f "$(LATEST_BACKUP)/.inputrc" ]; then cp "$(LATEST_BACKUP)/.inputrc" "$(HOME)/"; echo "  RESTORE: .inputrc"; fi
-	@if [ -d "$(LATEST_BACKUP)/readline" ]; then cp -r "$(LATEST_BACKUP)/readline" "$(HOME)/.config/"; echo "  RESTORE: .config/readline/"; fi
-	@# Restore directories
-	@if [ -d "$(LATEST_BACKUP)/bash" ]; then cp -r "$(LATEST_BACKUP)/bash" "$(HOME)/.config/"; echo "  RESTORE: .config/bash/"; fi
-	@if [ -d "$(LATEST_BACKUP)/zsh" ]; then cp -r "$(LATEST_BACKUP)/zsh" "$(HOME)/.config/"; echo "  RESTORE: .config/zsh/"; fi
-	@if [ -d "$(LATEST_BACKUP)/git" ]; then cp -r "$(LATEST_BACKUP)/git" "$(HOME)/.config/"; echo "  RESTORE: .config/git/"; fi
-	@if [ -d "$(LATEST_BACKUP)/emacs" ]; then cp -r "$(LATEST_BACKUP)/emacs" "$(HOME)/.config/"; echo "  RESTORE: .config/emacs/"; fi
-	@if [ -d "$(LATEST_BACKUP)/terminal" ]; then cp -r "$(LATEST_BACKUP)/terminal" "$(HOME)/.config/"; echo "  RESTORE: .config/terminal/"; fi
-	@if [ -d "$(LATEST_BACKUP)/.emacs.d" ]; then cp -r "$(LATEST_BACKUP)/.emacs.d" "$(HOME)/"; echo "  RESTORE: .emacs.d/"; fi
-	@if [ -d "$(LATEST_BACKUP)/.gnupg" ]; then cp -r "$(LATEST_BACKUP)/.gnupg" "$(HOME)/"; echo "  RESTORE: .gnupg/"; fi
-	@if [ -d "$(LATEST_BACKUP)/Code" ]; then cp -r "$(LATEST_BACKUP)/Code" "$(HOME)/.config/"; echo "  RESTORE: .config/Code/"; fi
+	@# Restore common dotfiles
+	@for file in .bashrc .zshrc .zshenv .gitconfig .inputrc; do \
+		if [ -f "$(LATEST_BACKUP)/$$file" ]; then \
+			cp "$(LATEST_BACKUP)/$$file" "$(HOME)/"; \
+			echo "  RESTORE: $$file"; \
+		fi; \
+	done
+	@# Restore config directories
+	@for config in bash zsh git emacs nano terminal tmux htop ripgrep fd curl gnupg Code; do \
+		if [ -d "$(LATEST_BACKUP)/$$config" ]; then \
+			cp -r "$(LATEST_BACKUP)/$$config" "$(HOME)/.config/"; \
+			echo "  RESTORE: .config/$$config/"; \
+		fi; \
+	done
+	@# Restore legacy directories
+	@for dir in .emacs.d .gnupg; do \
+		if [ -d "$(LATEST_BACKUP)/$$dir" ]; then \
+			cp -r "$(LATEST_BACKUP)/$$dir" "$(HOME)/"; \
+			echo "  RESTORE: $$dir/"; \
+		fi; \
+	done
 	@echo "Restore completed from: $(LATEST_BACKUP)"
 
 # List available backups
@@ -140,316 +199,6 @@ list-backups:
 	else \
 		echo "  No backup directory found"; \
 	fi
-
-# Preview install operations without making changes
-dry-run: check-stow
-	@cd $(PACKAGES_DIR) && for category in shell editors development desktop tools management; do \
-		if [ -d "$$category" ]; then \
-			cd "$$category" && \
-			for package in */; do \
-				if [ -d "$$package" ]; then \
-					package_name=$${package%/}; \
-					if $(STOW_DRY_RUN) "$$package" 2>/dev/null; then \
-						echo "  WOULD LINK: $$package_name"; \
-					else \
-						echo "  WOULD SKIP: $$package_name (conflicts)"; \
-					fi; \
-				fi; \
-			done && \
-			cd ..; \
-		fi; \
-	done
-
-# Safe install - backup first, then install
-install-safe: backup install
-
-# Install all packages
-install: check-stow
-
-	@cd $(PACKAGES_DIR) && for category in shell editors development desktop tools management; do \
-		if [ -d "$$category" ]; then \
-			cd "$$category" && \
-			for package in */; do \
-				if [ -d "$$package" ]; then \
-					package_name=$${package%/}; \
-					if $(STOW) "$$package" 2>/dev/null; then \
-						echo "  LINK: $$package_name"; \
-					else \
-						echo "  SKIP: $$package_name (conflicts)"; \
-					fi; \
-				fi; \
-			done && \
-			cd ..; \
-		fi; \
-	done
-
-
-# Force install all packages (overwrites existing files)
-force-install: check-stow
-
-	@cd $(PACKAGES_DIR) && for category in shell editors development desktop tools management; do \
-		if [ -d "$$category" ]; then \
-			cd "$$category" && \
-			for package in */; do \
-				if [ -d "$$package" ]; then \
-					package_name=$${package%/}; \
-					$(STOW) --adopt "$$package" 2>/dev/null; \
-					echo "  LINK: $$package_name (forced)"; \
-				fi; \
-			done && \
-			cd ..; \
-		fi; \
-	done
-	@echo "All packages force installed successfully!"
-
-# Uninstall all packages
-uninstall: check-stow
-	@if [ -L "$(HOME)/.config/bash" ]; then \
-		echo "  UNLINK: .config/bash"; \
-		rm "$(HOME)/.config/bash"; \
-	fi
-	@if [ -L "$(HOME)/.config/emacs" ]; then \
-		echo "  UNLINK: .config/emacs"; \
-		rm "$(HOME)/.config/emacs"; \
-	fi
-	@if [ -L "$(HOME)/.config/git" ]; then \
-		echo "  UNLINK: .config/git"; \
-		rm "$(HOME)/.config/git"; \
-	fi
-	@if [ -L "$(HOME)/.bashrc" ]; then \
-		echo "  UNLINK: .bashrc"; \
-		rm "$(HOME)/.bashrc"; \
-	fi
-	@if [ -L "$(HOME)/.emacs.d" ]; then \
-		echo "  UNLINK: .emacs.d"; \
-		rm "$(HOME)/.emacs.d"; \
-	fi
-	@if [ -L "$(HOME)/.gitconfig" ]; then \
-		echo "  UNLINK: .gitconfig"; \
-		rm "$(HOME)/.gitconfig"; \
-	fi
-	@if [ -L "$(HOME)/.inputrc" ]; then \
-		echo "  UNLINK: .inputrc"; \
-		rm "$(HOME)/.inputrc"; \
-	fi
-	@if [ -L "$(HOME)/.config/readline" ]; then \
-		echo "  UNLINK: .config/readline"; \
-		rm "$(HOME)/.config/readline"; \
-	fi
-	@if [ -L "$(HOME)/.config/Code" ]; then \
-		echo "  UNLINK: .config/Code"; \
-		rm "$(HOME)/.config/Code"; \
-	fi
-	@if [ -L "$(HOME)/.config/.curlrc" ]; then \
-		echo "  UNLINK: .config/.curlrc"; \
-		rm "$(HOME)/.config/.curlrc"; \
-	fi
-	@cd $(PACKAGES_DIR) && for category in shell editors development desktop tools management; do \
-		if [ -d "$$category" ]; then \
-			cd "$$category" && \
-			for package in */; do \
-				if [ -d "$$package" ]; then \
-					package_name=$${package%/}; \
-					$(STOW) -D "$$package" 2>/dev/null || true; \
-					echo "  UNLINK: $$package_name"; \
-				fi; \
-			done && \
-			cd ..; \
-		fi; \
-	done
-
-
-# Restow (uninstall + install)
-restow: check-stow
-	@cd $(PACKAGES_DIR) && for category in shell editors development desktop tools management; do \
-		if [ -d "$$category" ]; then \
-			cd "$$category" && \
-			for package in */; do \
-				if [ -d "$$package" ]; then \
-					package_name=$${package%/}; \
-					if $(STOW) -R "$$package" 2>/dev/null; then \
-						echo "  RESTOW: $$package_name"; \
-					else \
-						echo "  SKIP: $$package_name (conflicts)"; \
-					fi; \
-				fi; \
-			done && \
-			cd ..; \
-		fi; \
-	done
-
-# Individual package targets
-bash: check-stow
-	@mkdir -p "$(HOME)/.config/bash"
-	@cd $(PACKAGES_DIR)/shell && $(STOW) bash && echo "  LINK: bash"
-
-uninstall-bash:
-	@if [ -L "$(HOME)/.config/bash" ]; then \
-		rm "$(HOME)/.config/bash"; \
-		echo "  UNLINK: .config/bash"; \
-	fi
-	@if [ -L "$(HOME)/.bashrc" ]; then \
-		rm "$(HOME)/.bashrc"; \
-		echo "  UNLINK: .bashrc"; \
-	fi
-	@cd $(PACKAGES_DIR)/shell && $(STOW) -D bash 2>/dev/null && echo "  UNLINK: bash" || true
-
-zsh: check-stow
-	@echo "Installing zsh configuration..."
-	@mkdir -p "$(HOME)/.config/zsh"
-	@cd $(PACKAGES_DIR)/shell && $(STOW) zsh
-
-uninstall-zsh:
-	@echo "Uninstalling zsh configuration..."
-	@if [ -L "$(HOME)/.config/zsh" ]; then \
-		rm "$(HOME)/.config/zsh"; \
-		echo "Removed ~/.config/zsh symlink"; \
-	fi
-	@cd $(PACKAGES_DIR)/shell && $(STOW) -D zsh 2>/dev/null || true
-
-emacs: check-stow
-	@mkdir -p "$(HOME)/.config"
-	@cd $(PACKAGES_DIR)/editors && $(STOW) emacs && echo "  LINK: emacs"
-
-uninstall-emacs:
-	@if [ -L "$(HOME)/.config/emacs" ]; then \
-		rm "$(HOME)/.config/emacs"; \
-		echo "  UNLINK: .config/emacs"; \
-	fi
-	@if [ -L "$(HOME)/.emacs.d" ]; then \
-		rm "$(HOME)/.emacs.d"; \
-		echo "  UNLINK: .emacs.d"; \
-	fi
-	@cd $(PACKAGES_DIR)/editors && $(STOW) -D emacs 2>/dev/null && echo "  UNLINK: emacs" || true
-
-nano: check-stow
-	@echo "Installing nano configuration..."
-	@cd $(PACKAGES_DIR)/editors && $(STOW) nano
-
-uninstall-nano:
-	@echo "Uninstalling nano configuration..."
-	@cd $(PACKAGES_DIR)/editors && $(STOW) -D nano 2>/dev/null || true
-
-vscode: check-stow
-	@echo "Installing VSCode configuration..."
-	@mkdir -p "$(HOME)/.config/Code/User"
-	@cd $(PACKAGES_DIR)/editors && $(STOW) vscode && echo "  LINK: vscode (XDG compliant)"
-
-uninstall-vscode:
-	@echo "Uninstalling VSCode configuration..."
-	@if [ -L "$(HOME)/.config/Code" ]; then \
-		rm "$(HOME)/.config/Code"; \
-		echo "  UNLINK: .config/Code"; \
-	fi
-	@cd $(PACKAGES_DIR)/editors && $(STOW) -D vscode 2>/dev/null || true
-
-git: check-stow
-	@mkdir -p "$(HOME)/.config/git"
-	@cd $(PACKAGES_DIR)/development && $(STOW) git && echo "  LINK: git"
-
-uninstall-git:
-	@echo "Uninstalling git configuration..."
-	@if [ -L "$(HOME)/.config/git" ]; then \
-		rm "$(HOME)/.config/git"; \
-		echo "Removed ~/.config/git symlink"; \
-	fi
-	@if [ -L "$(HOME)/.gitconfig" ]; then \
-		rm "$(HOME)/.gitconfig"; \
-		echo "Removed ~/.gitconfig symlink"; \
-	fi
-	@cd $(PACKAGES_DIR)/development && $(STOW) -D git 2>/dev/null || true
-
-uninstall-terminal:
-	@echo "Uninstalling terminal configuration..."
-	@if [ -L "$(HOME)/.config/terminal" ]; then \
-		rm "$(HOME)/.config/terminal"; \
-		echo "Removed ~/.config/terminal symlink"; \
-	fi
-	@cd $(PACKAGES_DIR)/desktop && $(STOW) -D terminal 2>/dev/null || true
-
-uninstall-curlrc:
-	@echo "Uninstalling curlrc configuration..."
-	@if [ -L "$(HOME)/.config/.curlrc" ]; then \
-		rm "$(HOME)/.config/.curlrc"; \
-		echo "  UNLINK: .config/.curlrc"; \
-	fi
-	@if [ -L "$(HOME)/.config/curl" ]; then \
-		rm "$(HOME)/.config/curl"; \
-		echo "  UNLINK: .config/curl"; \
-	fi
-	@cd $(PACKAGES_DIR)/tools && $(STOW) -D curlrc 2>/dev/null || true
-
-i3: check-stow
-	@echo "Installing i3 configuration..."
-	@cd $(PACKAGES_DIR)/desktop && $(STOW) i3
-
-terminal: check-stow
-	@echo "Installing terminal configuration..."
-	@mkdir -p "$(HOME)/.config/terminal"
-	@cd $(PACKAGES_DIR)/desktop && $(STOW) terminal
-
-htop: check-stow
-	@echo "Installing htop configuration..."
-	@cd $(PACKAGES_DIR)/tools && $(STOW) htop
-
-tmux: check-stow
-	@echo "Installing tmux configuration..."
-	@cd $(PACKAGES_DIR)/tools && $(STOW) tmux
-
-gnupg: check-stow
-	@echo "Installing gnupg configuration..."
-	@cd $(PACKAGES_DIR)/tools && $(STOW) gnupg
-
-curlrc: check-stow
-	@echo "Installing curlrc configuration..."
-	@cd $(PACKAGES_DIR)/tools && $(STOW) curlrc
-	@echo "Creating .curlrc symlink in ~/.config/..."
-	@ln -sf "$(HOME)/.config/curl/curlrc" "$(HOME)/.config/.curlrc"
-	@echo "  LINK: .config/.curlrc -> curl/curlrc"
-
-inputrc: check-stow
-	@echo "Installing inputrc configuration..."
-	@cd $(PACKAGES_DIR)/tools && $(STOW) inputrc
-
-uninstall-inputrc:
-	@echo "Uninstalling inputrc configuration..."
-	@if [ -L "$(HOME)/.inputrc" ]; then \
-		rm "$(HOME)/.inputrc"; \
-		echo "  UNLINK: .inputrc"; \
-	fi
-	@if [ -L "$(HOME)/.config/readline" ]; then \
-		rm "$(HOME)/.config/readline"; \
-		echo "  UNLINK: .config/readline"; \
-	fi
-	@cd $(PACKAGES_DIR)/tools && $(STOW) -D inputrc 2>/dev/null || true
-
-ripgrep: check-stow
-	@echo "Installing ripgrep configuration..."
-	@cd $(PACKAGES_DIR)/tools && $(STOW) ripgrep
-
-uninstall-ripgrep:
-	@echo "Uninstalling ripgrep configuration..."
-	@if [ -L "$(HOME)/.config/ripgrep" ]; then \
-		rm "$(HOME)/.config/ripgrep"; \
-		echo "  UNLINK: .config/ripgrep"; \
-	fi
-	@if [ -L "$(HOME)/.rgignore" ]; then \
-		rm "$(HOME)/.rgignore"; \
-		echo "  UNLINK: .rgignore"; \
-	fi
-	@cd $(PACKAGES_DIR)/tools && $(STOW) -D ripgrep 2>/dev/null || true
-
-stow: check-stow
-	@echo "Installing stow configuration..."
-	@cd $(PACKAGES_DIR)/../management && $(STOW) stow
-
-# Category targets
-shell: bash zsh
-editors: emacs nano vscode
-development: git
-desktop: i3 terminal
-tools: htop tmux gnupg curlrc inputrc ripgrep
-management: stow
 
 # Clean old backups (keep last 5)
 clean-backups:
