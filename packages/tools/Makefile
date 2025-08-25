@@ -2,7 +2,7 @@
 SHELL := /bin/bash
 
 # Available tools
-TOOLS := curlrc gnupg htop inputrc ripgrep tmux
+TOOLS := curlrc fzf gnupg htop inputrc ripgrep tmux
 
 .PHONY: all install uninstall restow list $(TOOLS) $(addprefix uninstall-,$(TOOLS)) $(addprefix restow-,$(TOOLS))
 
@@ -21,6 +21,9 @@ restow: $(addprefix restow-,$(TOOLS))
 # Individual tool targets
 curlrc:
 	@cd curlrc && stow --target=$(HOME) --restow . && echo "  LINK: curlrc"
+
+fzf:
+	@cd fzf && stow --target=$(HOME) --restow . && echo "  LINK: fzf"
 
 gnupg:
 	@cd gnupg && stow --target=$(HOME) --restow . && echo "  LINK: gnupg"
@@ -41,6 +44,9 @@ tmux:
 uninstall-curlrc:
 	@cd curlrc && stow --target=$(HOME) --delete . && echo "  UNLINK: curlrc"
 
+uninstall-fzf:
+	@cd fzf && stow --target=$(HOME) --delete . && echo "  UNLINK: fzf"
+
 uninstall-gnupg:
 	@cd gnupg && stow --target=$(HOME) --delete . && echo "  UNLINK: gnupg"
 
@@ -59,6 +65,9 @@ uninstall-tmux:
 # Restow targets
 restow-curlrc:
 	@cd curlrc && stow --target=$(HOME) --restow . && echo "  RESTOW: curlrc"
+
+restow-fzf:
+	@cd fzf && stow --target=$(HOME) --restow . && echo "  RESTOW: fzf"
 
 restow-gnupg:
 	@cd gnupg && stow --target=$(HOME) --restow . && echo "  RESTOW: gnupg"
@@ -79,6 +88,7 @@ restow-tmux:
 list:
 	@echo "Available tools:"
 	@echo "  curlrc    - curl configuration"
+	@echo "  fzf       - fuzzy finder"
 	@echo "  gnupg     - GnuPG configuration"
 	@echo "  htop      - htop configuration"
 	@echo "  inputrc   - readline configuration"

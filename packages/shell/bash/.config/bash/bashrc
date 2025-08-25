@@ -75,6 +75,7 @@ case "$(uname -s)" in
 esac
 
 # Load fuzzy finder if available
+include "${XDG_CONFIG_HOME}/fzf/fzf.bash" "optional"
 include "${HOME}/.fzf.bash" "optional"
 
 # Load local machine-specific overrides

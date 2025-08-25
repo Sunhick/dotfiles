@@ -83,3 +83,5 @@ fi
 alias kill-emacs='emacsclient -e "(kill-emacs)"'
 alias e="emacsclient -n"
 alias ec="emacsclient -c"
+
+
