@@ -1,2 +1,5 @@
 # OSX uses bash_profile, source .bashrc for compatibility
-source ~/.bashrc
+# ~/.bash_profile
+if [[ -f ~/.bashrc ]]; then
+    source ~/.bashrc
+fi
