@@ -1,4 +1,0 @@
-# OSX uses bash_login, source .bashrc for compatibility
-if [[ -f ~/.bashrc ]]; then
-    source ~/.bashrc
-fi
