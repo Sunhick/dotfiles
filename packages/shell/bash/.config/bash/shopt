@@ -1,26 +1,22 @@
-# -*- mode: shell-script -*-
+#!/usr/bin/env bash
 
-# Avoid duplicate commands in history
-HISTCONTROL=ignoredups:erasedups
+# Shell options for better bash experience
 
-# Append to history rather than overwriting it on shell exit
-shopt -s histappend
+# Navigation
+shopt -s autocd        # Change to directory by typing name
+shopt -s cdspell       # Correct minor spelling errors in cd
+shopt -s dirspell      # Correct minor spelling errors in directory names
 
-# Automatically correct typos in path names when using `cd`
-shopt -s cdspell
+# Completion
+shopt -s nocaseglob    # Case-insensitive globbing
+shopt -s globstar      # Enable ** recursive globbing
 
-# Enable some useful Bash 4 features
-# 1. `autocd` - Automatically change to a directory if the name matches a folder (e.g., `mydir` -> `cd mydir`).
-# 2. `globstar` - Enable recursive globbing, which allows for `**/*.txt` (all `.txt` files in subdirectories).
-for option in autocd globstar; do
-    shopt -s "$option" 2>/dev/null  # Ignore errors if the option is unavailable (for older Bash versions)
-done
+# History (some duplicated from history file for safety)
+shopt -s histappend    # Append to history file
+shopt -s cmdhist       # Save multi-line commands as one command
+shopt -s histreedit    # Re-edit failed history substitutions
+shopt -s histverify    # Edit recalled history lines before executing
 
-# Enable intelligent case-insensitive file name completion
-shopt -s nocaseglob
-
-# Allow changing to the last visited directory with `cd -`
-shopt -s cdable_vars
-
-# Ensure `cd` remembers the last directory in the session
-export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
+# Terminal behavior
+shopt -s checkwinsize  # Update LINES and COLUMNS after each command
+shopt -s expand_aliases # Expand aliases in non-interactive shells

@@ -1,0 +1,8 @@
+# Dependencies for ripgrep package
+
+# Required
+ripgrep
+
+# Optional but recommended
+bat      # For better file previews
+fd       # For faster file finding

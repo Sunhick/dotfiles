@@ -1,53 +1,34 @@
 # Ripgrep configuration file
-# XDG Base Directory compliant location: ~/.config/ripgrep/config
-# Set RIPGREP_CONFIG_PATH environment variable to enable automatic loading
+# Located at ~/.config/ripgrep/config (XDG compliant)
 
-# Search options
+# Always use colors
+--color=always
+
+# Show line numbers
+--line-number
+
+# Smart case searching (case insensitive unless uppercase letters are used)
 --smart-case
+
+# Follow symbolic links
 --follow
+
+# Search hidden files but respect .gitignore
 --hidden
 
-# Output formatting
---colors=line:fg:yellow
---colors=line:style:bold
---colors=path:fg:green
---colors=path:style:bold
-
-# Performance
---max-columns=150
---max-columns-preview
-
-# File type associations
---type-add=web:*.{html,css,js,jsx,ts,tsx,vue,svelte}
---type-add=config:*.{json,yaml,yml,toml,ini,conf,cfg}
---type-add=docs:*.{md,rst,txt,rtf}
-
-# Global ignore patterns
+# Exclude common directories and files
 --glob=!.git/
 --glob=!node_modules/
 --glob=!.DS_Store
---glob=!*.min.js
---glob=!*.min.css
---glob=!dist/
---glob=!build/
---glob=!target/
---glob=!.next/
---glob=!.nuxt/
---glob=!coverage/
+--glob=!*.pyc
+--glob=!__pycache__/
 --glob=!*.log
---glob=!*.tmp
---glob=!*.temp
---glob=!*.cache
---glob=!.vscode/
---glob=!.idea/
---glob=!*.swp
---glob=!*.swo
---glob=!*~
---glob=!.env.local
---glob=!.env.*.local
+--glob=!.cache/
+--glob=!.npm/
+--glob=!.yarn/
 
-# Binary file handling
---binary
+# Set max columns to prevent extremely long lines from slowing down search
+--max-columns=200
 
-# Context lines
+# Show context around matches
 --context=2

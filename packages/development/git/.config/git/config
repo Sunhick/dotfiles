@@ -88,6 +88,27 @@
     default = simple
 
 [alias]
+    # Logging
     l1 = log --pretty=format:'%C(yellow)%h %Cred%d %<|(90)%Creset%s%Cblue %<(15)%cn %C(dim white)%ar' --decorate --date=short
     commit-message = log --format=%B -n 1
     dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
+
+    # Common shortcuts
+    st = status -sb
+    co = checkout
+    br = branch
+    ci = commit
+    ca = commit -a
+    cm = commit -m
+    cam = commit -am
+
+    # Useful commands
+    unstage = reset HEAD --
+    last = log -1 HEAD
+    visual = !gitk
+
+    # Branch management
+    cleanup = "!git branch --merged | grep -v '\\*\\|main\\|master\\|develop' | xargs -n 1 git branch -d"
+
+    # Show files ignored by git
+    ignored = ls-files -o -i --exclude-standard

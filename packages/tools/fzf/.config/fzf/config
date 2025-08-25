@@ -16,7 +16,19 @@ if command -v fd >/dev/null 2>&1; then
     export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
 fi
 
-# Basic file preview with bat if available
+# Enhanced file preview with bat if available
 if command -v bat >/dev/null 2>&1; then
-    export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range=:100 {}'"
+    export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:100 {}'"
+elif command -v cat >/dev/null 2>&1; then
+    export FZF_CTRL_T_OPTS="--preview 'head -100 {}'"
 fi
+
+# Directory preview with tree or ls
+if command -v tree >/dev/null 2>&1; then
+    export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -100'"
+elif command -v ls >/dev/null 2>&1; then
+    export FZF_ALT_C_OPTS="--preview 'ls -la {} | head -100'"
+fi
+
+# History search with preview
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
