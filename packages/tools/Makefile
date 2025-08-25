@@ -2,7 +2,7 @@
 SHELL := /bin/bash
 
 # Available tools
-TOOLS := curlrc fzf gnupg htop inputrc ripgrep tmux
+TOOLS := curlrc editorconfig fzf gnupg htop inputrc ripgrep tmux
 
 .PHONY: all install uninstall restow list dryrun $(TOOLS) $(addprefix uninstall-,$(TOOLS)) $(addprefix restow-,$(TOOLS)) $(addprefix dryrun-,$(TOOLS))
 
@@ -24,6 +24,9 @@ dryrun: $(addprefix dryrun-,$(TOOLS))
 # Individual tool targets
 curlrc:
 	@cd curlrc && stow --target=$(HOME) --restow . && echo "  LINK: curlrc"
+
+editorconfig:
+	@cd editorconfig && stow --target=$(HOME) --restow . && echo "  LINK: editorconfig"
 
 fzf:
 	@cd fzf && stow --target=$(HOME) --restow . && echo "  LINK: fzf"
@@ -47,6 +50,9 @@ tmux:
 uninstall-curlrc:
 	@cd curlrc && stow --target=$(HOME) --delete . && echo "  UNLINK: curlrc"
 
+uninstall-editorconfig:
+	@cd editorconfig && stow --target=$(HOME) --delete . && echo "  UNLINK: editorconfig"
+
 uninstall-fzf:
 	@cd fzf && stow --target=$(HOME) --delete . && echo "  UNLINK: fzf"
 
@@ -68,6 +74,9 @@ uninstall-tmux:
 # Restow targets
 restow-curlrc:
 	@cd curlrc && stow --target=$(HOME) --restow . && echo "  RESTOW: curlrc"
+
+restow-editorconfig:
+	@cd editorconfig && stow --target=$(HOME) --restow . && echo "  RESTOW: editorconfig"
 
 restow-fzf:
 	@cd fzf && stow --target=$(HOME) --restow . && echo "  RESTOW: fzf"
@@ -97,6 +106,17 @@ dryrun-curlrc:
 		fi; \
 	else \
 		echo "  SKIP: curlrc (not found)"; \
+	fi
+
+dryrun-editorconfig:
+	@if [ -d editorconfig ]; then \
+		if cd editorconfig && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
+			echo "  WOULD LINK: editorconfig"; \
+		else \
+			echo "  WOULD LINK: editorconfig (conflicts)"; \
+		fi; \
+	else \
+		echo "  SKIP: editorconfig (not found)"; \
 	fi
 
 dryrun-fzf:
@@ -168,10 +188,11 @@ dryrun-tmux:
 # List available tools
 list:
 	@echo "Available tools:"
-	@echo "  curlrc    - curl configuration"
-	@echo "  fzf       - fuzzy finder"
-	@echo "  gnupg     - GnuPG configuration"
-	@echo "  htop      - htop configuration"
-	@echo "  inputrc   - readline configuration"
-	@echo "  ripgrep   - ripgrep search configuration"
-	@echo "  tmux      - tmux terminal multiplexer"
+	@echo "  curlrc       - curl configuration"
+	@echo "  editorconfig - EditorConfig for consistent coding styles"
+	@echo "  fzf          - fuzzy finder"
+	@echo "  gnupg        - GnuPG configuration"
+	@echo "  htop         - htop configuration"
+	@echo "  inputrc      - readline configuration"
+	@echo "  ripgrep      - ripgrep search configuration"
+	@echo "  tmux         - tmux terminal multiplexer"
