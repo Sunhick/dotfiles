@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PACKAGE_LIST="$SCRIPT_DIR/package-list.txt"
+
+if [[ ! -f "$PACKAGE_LIST" ]]; then
+    echo "Error: Package list file not found at $PACKAGE_LIST"
+    exit 1
+fi
+
+sudo apt update
+
+packages=$(grep -v '^#' "$PACKAGE_LIST" | grep -v '^$' | tr '\n' ' ')
+sudo apt install -y $packages
