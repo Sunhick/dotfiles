@@ -2,7 +2,7 @@
 SHELL := /bin/bash
 
 # Available tools
-TOOLS := curlrc editorconfig fzf gnupg htop inputrc ripgrep tmux
+TOOLS := curlrc editorconfig fzf gnupg homebrew htop inputrc ripgrep tmux
 
 .PHONY: all install uninstall restow list dryrun $(TOOLS) $(addprefix uninstall-,$(TOOLS)) $(addprefix restow-,$(TOOLS)) $(addprefix dryrun-,$(TOOLS))
 
@@ -34,6 +34,9 @@ fzf:
 gnupg:
 	@cd gnupg && stow --target=$(HOME) --restow . && echo "  LINK: gnupg"
 
+homebrew:
+	@cd homebrew && stow --target=$(HOME) --restow . && echo "  LINK: homebrew"
+
 htop:
 	@cd htop && stow --target=$(HOME) --restow . && echo "  LINK: htop"
 
@@ -59,6 +62,9 @@ uninstall-fzf:
 uninstall-gnupg:
 	@cd gnupg && stow --target=$(HOME) --delete . && echo "  UNLINK: gnupg"
 
+uninstall-homebrew:
+	@cd homebrew && stow --target=$(HOME) --delete . && echo "  UNLINK: homebrew"
+
 uninstall-htop:
 	@cd htop && stow --target=$(HOME) --delete . && echo "  UNLINK: htop"
 
@@ -83,6 +89,9 @@ restow-fzf:
 
 restow-gnupg:
 	@cd gnupg && stow --target=$(HOME) --restow . && echo "  RESTOW: gnupg"
+
+restow-homebrew:
+	@cd homebrew && stow --target=$(HOME) --restow . && echo "  RESTOW: homebrew"
 
 restow-htop:
 	@cd htop && stow --target=$(HOME) --restow . && echo "  RESTOW: htop"
@@ -141,6 +150,17 @@ dryrun-gnupg:
 		echo "  SKIP: gnupg (not found)"; \
 	fi
 
+dryrun-homebrew:
+	@if [ -d homebrew ]; then \
+		if cd homebrew && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
+			echo "  WOULD LINK: homebrew"; \
+		else \
+			echo "  WOULD LINK: homebrew (conflicts)"; \
+		fi; \
+	else \
+		echo "  SKIP: homebrew (not found)"; \
+	fi
+
 dryrun-htop:
 	@if [ -d htop ]; then \
 		if cd htop && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
@@ -192,6 +212,7 @@ list:
 	@echo "  editorconfig - EditorConfig for consistent coding styles"
 	@echo "  fzf          - fuzzy finder"
 	@echo "  gnupg        - GnuPG configuration"
+	@echo "  homebrew     - Homebrew Brewfile for package management"
 	@echo "  htop         - htop configuration"
 	@echo "  inputrc      - readline configuration"
 	@echo "  ripgrep      - ripgrep search configuration"

@@ -1,0 +1,38 @@
+# Homebrew Bundle file
+# Install with: brew bundle
+# Update with: brew bundle --force
+
+# Taps
+tap "homebrew/bundle"
+tap "homebrew/services"
+
+# Essential CLI tools
+brew "git"
+brew "curl"
+brew "wget"
+brew "tree"
+brew "htop"
+brew "tmux"
+brew "stow"
+
+# Development tools
+brew "node"
+brew "python@3.11"
+brew "go"
+brew "rust"
+
+# Text processing and search
+brew "ripgrep"
+brew "fzf"
+brew "jq"
+brew "yq"
+
+# System utilities
+brew "gnupg"
+brew "openssh"
+brew "rsync"
+
+# GUI applications
+cask "visual-studio-code"
+cask "iterm2"
+cask "google-chrome"
