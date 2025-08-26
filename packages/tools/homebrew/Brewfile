@@ -2,10 +2,6 @@
 # Install with: brew bundle
 # Update with: brew bundle --force
 
-# Taps
-tap "homebrew/bundle"
-tap "homebrew/services"
-
 # Essential CLI tools
 brew "git"
 brew "curl"
