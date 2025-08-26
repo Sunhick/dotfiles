@@ -59,9 +59,9 @@
     rg
     restclient
     magit
+    gruvbox-theme
     ;; modus-themes
     ;; flx-ido
-    ;; gruvbox-theme
     ;; solarized-theme
     ;; which-key
     ;; ido

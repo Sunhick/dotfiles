@@ -29,8 +29,11 @@
 
 ;;; Code:
 
+;; gruvbox dark hard theme
+(load-theme 'gruvbox-dark-hard 'no-confirm)
+
 ;; zenburn
-(load-theme 'zenburn 'no-confirm)
+;; (load-theme 'zenburn 'no-confirm)
 
 ;; modus vivendi builtin theme
 ;; (load-theme 'modus-vivendi 'no-confirm)
