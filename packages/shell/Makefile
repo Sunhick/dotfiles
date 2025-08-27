@@ -1,25 +1,26 @@
 # Shell Package Makefile
 SHELL := /bin/bash
 
-# Available shells
-SHELLS := bash zsh
+# Available shells (Unix-only for default install)
+UNIX_SHELLS := bash zsh
+ALL_SHELLS := bash zsh powershell
 
-.PHONY: all install uninstall restow list dryrun $(SHELLS) $(addprefix uninstall-,$(SHELLS)) $(addprefix restow-,$(SHELLS)) $(addprefix dryrun-,$(SHELLS))
+.PHONY: all install uninstall restow list dryrun $(ALL_SHELLS) $(addprefix uninstall-,$(ALL_SHELLS)) $(addprefix restow-,$(ALL_SHELLS)) $(addprefix dryrun-,$(ALL_SHELLS))
 
 # Default target
 all: install
 
-# Install all shells
-install: $(SHELLS)
+# Install Unix shells only (PowerShell excluded)
+install: $(UNIX_SHELLS)
 
-# Uninstall all shells
-uninstall: $(addprefix uninstall-,$(SHELLS))
+# Uninstall Unix shells only
+uninstall: $(addprefix uninstall-,$(UNIX_SHELLS))
 
-# Restow all shells
-restow: $(addprefix restow-,$(SHELLS))
+# Restow Unix shells only
+restow: $(addprefix restow-,$(UNIX_SHELLS))
 
-# Dry run all shells
-dryrun: $(addprefix dryrun-,$(SHELLS))
+# Dry run Unix shells only
+dryrun: $(addprefix dryrun-,$(UNIX_SHELLS))
 
 # Individual shell targets
 bash:
@@ -28,6 +29,9 @@ bash:
 zsh:
 	@cd zsh && stow --target=$(HOME) --restow . && echo "  LINK: zsh"
 
+powershell:
+	@echo "  SKIP: powershell (Windows-only, use setup-powershell-profile.ps1)"
+
 # Uninstall targets
 uninstall-bash:
 	@cd bash && stow --target=$(HOME) --delete . && echo "  UNLINK: bash"
@@ -35,12 +39,18 @@ uninstall-bash:
 uninstall-zsh:
 	@cd zsh && stow --target=$(HOME) --delete . && echo "  UNLINK: zsh"
 
+uninstall-powershell:
+	@echo "  SKIP: powershell (Windows-only, manual uninstall required)"
+
 # Restow targets
 restow-bash:
 	@cd bash && stow --target=$(HOME) --restow . && echo "  RESTOW: bash"
 
 restow-zsh:
 	@cd zsh && stow --target=$(HOME) --restow . && echo "  RESTOW: zsh"
+
+restow-powershell:
+	@echo "  SKIP: powershell (Windows-only, use setup-powershell-profile.ps1)"
 
 # Dry run targets
 dryrun-bash:
@@ -65,8 +75,12 @@ dryrun-zsh:
 		echo "  SKIP: zsh (not found)"; \
 	fi
 
+dryrun-powershell:
+	@echo "  SKIP: powershell (Windows-only, use setup-powershell-profile.ps1)"
+
 # List available shells
 list:
 	@echo "Available shells:"
-	@echo "  bash - Bash shell configuration"
-	@echo "  zsh  - Zsh shell configuration"
+	@echo "  bash       - Bash shell configuration"
+	@echo "  zsh        - Zsh shell configuration"
+	@echo "  powershell - PowerShell configuration (Windows)"

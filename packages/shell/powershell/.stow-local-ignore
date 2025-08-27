@@ -1,0 +1,4 @@
+# Files to ignore when stowing PowerShell package
+README.md
+Makefile
+setup-powershell-profile.ps1
