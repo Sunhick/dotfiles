@@ -5,7 +5,7 @@ Personal dotfiles managed with GNU Stow, following the XDG Base Directory Specif
 ## Quick Start
 
 ```bash
-git clone https://github.com/yourusername/dotfiles.git ~/.dotfiles
+git clone https://github.com/sunhick/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 make install
 ```
