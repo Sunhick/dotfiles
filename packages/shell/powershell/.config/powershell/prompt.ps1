@@ -20,6 +20,7 @@ $Colors = @{
 
 #region Custom Prompt Function
 function prompt {
+    # Capture and preserve the last exit code immediately
     $lastExitCode = $LASTEXITCODE
     $promptString = ""
 
@@ -39,20 +40,23 @@ function prompt {
     $currentDir = Split-Path -Leaf (Get-Location)
     $promptString += "$($Colors.BoldCyan)$currentDir$($Colors.Reset)"
 
-    # Git branch (if in a git repository)
+    # Git branch (if in a git repository) - suppress error output and preserve exit code
     if (Get-Command git -ErrorAction SilentlyContinue) {
         try {
             $branch = git rev-parse --abbrev-ref HEAD 2>$null
-            if ($branch) {
+            if ($LASTEXITCODE -eq 0 -and $branch) {
                 $promptString += " $($Colors.BoldBlue)($branch)$($Colors.Reset)"
             }
         } catch {
-            # Not in a git repository
+            # Not in a git repository or git command failed
         }
     }
 
     # Final prompt character
     $promptString += " $($Colors.BoldWhite)»$($Colors.Reset) "
+
+    # Restore the original exit code before returning
+    $global:LASTEXITCODE = $lastExitCode
 
     return $promptString
 }
