@@ -1,9 +1,10 @@
 # PowerShell Configuration
 
-This package provides a PowerShell profile that replicates bash-like functionality and integrates with the XDG Base Directory Specification on Windows.
+This package provides a modular PowerShell profile that replicates bash-like functionality and integrates with the XDG Base Directory Specification on Windows.
 
 ## Features
 
+- **Modular configuration** - Split into logical components for easy customization
 - **XDG Base Directory support** - Windows-equivalent implementation
 - **Bash-style aliases** - Navigation shortcuts (`.`, `..`, `...`, etc.)
 - **Git integration** - Branch display in prompt and git shortcuts
@@ -11,6 +12,20 @@ This package provides a PowerShell profile that replicates bash-like functionali
 - **Enhanced history** - PSReadLine integration with Emacs-style bindings
 - **Colorized prompt** - Status indicators and AWS profile display
 - **Cross-platform consistency** - Matches bash configuration behavior
+
+## Modular Structure
+
+The configuration is split into focused modules:
+
+```
+.config/powershell/
+├── environment.ps1   # Environment variables, XDG dirs, PATH
+├── prompt.ps1        # Custom prompt with colors and git
+├── aliases.ps1       # Command aliases and utility functions
+├── history.ps1       # History configuration and PSReadLine
+├── fzf.ps1          # FZF integration for fuzzy finding
+└── README.md        # Module documentation
+```
 
 ## Installation
 
@@ -108,12 +123,15 @@ The profile creates these directories for organized configuration:
 
 ## Customization
 
-Edit the profile file to customize:
+The modular structure makes customization easy:
 
-- **Colors** - Modify the `$Colors` hashtable
-- **Prompt** - Update the `prompt` function
-- **Aliases** - Add your own functions and aliases
-- **Editor** - Change `$env:EDITOR` to your preferred editor
+- **Environment** - Edit `.config/powershell/environment.ps1` for variables and PATH
+- **Colors & Prompt** - Modify `.config/powershell/prompt.ps1` for appearance
+- **Aliases** - Add functions to `.config/powershell/aliases.ps1`
+- **History** - Adjust settings in `.config/powershell/history.ps1`
+- **FZF** - Configure fuzzy finding in `.config/powershell/fzf.ps1`
+- **Disable features** - Remove or rename module files
+- **Add modules** - Create new `.ps1` files and update the main profile
 
 ## Compatibility
 
