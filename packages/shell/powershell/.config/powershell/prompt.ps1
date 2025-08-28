@@ -21,7 +21,16 @@ $Colors = @{
 #region Custom Prompt Function
 function prompt {
     # Capture and preserve the last exit code immediately
-    $lastExitCode = $LASTEXITCODE
+    # Capture the success/failure of the last command
+    $lastSuccess = $?
+    $exitCode = $LASTEXITCODE
+
+    # Reset LASTEXITCODE for successful commands
+    if ($lastSuccess) {
+        $global:LASTEXITCODE = 0
+        $exitCode = 0
+    }
+
     $promptString = ""
 
     # Show AWS profile if set
@@ -30,7 +39,7 @@ function prompt {
     }
 
     # Status indicator based on last exit code
-    if ($lastExitCode -and $lastExitCode -ne 0) {
+    if ($exitCode -and $exitCode -ne 0) {
         $promptString += "$($Colors.BoldRed)»$($Colors.Reset) "
     } else {
         $promptString += "$($Colors.BoldGreen)»$($Colors.Reset) "
@@ -52,11 +61,13 @@ function prompt {
         }
     }
 
-    # Final prompt character
-    $promptString += " $($Colors.BoldWhite)»$($Colors.Reset) "
+    # Final prompt character with color based on command success
+    if (-not $lastSuccess -or ($exitCode -and $exitCode -ne 0)) {
+        $promptString += " $($Colors.BoldRed)»$($Colors.Reset) "
+    } else {
+        $promptString += " $($Colors.BoldGreen)»$($Colors.Reset) "
+    }
 
-    # Restore the original exit code before returning
-    $global:LASTEXITCODE = $lastExitCode
 
     return $promptString
 }
