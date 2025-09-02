@@ -38,3 +38,21 @@ notes/
 # conigstore
 config/.config/configstore/
 .kiro
+
+# Tmux plugins (managed by TPM)
+packages/tools/tmux/.config/tmux/plugins/
+
+# Emacs packages (managed by package managers)
+packages/editors/emacs/.config/emacs/elpa/
+packages/editors/emacs/.config/emacs/straight/
+packages/editors/emacs/.config/emacs/eln-cache/
+packages/editors/emacs/.config/emacs/auto-save-list/
+packages/editors/emacs/.config/emacs/backups/
+packages/editors/emacs/.config/emacs/projectile-bookmarks.eld
+packages/editors/emacs/.config/emacs/recentf
+packages/editors/emacs/.config/emacs/savehist
+packages/editors/emacs/.config/emacs/transient/
+packages/editors/emacs/.config/emacs/bookmarks
+packages/editors/emacs/.config/emacs/url/
+packages/editors/emacs/.config/emacs/tramp
+packages/editors/emacs/.config/emacs/.mc-lists.el
