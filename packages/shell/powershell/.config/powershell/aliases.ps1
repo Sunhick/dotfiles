@@ -53,4 +53,7 @@ if (Get-Command emacsclient -ErrorAction SilentlyContinue) {
     function e { emacsclient -n $args }
     function ec { emacsclient -c $args }
 }
+
+
+Set-Alias -Name code -Value code-no-sandbox
 #endregion

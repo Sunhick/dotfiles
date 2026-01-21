@@ -31,6 +31,7 @@ $PathsToAdd = @(
     "$env:USERPROFILE\.local\bin"
     "$env:USERPROFILE\bin"
     "$env:LOCALAPPDATA\Programs"
+    "C:\Program Files\OpenSSL-Win64\bin"
 )
 
 foreach ($PathToAdd in $PathsToAdd) {

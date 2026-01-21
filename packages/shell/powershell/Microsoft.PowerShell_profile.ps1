@@ -13,6 +13,7 @@ $ConfigFiles = @(
     "aliases.ps1"
     "history.ps1"
     "fzf.ps1"
+    "function.ps1"
 )
 
 foreach ($ConfigFile in $ConfigFiles) {

@@ -70,7 +70,8 @@ $ConfigFiles = @(
     "prompt.ps1",
     "aliases.ps1",
     "history.ps1",
-    "fzf.ps1"
+    "fzf.ps1",
+    "work.ps1"
 )
 
 Write-Host "Installing modular configuration files..." -ForegroundColor Green
