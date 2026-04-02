@@ -2,19 +2,7 @@
 
 #region FZF Integration (if available)
 if (Get-Command fzf -ErrorAction SilentlyContinue) {
-    # Basic FZF integration
-    function fzf-history {
-        $selection = Get-History | ForEach-Object { $_.CommandLine } | fzf
-        if ($selection) {
-            [Microsoft.PowerShell.PSConsoleReadLine]::InvokePrompt()
-            [Microsoft.PowerShell.PSConsoleReadLine]::Insert($selection)
-        }
-    }
-
-    # Bind Ctrl+R to history search (like bash)
-    if (Get-Module PSReadLine) {
-        Set-PSReadLineKeyHandler -Key Ctrl+r -ScriptBlock { fzf-history }
-    }
+    # Ctrl+r history search is handled by PSFzf in work/Modules.ps1
 
     # Additional FZF functions
     function fzf-cd {
