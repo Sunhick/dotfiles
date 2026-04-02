@@ -30,7 +30,20 @@ foreach ($ConfigFile in $ConfigFiles) {
     }
 }
 
+# Load work configuration if present
+$WorkEntryPoint = Join-Path $ProfileDir "work\work.ps1"
+if (Test-Path $WorkEntryPoint) {
+    try {
+        . $WorkEntryPoint
+        Write-Verbose "Loaded: work profile"
+    } catch {
+        Write-Warning "Failed to load work profile: $($_.Exception.Message)"
+    }
+}
+
 #region Welcome Message
-Write-Host "PowerShell profile loaded successfully!" -ForegroundColor Green
-Write-Host "Modular configuration loaded from .config/powershell/" -ForegroundColor Cyan
+Write-Host "Personal profile loaded." -ForegroundColor Green
+if (Test-Path $WorkEntryPoint) {
+    Write-Host "Work profile loaded." -ForegroundColor Green
+}
 #endregion
