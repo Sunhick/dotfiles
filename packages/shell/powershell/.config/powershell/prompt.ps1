@@ -31,6 +31,14 @@ function prompt {
         $exitCode = 0
     }
 
+    # Set terminal title to current folder name
+    $currentDir = Split-Path -Leaf (Get-Location)
+    $host.UI.RawUI.WindowTitle = $currentDir
+    
+    # Also use escape sequence for better compatibility
+    $ESC = [char]27
+    Write-Host "$ESC]0;$currentDir$ESC\" -NoNewline
+
     $promptString = ""
 
     # Show AWS profile if set
