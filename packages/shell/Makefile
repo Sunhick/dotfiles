@@ -30,7 +30,7 @@ zsh:
 	@cd zsh && stow --target=$(HOME) --restow . && echo "  LINK: zsh"
 
 powershell:
-	@echo "  SKIP: powershell (Windows-only, use setup-powershell-profile.ps1)"
+	@echo "  SKIP: powershell (Windows-only, use Setup-PowerShellProfile.ps1)"
 
 # Uninstall targets
 uninstall-bash:
@@ -50,7 +50,7 @@ restow-zsh:
 	@cd zsh && stow --target=$(HOME) --restow . && echo "  RESTOW: zsh"
 
 restow-powershell:
-	@echo "  SKIP: powershell (Windows-only, use setup-powershell-profile.ps1)"
+	@echo "  SKIP: powershell (Windows-only, use Setup-PowerShellProfile.ps1)"
 
 # Dry run targets
 dryrun-bash:
@@ -76,7 +76,7 @@ dryrun-zsh:
 	fi
 
 dryrun-powershell:
-	@echo "  SKIP: powershell (Windows-only, use setup-powershell-profile.ps1)"
+	@echo "  SKIP: powershell (Windows-only, use Setup-PowerShellProfile.ps1)"
 
 # List available shells
 list:
