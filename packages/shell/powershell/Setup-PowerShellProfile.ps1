@@ -146,5 +146,5 @@ Write-Host "- Consider Windows Terminal for the best experience" -ForegroundColo
 
 if (!$InstallModules) {
     Write-Host "`nTo install recommended PowerShell modules, run:" -ForegroundColor Yellow
-    Write-Host ".\setup-powershell-profile.ps1 -InstallModules" -ForegroundColor White
+    Write-Host ".\Setup-PowerShellProfile.ps1 -InstallModules" -ForegroundColor White
 }
