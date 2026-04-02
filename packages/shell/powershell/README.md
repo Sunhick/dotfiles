@@ -35,13 +35,13 @@ Run the PowerShell setup script for interactive installation:
 
 ```powershell
 # Basic installation
-.\setup-powershell-profile.ps1
+.\Setup-PowerShellProfile.ps1
 
 # Install with recommended modules
-.\setup-powershell-profile.ps1 -InstallModules
+.\Setup-PowerShellProfile.ps1 -InstallModules
 
 # Force overwrite existing profile
-.\setup-powershell-profile.ps1 -Force
+.\Setup-PowerShellProfile.ps1 -Force
 ```
 
 ### Manual Installation
