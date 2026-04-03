@@ -1,60 +1,45 @@
+# ~/.config/git/config - improved and cleaned
+
 ######################################################################################
 # To consume this file simply add the below two lines in your $HOME/.gitconfig file. #
 # [include]                                                                          #
 #         path = ~/.config/git/gitconfig                                             #
 ######################################################################################
 
-# Personal projects configuration
+# Per-project includes (personal/work)
 [includeIf "gitdir:~/prv/**"]
     path = ~/.gitconfig-github
-[includeIf "gitdir/i:~/personal/**"]
+[includeIf "gitdir:~/personal/**"]
     path = ~/.gitconfig-github
 [includeIf "gitdir:~/projects/personal/**"]
     path = ~/.gitconfig-github
 
-# Work projects configuration
 [includeIf "gitdir:~/work/**"]
     path = ~/.gitconfig-work
 [includeIf "gitdir:~/projects/work/**"]
     path = ~/.gitconfig-work
-[includeIf "gitdir/i:~/company/**"]
+[includeIf "gitdir:~/company/**"]
     path = ~/.gitconfig-work
 
-# Configuration switching aliases
-[alias]
-    personal = "!f() { \
-        git config --local include.path ~/.gitconfig-github && \
-        git config --local user.name \"$(git config --file ~/.gitconfig-github user.name)\" && \
-        git config --local user.email \"$(git config --file ~/.gitconfig-github user.email)\" && \
-        echo 'Switched to personal configuration'; \
-    }; f"
-
-    work = "!f() { \
-        git config --local include.path ~/.gitconfig-work && \
-        git config --local user.name \"$(git config --file ~/.gitconfig-work user.name)\" && \
-        git config --local user.email \"$(git config --file ~/.gitconfig-work user.email)\" && \
-        echo 'Switched to work configuration'; \
-    }; f"
-
-    whoami = "!git config user.name && git config user.email"
-
-# Include a local, private gitconfig for user-specific settings (e.g., name, email)
-# Create a ~/.config/git/local file and add it to your global .gitignore.
+# Local overrides (untracked, per-machine)
 [include]
     path = ~/.config/git/local
 
-# Include OS-specific configurations
+# OS-specific includes (macOS is already present in repo)
 [includeIf "os:darwin"]
     path = ~/.config/git/macOS.gitconfig
 
+# Core defaults
 [core]
     precomposeUnicode = true
     editor = emacs
-    # Speed up commands involving untracked files such as `git status`.
-    # https://git-scm.com/docs/git-update-index#_untracked_cache
+    # Speed up status on repos with many untracked files
     untrackedCache = true
     pager = less -FMRiX
+    # Global excludesfile (use the repo's gitignore)
+    excludesfile = ~/.config/git/gitignore
 
+# Merge / diff tools
 [merge]
     tool = emerge
 
@@ -62,21 +47,20 @@
     cmd = emacs --eval "(emerge-files \"$LOCAL\" \"$REMOTE\" nil \"$MERGED\")"
     trustExitCode = true
 
-[help]
-    # Automatically correct and execute mistyped commands
-    autocorrect = 0
-
-[color]
-    ui = auto
-
 [diff]
     tool = ediff
     colorMoved = zebra
-    # https://git-scm.com/docs/diff-config#Documentation/diff-config.txt-diffwsErrorHighlight
     wsErrorHighlight = all
 
 [difftool "ediff"]
     cmd = emacs --eval "(ediff-files \"$LOCAL\" \"$REMOTE\")"
+
+# Convenience and safety
+[help]
+    autocorrect = 0
+
+[color]
+    ui = auto
 
 [grep]
     linenumber = true
@@ -87,13 +71,9 @@
 [push]
     default = simple
 
+# Useful aliases (merged and expanded)
 [alias]
-    # Logging
-    l1 = log --pretty=format:'%C(yellow)%h %Cred%d %<|(90)%Creset%s%Cblue %<(15)%cn %C(dim white)%ar' --decorate --date=short
-    commit-message = log --format=%B -n 1
-    dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
-
-    # Common shortcuts
+    # Simple shortcuts
     st = status -sb
     co = checkout
     br = branch
@@ -101,14 +81,39 @@
     ca = commit -a
     cm = commit -m
     cam = commit -am
-
-    # Useful commands
     unstage = reset HEAD --
     last = log -1 HEAD
     visual = !gitk
 
+    # Logging / graph
+    l1 = log --pretty=format:'%C(yellow)%h %Cred%d %<|(90)%Creset%s%Cblue %<(15)%cn %C(dim white)%ar' --decorate --date=short
+    lg = log --graph --pretty=format:'%C(auto)%h %C(bold blue)%an%C(reset) %C(dim white)%cr %C(green)%s %C(red)%d' --abbrev-commit --date=relative
+    commit-message = log --format=%B -n 1
+    dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
+
     # Branch management
-    cleanup = "!git branch --merged | grep -v '\\*\\|main\\|master\\|develop' | xargs -n 1 git branch -d"
+    cleanup = "!git branch --merged | grep -v '\\*\\|main\\|master\\|develop' | xargs -r -n 1 git branch -d"
 
     # Show files ignored by git
     ignored = ls-files -o -i --exclude-standard
+
+    # Quick context switch between personal/work configs
+    personal = "!f() { \
+        git config --local include.path ~/.gitconfig-github && \
+        git config --local user.name \"$(git config --file ~/.gitconfig-github user.name)\" && \
+        git config --local user.email \"$(git config --file ~/.gitconfig-github user.email)\" && \
+        echo 'Switched to personal configuration'; \
+    }; f"
+    work = "!f() { \
+        git config --local include.path ~/.gitconfig-work && \
+        git config --local user.name \"$(git config --file ~/.gitconfig-work user.name)\" && \
+        git config --local user.email \"$(git config --file ~/.gitconfig-work user.email)\" && \
+        echo 'Switched to work configuration'; \
+    }; f"
+
+# Optional: add commit signing / templates in ~/.config/git/local or per-include
+# e.g. in local:
+# [commit]
+#     gpgSign = true
+# [user]
+#     signingkey = <your-key-id>
