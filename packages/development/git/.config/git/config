@@ -97,6 +97,9 @@
     # Show files ignored by git
     ignored = ls-files -o -i --exclude-standard
 
+    # Show current user identity
+    whoami = "!echo \"$(git config user.name) <$(git config user.email)>\""
+
     # Quick context switch between personal/work configs
     personal = "!f() { \
         git config --local include.path ~/.gitconfig-github && \
