@@ -23,6 +23,12 @@ brew "fzf"
 brew "jq"
 brew "yq"
 
+# Modern CLI replacements
+brew "bat"
+brew "eza"
+brew "fd"
+brew "emacs"
+
 # System utilities
 brew "gnupg"
 brew "openssh"

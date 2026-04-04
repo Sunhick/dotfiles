@@ -1,8 +1,8 @@
 # Ripgrep configuration file
 # Located at ~/.config/ripgrep/config (XDG compliant)
 
-# Always use colors
---color=always
+# Use colors when outputting to a terminal, disable when piping
+--color=auto
 
 # Show line numbers
 --line-number

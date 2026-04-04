@@ -7,7 +7,9 @@ target=~
 verbose=2
 
 # Adopt existing files into stow management
-adopt=true
+# WARNING: adopt=true silently overwrites repo files with whatever is on disk.
+# Use --adopt explicitly on the command line when needed instead.
+# adopt=true
 
 # Enable "restowing" (re-link existing symlinks)
 restow=true

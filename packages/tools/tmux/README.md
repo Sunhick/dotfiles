@@ -17,7 +17,7 @@ Tmux supports XDG configuration when using `~/.config/tmux/tmux.conf`.
 - Mouse support enabled
 - Custom color theme with gruvbox-inspired colors
 - Alt+number shortcuts for quick window switching
-- Increased history limit (10,000 lines)
+- Increased history limit (50,000 lines)
 
 ## Key Bindings
 
