@@ -5,14 +5,14 @@ include make/log.mk
 
 # All packages (flat structure)
 ALL_PKGS := bash zsh emacs nano vscode git tmux fzf ripgrep inputrc \
-            curlrc editorconfig gnupg homebrew htop i3 terminal apt
+            curlrc editorconfig gnupg htop i3 terminal
 
 # Groups for convenience installs
 SHELL_PKGS   := bash zsh
 EDITOR_PKGS  := emacs nano vscode
 DEV_PKGS     := git
 DESKTOP_PKGS := i3 terminal
-TOOL_PKGS    := tmux fzf ripgrep inputrc curlrc editorconfig gnupg homebrew htop apt
+TOOL_PKGS    := tmux fzf ripgrep inputrc curlrc editorconfig gnupg htop
 
 # Backup
 BACKUP_DIR    := $(HOME)/.dotfiles-backup/$(shell date +%Y%m%d_%H%M%S)
