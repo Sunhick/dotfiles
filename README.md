@@ -55,14 +55,15 @@ This dotfiles setup follows the XDG Base Directory Specification:
 
 ```
 dotfiles/
+├── make/               # shared Makefile helpers (log.mk)
 ├── packages/
-│   ├── shell/          # bash (.config/bash/), zsh (.config/zsh/)
+│   ├── shell/          # bash (.config/bash/), zsh (.config/zsh/), powershell
 │   ├── editors/        # emacs (.config/emacs/), nano (.config/nano/), vscode (.config/Code/)
 │   ├── tools/          # tmux (.config/tmux/), htop (.config/htop/), gnupg (.gnupg/)
 │   ├── desktop/        # i3 (.config/i3/), iterm2 (.config/)
 │   └── development/    # git (.config/git/)
 ├── management/stow/    # stow configuration
-└── Makefile           # installation commands
+└── Makefile            # installation commands
 ```
 
 ## Featured Packages
@@ -89,32 +90,36 @@ make install
 
 ### Install by Category
 ```bash
-make install-shell      # bash, zsh
-make install-editors    # emacs, nano, vscode
-make install-tools      # tmux, htop, gnupg
-make install-desktop    # i3, iterm2
-make install-dev        # git
+make shell              # bash, zsh
+make editors            # emacs, nano, vscode
+make tools              # tmux, htop, gnupg, etc.
+make desktop            # i3, iterm2
+make development        # git
 ```
 
 ### Install Individual Packages
 ```bash
-cd packages/shell
-make install-bash
+cd packages/tools
+make tmux
 
 # or directly with stow
-stow bash
+cd packages/tools/tmux
+stow --target=$HOME .
 ```
 
 ## Commands
 
-| Command          | Description               |
-| ---------------- | ------------------------- |
-| `make install`   | Install all packages      |
-| `make uninstall` | Remove all packages       |
-| `make status`    | Show installation status  |
-| `make test`      | Preview changes (dry run) |
-| `make clean`     | Remove broken symlinks    |
-| `make list`      | List available packages   |
+| Command            | Description                                    |
+| ------------------ | ---------------------------------------------- |
+| `make install`     | Install all packages                           |
+| `make install-safe`| Backup existing configs then install            |
+| `make uninstall`   | Remove all packages                            |
+| `make dryrun`      | Preview changes (dry run)                      |
+| `make restow`      | Re-link all packages                           |
+| `make list`        | List available packages                        |
+| `make doctor`      | Verify tools, symlinks, and config health      |
+| `make backup`      | Backup existing configuration files            |
+| `make restore`     | Restore from latest backup                     |
 
 ## Adding Packages
 
@@ -134,7 +139,7 @@ stow bash
 3. Install:
    ```bash
    cd packages/tools
-   make install-mynewpackage
+   make mynewpackage
    ```
 
 ### XDG Guidelines for New Packages
