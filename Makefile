@@ -1,71 +1,102 @@
 # Dotfiles Management Makefile
-# Delegates to individual package Makefiles
 
 SHELL := /bin/bash
 include make/log.mk
 
-# Package categories
-PACKAGE_DIRS := shell editors development desktop tools
+# All packages (flat structure)
+ALL_PKGS := bash zsh emacs nano vscode git tmux fzf ripgrep inputrc \
+            curlrc editorconfig gnupg homebrew htop i3 terminal apt
 
-# Backup directory with timestamp
-BACKUP_DIR := $(HOME)/.dotfiles-backup/$(shell date +%Y%m%d_%H%M%S)
+# Groups for convenience installs
+SHELL_PKGS   := bash zsh
+EDITOR_PKGS  := emacs nano vscode
+DEV_PKGS     := git
+DESKTOP_PKGS := i3 terminal
+TOOL_PKGS    := tmux fzf ripgrep inputrc curlrc editorconfig gnupg homebrew htop apt
+
+# Backup
+BACKUP_DIR    := $(HOME)/.dotfiles-backup/$(shell date +%Y%m%d_%H%M%S)
 LATEST_BACKUP := $(HOME)/.dotfiles-backup/latest
 
-.PHONY: help install uninstall restow list backup restore list-backups \
-	clean-backups clean-all-backups check-stow install-safe dryrun doctor \
-	$(PACKAGE_DIRS) $(addprefix uninstall-,$(PACKAGE_DIRS)) \
-	$(addprefix restow-,$(PACKAGE_DIRS)) $(addprefix dryrun-,$(PACKAGE_DIRS))
+.PHONY: help install install-safe uninstall restow dryrun list doctor \
+	check-stow backup restore list-backups clean-backups \
+	shell editors development desktop tools \
+	$(ALL_PKGS) $(addprefix uninstall-,$(ALL_PKGS))
 
 help:
-	@echo "Dotfiles Management System"
-	@echo "=========================="
+	@echo "Dotfiles Management"
+	@echo "==================="
 	@echo ""
-	@echo "Main targets:"
-	@echo "  install       - Install all package categories"
-	@echo "  install-safe  - Backup existing configs then install"
-	@echo "  dryrun        - Preview what would be installed (dry run)"
-	@echo "  uninstall     - Uninstall all package categories"
-	@echo "  restow        - Restow all package categories"
-	@echo "  list          - List all available packages"
-	@echo "  doctor        - Verify tools, symlinks, and config health"
+	@echo "Targets:"
+	@echo "  install       - Install all packages"
+	@echo "  install-safe  - Backup then install"
+	@echo "  uninstall     - Uninstall all packages"
+	@echo "  dryrun        - Preview changes"
+	@echo "  restow        - Re-link all packages"
+	@echo "  list          - List available packages"
+	@echo "  doctor        - Health check"
 	@echo ""
-	@echo "Category targets: $(PACKAGE_DIRS)"
+	@echo "Groups:"
+	@echo "  shell         - $(SHELL_PKGS)"
+	@echo "  editors       - $(EDITOR_PKGS)"
+	@echo "  development   - $(DEV_PKGS)"
+	@echo "  desktop       - $(DESKTOP_PKGS)"
+	@echo "  tools         - $(TOOL_PKGS)"
 	@echo ""
-	@echo "Backup targets: backup, restore, list-backups, clean-backups"
+	@echo "Individual: make <package>  (e.g. make git, make tmux)"
+	@echo "Uninstall:  make uninstall-<package>"
 
 check-stow:
 	@which stow > /dev/null || ($(call log,fail,GNU Stow is not installed) && exit 1)
 
-install: check-stow $(PACKAGE_DIRS)
+# ── Install / Uninstall / Restow (all) ────────────────────────────
+install: check-stow $(ALL_PKGS)
 install-safe: backup install
-uninstall: $(addprefix uninstall-,$(PACKAGE_DIRS))
-restow: $(addprefix restow-,$(PACKAGE_DIRS))
-dryrun: check-stow $(addprefix dryrun-,$(PACKAGE_DIRS))
+uninstall: $(addprefix uninstall-,$(ALL_PKGS))
+restow: check-stow $(addsuffix .restow,$(ALL_PKGS))
 
-list:
-	@for dir in $(PACKAGE_DIRS); do \
-		$(call log,info,=== $$dir ===); \
-		cd packages/$$dir && $(MAKE) --no-print-directory list; \
+# ── Group targets ─────────────────────────────────────────────────
+shell: check-stow $(SHELL_PKGS)
+editors: check-stow $(EDITOR_PKGS)
+development: check-stow $(DEV_PKGS)
+desktop: check-stow $(DESKTOP_PKGS)
+tools: check-stow $(TOOL_PKGS)
+
+# ── Per-package targets (generic rules) ───────────────────────────
+$(ALL_PKGS): check-stow
+	@cd $@ && stow --target=$(HOME) --restow . && $(call log,ok,LINK $@)
+
+$(addprefix uninstall-,$(ALL_PKGS)):
+	@cd $(subst uninstall-,,$@) && stow --target=$(HOME) --delete . && $(call log,ok,UNLINK $(subst uninstall-,,$@))
+
+$(addsuffix .restow,$(ALL_PKGS)): check-stow
+	@cd $(subst .restow,,$@) && stow --target=$(HOME) --restow . && $(call log,ok,RESTOW $(subst .restow,,$@))
+
+# ── Dry run ───────────────────────────────────────────────────────
+dryrun: check-stow
+	@for pkg in $(ALL_PKGS); do \
+		if [ -d "$$pkg" ]; then \
+			if (cd "$$pkg" && stow --target=$(HOME) --simulate . >/dev/null 2>&1); then \
+				$(call log,ok,WOULD LINK $$pkg); \
+			else \
+				$(call log,warn,WOULD LINK $$pkg (conflicts)); \
+			fi; \
+		fi; \
 	done
 
-# Package category targets
-shell editors development desktop tools: check-stow
-	@$(call log,info,Installing $@...)
-	@cd packages/$@ && $(MAKE) --no-print-directory install
+list:
+	@$(call log,info,Shell:)
+	@for p in $(SHELL_PKGS); do echo "  $$p"; done
+	@$(call log,info,Editors:)
+	@for p in $(EDITOR_PKGS); do echo "  $$p"; done
+	@$(call log,info,Development:)
+	@for p in $(DEV_PKGS); do echo "  $$p"; done
+	@$(call log,info,Desktop:)
+	@for p in $(DESKTOP_PKGS); do echo "  $$p"; done
+	@$(call log,info,Tools:)
+	@for p in $(TOOL_PKGS); do echo "  $$p"; done
 
-uninstall-shell uninstall-editors uninstall-development uninstall-desktop uninstall-tools:
-	@$(call log,info,Uninstalling $(subst uninstall-,,$@)...)
-	@cd packages/$(subst uninstall-,,$@) && $(MAKE) --no-print-directory uninstall
-
-restow-shell restow-editors restow-development restow-desktop restow-tools: check-stow
-	@$(call log,info,Restowing $(subst restow-,,$@)...)
-	@cd packages/$(subst restow-,,$@) && $(MAKE) --no-print-directory restow
-
-dryrun-shell dryrun-editors dryrun-development dryrun-desktop dryrun-tools: check-stow
-	@$(call log,info,Previewing $(subst dryrun-,,$@)...)
-	@cd packages/$(subst dryrun-,,$@) && $(MAKE) --no-print-directory dryrun
-
-# Backup existing configuration files
+# ── Backup / Restore ──────────────────────────────────────────────
 backup:
 	@$(call log,info,Creating backup at $(BACKUP_DIR)...)
 	@mkdir -p "$(BACKUP_DIR)"
@@ -81,17 +112,10 @@ backup:
 			$(call log,ok,BACKUP $$file); \
 		fi; \
 	done
-	@for dir in .emacs.d .gnupg; do \
-		if [ -d "$(HOME)/$$dir" ]; then \
-			cp -r "$(HOME)/$$dir" "$(BACKUP_DIR)/"; \
-			$(call log,ok,BACKUP $$dir/); \
-		fi; \
-	done
 	@rm -f "$(LATEST_BACKUP)"
 	@ln -sf "$(BACKUP_DIR)" "$(LATEST_BACKUP)"
 	@$(call log,ok,Backup completed at $(BACKUP_DIR))
 
-# Restore from latest backup
 restore:
 	@if [ ! -d "$(LATEST_BACKUP)" ]; then \
 		$(call log,fail,No backup found at $(LATEST_BACKUP)); \
@@ -111,12 +135,6 @@ restore:
 			$(call log,ok,RESTORE .config/$$config/); \
 		fi; \
 	done
-	@for dir in .emacs.d .gnupg; do \
-		if [ -d "$(LATEST_BACKUP)/$$dir" ]; then \
-			cp -r "$(LATEST_BACKUP)/$$dir" "$(HOME)/"; \
-			$(call log,ok,RESTORE $$dir/); \
-		fi; \
-	done
 	@$(call log,ok,Restore completed from $(LATEST_BACKUP))
 
 list-backups:
@@ -132,17 +150,9 @@ clean-backups:
 		cd "$(HOME)/.dotfiles-backup" && \
 		ls -t | grep -E '^[0-9]{8}_[0-9]{6}$$' | tail -n +6 | xargs -r rm -rf; \
 		$(call log,ok,Old backups cleaned); \
-	else \
-		$(call log,warn,No backup directory found); \
 	fi
 
-clean-all-backups:
-	@$(call log,warn,This will delete ALL backups)
-	@read -p "Are you sure? (y/N): " confirm && [ "$$confirm" = "y" ] || exit 1
-	@rm -rf "$(HOME)/.dotfiles-backup"
-	@$(call log,ok,All backups deleted)
-
-# ── Health check ────────────────────────────────────────────────────
+# ── Health check ──────────────────────────────────────────────────
 XDG_CONFIG := $(or $(XDG_CONFIG_HOME),$(HOME)/.config)
 XDG_DATA   := $(or $(XDG_DATA_HOME),$(HOME)/.local/share)
 XDG_CACHE  := $(or $(XDG_CACHE_HOME),$(HOME)/.cache)
@@ -218,8 +228,6 @@ doctor:
 	fi; \
 	if [ -f "$(XDG_CONFIG)/ripgrep/config" ]; then \
 		pass "ripgrep config found"; \
-	elif [ -n "$${RIPGREP_CONFIG_PATH:-}" ] && [ -f "$$RIPGREP_CONFIG_PATH" ]; then \
-		pass "ripgrep config found at $$RIPGREP_CONFIG_PATH"; \
 	else \
 		warn "ripgrep config not found"; \
 	fi; \

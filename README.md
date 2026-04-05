@@ -55,15 +55,20 @@ This dotfiles setup follows the XDG Base Directory Specification:
 
 ```
 dotfiles/
+├── bash/               # bash shell (.config/bash/)
+├── zsh/                # zsh shell (.config/zsh/)
+├── powershell/         # PowerShell (Windows)
+├── git/                # git (.config/git/)
+├── emacs/              # emacs (.config/emacs/)
+├── nano/               # nano (.config/nano/)
+├── vscode/             # vscode (.config/Code/)
+├── tmux/               # tmux (.config/tmux/)
+├── fzf/                # fzf (.config/fzf/)
+├── ripgrep/            # ripgrep (.config/ripgrep/)
+├── ...                 # and more
 ├── make/               # shared Makefile helpers (log.mk)
-├── packages/
-│   ├── shell/          # bash (.config/bash/), zsh (.config/zsh/), powershell
-│   ├── editors/        # emacs (.config/emacs/), nano (.config/nano/), vscode (.config/Code/)
-│   ├── tools/          # tmux (.config/tmux/), htop (.config/htop/), gnupg (.gnupg/)
-│   ├── desktop/        # i3 (.config/i3/), iterm2 (.config/)
-│   └── development/    # git (.config/git/)
 ├── management/stow/    # stow configuration
-└── Makefile            # installation commands
+└── Makefile            # one Makefile for everything
 ```
 
 ## Featured Packages
@@ -99,11 +104,12 @@ make development        # git
 
 ### Install Individual Packages
 ```bash
-cd packages/tools
 make tmux
+make git
+make bash
 
 # or directly with stow
-cd packages/tools/tmux
+cd tmux
 stow --target=$HOME .
 ```
 
@@ -123,22 +129,23 @@ stow --target=$HOME .
 
 ## Adding Packages
 
-1. Create directory in appropriate category:
+1. Create a directory at the repo root:
    ```bash
-   mkdir packages/tools/mynewpackage
+   mkdir mynewpackage
    ```
 
 2. Add your dotfiles following XDG structure:
    ```bash
-   packages/tools/mynewpackage/
+   mynewpackage/
    └── .config/
        └── mynewpackage/
            └── config.yml
    ```
 
-3. Install:
+3. Add it to `ALL_PKGS` in the Makefile and the appropriate group variable.
+
+4. Install:
    ```bash
-   cd packages/tools
    make mynewpackage
    ```
 
