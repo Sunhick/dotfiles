@@ -53,6 +53,7 @@
 (require 'pkg-gn-mode)
 (require 'pkg-google-c-style)
 (require 'pkg-rust-mode)
+(require 'pkg-ediff)
 
 
 (provide 'pkg-initializer)

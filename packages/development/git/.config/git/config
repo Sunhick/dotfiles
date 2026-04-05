@@ -42,11 +42,14 @@
 
 # Merge / diff tools
 [merge]
-    tool = emerge
+    tool = ediff
 
-[mergetool "emerge"]
-    cmd = emacs --eval "(emerge-files \"$LOCAL\" \"$REMOTE\" nil \"$MERGED\")"
+[mergetool "ediff"]
+    cmd = emacs --eval \"(ediff-merge-files-with-ancestor \\\"$LOCAL\\\" \\\"$REMOTE\\\" \\\"$BASE\\\" nil \\\"$MERGED\\\")\"
     trustExitCode = true
+
+[mergetool "vscode"]
+    cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
 [diff]
     tool = ediff
@@ -54,7 +57,10 @@
     wsErrorHighlight = all
 
 [difftool "ediff"]
-    cmd = emacs --eval "(ediff-files \"$LOCAL\" \"$REMOTE\")"
+    cmd = emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
+
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
 
 # Convenience and safety
 [help]
