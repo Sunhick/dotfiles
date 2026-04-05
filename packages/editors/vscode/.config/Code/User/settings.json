@@ -67,12 +67,24 @@
         "editorLineNumber.foreground": "#666666",
         "editorLineNumber.activeForeground": "#ffffff"
     },
-    "workbench.colorTheme": "Default Dark+",
+    // Theme and colors - Gruvbox Dark
+    "workbench.colorTheme": "Gruvbox Dark Hard",
     // Terminal - Emacs-like
     "terminal.integrated.scrollback": 10000,
     "terminal.integrated.cursorStyle": "block",
     "terminal.integrated.cursorBlinking": false,
     // Keybindings hint
     "workbench.tips.enabled": false,
-    "workbench.startupEditor": "none"
+    "workbench.startupEditor": "none",
+    // Emacs keybinding extension
+    // Install: ext install tuttieee.emacs-mcx
+    "emacs-mcx.killRingMax": 60,
+    "emacs-mcx.strictEmacsMove": true,
+    "emacs-mcx.useMetaPrefixMacCmd": false,
+    // Zen mode for distraction-free editing (like emacs fullscreen)
+    "zenMode.hideLineNumbers": false,
+    "zenMode.hideTabs": true,
+    "zenMode.hideStatusBar": false,
+    "zenMode.centerLayout": false,
+    "zenMode.fullScreen": true
 }

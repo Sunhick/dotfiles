@@ -1,0 +1,49 @@
+[
+    // ── Buffer/File management (C-x prefix) ──────────────────────
+    { "key": "ctrl+x ctrl+f", "command": "workbench.action.quickOpen" },
+    { "key": "ctrl+x ctrl+s", "command": "workbench.action.files.save" },
+    { "key": "ctrl+x s",      "command": "workbench.action.files.saveAll" },
+    { "key": "ctrl+x ctrl+w", "command": "workbench.action.files.saveAs" },
+    { "key": "ctrl+x k",      "command": "workbench.action.closeActiveEditor" },
+    { "key": "ctrl+x ctrl+c", "command": "workbench.action.quit" },
+
+    // ── Window management (C-x prefix) ───────────────────────────
+    { "key": "ctrl+x 0",      "command": "workbench.action.closeEditorsInGroup" },
+    { "key": "ctrl+x 1",      "command": "workbench.action.closeEditorsInOtherGroups" },
+    { "key": "ctrl+x 2",      "command": "workbench.action.splitEditorDown" },
+    { "key": "ctrl+x 3",      "command": "workbench.action.splitEditor" },
+    { "key": "ctrl+x o",      "command": "workbench.action.focusNextGroup" },
+
+    // ── Buffer switching ─────────────────────────────────────────
+    { "key": "ctrl+x b",      "command": "workbench.action.showAllEditors" },
+    { "key": "ctrl+x ctrl+b", "command": "workbench.action.showAllEditors" },
+    { "key": "ctrl+x right",  "command": "workbench.action.nextEditor" },
+    { "key": "ctrl+x left",   "command": "workbench.action.previousEditor" },
+
+    // ── Search (emacs-style) ─────────────────────────────────────
+    { "key": "ctrl+s",        "command": "actions.find",
+      "when": "editorFocus" },
+    { "key": "ctrl+r",        "command": "actions.find",
+      "when": "editorFocus" },
+    { "key": "alt+x",         "command": "workbench.action.showCommands" },
+
+    // ── Go to line (M-g g) ──────────────────────────────────────
+    { "key": "alt+g alt+g",   "command": "workbench.action.gotoLine" },
+    { "key": "alt+g g",       "command": "workbench.action.gotoLine" },
+
+    // ── Comment toggle (M-;) ─────────────────────────────────────
+    { "key": "alt+;",         "command": "editor.action.commentLine",
+      "when": "editorTextFocus" },
+
+    // ── Terminal (like eshell) ────────────────────────────────────
+    { "key": "ctrl+x t",      "command": "workbench.action.terminal.toggleTerminal" },
+
+    // ── Undo/Redo ────────────────────────────────────────────────
+    { "key": "ctrl+/",        "command": "undo",
+      "when": "editorTextFocus" },
+    { "key": "ctrl+shift+/",  "command": "redo",
+      "when": "editorTextFocus" },
+
+    // ── Zen mode (distraction-free like emacs fullscreen) ────────
+    { "key": "ctrl+x z",      "command": "workbench.action.toggleZenMode" }
+]
