@@ -1,9 +1,7 @@
 # ~/.config/git/config - improved and cleaned
 
 ######################################################################################
-# To consume this file simply add the below two lines in your $HOME/.gitconfig file. #
-# [include]                                                                          #
-#         path = ~/.config/git/config                                                #
+# Loaded via ~/.gitconfig -> [include] path = ~/.config/git/config                   #
 ######################################################################################
 
 # Per-project includes (personal/work)

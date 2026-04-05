@@ -18,10 +18,10 @@ TOOL_PKGS    := tmux fzf ripgrep inputrc curlrc editorconfig gnupg homebrew htop
 BACKUP_DIR    := $(HOME)/.dotfiles-backup/$(shell date +%Y%m%d_%H%M%S)
 LATEST_BACKUP := $(HOME)/.dotfiles-backup/latest
 
-.PHONY: help install install-safe uninstall restow dryrun list doctor \
-	check-stow backup restore list-backups clean-backups \
-	shell editors development desktop tools \
-	$(ALL_PKGS) $(addprefix uninstall-,$(ALL_PKGS))
+.PHONY: help install adopt safe-install sync plan ls doctor \
+	check-stow backup restore list-backups prune-backups \
+	shell editors development desktop tools prune \
+	$(ALL_PKGS) $(addprefix rm-,$(ALL_PKGS))
 
 help:
 	@echo "Dotfiles Management"
@@ -29,12 +29,13 @@ help:
 	@echo ""
 	@echo "Targets:"
 	@echo "  install       - Install all packages"
-	@echo "  install-safe  - Backup then install"
-	@echo "  uninstall     - Uninstall all packages"
-	@echo "  dryrun        - Preview changes"
-	@echo "  restow        - Re-link all packages"
-	@echo "  list          - List available packages"
+	@echo "  adopt         - Install all (adopt existing files)"
+	@echo "  safe-install  - Backup then install"
+	@echo "  sync          - Re-link all packages"
+	@echo "  plan          - Preview changes (dry run)"
+	@echo "  ls            - List available packages"
 	@echo "  doctor        - Health check"
+	@echo "  prune         - Remove broken symlinks"
 	@echo ""
 	@echo "Groups:"
 	@echo "  shell         - $(SHELL_PKGS)"
@@ -44,16 +45,24 @@ help:
 	@echo "  tools         - $(TOOL_PKGS)"
 	@echo ""
 	@echo "Individual: make <package>  (e.g. make git, make tmux)"
-	@echo "Uninstall:  make uninstall-<package>"
+	@echo "Remove:     make rm-<package>"
 
 check-stow:
 	@which stow > /dev/null || ($(call log,fail,GNU Stow is not installed) && exit 1)
 
-# ── Install / Uninstall / Restow (all) ────────────────────────────
+# ── Core targets ──────────────────────────────────────────────────
 install: check-stow $(ALL_PKGS)
-install-safe: backup install
-uninstall: $(addprefix uninstall-,$(ALL_PKGS))
-restow: check-stow $(addsuffix .restow,$(ALL_PKGS))
+safe-install: backup install
+
+adopt: check-stow
+	@for pkg in $(ALL_PKGS); do \
+		if [ -d "$$pkg" ]; then \
+			(cd $$pkg && stow --target=$(HOME) --adopt . 2>/dev/null; \
+			 stow --target=$(HOME) --restow . && $(call log,ok,LINK $$pkg (adopted))); \
+		fi; \
+	done
+
+sync: check-stow $(addsuffix .restow,$(ALL_PKGS))
 
 # ── Group targets ─────────────────────────────────────────────────
 shell: check-stow $(SHELL_PKGS)
@@ -62,18 +71,18 @@ development: check-stow $(DEV_PKGS)
 desktop: check-stow $(DESKTOP_PKGS)
 tools: check-stow $(TOOL_PKGS)
 
-# ── Per-package targets (generic rules) ───────────────────────────
+# ── Per-package targets ───────────────────────────────────────────
 $(ALL_PKGS): check-stow
 	@cd $@ && stow --target=$(HOME) --restow . && $(call log,ok,LINK $@)
 
-$(addprefix uninstall-,$(ALL_PKGS)):
-	@cd $(subst uninstall-,,$@) && stow --target=$(HOME) --delete . && $(call log,ok,UNLINK $(subst uninstall-,,$@))
+$(addprefix rm-,$(ALL_PKGS)):
+	@cd $(subst rm-,,$@) && stow --target=$(HOME) --delete . && $(call log,ok,UNLINK $(subst rm-,,$@))
 
 $(addsuffix .restow,$(ALL_PKGS)): check-stow
-	@cd $(subst .restow,,$@) && stow --target=$(HOME) --restow . && $(call log,ok,RESTOW $(subst .restow,,$@))
+	@cd $(subst .restow,,$@) && stow --target=$(HOME) --restow . && $(call log,ok,SYNC $(subst .restow,,$@))
 
-# ── Dry run ───────────────────────────────────────────────────────
-dryrun: check-stow
+# ── Plan (dry run) ────────────────────────────────────────────────
+plan: check-stow
 	@for pkg in $(ALL_PKGS); do \
 		if [ -d "$$pkg" ]; then \
 			if (cd "$$pkg" && stow --target=$(HOME) --simulate . >/dev/null 2>&1); then \
@@ -84,7 +93,7 @@ dryrun: check-stow
 		fi; \
 	done
 
-list:
+ls:
 	@$(call log,info,Shell:)
 	@for p in $(SHELL_PKGS); do echo "  $$p"; done
 	@$(call log,info,Editors:)
@@ -95,6 +104,11 @@ list:
 	@for p in $(DESKTOP_PKGS); do echo "  $$p"; done
 	@$(call log,info,Tools:)
 	@for p in $(TOOL_PKGS); do echo "  $$p"; done
+
+prune:
+	@$(call log,info,Removing broken symlinks...)
+	@find $(HOME)/.config -type l -exec test ! -e {} \; -print -delete 2>/dev/null || true
+	@$(call log,ok,Prune complete)
 
 # ── Backup / Restore ──────────────────────────────────────────────
 backup:
@@ -144,12 +158,12 @@ list-backups:
 		$(call log,warn,No backup directory found); \
 	fi
 
-clean-backups:
+prune-backups:
 	@$(call log,info,Cleaning old backups - keeping last 5...)
 	@if [ -d "$(HOME)/.dotfiles-backup" ]; then \
 		cd "$(HOME)/.dotfiles-backup" && \
 		ls -t | grep -E '^[0-9]{8}_[0-9]{6}$$' | tail -n +6 | xargs -r rm -rf; \
-		$(call log,ok,Old backups cleaned); \
+		$(call log,ok,Old backups pruned); \
 	fi
 
 # ── Health check ──────────────────────────────────────────────────
