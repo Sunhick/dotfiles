@@ -32,4 +32,21 @@ if command -v fzf >/dev/null 2>&1; then
             break
         fi
     done
+
+    # fzf-git integration: fuzzy git operations
+    # Ctrl+G Ctrl+F  - files (git status)
+    # Ctrl+G Ctrl+B  - branches
+    # Ctrl+G Ctrl+T  - tags
+    # Ctrl+G Ctrl+H  - commit hashes (log)
+    # Ctrl+G Ctrl+R  - remotes
+    # Ctrl+G Ctrl+S  - stashes
+    for fzf_git_file in \
+        "${XDG_CONFIG_HOME}/fzf/fzf-git.sh" \
+        "/opt/homebrew/share/fzf-git/fzf-git.sh" \
+        "${XDG_DATA_HOME}/fzf-git/fzf-git.sh"; do
+        if [[ -f "$fzf_git_file" ]]; then
+            source "$fzf_git_file"
+            break
+        fi
+    done
 fi

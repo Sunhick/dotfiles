@@ -22,6 +22,7 @@ brew "ripgrep"
 brew "fzf"
 brew "jq"
 brew "yq"
+brew "zoxide"
 
 # Modern CLI replacements
 brew "bat"

@@ -32,11 +32,11 @@
 (require 'which-key)
 (setq which-key-popup-type 'minibuffer)
 
-;; Allow C-h to trigger which-key before it is done automatically
+;; Show keybinding hints after a short delay
+(setq which-key-idle-delay 0.5)
+
+;; Allow C-h to trigger which-key before the delay
 (setq which-key-show-early-on-C-h t)
-;; make sure which-key doesn't show normally but refreshes quickly after it is
-;; triggered.
-(setq which-key-idle-delay 10000)
 (setq which-key-idle-secondary-delay 0.05)
 
 (which-key-mode)

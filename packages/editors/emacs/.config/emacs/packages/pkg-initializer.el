@@ -36,7 +36,7 @@
 (require 'pkg-vertico)
 (require 'pkg-multiple-cursors)
 ;; (require 'pkg-guide-key)
-;; (require 'pkg-which-key)
+(require 'pkg-which-key)
 (require 'pkg-ripgrep)
 (require 'pkg-smartparens)
 ;; (require 'pkg-switch-windows)

@@ -109,3 +109,8 @@ include "${XDG_CONFIG_HOME:-$HOME/.config}/fzf/fzf.zsh"
 
 # source machine specific customizations
 include "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/zshrc.local"
+
+# Initialize zoxide (smarter cd) if available
+if (( $+commands[zoxide] )); then
+    eval "$(zoxide init zsh)"
+fi
