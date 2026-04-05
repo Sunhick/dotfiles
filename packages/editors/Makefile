@@ -1,54 +1,41 @@
 # Editors Package Makefile
 SHELL := /bin/bash
+include ../../make/log.mk
 
-# Available editors
-EDITORS := emacs nano vscode
+PACKAGES := emacs nano vscode
 
-.PHONY: all install uninstall restow list $(EDITORS) $(addprefix uninstall-,$(EDITORS)) $(addprefix restow-,$(EDITORS))
+.PHONY: all install uninstall restow list dryrun $(PACKAGES) \
+	$(addprefix uninstall-,$(PACKAGES)) \
+	$(addprefix restow-,$(PACKAGES)) \
+	$(addprefix dryrun-,$(PACKAGES))
 
-# Default target
 all: install
+install: $(PACKAGES)
+uninstall: $(addprefix uninstall-,$(PACKAGES))
+restow: $(addprefix restow-,$(PACKAGES))
+dryrun: $(addprefix dryrun-,$(PACKAGES))
 
-# Install all editors
-install: $(EDITORS)
+$(PACKAGES):
+	@cd $@ && stow --target=$(HOME) --restow . && $(call log,ok,LINK $@)
 
-# Uninstall all editors
-uninstall: $(addprefix uninstall-,$(EDITORS))
+$(addprefix uninstall-,$(PACKAGES)):
+	@cd $(subst uninstall-,,$@) && stow --target=$(HOME) --delete . && $(call log,ok,UNLINK $(subst uninstall-,,$@))
 
-# Restow all editors
-restow: $(addprefix restow-,$(EDITORS))
+$(addprefix restow-,$(PACKAGES)):
+	@cd $(subst restow-,,$@) && stow --target=$(HOME) --restow . && $(call log,ok,RESTOW $(subst restow-,,$@))
 
-# Individual editor targets
-emacs:
-	@cd emacs && stow --target=$(HOME) --restow . && echo "  LINK: emacs"
+$(addprefix dryrun-,$(PACKAGES)):
+	@pkg=$(subst dryrun-,,$@); \
+	if [ -d "$$pkg" ]; then \
+		if (cd "$$pkg" && stow --target=$(HOME) --simulate . >/dev/null 2>&1); then \
+			$(call log,ok,WOULD LINK $$pkg); \
+		else \
+			$(call log,warn,WOULD LINK $$pkg (conflicts)); \
+		fi; \
+	else \
+		$(call log,warn,SKIP $$pkg (not found)); \
+	fi
 
-nano:
-	@cd nano && stow --target=$(HOME) --restow . && echo "  LINK: nano"
-
-vscode:
-	@cd vscode && stow --target=$(HOME) --restow . && echo "  LINK: vscode"
-
-# Uninstall targets
-uninstall-emacs:
-	@cd emacs && stow --target=$(HOME) --delete . && echo "  UNLINK: emacs"
-
-uninstall-nano:
-	@cd nano && stow --target=$(HOME) --delete . && echo "  UNLINK: nano"
-
-uninstall-vscode:
-	@cd vscode && stow --target=$(HOME) --delete . && echo "  UNLINK: vscode"
-
-# Restow targets
-restow-emacs:
-	@cd emacs && stow --target=$(HOME) --restow . && echo "  RESTOW: emacs"
-
-restow-nano:
-	@cd nano && stow --target=$(HOME) --restow . && echo "  RESTOW: nano"
-
-restow-vscode:
-	@cd vscode && stow --target=$(HOME) --restow . && echo "  RESTOW: vscode"
-
-# List available editors
 list:
 	@echo "Available editors:"
 	@echo "  emacs  - Emacs editor configuration"

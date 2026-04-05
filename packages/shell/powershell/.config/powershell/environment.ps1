@@ -16,7 +16,8 @@ $env:XDG_STATE_HOME = if ($env:XDG_STATE_HOME) { $env:XDG_STATE_HOME } else { "$
 $env:EDITOR = "code"  # Change to your preferred editor
 $env:VISUAL = $env:EDITOR
 $env:LESS = "-R -F -X"
-$env:GREP_OPTIONS = "--color=auto"
+# Note: GREP_OPTIONS is deprecated and removed in newer grep versions.
+# Color is handled via aliases instead.
 $env:GREP_COLOR = "1;32"
 
 # GPG TTY equivalent (if using GPG on Windows)

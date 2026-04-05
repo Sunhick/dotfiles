@@ -1,211 +1,41 @@
 # Tools Package Makefile
 SHELL := /bin/bash
+include ../../make/log.mk
 
-# Available tools
-TOOLS := curlrc editorconfig fzf gnupg homebrew htop inputrc ripgrep tmux
+PACKAGES := curlrc editorconfig fzf gnupg homebrew htop inputrc ripgrep tmux
 
-.PHONY: all install uninstall restow list dryrun $(TOOLS) $(addprefix uninstall-,$(TOOLS)) $(addprefix restow-,$(TOOLS)) $(addprefix dryrun-,$(TOOLS))
+.PHONY: all install uninstall restow list dryrun $(PACKAGES) \
+	$(addprefix uninstall-,$(PACKAGES)) \
+	$(addprefix restow-,$(PACKAGES)) \
+	$(addprefix dryrun-,$(PACKAGES))
 
-# Default target
 all: install
+install: $(PACKAGES)
+uninstall: $(addprefix uninstall-,$(PACKAGES))
+restow: $(addprefix restow-,$(PACKAGES))
+dryrun: $(addprefix dryrun-,$(PACKAGES))
 
-# Install all tools
-install: $(TOOLS)
+$(PACKAGES):
+	@cd $@ && stow --target=$(HOME) --restow . && $(call log,ok,LINK $@)
 
-# Uninstall all tools
-uninstall: $(addprefix uninstall-,$(TOOLS))
+$(addprefix uninstall-,$(PACKAGES)):
+	@cd $(subst uninstall-,,$@) && stow --target=$(HOME) --delete . && $(call log,ok,UNLINK $(subst uninstall-,,$@))
 
-# Restow all tools
-restow: $(addprefix restow-,$(TOOLS))
+$(addprefix restow-,$(PACKAGES)):
+	@cd $(subst restow-,,$@) && stow --target=$(HOME) --restow . && $(call log,ok,RESTOW $(subst restow-,,$@))
 
-# Dry run all tools
-dryrun: $(addprefix dryrun-,$(TOOLS))
-
-# Individual tool targets
-curlrc:
-	@cd curlrc && stow --target=$(HOME) --restow . && echo "  LINK: curlrc"
-
-editorconfig:
-	@cd editorconfig && stow --target=$(HOME) --restow . && echo "  LINK: editorconfig"
-
-fzf:
-	@cd fzf && stow --target=$(HOME) --restow . && echo "  LINK: fzf"
-
-gnupg:
-	@cd gnupg && stow --target=$(HOME) --restow . && echo "  LINK: gnupg"
-
-homebrew:
-	@cd homebrew && stow --target=$(HOME) --restow . && echo "  LINK: homebrew"
-
-htop:
-	@cd htop && stow --target=$(HOME) --restow . && echo "  LINK: htop"
-
-inputrc:
-	@cd inputrc && stow --target=$(HOME) --restow . && echo "  LINK: inputrc"
-
-ripgrep:
-	@cd ripgrep && stow --target=$(HOME) --restow . && echo "  LINK: ripgrep"
-
-tmux:
-	@cd tmux && stow --target=$(HOME) --restow . && echo "  LINK: tmux"
-
-# Uninstall targets
-uninstall-curlrc:
-	@cd curlrc && stow --target=$(HOME) --delete . && echo "  UNLINK: curlrc"
-
-uninstall-editorconfig:
-	@cd editorconfig && stow --target=$(HOME) --delete . && echo "  UNLINK: editorconfig"
-
-uninstall-fzf:
-	@cd fzf && stow --target=$(HOME) --delete . && echo "  UNLINK: fzf"
-
-uninstall-gnupg:
-	@cd gnupg && stow --target=$(HOME) --delete . && echo "  UNLINK: gnupg"
-
-uninstall-homebrew:
-	@cd homebrew && stow --target=$(HOME) --delete . && echo "  UNLINK: homebrew"
-
-uninstall-htop:
-	@cd htop && stow --target=$(HOME) --delete . && echo "  UNLINK: htop"
-
-uninstall-inputrc:
-	@cd inputrc && stow --target=$(HOME) --delete . && echo "  UNLINK: inputrc"
-
-uninstall-ripgrep:
-	@cd ripgrep && stow --target=$(HOME) --delete . && echo "  UNLINK: ripgrep"
-
-uninstall-tmux:
-	@cd tmux && stow --target=$(HOME) --delete . && echo "  UNLINK: tmux"
-
-# Restow targets
-restow-curlrc:
-	@cd curlrc && stow --target=$(HOME) --restow . && echo "  RESTOW: curlrc"
-
-restow-editorconfig:
-	@cd editorconfig && stow --target=$(HOME) --restow . && echo "  RESTOW: editorconfig"
-
-restow-fzf:
-	@cd fzf && stow --target=$(HOME) --restow . && echo "  RESTOW: fzf"
-
-restow-gnupg:
-	@cd gnupg && stow --target=$(HOME) --restow . && echo "  RESTOW: gnupg"
-
-restow-homebrew:
-	@cd homebrew && stow --target=$(HOME) --restow . && echo "  RESTOW: homebrew"
-
-restow-htop:
-	@cd htop && stow --target=$(HOME) --restow . && echo "  RESTOW: htop"
-
-restow-inputrc:
-	@cd inputrc && stow --target=$(HOME) --restow . && echo "  RESTOW: inputrc"
-
-restow-ripgrep:
-	@cd ripgrep && stow --target=$(HOME) --restow . && echo "  RESTOW: ripgrep"
-
-restow-tmux:
-	@cd tmux && stow --target=$(HOME) --restow . && echo "  RESTOW: tmux"
-
-# Dry run targets
-dryrun-curlrc:
-	@if [ -d curlrc ]; then \
-		if cd curlrc && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
-			echo "  WOULD LINK: curlrc"; \
+$(addprefix dryrun-,$(PACKAGES)):
+	@pkg=$(subst dryrun-,,$@); \
+	if [ -d "$$pkg" ]; then \
+		if (cd "$$pkg" && stow --target=$(HOME) --simulate . >/dev/null 2>&1); then \
+			$(call log,ok,WOULD LINK $$pkg); \
 		else \
-			echo "  WOULD LINK: curlrc (conflicts)"; \
+			$(call log,warn,WOULD LINK $$pkg (conflicts)); \
 		fi; \
 	else \
-		echo "  SKIP: curlrc (not found)"; \
+		$(call log,warn,SKIP $$pkg (not found)); \
 	fi
 
-dryrun-editorconfig:
-	@if [ -d editorconfig ]; then \
-		if cd editorconfig && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
-			echo "  WOULD LINK: editorconfig"; \
-		else \
-			echo "  WOULD LINK: editorconfig (conflicts)"; \
-		fi; \
-	else \
-		echo "  SKIP: editorconfig (not found)"; \
-	fi
-
-dryrun-fzf:
-	@if [ -d fzf ]; then \
-		if cd fzf && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
-			echo "  WOULD LINK: fzf"; \
-		else \
-			echo "  WOULD LINK: fzf (conflicts)"; \
-		fi; \
-	else \
-		echo "  SKIP: fzf (not found)"; \
-	fi
-
-dryrun-gnupg:
-	@if [ -d gnupg ]; then \
-		if cd gnupg && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
-			echo "  WOULD LINK: gnupg"; \
-		else \
-			echo "  WOULD LINK: gnupg (conflicts)"; \
-		fi; \
-	else \
-		echo "  SKIP: gnupg (not found)"; \
-	fi
-
-dryrun-homebrew:
-	@if [ -d homebrew ]; then \
-		if cd homebrew && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
-			echo "  WOULD LINK: homebrew"; \
-		else \
-			echo "  WOULD LINK: homebrew (conflicts)"; \
-		fi; \
-	else \
-		echo "  SKIP: homebrew (not found)"; \
-	fi
-
-dryrun-htop:
-	@if [ -d htop ]; then \
-		if cd htop && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
-			echo "  WOULD LINK: htop"; \
-		else \
-			echo "  WOULD LINK: htop (conflicts)"; \
-		fi; \
-	else \
-		echo "  SKIP: htop (not found)"; \
-	fi
-
-dryrun-inputrc:
-	@if [ -d inputrc ]; then \
-		if cd inputrc && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
-			echo "  WOULD LINK: inputrc"; \
-		else \
-			echo "  WOULD LINK: inputrc (conflicts)"; \
-		fi; \
-	else \
-		echo "  SKIP: inputrc (not found)"; \
-	fi
-
-dryrun-ripgrep:
-	@if [ -d ripgrep ]; then \
-		if cd ripgrep && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
-			echo "  WOULD LINK: ripgrep"; \
-		else \
-			echo "  WOULD LINK: ripgrep (conflicts)"; \
-		fi; \
-	else \
-		echo "  SKIP: ripgrep (not found)"; \
-	fi
-
-dryrun-tmux:
-	@if [ -d tmux ]; then \
-		if cd tmux && stow --target=$(HOME) --simulate . >/dev/null 2>&1; then \
-			echo "  WOULD LINK: tmux"; \
-		else \
-			echo "  WOULD LINK: tmux (conflicts)"; \
-		fi; \
-	else \
-		echo "  SKIP: tmux (not found)"; \
-	fi
-
-# List available tools
 list:
 	@echo "Available tools:"
 	@echo "  curlrc       - curl configuration"

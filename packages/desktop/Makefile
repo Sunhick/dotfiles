@@ -1,45 +1,41 @@
 # Desktop Package Makefile
 SHELL := /bin/bash
+include ../../make/log.mk
 
-# Available desktop tools
-DESKTOP_TOOLS := i3 terminal
+PACKAGES := i3 terminal
 
-.PHONY: all install uninstall restow list $(DESKTOP_TOOLS) $(addprefix uninstall-,$(DESKTOP_TOOLS)) $(addprefix restow-,$(DESKTOP_TOOLS))
+.PHONY: all install uninstall restow list dryrun $(PACKAGES) \
+	$(addprefix uninstall-,$(PACKAGES)) \
+	$(addprefix restow-,$(PACKAGES)) \
+	$(addprefix dryrun-,$(PACKAGES))
 
-# Default target
 all: install
+install: $(PACKAGES)
+uninstall: $(addprefix uninstall-,$(PACKAGES))
+restow: $(addprefix restow-,$(PACKAGES))
+dryrun: $(addprefix dryrun-,$(PACKAGES))
 
-# Install all desktop tools
-install: $(DESKTOP_TOOLS)
+$(PACKAGES):
+	@cd $@ && stow --target=$(HOME) --restow . && $(call log,ok,LINK $@)
 
-# Uninstall all desktop tools
-uninstall: $(addprefix uninstall-,$(DESKTOP_TOOLS))
+$(addprefix uninstall-,$(PACKAGES)):
+	@cd $(subst uninstall-,,$@) && stow --target=$(HOME) --delete . && $(call log,ok,UNLINK $(subst uninstall-,,$@))
 
-# Restow all desktop tools
-restow: $(addprefix restow-,$(DESKTOP_TOOLS))
+$(addprefix restow-,$(PACKAGES)):
+	@cd $(subst restow-,,$@) && stow --target=$(HOME) --restow . && $(call log,ok,RESTOW $(subst restow-,,$@))
 
-# Individual desktop tool targets
-i3:
-	@cd i3 && stow --target=$(HOME) --restow . && echo "  LINK: i3"
+$(addprefix dryrun-,$(PACKAGES)):
+	@pkg=$(subst dryrun-,,$@); \
+	if [ -d "$$pkg" ]; then \
+		if (cd "$$pkg" && stow --target=$(HOME) --simulate . >/dev/null 2>&1); then \
+			$(call log,ok,WOULD LINK $$pkg); \
+		else \
+			$(call log,warn,WOULD LINK $$pkg (conflicts)); \
+		fi; \
+	else \
+		$(call log,warn,SKIP $$pkg (not found)); \
+	fi
 
-terminal:
-	@cd terminal && stow --target=$(HOME) --restow . && echo "  LINK: terminal"
-
-# Uninstall targets
-uninstall-i3:
-	@cd i3 && stow --target=$(HOME) --delete . && echo "  UNLINK: i3"
-
-uninstall-terminal:
-	@cd terminal && stow --target=$(HOME) --delete . && echo "  UNLINK: terminal"
-
-# Restow targets
-restow-i3:
-	@cd i3 && stow --target=$(HOME) --restow . && echo "  RESTOW: i3"
-
-restow-terminal:
-	@cd terminal && stow --target=$(HOME) --restow . && echo "  RESTOW: terminal"
-
-# List available desktop tools
 list:
 	@echo "Available desktop tools:"
 	@echo "  i3       - i3 window manager configuration"

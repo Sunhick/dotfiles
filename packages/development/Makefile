@@ -1,36 +1,41 @@
 # Development Package Makefile
 SHELL := /bin/bash
+include ../../make/log.mk
 
-# Available development tools
-DEV_TOOLS := git
+PACKAGES := git
 
-.PHONY: all install uninstall restow list $(DEV_TOOLS) $(addprefix uninstall-,$(DEV_TOOLS)) $(addprefix restow-,$(DEV_TOOLS))
+.PHONY: all install uninstall restow list dryrun $(PACKAGES) \
+	$(addprefix uninstall-,$(PACKAGES)) \
+	$(addprefix restow-,$(PACKAGES)) \
+	$(addprefix dryrun-,$(PACKAGES))
 
-# Default target
 all: install
+install: $(PACKAGES)
+uninstall: $(addprefix uninstall-,$(PACKAGES))
+restow: $(addprefix restow-,$(PACKAGES))
+dryrun: $(addprefix dryrun-,$(PACKAGES))
 
-# Install all development tools
-install: $(DEV_TOOLS)
+$(PACKAGES):
+	@cd $@ && stow --target=$(HOME) --restow . && $(call log,ok,LINK $@)
 
-# Uninstall all development tools
-uninstall: $(addprefix uninstall-,$(DEV_TOOLS))
+$(addprefix uninstall-,$(PACKAGES)):
+	@cd $(subst uninstall-,,$@) && stow --target=$(HOME) --delete . && $(call log,ok,UNLINK $(subst uninstall-,,$@))
 
-# Restow all development tools
-restow: $(addprefix restow-,$(DEV_TOOLS))
+$(addprefix restow-,$(PACKAGES)):
+	@cd $(subst restow-,,$@) && stow --target=$(HOME) --restow . && $(call log,ok,RESTOW $(subst restow-,,$@))
 
-# Individual development tool targets
-git:
-	@cd git && stow --target=$(HOME) --restow . && echo "  LINK: git"
+$(addprefix dryrun-,$(PACKAGES)):
+	@pkg=$(subst dryrun-,,$@); \
+	if [ -d "$$pkg" ]; then \
+		if (cd "$$pkg" && stow --target=$(HOME) --simulate . >/dev/null 2>&1); then \
+			$(call log,ok,WOULD LINK $$pkg); \
+		else \
+			$(call log,warn,WOULD LINK $$pkg (conflicts)); \
+		fi; \
+	else \
+		$(call log,warn,SKIP $$pkg (not found)); \
+	fi
 
-# Uninstall targets
-uninstall-git:
-	@cd git && stow --target=$(HOME) --delete . && echo "  UNLINK: git"
-
-# Restow targets
-restow-git:
-	@cd git && stow --target=$(HOME) --restow . && echo "  RESTOW: git"
-
-# List available development tools
 list:
 	@echo "Available development tools:"
 	@echo "  git - Git version control configuration"
