@@ -6,11 +6,11 @@
 
 # Per-project includes (personal/work)
 [includeIf "gitdir:~/prv/**"]
-    path = ~/.gitconfig-github
+    path = ~/.gitconfig-personal
 [includeIf "gitdir:~/personal/**"]
-    path = ~/.gitconfig-github
+    path = ~/.gitconfig-personal
 [includeIf "gitdir:~/projects/personal/**"]
-    path = ~/.gitconfig-github
+    path = ~/.gitconfig-personal
 
 [includeIf "gitdir:~/work/**"]
     path = ~/.gitconfig-work
@@ -107,9 +107,9 @@
 
     # Quick context switch between personal/work configs
     personal = "!f() { \
-        git config --local include.path ~/.gitconfig-github && \
-        git config --local user.name \"$(git config --file ~/.gitconfig-github user.name)\" && \
-        git config --local user.email \"$(git config --file ~/.gitconfig-github user.email)\" && \
+        git config --local include.path ~/.gitconfig-personal && \
+        git config --local user.name \"$(git config --file ~/.gitconfig-personal user.name)\" && \
+        git config --local user.email \"$(git config --file ~/.gitconfig-personal user.email)\" && \
         echo 'Switched to personal configuration'; \
     }; f"
     work = "!f() { \
