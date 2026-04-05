@@ -14,6 +14,9 @@ DEV_PKGS     := git
 DESKTOP_PKGS := i3 terminal
 TOOL_PKGS    := tmux fzf ripgrep inputrc curlrc editorconfig gnupg htop
 
+# Stow flags: --no-folding ensures file-level symlinks (not directory-level)
+STOW_FLAGS := --no-folding --target=$(HOME)
+
 # Backup
 BACKUP_DIR    := $(HOME)/.dotfiles-backup/$(shell date +%Y%m%d_%H%M%S)
 LATEST_BACKUP := $(HOME)/.dotfiles-backup/latest
@@ -57,8 +60,8 @@ safe-install: backup install
 adopt: check-stow
 	@for pkg in $(ALL_PKGS); do \
 		if [ -d "$$pkg" ]; then \
-			(cd $$pkg && stow --target=$(HOME) --adopt . 2>/dev/null; \
-			 stow --target=$(HOME) --restow . && $(call log,ok,LINK $$pkg (adopted))); \
+			(cd $$pkg && stow $(STOW_FLAGS) --adopt . 2>/dev/null; \
+			 stow $(STOW_FLAGS) --restow . && printf "  $(_GREEN)OK$(_NC)   %s\n" "LINK $$pkg (adopted)"); \
 		fi; \
 	done
 
@@ -73,22 +76,22 @@ tools: check-stow $(TOOL_PKGS)
 
 # ── Per-package targets ───────────────────────────────────────────
 $(ALL_PKGS): check-stow
-	@cd $@ && stow --target=$(HOME) --restow . && $(call log,ok,LINK $@)
+	@cd $@ && stow $(STOW_FLAGS) --restow . && $(call log,ok,LINK $@)
 
 $(addprefix rm-,$(ALL_PKGS)):
-	@cd $(subst rm-,,$@) && stow --target=$(HOME) --delete . && $(call log,ok,UNLINK $(subst rm-,,$@))
+	@cd $(subst rm-,,$@) && stow $(STOW_FLAGS) --delete . && $(call log,ok,UNLINK $(subst rm-,,$@))
 
 $(addsuffix .restow,$(ALL_PKGS)): check-stow
-	@cd $(subst .restow,,$@) && stow --target=$(HOME) --restow . && $(call log,ok,SYNC $(subst .restow,,$@))
+	@cd $(subst .restow,,$@) && stow $(STOW_FLAGS) --restow . && $(call log,ok,SYNC $(subst .restow,,$@))
 
 # ── Plan (dry run) ────────────────────────────────────────────────
 plan: check-stow
 	@for pkg in $(ALL_PKGS); do \
 		if [ -d "$$pkg" ]; then \
-			if (cd "$$pkg" && stow --target=$(HOME) --simulate . >/dev/null 2>&1); then \
-				$(call log,ok,WOULD LINK $$pkg); \
+			if (cd "$$pkg" && stow $(STOW_FLAGS) --simulate . >/dev/null 2>&1); then \
+				printf "  $(_GREEN)OK$(_NC)   %s\n" "WOULD LINK $$pkg"; \
 			else \
-				$(call log,warn,WOULD LINK $$pkg (conflicts)); \
+				printf "  $(_YELLOW)WARN$(_NC) %s\n" "WOULD LINK $$pkg (conflicts)"; \
 			fi; \
 		fi; \
 	done
@@ -117,13 +120,13 @@ backup:
 	@for config in bash zsh git emacs nano terminal tmux htop ripgrep fd curl gnupg Code; do \
 		if [ -d "$(HOME)/.config/$$config" ]; then \
 			cp -r "$(HOME)/.config/$$config" "$(BACKUP_DIR)/"; \
-			$(call log,ok,BACKUP .config/$$config/); \
+			printf "  $(_GREEN)OK$(_NC)   %s\n" "BACKUP .config/$$config/"; \
 		fi; \
 	done
 	@for file in .bashrc .zshrc .zshenv .gitconfig .inputrc; do \
 		if [ -f "$(HOME)/$$file" ]; then \
 			cp "$(HOME)/$$file" "$(BACKUP_DIR)/"; \
-			$(call log,ok,BACKUP $$file); \
+			printf "  $(_GREEN)OK$(_NC)   %s\n" "BACKUP $$file"; \
 		fi; \
 	done
 	@rm -f "$(LATEST_BACKUP)"
@@ -132,7 +135,7 @@ backup:
 
 restore:
 	@if [ ! -d "$(LATEST_BACKUP)" ]; then \
-		$(call log,fail,No backup found at $(LATEST_BACKUP)); \
+		printf "  $(_RED)FAIL$(_NC) %s\n" "No backup found at $(LATEST_BACKUP)"; \
 		exit 1; \
 	fi
 	@$(call log,warn,This will overwrite current configurations)
@@ -140,13 +143,13 @@ restore:
 	@for file in .bashrc .zshrc .zshenv .gitconfig .inputrc; do \
 		if [ -f "$(LATEST_BACKUP)/$$file" ]; then \
 			cp "$(LATEST_BACKUP)/$$file" "$(HOME)/"; \
-			$(call log,ok,RESTORE $$file); \
+			printf "  $(_GREEN)OK$(_NC)   %s\n" "RESTORE $$file"; \
 		fi; \
 	done
 	@for config in bash zsh git emacs nano terminal tmux htop ripgrep fd curl gnupg Code; do \
 		if [ -d "$(LATEST_BACKUP)/$$config" ]; then \
 			cp -r "$(LATEST_BACKUP)/$$config" "$(HOME)/.config/"; \
-			$(call log,ok,RESTORE .config/$$config/); \
+			printf "  $(_GREEN)OK$(_NC)   %s\n" "RESTORE .config/$$config/"; \
 		fi; \
 	done
 	@$(call log,ok,Restore completed from $(LATEST_BACKUP))
