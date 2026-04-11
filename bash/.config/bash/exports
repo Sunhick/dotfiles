@@ -17,10 +17,6 @@ export GPG_TTY=$(tty)
 export LESS="-R -F -X"
 export LESSHISTFILE="-"
 
-# History configuration
-export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
-export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
-
 # Development tools
 # Note: GREP_OPTIONS is deprecated and removed in newer grep versions.
 # Color is handled via aliases in ~/.config/bash/aliases instead.

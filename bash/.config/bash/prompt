@@ -15,6 +15,10 @@ git_branch() {
 # Prompt command function
 prompt_command() {
     local last_exit_code=$?
+
+    # Flush history so other terminals can see it
+    history -a
+
     local prompt=""
 
     # Show AWS profile if set
