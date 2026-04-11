@@ -192,7 +192,7 @@ doctor:
 	done; \
 	\
 	header "Optional tools"; \
-	for cmd in emacs fzf bat eza fd rg tmux gpg curl jq htop zoxide; do \
+	for cmd in emacs fzf bat eza fd rg tmux gpg curl jq htop; do \
 		if command -v "$$cmd" >/dev/null 2>&1; then \
 			pass "$$cmd"; \
 		else \

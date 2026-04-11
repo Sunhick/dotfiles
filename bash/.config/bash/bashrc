@@ -79,8 +79,3 @@ fi
 
 # Load local machine-specific overrides
 include "${XDG_CONFIG_HOME}/work/bash/local" "optional"
-
-# Initialize zoxide (smarter cd) if available
-if command -v zoxide >/dev/null 2>&1; then
-    eval "$(zoxide init bash)"
-fi
