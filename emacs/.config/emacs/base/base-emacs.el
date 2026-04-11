@@ -41,8 +41,10 @@
 (if (file-exists-p custom-file)
     (load custom-file))
 
-;; gc to run when memory reaches 20MB
-(setq gc-cons-threshold 20000000)
+;; Raise GC threshold during init for faster startup, reset after
+(setq gc-cons-threshold most-positive-fixnum)
+(add-hook 'emacs-startup-hook
+          (lambda () (setq gc-cons-threshold (* 20 1024 1024))))
 
 ;; save the previous locations of opened files (XDG compliant)
 (require 'saveplace)
@@ -64,7 +66,6 @@
 (eval-after-load "eldoc" '(diminish 'eldoc-mode))
 
 ;; osx move deleted files to trash can
-(setq delete-by-moving-to-trash t)
 (setq trash-directory "~/.Trash")
 
 ;; set file encoding format
@@ -82,10 +83,9 @@
   (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
   (global-set-key (kbd "<mouse-5>") 'scroll-up-line))
 
-;; setup tramp
-(require 'tramp)
-(setq tramp-default-method "ssh")
-;; (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+;; setup tramp (deferred — tramp is heavy)
+(with-eval-after-load 'tramp
+  (setq tramp-default-method "ssh"))
 
 ;; enable savehist for command history
 (savehist-mode 1)

@@ -35,11 +35,15 @@
 ; ; prioritize compilation speed
 (setq native-comp-speed 3)
 
-(defun compile-emacs-d-native ()
-  "Native compile all .el files under ~/.emacs.d recursively."
+(defun compile-emacs-config-native ()
+  "Native compile all .el files under the emacs config directory."
   (interactive)
   (when (fboundp 'native-compile-async)
-    (native-compile-async "~/.emacs.d" 'recursively)))
+    (let ((config-dir (or (bound-and-true-p emacs-dir)
+                          (expand-file-name "emacs"
+                                            (or (getenv "XDG_CONFIG_HOME")
+                                                (expand-file-name "~/.config"))))))
+      (native-compile-async config-dir 'recursively))))
 
 ;; (add-hook 'emacs-startup-hook #'compile-emacs-d-native)
 

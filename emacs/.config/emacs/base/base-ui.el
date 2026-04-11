@@ -49,13 +49,15 @@
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
-;; remove all alarms from emacs
+;; Flash background briefly instead of audible bell
 (setq visible-bell nil)
-;; https://www.emacswiki.org/emacs/EmacsNiftyTricks
-(setq ring-bell-function `(lambda ()
-                            (let ((face-background (face-background 'default)))
-                              (set-face-background 'default "DodgerBlue")
-                              (set-face-background 'default face-background))))
+(setq ring-bell-function
+      (lambda ()
+        (let ((orig-bg (face-background 'default)))
+          (set-face-background 'default "DodgerBlue")
+          (run-with-timer 0.1 nil
+                          (lambda (bg) (set-face-background 'default bg))
+                          orig-bg))))
 
 ;; no start up screen please
 (setq inhibit-startup-screen t)
@@ -89,12 +91,9 @@
 (setq line-number-mode t)
 (setq column-number-mode t)
 
-(when (version<= "26.0.50" emacs-version)
-  (global-display-line-numbers-mode 1)
-  (setq display-line-numbers-type 'relative))
-
+(global-display-line-numbers-mode 1)
+(setq display-line-numbers-type 'relative)
 (setq-default display-line-numbers-current-absolute nil)
-(global-display-line-numbers-mode)
 
 ;; use whitespaces instead of tabs
 (setq-default indent-tabs-mode nil)

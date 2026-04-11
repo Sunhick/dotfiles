@@ -29,10 +29,15 @@
 
 ;;; Code:
 
+(defvar ensure-pkg--refreshed nil
+  "Whether package contents have been refreshed this session.")
+
 (defun ensure-pkg (pkg)
   "Ensure the given pkg is installed"
   (unless (package-installed-p pkg)
-    (package-refresh-contents)
+    (unless ensure-pkg--refreshed
+      (package-refresh-contents)
+      (setq ensure-pkg--refreshed t))
     (package-install pkg)))
 
 (provide 'base-ensure)

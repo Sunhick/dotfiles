@@ -44,12 +44,13 @@
 
 ;; do not bloat this list of packages
 (defvar base-packages
-  '(auto-complete
+  '(corfu
     diminish
     fzf
     vertico
     marginalia
     orderless
+    editorconfig
     multiple-cursors
     org
     org-bullets
@@ -79,6 +80,10 @@
     (ensure-pkg pkg)))
 
 (install-base-packages)
+
+;; Enable editorconfig support
+(require 'editorconfig)
+(editorconfig-mode 1)
 
 (provide 'base-packages)
 

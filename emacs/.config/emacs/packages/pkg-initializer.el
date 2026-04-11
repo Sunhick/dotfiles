@@ -31,8 +31,7 @@
 
 ;; Base packages setup
 (require 'pkg-fzf)
-;; (require 'pkg-ido)
-;; (require 'pkg-magit)
+(require 'pkg-magit)
 (require 'pkg-vertico)
 (require 'pkg-multiple-cursors)
 ;; (require 'pkg-guide-key)
