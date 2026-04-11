@@ -3,5 +3,5 @@
 	name = Sunil Murthy
 
 [include]
-        path = ~/.config/git/gitconfig
+    path = ~/.config/git/config
 

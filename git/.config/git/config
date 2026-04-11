@@ -1,10 +1,10 @@
-# ~/.config/git/config - improved and cleaned
+# ~/.config/git/config — single source of truth
+# Loaded via ~/.gitconfig -> [include] path = ~/.config/git/config
 
-######################################################################################
-# Loaded via ~/.gitconfig -> [include] path = ~/.config/git/config                   #
-######################################################################################
+# ---------------------------------------------------------------------------
+# Identity includes (conditional on directory)
+# ---------------------------------------------------------------------------
 
-# Per-project includes (personal/work)
 [includeIf "gitdir:~/prv/**"]
     path = ~/.gitconfig-personal
 [includeIf "gitdir:~/personal/**"]
@@ -23,24 +23,44 @@
 [include]
     path = ~/.config/git/local
 
-# OS-specific includes (always included; macOS-specific settings are
-# guarded inside the file itself or are harmless on other platforms)
+# OS-specific
 [include]
     path = ~/.config/git/macOS.gitconfig
 
-# Core defaults
+# ---------------------------------------------------------------------------
+# Core
+# ---------------------------------------------------------------------------
+
 [core]
     precomposeUnicode = true
     editor = emacs
-    # Speed up status on repos with many untracked files
     untrackedCache = true
     pager = less -FMRiX
-    # Global excludesfile (use the repo's gitignore)
     excludesfile = ~/.config/git/gitignore
+    # Prevent commits with mixed line endings
+    autocrlf = input
 
-# Merge / diff tools
+[init]
+    defaultBranch = main
+
+# ---------------------------------------------------------------------------
+# Commit signing
+# ---------------------------------------------------------------------------
+
+[commit]
+    gpgSign = true
+    verbose = true
+
+[tag]
+    gpgSign = true
+
+# ---------------------------------------------------------------------------
+# Merge / Diff
+# ---------------------------------------------------------------------------
+
 [merge]
     tool = ediff
+    conflictStyle = zdiff3
 
 [mergetool "ediff"]
     cmd = emacs --eval \"(ediff-merge-files-with-ancestor \\\"$LOCAL\\\" \\\"$REMOTE\\\" \\\"$BASE\\\" nil \\\"$MERGED\\\")\"
@@ -53,6 +73,7 @@
     tool = ediff
     colorMoved = zebra
     wsErrorHighlight = all
+    algorithm = histogram
 
 [difftool "ediff"]
     cmd = emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
@@ -60,25 +81,44 @@
 [difftool "vscode"]
     cmd = code --wait --diff $LOCAL $REMOTE
 
-# Convenience and safety
-[help]
-    autocorrect = 0
+# ---------------------------------------------------------------------------
+# Behavior
+# ---------------------------------------------------------------------------
 
 [color]
     ui = auto
 
 [grep]
-    linenumber = true
+    lineNumber = true
 
 [pull]
     ff = only
 
 [push]
-    # default = simple is the default since git 2.0
+    default = current
+    autoSetupRemote = true
 
-# Useful aliases (merged and expanded)
+[fetch]
+    prune = true
+    pruneTags = true
+
+[rebase]
+    autoStash = true
+
+[rerere]
+    enabled = true
+
+[help]
+    autocorrect = 0
+
+[log]
+    date = iso
+
+# ---------------------------------------------------------------------------
+# Aliases
+# ---------------------------------------------------------------------------
+
 [alias]
-    # Simple shortcuts
     st = status -sb
     co = checkout
     br = branch
@@ -96,8 +136,8 @@
     commit-message = log --format=%B -n 1
     dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
 
-    # Branch management
-    cleanup = "!git branch --merged | grep -v '\\*\\|main\\|master\\|develop' | xargs -r -n 1 git branch -d"
+    # Branch management — delete merged branches (excluding protected ones)
+    cleanup = "!git branch --merged | grep -v '\\*\\|main\\|develop' | xargs -r -n 1 git branch -d"
 
     # Show files ignored by git
     ignored = ls-files -o -i --exclude-standard
@@ -105,7 +145,7 @@
     # Show current user identity
     whoami = "!echo \"$(git config user.name) <$(git config user.email)>\""
 
-    # Quick context switch between personal/work configs
+    # Quick context switch
     personal = "!f() { \
         git config --local include.path ~/.gitconfig-personal && \
         git config --local user.name \"$(git config --file ~/.gitconfig-personal user.name)\" && \
@@ -118,10 +158,3 @@
         git config --local user.email \"$(git config --file ~/.gitconfig-work user.email)\" && \
         echo 'Switched to work configuration'; \
     }; f"
-
-# Optional: add commit signing / templates in ~/.config/git/local or per-include
-# e.g. in local:
-# [commit]
-#     gpgSign = true
-# [user]
-#     signingkey = <your-key-id>

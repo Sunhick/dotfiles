@@ -1,16 +1,9 @@
-[user]
-	email = sunilmur@amazon.com
-	name = Sunil Murthy
-[color]
-	ui = auto
-[core]
-	pager = less -FMRiX
-[push]
-	default = simple
-[alias]
-	dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
+# Thin loader — all real config lives in ~/.config/git/config
+[include]
+    path = ~/.config/git/config
+
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
