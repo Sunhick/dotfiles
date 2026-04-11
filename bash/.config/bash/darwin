@@ -52,7 +52,10 @@ fi
 
 # Application aliases (if available)
 if [[ -x "/Applications/Emacs.app/Contents/MacOS/Emacs" ]]; then
-    alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
+    # Use open(1) so macOS brings Emacs to the foreground
+    alias emacs='open -a Emacs'
+    # For opening specific files in an existing Emacs frame
+    alias emacs-file='/Applications/Emacs.app/Contents/MacOS/Emacs'
 fi
 
 if command -v emacsclient >/dev/null; then
