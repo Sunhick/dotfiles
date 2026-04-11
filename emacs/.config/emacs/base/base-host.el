@@ -32,8 +32,11 @@
 ;; https://gitlab.com/protesilaos/iosevka-comfy
 ;; (set-frame-font "Iosevka Comfy:pixelsize=15" t t)
 
-;; Inspired from Berkeley Mono font
-(set-frame-font "Zenbones Brainy:pixelsize=15" t t)
+;; Set preferred font (with fallback)
+(let ((preferred-font "Zenbones Brainy"))
+  (if (find-font (font-spec :name preferred-font))
+      (set-frame-font (concat preferred-font ":pixelsize=15") t t)
+    (message "Font '%s' not found, using default" preferred-font)))
 
 ;; Improve vertical spacing
 (setq-default line-spacing 2)

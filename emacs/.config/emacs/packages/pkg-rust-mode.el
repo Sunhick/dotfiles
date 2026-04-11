@@ -1,4 +1,4 @@
-;;; pkg-rust-mode.el --- go mode -*- lexical-binding: t -*-
+;;; pkg-rust-mode.el --- rust mode -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2024-2025 Sunil
 ;;

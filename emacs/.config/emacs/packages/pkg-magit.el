@@ -29,12 +29,13 @@
 
 ;;; Code:
 
-(require 'magit)
+;; Defer magit loading until first use (saves ~0.5s startup)
+(autoload 'magit-status "magit" nil t)
 
-;; Disable Git polling on startup. I need quick emacs load times.
-(setq vc-handled-backends nil)
+;; Disable vc-mode for git (magit handles everything)
+(setq vc-handled-backends (delq 'Git vc-handled-backends))
 
-(global-set-key(kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x g") 'magit-status)
 
 (provide 'pkg-magit)
 

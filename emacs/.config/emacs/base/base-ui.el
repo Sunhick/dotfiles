@@ -39,8 +39,8 @@
 (require 'base-window)
 (add-hook 'after-init-hook
           (lambda ()
-            (set-frame-size (selected-frame) 205 67))
-          (set-frame-position (selected-frame) 50 0))
+            (set-frame-size (selected-frame) 205 67)
+            (set-frame-position (selected-frame) 50 0)))
 
 ;; Apply host settings
 (require 'base-host)
@@ -99,8 +99,9 @@
 (setq-default indent-tabs-mode nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;; whitespace visualization
-(setq-default show-trailing-whitespace t)
+;; whitespace visualization (only in code/text buffers, not magit/help/etc)
+(dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
+  (add-hook hook (lambda () (setq show-trailing-whitespace t))))
 
 ;; Show empty lines indicator
 (set-default 'indicate-empty-lines t)
