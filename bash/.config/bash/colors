@@ -2,19 +2,19 @@
 #!/usr/bin/env bash
 
 vibrant_colors='
-# Vibrant and high-contrast color theme
-red="\[\e[38;5;196m\]"       # vivid red
-green="\[\e[38;5;40m\]"      # strong green
+# Vibrant dark-terminal theme — high contrast, easy on the eyes
+red="\[\e[38;5;196m\]"            # vivid red
+green="\[\e[38;5;40m\]"           # strong green
 
-bold_black="\[\e[38;5;238m\]"     # charcoal gray
-bold_red="\[\e[38;5;203m\]"       # tomato red
-bold_green="\[\e[38;5;77m\]"      # emerald
-bold_yellow="\[\e[38;5;227m\]"    # butter yellow
-bold_blue="\[\e[38;5;75m\]"       # rich sky blue
-bold_purple="\[\e[38;5;135m\]"    # magenta/violet
-bold_cyan="\[\e[1;1;38;5;40m\]"   # bright cyan for pop
-bold_white="\[\e[38;5;255m\]"     # bright white
-bold_orange="\[\e[38;5;208m\]"    # vivid orange
+bold_black="\[\e[38;5;245m\]"     # medium gray (visible on dark bg)
+bold_red="\[\e[38;5;204m\]"       # soft coral red
+bold_green="\[\e[38;5;114m\]"     # fresh green (not neon)
+bold_yellow="\[\e[38;5;221m\]"    # warm gold (readable on dark)
+bold_blue="\[\e[38;5;75m\]"       # sky blue
+bold_purple="\[\e[38;5;141m\]"    # soft lavender
+bold_cyan="\[\e[38;5;80m\]"       # actual cyan/teal
+bold_white="\[\e[38;5;252m\]"     # off-white (less glare)
+bold_orange="\[\e[38;5;209m\]"    # warm salmon orange
 
 orange_bg="\[\e[48;5;208m\]\[\e[38;5;232m\]"  # black text on vivid orange
 bg_reset="\[\e[0m\]"
