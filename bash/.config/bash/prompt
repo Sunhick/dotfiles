@@ -38,8 +38,8 @@ prompt_command() {
     # Final prompt character
     prompt+=" ${bold_white}❯${reset_color} "
 
-    # Set terminal title: user@host:working_dir
-    prompt="\[\e]0;\u@\h:\w\a\]${prompt}"
+    # Set terminal title: user:dirname
+    prompt="\[\e]0;\u:\W\a\]${prompt}"
 
     PS1="$prompt"
     PS2="${bold_yellow}>${reset_color} "
