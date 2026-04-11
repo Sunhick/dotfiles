@@ -133,6 +133,10 @@ EXEC 38;5;142;1
 .pcx 38;5;175
 .webp 38;5;175
 .ico 38;5;175
+.heic 38;5;175
+.heif 38;5;175
+.avif 38;5;175
+.jxl 38;5;175
 
 # Videos - bright purple
 .mov 38;5;175;1
@@ -219,19 +223,20 @@ EXEC 38;5;142;1
 .cpp 38;5;142
 .cxx 38;5;142
 .cc 38;5;142
-.h 38;5;142
-.hpp 38;5;142
-.hxx 38;5;142
 .py 38;5;142
 .rb 38;5;142
 .js 38;5;142
 .ts 38;5;142
 .jsx 38;5;142
 .tsx 38;5;142
+.mjs 38;5;142
+.cjs 38;5;142
 .go 38;5;142
 .rs 38;5;142
 .java 38;5;142
-.class 38;5;142
+.kt 38;5;142
+.kts 38;5;142
+.swift 38;5;142
 .php 38;5;142
 .pl 38;5;142
 .sh 38;5;142
@@ -240,6 +245,7 @@ EXEC 38;5;142;1
 .fish 38;5;142
 .vim 38;5;142
 .lua 38;5;142
+.el 38;5;142
 .r 38;5;142
 .R 38;5;142
 .sql 38;5;142
@@ -247,15 +253,62 @@ EXEC 38;5;142;1
 .scss 38;5;142
 .sass 38;5;142
 .less 38;5;142
+.zig 38;5;142
+.nix 38;5;142
+.wasm 38;5;142
+
+# Headers / interfaces - dimmer green
+.h 38;5;107
+.hpp 38;5;107
+.hxx 38;5;107
+.class 38;5;107
+
+# Infrastructure / schema - bright orange
+.tf 38;5;208;1
+.tfvars 38;5;208;1
+.hcl 38;5;208;1
+.graphql 38;5;208;1
+.gql 38;5;208;1
+.proto 38;5;208;1
+
+# Build / project files - yellow
+*Makefile 38;5;214;1
+*Dockerfile 38;5;214;1
+*Containerfile 38;5;214;1
+*Justfile 38;5;214;1
+*CMakeLists.txt 38;5;214;1
+*Cargo.toml 38;5;214;1
+*go.mod 38;5;214;1
+*package.json 38;5;214;1
+*Gemfile 38;5;214;1
+*Rakefile 38;5;214;1
+*Brewfile 38;5;214;1
+
+# Lockfiles - dim gray
+*package-lock.json 38;5;241
+*yarn.lock 38;5;241
+*Cargo.lock 38;5;241
+*Gemfile.lock 38;5;241
+*go.sum 38;5;241
+*pnpm-lock.yaml 38;5;241
+
+# Build artifacts - dim gray
+.o 38;5;241
+.a 38;5;241
+.so 38;5;241
+.dylib 38;5;241
+.pyc 38;5;241
+.pyo 38;5;241
+.elc 38;5;241
+.eln 38;5;241
 
 # Executables - bright green
 .exe 38;5;142;1
 .msi 38;5;142;1
-.deb 38;5;142;1
-.rpm 38;5;142;1
 .dmg 38;5;142;1
 .pkg 38;5;142;1
 .app 38;5;142;1
+.AppImage 38;5;142;1
 
 # Backup/temp files - gray
 *~ 38;5;245
