@@ -6,17 +6,27 @@
 shopt -s autocd        # Change to directory by typing name
 shopt -s cdspell       # Correct minor spelling errors in cd
 shopt -s dirspell      # Correct minor spelling errors in directory names
+shopt -s cdable_vars   # cd into variable values (e.g. export proj=~/projects; cd proj)
 
-# Completion
+# Globbing
 shopt -s nocaseglob    # Case-insensitive globbing
 shopt -s globstar      # Enable ** recursive globbing
+shopt -s dotglob       # Include hidden files in glob expansion
+shopt -s extglob       # Extended pattern matching (!(x), ?(x), +(x), etc.)
+shopt -s nullglob      # Non-matching globs expand to nothing instead of literal
 
-# History (some duplicated from history file for safety)
+# History
 shopt -s histappend    # Append to history file
 shopt -s cmdhist       # Save multi-line commands as one command
+shopt -s lithist       # Preserve newlines in multi-line history entries
 shopt -s histreedit    # Re-edit failed history substitutions
 shopt -s histverify    # Edit recalled history lines before executing
 
 # Terminal behavior
 shopt -s checkwinsize  # Update LINES and COLUMNS after each command
 shopt -s expand_aliases # Expand aliases in non-interactive shells
+shopt -s checkjobs     # Warn before exiting with running background jobs
+shopt -s no_empty_cmd_completion  # Don't tab-complete on empty line (avoids PATH scan)
+
+# Safety
+shopt -s shift_verbose # Warn when shift count exceeds positional params
