@@ -1,34 +1,105 @@
-# EditorConfig is awesome: https://EditorConfig.org
-
-# top-most EditorConfig file
+# EditorConfig: https://EditorConfig.org
 root = true
 
-# Unix-style newlines with a newline ending every file
+# ---------------------------------------------------------------------------
+# Defaults — apply to every file unless overridden below
+# ---------------------------------------------------------------------------
 [*]
 end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 charset = utf-8
-
-# 4 space indentation
-[*.{py,java,r,R}]
 indent_style = space
 indent_size = 4
 
-# 2 space indentation
-[*.{js,jsx,ts,tsx,json,yml,yaml,html,css,scss,vue,xml}]
-indent_style = space
+# ---------------------------------------------------------------------------
+# 2-space languages (web / config / markup)
+# ---------------------------------------------------------------------------
+[*.{js,jsx,ts,tsx,mjs,cjs}]
 indent_size = 2
 
-# Tab indentation (no size specified)
-[*.{go,makefile,Makefile}]
+[*.{json,jsonc,json5}]
+indent_size = 2
+
+[*.{html,htm,css,scss,sass,less,vue,svelte}]
+indent_size = 2
+
+[*.{yml,yaml,toml}]
+indent_size = 2
+
+[*.{xml,svg,plist}]
+indent_size = 2
+
+[*.{graphql,gql,proto}]
+indent_size = 2
+
+# ---------------------------------------------------------------------------
+# 4-space languages (already covered by default, listed for clarity)
+# ---------------------------------------------------------------------------
+[*.{py,pyi}]
+indent_size = 4
+max_line_length = 88
+
+[*.{java,kt,kts,groovy,gradle}]
+indent_size = 4
+
+[*.{r,R}]
+indent_size = 4
+
+[*.{c,cpp,cc,cxx,h,hpp}]
+indent_size = 4
+
+[*.rs]
+indent_size = 4
+
+# ---------------------------------------------------------------------------
+# Emacs Lisp — 2 spaces (Emacs convention)
+# ---------------------------------------------------------------------------
+[*.el]
+indent_size = 2
+
+# ---------------------------------------------------------------------------
+# Shell scripts
+# ---------------------------------------------------------------------------
+[*.{sh,bash,zsh}]
+indent_size = 4
+
+# Bash config files (no extension)
+[{bashrc,bash_profile,aliases,exports,colors,prompt,shopt,history,darwin,linux}]
+indent_size = 4
+
+# ---------------------------------------------------------------------------
+# Tab-indented languages
+# ---------------------------------------------------------------------------
+[*.go]
 indent_style = tab
 
-# Matches the exact files either package.json or .travis.yml
-[{package.json,.travis.yml}]
-indent_style = space
+[{Makefile,makefile,*.mk}]
+indent_style = tab
+
+# ---------------------------------------------------------------------------
+# Data / config files
+# ---------------------------------------------------------------------------
+[*.{tf,tfvars,hcl}]
 indent_size = 2
 
-# Markdown files
+[*.sql]
+indent_size = 4
+
+[{Dockerfile,Dockerfile.*,*.dockerfile}]
+indent_size = 4
+
+[*.{conf,cfg,ini,env}]
+indent_size = 4
+
+# ---------------------------------------------------------------------------
+# Special files
+# ---------------------------------------------------------------------------
 [*.md]
 trim_trailing_whitespace = false
+
+[{package.json,.travis.yml,.prettierrc,.eslintrc}]
+indent_size = 2
+
+[{.gitconfig,.gitconfig-*}]
+indent_style = tab
