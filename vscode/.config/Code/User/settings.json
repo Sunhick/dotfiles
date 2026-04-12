@@ -67,6 +67,12 @@
         "editorLineNumber.foreground": "#666666",
         "editorLineNumber.activeForeground": "#ffffff"
     },
+    // Font - Zenbones Brainy
+    "editor.fontFamily": "Zenbones Brainy",
+    "editor.fontSize": 14,
+    "editor.fontWeight": "600",
+    "terminal.integrated.fontFamily": "Zenbones Brainy",
+    "terminal.integrated.fontSize": 15,
     // Theme and colors - Gruvbox Dark
     "workbench.colorTheme": "Gruvbox Dark Hard",
     // Terminal - Emacs-like

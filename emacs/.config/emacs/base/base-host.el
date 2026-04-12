@@ -29,9 +29,6 @@
 
 ;;; Code:
 
-;; https://gitlab.com/protesilaos/iosevka-comfy
-;; (set-frame-font "Iosevka Comfy:pixelsize=15" t t)
-
 ;; Set preferred font (with fallback)
 (let ((preferred-font "Zenbones Brainy"))
   (if (find-font (font-spec :name preferred-font))
