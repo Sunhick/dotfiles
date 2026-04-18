@@ -56,7 +56,6 @@ This dotfiles setup follows the XDG Base Directory Specification:
 ```
 dotfiles/
 ├── bash/               # bash shell (.config/bash/)
-├── zsh/                # zsh shell (.config/zsh/)
 ├── powershell/         # PowerShell (Windows)
 ├── git/                # git (.config/git/)
 ├── emacs/              # emacs (.config/emacs/)
@@ -95,7 +94,7 @@ make install
 
 ### Install by Category
 ```bash
-make shell              # bash, zsh
+make shell              # bash
 make editors            # emacs, nano, vscode
 make tools              # tmux, htop, gnupg, etc.
 make desktop            # i3, iterm2

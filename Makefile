@@ -4,11 +4,11 @@ SHELL := /bin/bash
 include make/log.mk
 
 # All packages (flat structure)
-ALL_PKGS := bash zsh emacs nano vscode git tmux fzf ripgrep inputrc \
+ALL_PKGS := bash emacs nano vscode git tmux fzf ripgrep inputrc \
             curlrc editorconfig gnupg htop i3 terminal
 
 # Groups for convenience installs
-SHELL_PKGS   := bash zsh
+SHELL_PKGS   := bash
 EDITOR_PKGS  := emacs nano vscode
 DEV_PKGS     := git
 DESKTOP_PKGS := i3 terminal
@@ -117,13 +117,13 @@ prune:
 backup:
 	@$(call log,info,Creating backup at $(BACKUP_DIR)...)
 	@mkdir -p "$(BACKUP_DIR)"
-	@for config in bash zsh git emacs nano terminal tmux htop ripgrep fd curl gnupg Code; do \
+	@for config in bash git emacs nano terminal tmux htop ripgrep fd curl gnupg Code; do \
 		if [ -d "$(HOME)/.config/$$config" ]; then \
 			cp -r "$(HOME)/.config/$$config" "$(BACKUP_DIR)/"; \
 			printf "  $(_GREEN)OK$(_NC)   %s\n" "BACKUP .config/$$config/"; \
 		fi; \
 	done
-	@for file in .bashrc .zshrc .zshenv .gitconfig .inputrc; do \
+	@for file in .bashrc .gitconfig .inputrc; do \
 		if [ -f "$(HOME)/$$file" ]; then \
 			cp "$(HOME)/$$file" "$(BACKUP_DIR)/"; \
 			printf "  $(_GREEN)OK$(_NC)   %s\n" "BACKUP $$file"; \
@@ -140,13 +140,13 @@ restore:
 	fi
 	@$(call log,warn,This will overwrite current configurations)
 	@read -p "Continue? (y/N): " confirm && [ "$$confirm" = "y" ] || exit 1
-	@for file in .bashrc .zshrc .zshenv .gitconfig .inputrc; do \
+	@for file in .bashrc .gitconfig .inputrc; do \
 		if [ -f "$(LATEST_BACKUP)/$$file" ]; then \
 			cp "$(LATEST_BACKUP)/$$file" "$(HOME)/"; \
 			printf "  $(_GREEN)OK$(_NC)   %s\n" "RESTORE $$file"; \
 		fi; \
 	done
-	@for config in bash zsh git emacs nano terminal tmux htop ripgrep fd curl gnupg Code; do \
+	@for config in bash git emacs nano terminal tmux htop ripgrep fd curl gnupg Code; do \
 		if [ -d "$(LATEST_BACKUP)/$$config" ]; then \
 			cp -r "$(LATEST_BACKUP)/$$config" "$(HOME)/.config/"; \
 			printf "  $(_GREEN)OK$(_NC)   %s\n" "RESTORE .config/$$config/"; \
