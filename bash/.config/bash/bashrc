@@ -56,6 +56,9 @@ case "$(uname -s)" in
         ;;
 esac
 
+# Load completions (after OS-specific config so Homebrew paths are set)
+include "${BASH_CONFIG_DIR}/completion"
+
 # Load fuzzy finder if available
 include "${XDG_CONFIG_HOME}/fzf/fzf.bash" "optional"
 include "${HOME}/.fzf.bash" "optional"

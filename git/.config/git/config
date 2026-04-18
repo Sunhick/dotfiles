@@ -109,7 +109,7 @@
     enabled = true
 
 [help]
-    autocorrect = 0
+    autocorrect = prompt
 
 [log]
     date = iso

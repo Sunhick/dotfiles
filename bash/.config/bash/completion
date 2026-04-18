@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+# Bash completion configuration
+# Loads system completions and tool-specific completions
+
+# ---------------------------------------------------------------------------
+# System bash-completion
+# ---------------------------------------------------------------------------
+
+# macOS: Homebrew bash-completion@2 (bash 4.2+)
+if [[ -n "${HOMEBREW_PREFIX:-}" ]]; then
+    if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+        source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+    fi
+# Linux: system bash-completion
+elif [[ -r /usr/share/bash-completion/bash_completion ]]; then
+    source /usr/share/bash-completion/bash_completion
+elif [[ -r /etc/bash_completion ]]; then
+    source /etc/bash_completion
+fi
+
+# ---------------------------------------------------------------------------
+# Tool-specific completions
+# ---------------------------------------------------------------------------
+
+# Git completion (if not already loaded by bash-completion)
+if ! complete -p git &>/dev/null; then
+    if [[ -n "${HOMEBREW_PREFIX:-}" && -r "${HOMEBREW_PREFIX}/etc/bash_completion.d/git-completion.bash" ]]; then
+        source "${HOMEBREW_PREFIX}/etc/bash_completion.d/git-completion.bash"
+    elif [[ -r /usr/share/bash-completion/completions/git ]]; then
+        source /usr/share/bash-completion/completions/git
+    fi
+fi
+
+# Docker
+if command -v docker &>/dev/null && ! complete -p docker &>/dev/null; then
+    if [[ -r "${HOMEBREW_PREFIX:-}/etc/bash_completion.d/docker" ]]; then
+        source "${HOMEBREW_PREFIX}/etc/bash_completion.d/docker"
+    fi
+fi
+
+# AWS CLI
+if command -v aws_completer &>/dev/null; then
+    complete -C "$(command -v aws_completer)" aws
+fi
+
+# Cargo/Rustup
+if command -v rustup &>/dev/null && ! complete -p rustup &>/dev/null; then
+    eval "$(rustup completions bash rustup 2>/dev/null)"
+    eval "$(rustup completions bash cargo 2>/dev/null)"
+fi
+
+# Make - complete targets from Makefile
+if ! complete -p make &>/dev/null; then
+    complete -W "\$(grep -oE '^[a-zA-Z0-9_.-]+:([^=]|$)' [Mm]akefile 2>/dev/null | sed 's/[^a-zA-Z0-9_.-]*$//')" make
+fi
+
+# SSH - complete hostnames from config and known_hosts
+if ! complete -p ssh &>/dev/null; then
+    _ssh_completion() {
+        local cur="${COMP_WORDS[COMP_CWORD]}"
+        local hosts=""
+        [[ -r ~/.ssh/config ]] && hosts+=$(awk '/^Host / && !/\*/ {print $2}' ~/.ssh/config)
+        [[ -r ~/.ssh/known_hosts ]] && hosts+=" $(awk -F'[, ]' '{print $1}' ~/.ssh/known_hosts 2>/dev/null | sort -u)"
+        COMPREPLY=($(compgen -W "$hosts" -- "$cur"))
+    }
+    complete -F _ssh_completion ssh scp sftp
+fi
+
+# ---------------------------------------------------------------------------
+# User completions directory (XDG compliant)
+# ---------------------------------------------------------------------------
+
+# Load any custom completions from XDG data dir
+if [[ -d "${XDG_DATA_HOME:-$HOME/.local/share}/bash-completion/completions" ]]; then
+    for f in "${XDG_DATA_HOME:-$HOME/.local/share}/bash-completion/completions"/*; do
+        [[ -r "$f" ]] && source "$f"
+    done
+    unset f
+fi
