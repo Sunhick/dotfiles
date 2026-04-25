@@ -54,6 +54,10 @@ case "$TERM" in
     dumb|unknown)
         PS1="> "
         ;;
+    eterm-color)
+        # Inside Emacs shell-mode — use simple prompt without \[...\] wrappers
+        PS1='\[\e[38;5;114m\]❯\[\e[0m\] \[\e[38;5;80m\]\W\[\e[0m\] \[\e[38;5;252m\]❯\[\e[0m\] '
+        ;;
     *)
         PROMPT_COMMAND="prompt_command"
         ;;

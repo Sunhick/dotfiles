@@ -167,6 +167,58 @@
 (use-package gruvbox-theme :defer t)
 (use-package zenburn-theme :defer t)
 
+;; ── Eshell prompt (matches bash ❯ dirname ❯ style) ─────────────
+
+(use-package eshell
+  :ensure nil ; built-in
+  :defer t
+  :config
+  (defun my/eshell-prompt ()
+    "Custom eshell prompt matching bash prompt: ❯ dirname ❯"
+    (let* ((last-status eshell-last-command-status)
+           (dir (abbreviate-file-name (eshell/pwd)))
+           (basename (file-name-nondirectory (directory-file-name dir)))
+           (basename (if (string= basename "") "~" basename))
+           (branch (when (executable-find "git")
+                     (let ((b (string-trim
+                               (shell-command-to-string
+                                "git rev-parse --abbrev-ref HEAD 2>/dev/null"))))
+                       (unless (string= b "") b))))
+           ;; Gruvbox-inspired colors
+           (green "#98971a")
+           (red "#cc241d")
+           (cyan "#689d6a")
+           (blue "#458588")
+           (white "#ebdbb2"))
+      (concat
+       ;; Status arrow
+       (propertize "❯" 'face `(:foreground ,(if (= last-status 0) green red)))
+       " "
+       ;; Directory
+       (propertize basename 'face `(:foreground ,cyan))
+       ;; Git branch
+       (when branch
+         (concat " " (propertize (format "(%s)" branch) 'face `(:foreground ,blue))))
+       ;; Final arrow
+       " "
+       (propertize "❯" 'face `(:foreground ,white))
+       " ")))
+
+  (setq eshell-prompt-function #'my/eshell-prompt)
+  (setq eshell-prompt-regexp "^❯ .* ❯ ")
+  (setq eshell-highlight-prompt nil))
+
+;; ── Shell-mode (fix bash prompt rendering) ──────────────────────
+
+(use-package shell
+  :ensure nil ; built-in
+  :defer t
+  :config
+  ;; Interpret ANSI color codes so bash prompt renders correctly
+  (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
+  ;; Track directory changes from the shell
+  (add-hook 'shell-mode-hook #'dirtrack-mode))
+
 (provide 'pkg-initializer)
 
 ;;; pkg-initializer.el ends here
