@@ -30,6 +30,9 @@ brew "eza"
 brew "fd"
 brew "emacs"
 
+# Shell enhancements
+brew "bash-completion@2"
+
 # System utilities
 brew "gnupg"
 brew "openssh"

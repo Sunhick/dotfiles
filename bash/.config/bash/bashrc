@@ -8,11 +8,16 @@ export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 
 # ble.sh — fish-like autosuggestions, syntax highlighting
 # Must be loaded before other config, attached at the end
+# Install: git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git /tmp/ble.sh && make -C /tmp/ble.sh install PREFIX=~/.local
 if [[ $- == *i* && -z "$INSIDE_EMACS" ]]; then
-    _blesh_path="${XDG_DATA_HOME}/blesh/ble.sh"
-    if [[ -f "$_blesh_path" ]]; then
-        source -- "$_blesh_path" --attach=none
-    fi
+    for _blesh_path in \
+        "${XDG_DATA_HOME}/blesh/ble.sh" \
+        "$HOME/.local/share/blesh/ble.sh"; do
+        if [[ -f "$_blesh_path" ]]; then
+            source -- "$_blesh_path" --attach=none
+            break
+        fi
+    done
     unset _blesh_path
 fi
 
@@ -100,3 +105,6 @@ fi
 
 # Load local machine-specific overrides
 include "${XDG_CONFIG_HOME}/work/bash/local" "optional"
+
+# ble.sh — attach at the end after all config is loaded
+[[ ! ${BLE_VERSION-} ]] || ble-attach
