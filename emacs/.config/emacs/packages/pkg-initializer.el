@@ -214,10 +214,16 @@
   :ensure nil ; built-in
   :defer t
   :config
+  ;; Set TERM so bash uses our color prompt instead of the dumb fallback
+  (setenv "TERM" "eterm-color")
   ;; Interpret ANSI color codes so bash prompt renders correctly
   (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
   ;; Track directory changes from the shell
-  (add-hook 'shell-mode-hook #'dirtrack-mode))
+  (add-hook 'shell-mode-hook #'dirtrack-mode)
+  ;; Match our prompt pattern for dirtrack
+  (add-hook 'shell-mode-hook
+            (lambda ()
+              (setq dirtrack-list '("^❯ \\(.*?\\) ❯ " 1)))))
 
 (provide 'pkg-initializer)
 

@@ -55,8 +55,23 @@ case "$TERM" in
         PS1="> "
         ;;
     eterm-color)
-        # Inside Emacs shell-mode — use simple prompt without \[...\] wrappers
-        PS1='\[\e[38;5;114m\]❯\[\e[0m\] \[\e[38;5;80m\]\W\[\e[0m\] \[\e[38;5;252m\]❯\[\e[0m\] '
+        # Inside Emacs shell-mode — simplified prompt with ANSI colors
+        # (no \[...\] needed since comint handles it)
+        _emacs_prompt_command() {
+            local last_exit=$?
+            local arrow branch=""
+            if [[ "$last_exit" -ne 0 ]]; then
+                arrow='\[\e[38;5;204m\]❯\[\e[0m\]'
+            else
+                arrow='\[\e[38;5;114m\]❯\[\e[0m\]'
+            fi
+            branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+            if [[ -n "$branch" ]]; then
+                branch=' \[\e[38;5;75m\]('"$branch"')\[\e[0m\]'
+            fi
+            PS1="${arrow} \[\e[38;5;80m\]\W\[\e[0m\]${branch} \[\e[38;5;252m\]❯\[\e[0m\] "
+        }
+        PROMPT_COMMAND="_emacs_prompt_command"
         ;;
     *)
         PROMPT_COMMAND="prompt_command"
