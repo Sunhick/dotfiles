@@ -26,6 +26,9 @@
 ;; Auto-install missing packages from MELPA
 (setq use-package-always-ensure t)
 
+;; Diminish — loaded early because base-emacs.el needs it
+(use-package diminish)
+
 ;; Enable editorconfig support
 (use-package editorconfig
   :config (editorconfig-mode 1))
