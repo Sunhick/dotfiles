@@ -1,6 +1,6 @@
-;;; pkg-initializer.el --- package initializer  -*- lexical-binding: t -*-
+;;; pkg-initializer.el --- All package declarations (use-package)  -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2018-2019 Sunil
+;; Copyright (c) 2018-2026 Sunil
 ;;
 ;; Author: Sunil <sunhick@gmail.com>
 
@@ -8,52 +8,164 @@
 
 ;;; Commentary:
 
-;; Emacs configuration file
-
-;;; License:
-
-;; This program is free software; you can redistribute it and/or
-;; modify it under the terms of the GNU General Public License
-;; as published by the Free Software Foundation; either version 3
-;; of the License, or (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to the
-;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-;; Boston, MA 02110-1301, USA.
+;; Single file for all package configuration using use-package.
+;; Each declaration handles install, defer, keybindings, and config.
 
 ;;; Code:
 
-;; Base packages setup
-(require 'pkg-fzf)
-(require 'pkg-magit)
-(require 'pkg-vertico)
-(require 'pkg-multiple-cursors)
-;; (require 'pkg-guide-key)
-(require 'pkg-which-key)
-(require 'pkg-ripgrep)
-(require 'pkg-smartparens)
-;; (require 'pkg-switch-windows)
-(require 'pkg-windmove)
-(require 'pkg-autocomplete)
-(require 'pkg-eglot)
-(require 'pkg-org-mode)
+;; ── Completion framework (vertico + orderless + marginalia) ──────
 
-;; Add-on packages (uncomment if required)
-(require 'pkg-slim-programming-mode)
-(require 'pkg-go-mode)
-;; (require 'pkg-react-native)
-(require 'pkg-typescript-mode)
-(require 'pkg-gn-mode)
-(require 'pkg-google-c-style)
-(require 'pkg-rust-mode)
-(require 'pkg-ediff)
+(use-package vertico
+  :init (vertico-mode))
 
+(use-package orderless
+  :custom
+  (completion-styles '(orderless))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
+
+(use-package marginalia
+  :init (marginalia-mode))
+
+;; ── Completion at point (corfu) ─────────────────────────────────
+
+(use-package corfu
+  :custom
+  (corfu-auto t)
+  (corfu-auto-delay 0.2)
+  (corfu-auto-prefix 2)
+  (corfu-quit-no-match 'separator)
+  :init (global-corfu-mode 1))
+
+;; ── Git ─────────────────────────────────────────────────────────
+
+(use-package magit
+  :defer t
+  :bind ("C-x g" . magit-status)
+  :init
+  (setq vc-handled-backends (delq 'Git vc-handled-backends)))
+
+;; ── Search ──────────────────────────────────────────────────────
+
+(use-package fzf
+  :defer t
+  :bind (("C-c f f" . fzf-git-files)
+         ("C-c f g" . fzf-git)
+         ("C-c f d" . fzf-directory)
+         ("C-c f s" . fzf-git-grep)
+         ("C-c f p" . fzf-projectile)))
+
+(use-package rg
+  :defer t
+  :commands (rg rg-project rg-dwim)
+  :config (rg-enable-menu))
+
+;; ── Editing ─────────────────────────────────────────────────────
+
+(use-package multiple-cursors
+  :defer t
+  :bind (("C->" . mc/mark-next-like-this)
+         ("C-<" . mc/mark-previous-like-this)
+         ("C-c C-<" . mc/mark-all-like-this)))
+
+(use-package smartparens
+  :defer 1
+  :diminish smartparens-mode
+  :config
+  (require 'smartparens-config)
+  (diminish 'smartparens-strict-mode)
+  (smartparens-global-mode t))
+
+;; ── UI helpers ──────────────────────────────────────────────────
+
+(use-package which-key
+  :diminish
+  :custom
+  (which-key-popup-type 'minibuffer)
+  (which-key-idle-delay 0.5)
+  (which-key-show-early-on-C-h t)
+  (which-key-idle-secondary-delay 0.05)
+  :config (which-key-mode))
+
+(use-package diminish)
+
+(use-package windmove
+  :config
+  (windmove-default-keybindings)
+  (setq windmove-wrap-around t))
+
+;; ── Org mode ────────────────────────────────────────────────────
+
+(use-package org
+  :defer t)
+
+(use-package org-bullets
+  :defer t
+  :hook (org-mode . org-bullets-mode))
+
+;; ── LSP (eglot — built into Emacs 29+) ─────────────────────────
+
+(use-package eglot
+  :ensure nil ; built-in
+  :defer t
+  :hook (python-mode . eglot-ensure)
+  :custom
+  (eglot-autoshutdown t)
+  (eglot-extend-to-xref t)
+  :config
+  (add-hook 'eglot-managed-mode-hook #'eldoc-mode))
+
+;; ── Language modes ──────────────────────────────────────────────
+
+(use-package go-mode
+  :defer t
+  :hook (go-mode . (lambda ()
+                     (add-hook 'before-save-hook #'gofmt-before-save nil t)))
+  :bind (:map go-mode-map
+         ("C-c C-r" . go-remove-unused-imports)
+         ("C-c C-g" . go-goto-imports)
+         ("C-c C-f" . gofmt)))
+
+(use-package rust-mode
+  :defer t
+  :hook ((rust-mode . eglot-ensure)
+         (rust-mode . (lambda ()
+                        (setq indent-tabs-mode nil)
+                        (setq rust-format-on-save t)))))
+
+(use-package typescript-mode
+  :defer t
+  :custom (typescript-indent-level 2))
+
+(use-package yaml-mode :defer t)
+(use-package protobuf-mode :defer t)
+(use-package groovy-mode :defer t)
+(use-package markdown-mode :defer t)
+
+(use-package gn-mode
+  :defer t
+  :mode "\\.gn\\'")
+
+(use-package google-c-style
+  :defer t
+  :hook ((c-mode-common . google-set-c-style)
+         (c-mode-common . google-make-newline-indent)))
+
+;; ── Diff / Merge ────────────────────────────────────────────────
+
+(use-package ediff
+  :ensure nil ; built-in
+  :defer t
+  :custom
+  (ediff-window-setup-function 'ediff-setup-windows-plain)
+  (ediff-split-window-function 'split-window-horizontally)
+  (ediff-diff-options "-w"))
+
+;; ── Misc ────────────────────────────────────────────────────────
+
+(use-package restclient :defer t)
+(use-package gruvbox-theme :defer t)
+(use-package zenburn-theme :defer t)
 
 (provide 'pkg-initializer)
 
