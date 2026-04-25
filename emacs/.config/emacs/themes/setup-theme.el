@@ -29,14 +29,13 @@
 
 ;;; Code:
 
-;; gruvbox dark hard theme
-(load-theme 'gruvbox-dark-hard 'no-confirm)
+;; Theme is loaded via use-package in pkg-initializer.el
+;; This file is kept for reference of available themes.
 
-;; zenburn
-;; (load-theme 'zenburn 'no-confirm)
-
-;; modus vivendi builtin theme
-;; (load-theme 'modus-vivendi 'no-confirm)
+;; Active: gruvbox-dark-hard (set in pkg-initializer.el)
+;; Alternatives:
+;;   (load-theme 'zenburn 'no-confirm)
+;;   (load-theme 'modus-vivendi 'no-confirm)
 
 (provide 'setup-theme)
 

@@ -163,7 +163,8 @@
 ;; ── Misc ────────────────────────────────────────────────────────
 
 (use-package restclient :defer t)
-(use-package gruvbox-theme :defer t)
+(use-package gruvbox-theme
+  :config (load-theme 'gruvbox-dark-hard t))
 (use-package zenburn-theme :defer t)
 
 ;; ── Eshell prompt (matches bash ❯ dirname ❯ style) ─────────────
