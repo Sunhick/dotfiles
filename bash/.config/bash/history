@@ -16,3 +16,15 @@ export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help:history:clear"
 
 # Add timestamp to history
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
+
+# Enable menu-complete: Tab cycles through matches instead of listing them
+# Shift-Tab cycles backward
+if [[ -z "$INSIDE_EMACS" && "$TERM" != "dumb" ]]; then
+    bind 'TAB:menu-complete'
+    bind '"\e[Z":menu-complete-backward'
+    bind 'set show-all-if-ambiguous on'
+    bind 'set menu-complete-display-prefix on'
+    # Ctrl-p / Ctrl-n for history prefix search (type partial, then cycle)
+    bind '"\C-p":history-search-backward'
+    bind '"\C-n":history-search-forward'
+fi

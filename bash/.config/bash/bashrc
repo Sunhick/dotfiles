@@ -6,6 +6,16 @@ export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 
+# ble.sh — fish-like autosuggestions, syntax highlighting
+# Must be loaded before other config, attached at the end
+if [[ $- == *i* && -z "$INSIDE_EMACS" ]]; then
+    _blesh_path="${XDG_DATA_HOME}/blesh/ble.sh"
+    if [[ -f "$_blesh_path" ]]; then
+        source -- "$_blesh_path" --attach=none
+    fi
+    unset _blesh_path
+fi
+
 # Bash configuration directory
 BASH_CONFIG_DIR="${XDG_CONFIG_HOME}/bash"
 
@@ -65,9 +75,11 @@ if [[ -z "$INSIDE_EMACS" && "$TERM" != "dumb" ]]; then
     include "${BASH_CONFIG_DIR}/completion"
 fi
 
-# Load fuzzy finder if available
-include "${XDG_CONFIG_HOME}/fzf/fzf.bash" "optional"
-include "${HOME}/.fzf.bash" "optional"
+# Load fuzzy finder if available (skip in Emacs — fzf bind calls fail without readline)
+if [[ -z "$INSIDE_EMACS" ]]; then
+    include "${XDG_CONFIG_HOME}/fzf/fzf.bash" "optional"
+    include "${HOME}/.fzf.bash" "optional"
+fi
 
 # Load dir_colors for ls coloring
 if command -v gdircolors >/dev/null 2>&1; then

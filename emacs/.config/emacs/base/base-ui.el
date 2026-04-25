@@ -49,14 +49,14 @@
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
-;; Flash background briefly instead of audible bell
+;; Flash modeline briefly instead of audible bell
 (setq visible-bell nil)
 (setq ring-bell-function
       (lambda ()
-        (let ((orig-bg (face-background 'default)))
-          (set-face-background 'default "DodgerBlue")
+        (let ((orig-bg (face-background 'mode-line)))
+          (set-face-background 'mode-line "#d65d0e") ; gruvbox orange
           (run-with-timer 0.1 nil
-                          (lambda (bg) (set-face-background 'default bg))
+                          (lambda (bg) (set-face-background 'mode-line bg))
                           orig-bg))))
 
 ;; no start up screen please
