@@ -29,10 +29,10 @@
 
 ;;; Code:
 
-(require 'typescript-mode)
-
-(setq-default typescript-indent-level 2)
+;; typescript-mode autoloads on .ts files — just set indent level
+(with-eval-after-load 'typescript-mode
+  (setq typescript-indent-level 2))
 
 (provide 'pkg-typescript-mode)
 
-;;; pkg-react-native.el ends here
+;;; pkg-typescript-mode.el ends here

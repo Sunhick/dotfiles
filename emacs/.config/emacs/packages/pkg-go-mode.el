@@ -29,16 +29,14 @@
 
 ;;; Code:
 
-(require 'base-ensure)
+;; go-mode autoloads on .go files — just configure hooks
+(with-eval-after-load 'go-mode
+  (define-key go-mode-map (kbd "C-c C-r") 'go-remove-unused-imports)
+  (define-key go-mode-map (kbd "C-c C-g") 'go-goto-imports)
+  (define-key go-mode-map (kbd "C-c C-f") 'gofmt))
 
-(ensure-pkg 'go-mode)
-
-;; Go mode hooks
 (add-hook 'go-mode-hook
           (lambda ()
-            (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
-            (local-set-key (kbd "C-c C-g") 'go-goto-imports)
-            (local-set-key (kbd "C-c C-f") 'gofmt)
             (add-hook 'before-save-hook #'gofmt-before-save nil t)))
 
 (provide 'pkg-go-mode)

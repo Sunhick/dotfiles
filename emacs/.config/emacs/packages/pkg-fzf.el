@@ -29,7 +29,13 @@
 
 ;;; Code:
 
-(require 'fzf)
+;; Defer fzf — autoload on first keybinding use
+(autoload 'fzf-git-files "fzf" nil t)
+(autoload 'fzf-git "fzf" nil t)
+(autoload 'fzf-directory "fzf" nil t)
+(autoload 'fzf-git-grep "fzf" nil t)
+(autoload 'fzf-projectile "fzf" nil t)
+
 (global-set-key (kbd "C-c f f") 'fzf-git-files)
 (global-set-key (kbd "C-c f g") 'fzf-git)
 (global-set-key (kbd "C-c f d") 'fzf-directory)

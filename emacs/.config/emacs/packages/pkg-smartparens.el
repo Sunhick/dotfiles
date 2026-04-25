@@ -29,14 +29,14 @@
 
 ;;; Code:
 
-(require 'smartparens)
-(require 'diminish)
-(require 'smartparens-config)
-
-(diminish 'smartparens-mode)
-(diminish 'smartparens-strict-mode)
-
-(smartparens-global-mode t)
+;; Defer smartparens to after init
+(add-hook 'after-init-hook
+          (lambda ()
+            (require 'smartparens)
+            (require 'smartparens-config)
+            (diminish 'smartparens-mode)
+            (diminish 'smartparens-strict-mode)
+            (smartparens-global-mode t)))
 
 (provide 'pkg-smartparens)
 

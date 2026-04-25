@@ -29,11 +29,13 @@
 
 ;;; Code:
 
-;; Enable deferred native compilation
-(setq native-comp-deferred-compilation t)
+;; Enable deferred native compilation (Emacs 29+ renamed this)
+(if (boundp 'native-comp-jit-compilation)
+    (setq native-comp-jit-compilation t)
+  (setq native-comp-deferred-compilation t))
 
-; ; prioritize compilation speed
-(setq native-comp-speed 3)
+;; Use default compilation speed (level 2); level 3 disables safety checks
+(setq native-comp-speed 2)
 
 (defun compile-emacs-config-native ()
   "Native compile all .el files under the emacs config directory."

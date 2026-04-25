@@ -29,10 +29,13 @@
 
 ;;; Code:
 
-(require 'rg)
+;; Defer rg until first use
+(autoload 'rg "rg" nil t)
+(autoload 'rg-project "rg" nil t)
+(autoload 'rg-dwim "rg" nil t)
 
-;; enable maggit like interface for riprep
-(rg-enable-menu)
+(with-eval-after-load 'rg
+  (rg-enable-menu))
 
 (provide 'pkg-ripgrep)
 

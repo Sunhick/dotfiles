@@ -29,7 +29,10 @@
 
 ;;; Code:
 
-(require 'google-c-style)
+;; Defer google-c-style until a C/C++ file is opened
+(autoload 'google-set-c-style "google-c-style" nil t)
+(autoload 'google-make-newline-indent "google-c-style" nil t)
+
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 

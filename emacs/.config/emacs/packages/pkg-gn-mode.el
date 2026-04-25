@@ -29,8 +29,7 @@
 
 ;;; Code:
 
-(require 'gn-mode)
-
+;; gn-mode autoloads — just register the file association
 (add-to-list 'auto-mode-alist '("\\.gn\\'" . gn-mode))
 
 (provide 'pkg-gn-mode)

@@ -29,10 +29,10 @@
 
 ;;; Code:
 
-(require 'org)
-(require 'org-bullets)
-
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+;; org autoloads on .org files — no need to require at startup
+(with-eval-after-load 'org
+  (require 'org-bullets)
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 (provide 'pkg-org-mode)
 

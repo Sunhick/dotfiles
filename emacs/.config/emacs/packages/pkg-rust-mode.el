@@ -29,16 +29,8 @@
 
 ;;; Code:
 
-(require 'base-ensure)
-
-;; Load rust-mode for .rs files
-(require 'rust-mode)
-(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-
-;; Enable eglot for Rust
+;; rust-mode autoloads on .rs files — just configure hooks
 (add-hook 'rust-mode-hook #'eglot-ensure)
-
-;; Optional: format Rust code on save
 (add-hook 'rust-mode-hook
           (lambda ()
             (setq indent-tabs-mode nil)

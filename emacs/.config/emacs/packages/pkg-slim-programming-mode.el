@@ -31,14 +31,14 @@
 
 (require 'base-ensure)
 
+;; Programming language packages — installed lazily on first need
+;; These packages provide autoloads for their major modes, so they
+;; activate automatically when you open the corresponding file types.
 (defvar programming-pkgs
   '(yaml-mode
-    ;; gitignore-mode
     protobuf-mode
     groovy-mode
     rust-mode
-    ;; cmake-mode
-    ;; rjsx-mode
     markdown-mode
     gn-mode
     google-c-style
@@ -46,12 +46,11 @@
     )
   "Support for programming in emacs")
 
-(defun install-programming-pkgs ()
-  "Install programming packages"
-  (dolist (pkg programming-pkgs)
-    (ensure-pkg pkg)))
-
-(install-programming-pkgs)
+;; Defer installation to after init to avoid blocking startup
+(add-hook 'after-init-hook
+          (lambda ()
+            (dolist (pkg programming-pkgs)
+              (ensure-pkg pkg))))
 
 (provide 'pkg-slim-programming-mode)
 
