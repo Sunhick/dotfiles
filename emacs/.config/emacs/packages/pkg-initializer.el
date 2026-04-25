@@ -213,9 +213,6 @@
 (use-package shell
   :ensure nil ; built-in
   :defer t
-  :init
-  ;; Set TERM before shell starts so bash uses our color prompt
-  (setenv "TERM" "eterm-color")
   :config
   ;; Interpret ANSI color codes so bash prompt renders correctly
   (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)

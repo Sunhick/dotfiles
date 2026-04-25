@@ -29,8 +29,8 @@ fi
 include "${BASH_CONFIG_DIR}/shopt"
 
 # Load readline configuration (XDG compliant)
-# Skip when line editing is unavailable (Emacs shell-mode, dumb terminals)
-if [[ -t 0 && "$TERM" != "dumb" && "$TERM" != "eterm-color" ]]; then
+# Skip inside Emacs where line editing is unavailable
+if [[ -z "$INSIDE_EMACS" && "$TERM" != "dumb" ]]; then
     if [[ -f "${XDG_CONFIG_HOME}/readline/inputrc" ]]; then
         bind -f "${XDG_CONFIG_HOME}/readline/inputrc"
     fi
@@ -60,8 +60,8 @@ case "$(uname -s)" in
 esac
 
 # Load completions (after OS-specific config so Homebrew paths are set)
-# Skip in dumb/emacs terminals where readline completion is unavailable
-if [[ "$TERM" != "dumb" && "$TERM" != "eterm-color" ]]; then
+# Skip inside Emacs where readline completion is unavailable
+if [[ -z "$INSIDE_EMACS" && "$TERM" != "dumb" ]]; then
     include "${BASH_CONFIG_DIR}/completion"
 fi
 
