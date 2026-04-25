@@ -29,8 +29,11 @@ fi
 include "${BASH_CONFIG_DIR}/shopt"
 
 # Load readline configuration (XDG compliant)
-if [[ -f "${XDG_CONFIG_HOME}/readline/inputrc" ]]; then
-    bind -f "${XDG_CONFIG_HOME}/readline/inputrc"
+# Skip when line editing is unavailable (Emacs shell-mode, dumb terminals)
+if [[ -t 0 && "$TERM" != "dumb" && "$TERM" != "eterm-color" ]]; then
+    if [[ -f "${XDG_CONFIG_HOME}/readline/inputrc" ]]; then
+        bind -f "${XDG_CONFIG_HOME}/readline/inputrc"
+    fi
 fi
 
 # Load environment variables
@@ -57,7 +60,10 @@ case "$(uname -s)" in
 esac
 
 # Load completions (after OS-specific config so Homebrew paths are set)
-include "${BASH_CONFIG_DIR}/completion"
+# Skip in dumb/emacs terminals where readline completion is unavailable
+if [[ "$TERM" != "dumb" && "$TERM" != "eterm-color" ]]; then
+    include "${BASH_CONFIG_DIR}/completion"
+fi
 
 # Load fuzzy finder if available
 include "${XDG_CONFIG_HOME}/fzf/fzf.bash" "optional"
