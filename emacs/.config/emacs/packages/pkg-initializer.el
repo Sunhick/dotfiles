@@ -86,9 +86,9 @@
   (which-key-show-early-on-C-h t)
   (which-key-idle-secondary-delay 0.05)
   :config (which-key-mode))
-(use-package diminish)
 
 (use-package windmove
+  :ensure nil ; built-in
   :config
   (windmove-default-keybindings)
   (setq windmove-wrap-around t))
