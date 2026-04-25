@@ -30,7 +30,7 @@
 ;;; Code:
 
 ;; Set preferred font (with fallback)
-(let ((preferred-font "Zenbones Brainy"))
+(let ((preferred-font "Iosevka Comfy"))
   (if (find-font (font-spec :name preferred-font))
       (set-frame-font (concat preferred-font ":pixelsize=15") t t)
     (message "Font '%s' not found, using default" preferred-font)))
