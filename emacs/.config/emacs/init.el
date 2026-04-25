@@ -44,25 +44,19 @@
 (defvar emacs-user-dir (expand-file-name "user" emacs-dir)
   "Emacs user's directory")
 
-(defvar emacs-themes-dir (expand-file-name "themes" emacs-dir)
-  "Directory hosting the themes for emacs")
-
 (defvar emacs-packages-dir (expand-file-name "packages" emacs-dir)
-  "Emacs packages directory boostrapping the installed packages.
-Most of them will be keybindings for packages installed by default.")
+  "Emacs packages directory housing use-package declarations.")
 
 (defvar emacs-vendor-dir (expand-file-name "vendor" emacs-dir)
   "Emacs vendor packages. Forked from other github repositories")
 
 (add-to-list 'load-path emacs-base-dir)
 (add-to-list 'load-path emacs-user-dir)
-(add-to-list 'load-path emacs-themes-dir)
 (add-to-list 'load-path emacs-packages-dir)
 (add-to-list 'load-path emacs-vendor-dir)
 
 (require 'base-init)
 (require 'user-setup)
-(require 'setup-theme)
 (require 'pkg-initializer)
 ;; (require 'vendor-init)
 

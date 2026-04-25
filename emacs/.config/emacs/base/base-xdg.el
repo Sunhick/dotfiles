@@ -61,8 +61,8 @@
       `(("." . ,(expand-file-name "emacs/backups" xdg-cache-home))))
 
 ;; Undo tree files (if undo-tree is used)
-(setq undo-tree-history-directory-alist
-      `(("." . ,(expand-file-name "emacs/undo-tree" xdg-data-home))))
+;; (setq undo-tree-history-directory-alist
+;;       `(("." . ,(expand-file-name "emacs/undo-tree" xdg-data-home))))
 
 ;; Recent files
 (setq recentf-save-file (expand-file-name "emacs/recentf" xdg-data-home))
@@ -82,23 +82,7 @@
 ;; Org mode
 (setq org-id-locations-file (expand-file-name "emacs/org-id-locations" xdg-data-home))
 
-;; Projectile (if used)
-(setq projectile-cache-file (expand-file-name "emacs/projectile.cache" xdg-cache-home))
-(setq projectile-known-projects-file (expand-file-name "emacs/projectile-bookmarks.eld" xdg-data-home))
-
-;; Magit (if used)
-(setq magit-repository-directories-file (expand-file-name "emacs/magit-repos" xdg-data-home))
-
-;; Company (if used)
-(setq company-statistics-file (expand-file-name "emacs/company-statistics-cache.el" xdg-data-home))
-
-;; Helm (if used)
-(setq helm-adaptive-history-file (expand-file-name "emacs/helm-adaptive-history" xdg-data-home))
-
-;; Ivy/Counsel (if used)
-(setq ivy-views-file (expand-file-name "emacs/ivy-views" xdg-data-home))
-
-;; Vertico (already configured, but ensure persistence)
+;; Vertico
 (setq vertico-save-file (expand-file-name "emacs/vertico-save" xdg-data-home))
 
 ;; Savehist

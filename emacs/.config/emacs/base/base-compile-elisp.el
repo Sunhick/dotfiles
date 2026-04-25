@@ -47,7 +47,7 @@
                                                 (expand-file-name "~/.config"))))))
       (native-compile-async config-dir 'recursively))))
 
-;; (add-hook 'emacs-startup-hook #'compile-emacs-d-native)
+;; (add-hook 'emacs-startup-hook #'compile-emacs-config-native)
 
 (provide 'base-compile-elisp)
 

@@ -1,62 +1,55 @@
 # Emacs Configuration
 
-This Emacs configuration follows the XDG Base Directory Specification for better organization and compliance with modern standards.
+Personal Emacs config — XDG compliant, managed with use-package, Gruvbox Dark Hard theme.
+
+## Structure
+
+```
+~/.config/emacs/
+├── init.el                  # Entry point — sets load paths, requires modules
+├── base/
+│   ├── base-init.el         # Loads all base modules in order
+│   ├── base-xdg.el          # XDG Base Directory paths for all data/cache
+│   ├── base-compile-elisp.el # Native compilation settings
+│   ├── base-ui.el           # Frame, line numbers, whitespace, visual bell
+│   ├── base-window.el       # Toolbar, scrollbar, fringe, pixel scroll
+│   ├── base-host.el         # Font, line spacing (machine-specific)
+│   ├── base-packages.el     # MELPA + use-package + diminish setup
+│   └── base-emacs.el        # Core editor behavior (encoding, parens, mouse)
+├── packages/
+│   └── pkg-initializer.el   # All package declarations (single file)
+├── user/
+│   └── user-setup.el        # User identity (name, email)
+└── debug.el                 # Standalone debug config (emacs -q --load debug.el)
+```
 
 ## XDG Compliance
 
-This configuration stores files in the following XDG-compliant locations:
+| Purpose | Location |
+|---------|----------|
+| Config | `~/.config/emacs/` |
+| Data (packages, history, bookmarks) | `~/.local/share/emacs/` |
+| Cache (backups, url cache) | `~/.cache/emacs/` |
 
-- **Config**: `~/.config/emacs/` (this directory)
-- **Data**: `~/.local/share/emacs/` (packages, history, bookmarks, etc.)
-- **Cache**: `~/.cache/emacs/` (backups, temporary files)
+## Packages
 
-### Data Files Location
+All managed via `use-package` in `pkg-initializer.el`. See that file for the full list.
 
-The following files are stored in `~/.local/share/emacs/`:
-- Package installations (`elpa/`)
-- Custom settings (`customs.el`)
-- Recent files (`recentf`)
-- Bookmarks (`bookmarks`)
-- Save places (`places`)
-- Auto-save list (`auto-save-list/`)
-- Undo tree history (`undo-tree/`)
-- Eshell data (`eshell/`)
-- Org ID locations (`org-id-locations`)
-- Tramp persistence (`tramp`)
-- Various package-specific data files
+## Keybindings
 
-### Cache Files Location
+See [emacs-keybindings.md](emacs-keybindings.md) for a comprehensive reference.
 
-The following files are stored in `~/.cache/emacs/`:
-- Backup files (`backups/`)
-- URL cache (`url/`)
-- Projectile cache (if used)
+## Font
 
-## Migration from ~/.emacs.d
+Iosevka Comfy at 15px (`base-host.el`). Falls back to default if not installed.
 
-If you have an existing `~/.emacs.d` directory, you can migrate your data:
+## Theme
 
-```bash
-# Create XDG directories
-mkdir -p ~/.local/share/emacs ~/.cache/emacs
-
-# Migrate data files (adjust paths as needed)
-mv ~/.emacs.d/elpa ~/.local/share/emacs/ 2>/dev/null || true
-mv ~/.emacs.d/recentf ~/.local/share/emacs/ 2>/dev/null || true
-mv ~/.emacs.d/bookmarks ~/.local/share/emacs/ 2>/dev/null || true
-mv ~/.emacs.d/.places ~/.local/share/emacs/places 2>/dev/null || true
-mv ~/.emacs.d/auto-save-list ~/.local/share/emacs/ 2>/dev/null || true
-mv ~/.emacs.d/eshell ~/.local/share/emacs/ 2>/dev/null || true
-
-# Migrate cache files
-mv ~/.emacs.d/backups ~/.cache/emacs/ 2>/dev/null || true
-mv ~/.emacs.d/url ~/.cache/emacs/ 2>/dev/null || true
-
-# Rename customs file
-mv ~/.emacs.d/.customs.el ~/.local/share/emacs/customs.el 2>/dev/null || true
-```
+Gruvbox Dark Hard — loaded via use-package in `pkg-initializer.el`.
 
 ## References
-* [Prelude](https://github.com/bbatsov/prelude)
-* [emacs.d - Magnars](https://github.com/magnars/.emacs.d)
-* [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+
+- [Prelude](https://github.com/bbatsov/prelude)
+- [emacs.d - Magnars](https://github.com/magnars/.emacs.d)
+- [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
+- [use-package](https://github.com/jwiegley/use-package)

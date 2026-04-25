@@ -36,7 +36,6 @@
 (require 'base-ui)
 (require 'base-packages)
 (require 'base-emacs)
-(require 'base-registers)
 
 (provide 'base-init)
 
