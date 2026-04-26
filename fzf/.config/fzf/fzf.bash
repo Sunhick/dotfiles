@@ -22,6 +22,12 @@ if command -v fzf >/dev/null 2>&1; then
         fi
     done
 
+    # Restore default directory completion for cd/pushd/rmdir
+    # fzf overrides these with fuzzy matching; use cd **<Tab> for fzf instead
+    complete -r cd 2>/dev/null
+    complete -r pushd 2>/dev/null
+    complete -r rmdir 2>/dev/null
+
     # Try to source fzf key bindings from common locations
     for keybind_file in \
         "/opt/homebrew/share/fzf/shell/key-bindings.bash" \
