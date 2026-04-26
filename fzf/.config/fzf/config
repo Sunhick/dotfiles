@@ -10,6 +10,9 @@ export FZF_DEFAULT_OPTS="
 --layout=reverse
 --border"
 
+# Only trigger fzf completion on ** (not on every Tab)
+export FZF_COMPLETION_TRIGGER='**'
+
 # Use fd if available, otherwise find
 if command -v fd >/dev/null 2>&1; then
     export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
