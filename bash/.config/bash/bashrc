@@ -90,3 +90,11 @@ fi
 
 # Load local machine-specific overrides
 include "${XDG_CONFIG_HOME}/work/bash/local" "optional"
+
+# Remove fzf's fuzzy completion overrides for common commands
+# (fzf completion is loaded by Homebrew's bash-completion or ~/.fzf.bash)
+# Use **<Tab> for fzf fuzzy finder instead
+for _cmd in cd pushd rmdir ls cat less head tail; do
+    complete -r "$_cmd" 2>/dev/null
+done
+unset _cmd
