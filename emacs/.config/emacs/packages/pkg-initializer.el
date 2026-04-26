@@ -93,20 +93,6 @@
   (windmove-default-keybindings)
   (setq windmove-wrap-around t))
 
-;; ── Indent guides ───────────────────────────────────────────────
-
-(use-package highlight-indent-guides
-  :defer t
-  :hook (prog-mode . highlight-indent-guides-mode)
-  :custom
-  (highlight-indent-guides-method 'character)
-  (highlight-indent-guides-responsive 'top)
-  (highlight-indent-guides-auto-enabled nil)
-  :config
-  ;; Gruvbox colors — subtle for inactive, visible for active
-  (set-face-foreground 'highlight-indent-guides-character-face "#3c3836")
-  (set-face-foreground 'highlight-indent-guides-top-character-face "#665c54"))
-
 ;; ── Org mode ────────────────────────────────────────────────────
 
 (use-package org
