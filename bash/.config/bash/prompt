@@ -55,17 +55,13 @@ if [[ -n "$INSIDE_EMACS" ]]; then
     # Comint with TERM=dumb doesn't render colors reliably
     _emacs_prompt_command() {
         local last_exit=$?
-        local indicator branch=""
+        local indicator
         if [[ "$last_exit" -ne 0 ]]; then
-            indicator="✗"
+            indicator="x"
         else
-            indicator="❯"
+            indicator=">"
         fi
-        branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-        if [[ -n "$branch" ]]; then
-            branch=" ($branch)"
-        fi
-        PS1="${indicator} \W${branch} ❯ "
+        PS1="${indicator} \W > "
     }
     PROMPT_COMMAND="_emacs_prompt_command"
 elif [[ "$TERM" == "dumb" || "$TERM" == "unknown" ]]; then

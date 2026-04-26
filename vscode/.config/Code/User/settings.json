@@ -75,7 +75,7 @@
     "editor.formatOnSave": true,
     "editor.linkedEditing": true,
     "terminal.integrated.fontFamily": "Iosevka Comfy",
-    "terminal.integrated.fontSize": 15,
+    "terminal.integrated.fontSize": 13,
     // Theme and colors - Gruvbox Dark
     "workbench.colorTheme": "Gruvbox Dark Hard",
     // Terminal - Emacs-like
