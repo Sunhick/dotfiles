@@ -75,8 +75,24 @@ desktop: check-stow $(DESKTOP_PKGS)
 tools: check-stow $(TOOL_PKGS)
 
 # ── Per-package targets ───────────────────────────────────────────
-$(ALL_PKGS): check-stow
+$(filter-out vscode,$(ALL_PKGS)): check-stow
 	@cd $@ && stow $(STOW_FLAGS) --restow . && $(call log,ok,LINK $@)
+
+# VS Code needs OS-specific symlink (macOS uses ~/Library, Linux uses ~/.config)
+vscode: check-stow
+	@cd vscode && stow $(STOW_FLAGS) --restow . && $(call log,ok,LINK vscode)
+	@case "$$(uname -s)" in \
+		Darwin) \
+			mkdir -p "$(HOME)/Library/Application Support/Code/User"; \
+			for f in settings.json keybindings.json; do \
+				src="$(HOME)/.config/Code/User/$$f"; \
+				dst="$(HOME)/Library/Application Support/Code/User/$$f"; \
+				if [ -f "$$src" ] && [ ! -L "$$dst" ]; then \
+					ln -sf "$$src" "$$dst"; \
+					printf "  $(_GREEN)OK$(_NC)   %s\n" "SYMLINK $$f -> Library/Application Support/Code/User/"; \
+				fi; \
+			done ;; \
+	esac
 
 $(addprefix rm-,$(ALL_PKGS)):
 	@cd $(subst rm-,,$@) && stow $(STOW_FLAGS) --delete . && $(call log,ok,UNLINK $(subst rm-,,$@))
