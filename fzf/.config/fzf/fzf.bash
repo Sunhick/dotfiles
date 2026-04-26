@@ -11,24 +11,9 @@ fi
 
 # Auto-completion and key bindings
 if command -v fzf >/dev/null 2>&1; then
-    # Try to source fzf completion from common locations
-    for completion_file in \
-        "/opt/homebrew/share/fzf/shell/completion.bash" \
-        "/usr/local/share/fzf/shell/completion.bash" \
-        "/usr/share/fzf/completion.bash"; do
-        if [[ -f "$completion_file" ]]; then
-            source "$completion_file"
-            break
-        fi
-    done
-
-    # Restore default directory completion for cd/pushd/rmdir
-    # fzf overrides these with fuzzy matching; use cd **<Tab> for fzf instead
-    complete -r cd 2>/dev/null
-    complete -r pushd 2>/dev/null
-    complete -r rmdir 2>/dev/null
-
-    # Try to source fzf key bindings from common locations
+    # Only load fzf key bindings (Ctrl-R, Ctrl-T, Alt-C)
+    # Skip fzf completion — it overrides normal prefix Tab completion
+    # Use **<Tab> trigger if you re-enable completion later
     for keybind_file in \
         "/opt/homebrew/share/fzf/shell/key-bindings.bash" \
         "/usr/local/share/fzf/shell/key-bindings.bash" \
