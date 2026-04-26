@@ -68,7 +68,8 @@ fi
 # Load fuzzy finder if available (skip in Emacs — fzf bind calls fail without readline)
 if [[ -z "$INSIDE_EMACS" ]]; then
     include "${XDG_CONFIG_HOME}/fzf/fzf.bash" "optional"
-    include "${HOME}/.fzf.bash" "optional"
+    # Note: ~/.fzf.bash is NOT loaded — it registers fzf completion that
+    # overrides normal prefix Tab completion. Our fzf.bash handles keybindings.
 fi
 
 # Load dir_colors for ls coloring
@@ -92,9 +93,14 @@ fi
 include "${XDG_CONFIG_HOME}/work/bash/local" "optional"
 
 # Remove fzf's fuzzy completion overrides for common commands
-# (fzf completion is loaded by Homebrew's bash-completion or ~/.fzf.bash)
-# Use **<Tab> for fzf fuzzy finder instead
-for _cmd in cd pushd rmdir ls cat less head tail; do
-    complete -r "$_cmd" 2>/dev/null
-done
-unset _cmd
+# Runs via PROMPT_COMMAND on first prompt to ensure it executes after
+# all completion sources (Homebrew, fzf) have finished registering
+_remove_fzf_completions() {
+    for _cmd in cd pushd rmdir ls cat less head tail; do
+        complete -r "$_cmd" 2>/dev/null
+    done
+    unset _cmd
+    # Remove self from PROMPT_COMMAND after first run
+    PROMPT_COMMAND="${PROMPT_COMMAND/_remove_fzf_completions;/}"
+}
+PROMPT_COMMAND="_remove_fzf_completions;${PROMPT_COMMAND}"
