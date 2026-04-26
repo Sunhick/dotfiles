@@ -1,9 +1,9 @@
 {
     // UI Layout - Emacs-like minimal interface
-    "workbench.sideBar.location": "right",
+    "workbench.sideBar.location": "left",
     "workbench.activityBar.visible": false,
     "editor.minimap.enabled": false,
-    "breadcrumbs.enabled": false,
+    "breadcrumbs.enabled": true,
     "editor.renderLineHighlight": "none",
     "workbench.statusBar.visible": true,
     "workbench.editor.showTabs": true,
@@ -41,17 +41,17 @@
         "**/.DS_Store": true,
         "**/Thumbs.db": true
     },
-    // Editor behavior - Emacs-like
+    // Editor behavior
     "editor.acceptSuggestionOnEnter": "off",
     "editor.quickSuggestions": {
-        "other": "off",
+        "other": "on",
         "comments": "off",
         "strings": "off"
     },
-    "editor.suggestOnTriggerCharacters": false,
-    "editor.parameterHints.enabled": false,
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.parameterHints.enabled": true,
     "editor.hover.enabled": false,
-    "editor.lightbulb.enabled": "off",
+    "editor.lightbulb.enabled": "on",
     // Scrolling - Emacs-like smooth scrolling
     "editor.smoothScrolling": true,
     "editor.scrollBeyondLastLine": false,
@@ -59,6 +59,7 @@
     // Matching brackets - Emacs show-paren-mode
     "editor.matchBrackets": "always",
     "editor.guides.bracketPairs": "active",
+    "editor.bracketPairColorization.enabled": true,
     // Theme and colors
     "workbench.colorCustomizations": {
         "statusBar.background": "#1A1A1A",
@@ -71,6 +72,8 @@
     "editor.fontFamily": "Iosevka Comfy",
     "editor.fontSize": 14,
     "editor.fontWeight": "600",
+    "editor.formatOnSave": true,
+    "editor.linkedEditing": true,
     "terminal.integrated.fontFamily": "Iosevka Comfy",
     "terminal.integrated.fontSize": 15,
     // Theme and colors - Gruvbox Dark
