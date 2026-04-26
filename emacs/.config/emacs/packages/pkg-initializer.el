@@ -93,6 +93,16 @@
   (windmove-default-keybindings)
   (setq windmove-wrap-around t))
 
+;; ── Indent guides ───────────────────────────────────────────────
+
+(use-package highlight-indent-guides
+  :defer t
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :custom
+  (highlight-indent-guides-method 'character)
+  (highlight-indent-guides-responsive 'top)
+  (highlight-indent-guides-auto-character-face-perc 20))
+
 ;; ── Org mode ────────────────────────────────────────────────────
 
 (use-package org
