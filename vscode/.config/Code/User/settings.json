@@ -1,7 +1,7 @@
 {
     // UI Layout - Emacs-like minimal interface
     "workbench.sideBar.location": "left",
-    "workbench.activityBar.visible": false,
+    "workbench.activityBar.visible": true,
     "editor.minimap.enabled": false,
     "breadcrumbs.enabled": true,
     "editor.renderLineHighlight": "none",
