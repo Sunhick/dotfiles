@@ -106,6 +106,11 @@
 ;; Show empty lines indicator
 (set-default 'indicate-empty-lines t)
 
+;; Show comments in italics in programming modes
+(custom-set-faces
+ '(font-lock-comment-face ((t (:slant italic))))
+ '(font-lock-comment-delimiter-face ((t (:inherit font-lock-comment-face)))))
+
 ;; ibuffer is a better choice
 (defalias 'list-buffers 'ibuffer)
 
