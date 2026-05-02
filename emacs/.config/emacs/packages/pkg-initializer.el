@@ -116,6 +116,38 @@
 
 ;; ── Language modes ──────────────────────────────────────────────
 
+;; Tree-sitter modes (Emacs 29+) — better syntax highlighting & navigation
+;; Grammars install automatically on first use via treesit-auto
+(use-package treesit-auto
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
+;; Remap major modes to tree-sitter variants where available
+(setq major-mode-remap-alist
+      '((python-mode    . python-ts-mode)
+        (js-mode        . js-ts-mode)
+        (typescript-mode . typescript-ts-mode)
+        (json-mode      . json-ts-mode)
+        (css-mode       . css-ts-mode)
+        (yaml-mode      . yaml-ts-mode)
+        (bash-mode      . bash-ts-mode)
+        (c-mode         . c-ts-mode)
+        (c++-mode       . c++-ts-mode)
+        (rust-mode      . rust-ts-mode)
+        (go-mode        . go-ts-mode)
+        (toml-mode      . toml-ts-mode)))
+
+;; Eglot hooks for tree-sitter modes
+(dolist (hook '(python-ts-mode-hook
+               rust-ts-mode-hook
+               go-ts-mode-hook
+               typescript-ts-mode-hook))
+  (add-hook hook #'eglot-ensure))
+
+;; Fallback non-treesit packages (used when grammar not available)
 (use-package go-mode
   :defer t
   :hook (go-mode . (lambda ()
