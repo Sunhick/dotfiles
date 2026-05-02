@@ -5,12 +5,22 @@ if [[ -x /usr/libexec/java_home ]]; then
     export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null)
 fi
 
-# Homebrew configuration
+# Homebrew configuration (cached to avoid subprocess on every shell)
+_brew_cache="${XDG_CACHE_HOME:-$HOME/.cache}/bash/brew_shellenv"
 if [[ -x /opt/homebrew/bin/brew ]]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    if [[ ! -f "$_brew_cache" || "$_brew_cache" -ot /opt/homebrew/bin/brew ]]; then
+        mkdir -p "$(dirname "$_brew_cache")"
+        /opt/homebrew/bin/brew shellenv > "$_brew_cache"
+    fi
+    source "$_brew_cache"
 elif [[ -x /usr/local/bin/brew ]]; then
-    eval "$(/usr/local/bin/brew shellenv)"
+    if [[ ! -f "$_brew_cache" || "$_brew_cache" -ot /usr/local/bin/brew ]]; then
+        mkdir -p "$(dirname "$_brew_cache")"
+        /usr/local/bin/brew shellenv > "$_brew_cache"
+    fi
+    source "$_brew_cache"
 fi
+unset _brew_cache
 
 # Application paths
 declare -a app_paths=(

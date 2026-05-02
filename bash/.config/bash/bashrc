@@ -72,22 +72,26 @@ if [[ -z "$INSIDE_EMACS" ]]; then
     # overrides normal prefix Tab completion. Our fzf.bash handles keybindings.
 fi
 
-# Load dir_colors for ls coloring
-if command -v gdircolors >/dev/null 2>&1; then
-    # Use GNU dircolors if available (from coreutils)
-    if [[ -f "${BASH_CONFIG_DIR}/dir_colors" ]]; then
-        eval "$(gdircolors -b "${BASH_CONFIG_DIR}/dir_colors")"
-    else
-        eval "$(gdircolors -b)"
-    fi
-elif command -v dircolors >/dev/null 2>&1; then
-    # Fallback to system dircolors
-    if [[ -f "${BASH_CONFIG_DIR}/dir_colors" ]]; then
-        eval "$(dircolors -b "${BASH_CONFIG_DIR}/dir_colors")"
-    else
-        eval "$(dircolors -b)"
+# Load dir_colors for ls coloring (cached to avoid subprocess on every shell)
+_dircolors_cache="${XDG_CACHE_HOME:-$HOME/.cache}/bash/dir_colors.sh"
+if [[ ! -f "$_dircolors_cache" || "${BASH_CONFIG_DIR}/dir_colors" -nt "$_dircolors_cache" ]]; then
+    mkdir -p "$(dirname "$_dircolors_cache")"
+    if command -v gdircolors >/dev/null 2>&1; then
+        if [[ -f "${BASH_CONFIG_DIR}/dir_colors" ]]; then
+            gdircolors -b "${BASH_CONFIG_DIR}/dir_colors" > "$_dircolors_cache"
+        else
+            gdircolors -b > "$_dircolors_cache"
+        fi
+    elif command -v dircolors >/dev/null 2>&1; then
+        if [[ -f "${BASH_CONFIG_DIR}/dir_colors" ]]; then
+            dircolors -b "${BASH_CONFIG_DIR}/dir_colors" > "$_dircolors_cache"
+        else
+            dircolors -b > "$_dircolors_cache"
+        fi
     fi
 fi
+[[ -f "$_dircolors_cache" ]] && source "$_dircolors_cache"
+unset _dircolors_cache
 
 # Load local machine-specific overrides
 include "${XDG_CONFIG_HOME}/work/bash/local" "optional"
