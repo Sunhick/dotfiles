@@ -93,6 +93,10 @@
 ;; enable recentf for recent files
 (recentf-mode 1)
 
+;; enable repeat-mode (Emacs 28+) — repeat last key without prefix
+;; e.g. C-x o o o to cycle windows, C-x ^ ^ ^ to enlarge
+(repeat-mode 1)
+
 ;; follow symbolic links to the actual files when editing
 (setq vc-follow-symlinks t)
 
