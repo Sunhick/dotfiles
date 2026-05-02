@@ -163,9 +163,25 @@
 ;; ── Misc ────────────────────────────────────────────────────────
 
 (use-package restclient :defer t)
-(use-package gruvbox-theme
-  :config (load-theme 'gruvbox-dark-hard t))
+(use-package gruvbox-theme :defer t)
 (use-package zenburn-theme :defer t)
+
+;; ── Time-based theme switching ──────────────────────────────────
+;; Day (7am–7pm): gruvbox-dark-hard
+;; Night (7pm–7am): modus-vivendi
+
+(defun my/load-theme-by-time ()
+  "Load theme based on time of day."
+  (let ((hour (string-to-number (format-time-string "%H"))))
+    (mapc #'disable-theme custom-enabled-themes)
+    (if (and (>= hour 7) (< hour 19))
+        (load-theme 'gruvbox-dark-hard t)
+      (load-theme 'modus-vivendi t))))
+
+(my/load-theme-by-time)
+
+;; Re-check every hour
+(run-at-time "01:00:00" 3600 #'my/load-theme-by-time)
 
 ;; ── Eshell prompt ────────────────────────────────────────────────
 
