@@ -30,10 +30,22 @@
 ;;; Code:
 
 ;; Set preferred font (with fallback)
-(let ((preferred-font "Aporetic Sans Mono"))
-  (if (find-font (font-spec :name preferred-font))
-      (set-frame-font (concat preferred-font ":pixelsize=15") t t)
-    (message "Font '%s' not found, using default" preferred-font)))
+;; Uses after-make-frame-functions for daemon mode compatibility
+(defvar my/preferred-font "Aporetic Sans Mono")
+(defvar my/font-size 15)
+
+(defun my/set-font (&optional frame)
+  "Set preferred font on FRAME, or current frame if nil."
+  (when (display-graphic-p (or frame (selected-frame)))
+    (with-selected-frame (or frame (selected-frame))
+      (if (find-font (font-spec :name my/preferred-font))
+          (set-frame-font (format "%s:pixelsize=%d" my/preferred-font my/font-size) t t)
+        (message "Font '%s' not found, using default" my/preferred-font)))))
+
+;; Apply font now (works for non-daemon startup)
+(my/set-font)
+;; Apply font when new frames are created (works for daemon + emacsclient)
+(add-hook 'after-make-frame-functions #'my/set-font)
 
 ;; Improve vertical spacing
 (setq-default line-spacing 2)
