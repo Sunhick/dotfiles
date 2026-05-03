@@ -37,10 +37,21 @@
 ;;           (width . 205)
 ;;           (height . 67))))
 (require 'base-window)
-(add-hook 'after-init-hook
-          (lambda ()
-            (set-frame-size (selected-frame) 205 67)
-            (set-frame-position (selected-frame) 50 0)))
+
+;; Open frames in native fullscreen (not maximized) and bring to front
+(add-to-list 'default-frame-alist '(fullscreen . fullboth))
+
+;; For daemon mode: apply fullscreen to each new client frame
+(defun my/setup-frame (&optional frame)
+  "Configure FRAME for fullscreen and bring to foreground."
+  (with-selected-frame (or frame (selected-frame))
+    (when (display-graphic-p)
+      (set-frame-parameter nil 'fullscreen 'fullboth)
+      ;; Bring Emacs to foreground on macOS
+      (when (eq system-type 'darwin)
+        (ns-do-applescript "tell application \"Emacs\" to activate")))))
+
+(add-hook 'after-make-frame-functions #'my/setup-frame)
 
 ;; Apply host settings
 (require 'base-host)
