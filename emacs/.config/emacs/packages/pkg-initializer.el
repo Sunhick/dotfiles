@@ -39,11 +39,6 @@
 
 ;; ── Git ─────────────────────────────────────────────────────────
 
-(use-package pinentry
-  :config
-  (setq epg-pinentry-mode 'loopback)
-  (pinentry-start))
-
 (use-package magit
   :defer t
   :bind ("C-x g" . magit-status)
