@@ -15,7 +15,9 @@ if command -v fzf >/dev/null 2>&1; then
     # Skip fzf completion — it overrides normal prefix Tab completion
     # Use **<Tab> trigger if you re-enable completion later
     for keybind_file in \
+        "/opt/homebrew/opt/fzf/shell/key-bindings.bash" \
         "/opt/homebrew/share/fzf/shell/key-bindings.bash" \
+        "/usr/local/opt/fzf/shell/key-bindings.bash" \
         "/usr/local/share/fzf/shell/key-bindings.bash" \
         "/usr/share/fzf/key-bindings.bash"; do
         if [[ -f "$keybind_file" ]]; then
