@@ -43,7 +43,8 @@
   :defer t
   :bind ("C-x g" . magit-status)
   :init
-  (setq vc-handled-backends (delq 'Git vc-handled-backends)))
+  (setq vc-handled-backends (delq 'Git vc-handled-backends))
+  (setq epg-pinentry-mode 'loopback))
 
 ;; ── Search ──────────────────────────────────────────────────────
 
