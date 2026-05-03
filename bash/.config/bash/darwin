@@ -60,16 +60,11 @@ else
     alias lsa="ls -lahG"
 fi
 
-# Application aliases (if available)
+# Emacs GUI (macOS-specific)
 if [[ -x "/Applications/Emacs.app/Contents/MacOS/Emacs" ]]; then
-    # Use open(1) so macOS brings Emacs to the foreground
-    alias emacs='open -a Emacs'
-    # For opening specific files in an existing Emacs frame
+    # Open Emacs GUI app (don't alias 'emacs' — breaks emacs --daemon)
+    alias emacs-gui='open -a Emacs'
     alias emacs-file='/Applications/Emacs.app/Contents/MacOS/Emacs'
-fi
-
-if command -v emacsclient >/dev/null; then
-    alias ec="emacsclient -c"
 fi
 
 # macOS-specific functions

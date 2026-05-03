@@ -64,9 +64,9 @@ elif command -v exa >/dev/null 2>&1; then
 fi
 
 # Emacs shortcuts
-alias es="emacs --daemon"              # start server
-alias ec="emacsclient -c"             # new frame (client)
-alias e="emacsclient -n"              # open file in existing frame
-alias et="emacsclient -t"             # open in terminal
-alias ek='emacsclient -e "(kill-emacs)"'  # kill server
-alias er='ek && es'                    # restart server
+alias es="emacs --daemon"                      # start server
+alias ec="emacsclient -c"                      # new frame (client)
+alias e="emacsclient -n"                       # open file in existing frame
+alias et="emacsclient -t"                      # open in terminal
+alias ek='emacsclient -e "(kill-emacs)"'       # kill server
+alias er='ek && es'                            # restart server
