@@ -44,7 +44,10 @@
   :bind ("C-x g" . magit-status)
   :init
   (setq vc-handled-backends (delq 'Git vc-handled-backends))
-  (setq epg-pinentry-mode 'loopback))
+  (setq epg-pinentry-mode 'loopback)
+  :config
+  ;; Limit log to 25 commits when showing signatures (prevents slow GPG verify)
+  (setq magit-log-section-commit-count 25))
 
 ;; ── Search ──────────────────────────────────────────────────────
 
