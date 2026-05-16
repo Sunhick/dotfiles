@@ -247,7 +247,16 @@
               (face-remap-add-relative 'variable-pitch :family my/preferred-font)))
   (set-face-attribute 'elfeed-search-title-face nil :font (face-attribute 'default :font))
   (set-face-attribute 'elfeed-search-feed-face nil :font (face-attribute 'default :font))
-  (set-face-attribute 'elfeed-search-tag-face nil :font (face-attribute 'default :font)))
+  (set-face-attribute 'elfeed-search-tag-face nil :font (face-attribute 'default :font))
+
+  ;; Open articles in eww (Emacs browser) instead of external browser
+  (defun my/elfeed-open-in-eww ()
+    "Open current elfeed entry URL in eww."
+    (interactive)
+    (let ((url (elfeed-entry-link elfeed-show-entry)))
+      (when url (eww url))))
+
+  (define-key elfeed-show-mode-map (kbd "b") #'my/elfeed-open-in-eww))
 
 (use-package elfeed-org
   :defer t
