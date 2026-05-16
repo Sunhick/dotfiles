@@ -199,7 +199,7 @@
   :bind ("C-c r" . elfeed)
   :custom
   (elfeed-db-directory (expand-file-name "emacs/elfeed" xdg-data-home))
-  (elfeed-search-filter "@1-week-ago +unread")
+  (elfeed-search-filter "+unread")
   (elfeed-feeds
    '(;; Emacs
      ("https://planet.emacslife.com/atom.xml" emacs)
@@ -244,6 +244,8 @@
               (setq-local line-spacing 4)
               ;; Force monospace in article view (shr uses variable-pitch by default)
               (setq-local shr-use-fonts nil)
+              ;; Limit image width to window width
+              (setq-local shr-max-image-proportion 0.6)
               (face-remap-add-relative 'variable-pitch :family my/preferred-font)))
   (set-face-attribute 'elfeed-search-title-face nil :font (face-attribute 'default :font))
   (set-face-attribute 'elfeed-search-feed-face nil :font (face-attribute 'default :font))
