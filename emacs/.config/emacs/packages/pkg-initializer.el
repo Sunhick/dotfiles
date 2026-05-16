@@ -192,6 +192,37 @@
   (ediff-split-window-function 'split-window-horizontally)
   (ediff-diff-options "-w"))
 
+;; ── RSS (elfeed) ─────────────────────────────────────────────────
+
+(use-package elfeed
+  :defer t
+  :bind ("C-c r" . elfeed)
+  :custom
+  (elfeed-db-directory (expand-file-name "emacs/elfeed" xdg-data-home))
+  (elfeed-search-filter "@1-week-ago +unread")
+  (elfeed-feeds
+   '(;; Emacs
+     ("https://planet.emacslife.com/atom.xml" emacs)
+     ("https://protesilaos.com/codelog.xml" emacs prot)
+     ("https://irreal.org/blog/?feed=rss2" emacs)
+     ;; Tech
+     ("https://news.ycombinator.com/rss" hn tech)
+     ("https://lobste.rs/rss" lobsters tech)
+     ("https://blog.rust-lang.org/feed.xml" rust)
+     ("https://go.dev/blog/feed.atom" go)
+     ;; Security
+     ("https://krebsonsecurity.com/feed/" security)
+     ;; Linux/Unix
+     ("https://lwn.net/headlines/rss" linux)
+     ;; Add your own feeds below
+     )))
+
+(use-package elfeed-org
+  :defer t
+  :after elfeed
+  :config
+  (elfeed-org))
+
 ;; ── Misc ────────────────────────────────────────────────────────
 
 (use-package restclient :defer t)
