@@ -219,7 +219,12 @@
   :config
   ;; Use the default frame font (not variable-pitch)
   (add-hook 'elfeed-search-mode-hook (lambda () (setq-local line-spacing 4)))
-  (add-hook 'elfeed-show-mode-hook (lambda () (setq-local line-spacing 4)))
+  (add-hook 'elfeed-show-mode-hook
+            (lambda ()
+              (setq-local line-spacing 4)
+              ;; Force monospace in article view (shr uses variable-pitch by default)
+              (setq-local shr-use-fonts nil)
+              (face-remap-add-relative 'variable-pitch :family my/preferred-font)))
   (set-face-attribute 'elfeed-search-title-face nil :font (face-attribute 'default :font))
   (set-face-attribute 'elfeed-search-feed-face nil :font (face-attribute 'default :font))
   (set-face-attribute 'elfeed-search-tag-face nil :font (face-attribute 'default :font)))
