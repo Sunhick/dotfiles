@@ -212,9 +212,13 @@
      ("https://blog.yubico.com/feed/" yubikey security)
      ("https://words.filippo.io/rss/" crypto go)
      ("https://soatok.blog/feed/" crypto)
-     ;; Formal methods / Correctness
+     ;; Formal methods / Correctness / Distributed systems
      ("https://www.hillelwayne.com/index.xml" formal-methods tla)
      ("https://brooker.co.za/blog/rss.xml" distributed-systems formal)
+     ("https://martin.kleppmann.com/feed.xml" distributed-systems crdt)
+     ("https://foundation.tlapl.us/blog/index.xml" tla formal-methods)
+     ("https://emptysqua.re/blog/feed" tla python)
+     ("https://www.microsoft.com/en-us/research/blog/tag/leslie-lamport/feed/" lamport formal)
      ;; Linux / Systems
      ("https://lwn.net/headlines/rss" linux)
      ("https://blog.cloudflare.com/rss/" systems networking)
