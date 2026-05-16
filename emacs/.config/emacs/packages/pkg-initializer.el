@@ -205,15 +205,31 @@
      ("https://planet.emacslife.com/atom.xml" emacs)
      ("https://protesilaos.com/codelog.xml" emacs prot)
      ("https://irreal.org/blog/?feed=rss2" emacs)
-     ;; Tech
-     ("https://news.ycombinator.com/rss" hn tech)
-     ("https://lobste.rs/rss" lobsters tech)
+     ("https://sachachua.com/blog/feed/" emacs weekly)
+     ;; Security / Crypto / Hardware keys
+     ("https://krebsonsecurity.com/feed/" security)
+     ("https://www.schneier.com/feed/atom/" security crypto)
+     ("https://blog.yubico.com/feed/" yubikey security)
+     ("https://words.filippo.io/rss/" crypto go)
+     ("https://soatok.blog/feed/" crypto)
+     ;; Formal methods / Correctness
+     ("https://www.hillelwayne.com/index.xml" formal-methods tla)
+     ("https://brooker.co.za/blog/rss.xml" distributed-systems formal)
+     ;; Linux / Systems
+     ("https://lwn.net/headlines/rss" linux)
+     ("https://blog.cloudflare.com/rss/" systems networking)
+     ("https://jvns.ca/atom.xml" linux systems)
+     ("https://rachelbythebay.com/w/atom.xml" systems debugging)
+     ;; Git
+     ("https://github.blog/feed/" git github)
+     ;; Rust / Go / Languages
      ("https://blog.rust-lang.org/feed.xml" rust)
      ("https://go.dev/blog/feed.atom" go)
-     ;; Security
-     ("https://krebsonsecurity.com/feed/" security)
-     ;; Linux/Unix
-     ("https://lwn.net/headlines/rss" linux)
+     ("https://without.boats/index.xml" rust async)
+     ;; Tech general
+     ("https://news.ycombinator.com/rss" hn tech)
+     ("https://lobste.rs/rss" lobsters tech)
+     ("https://drewdevault.com/blog/index.xml" foss systems)
      ;; Add your own feeds below
      ))
   :config
