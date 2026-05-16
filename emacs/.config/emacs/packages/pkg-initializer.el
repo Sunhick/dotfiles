@@ -215,7 +215,14 @@
      ;; Linux/Unix
      ("https://lwn.net/headlines/rss" linux)
      ;; Add your own feeds below
-     )))
+     ))
+  :config
+  ;; Use the default frame font (not variable-pitch)
+  (add-hook 'elfeed-search-mode-hook (lambda () (setq-local line-spacing 4)))
+  (add-hook 'elfeed-show-mode-hook (lambda () (setq-local line-spacing 4)))
+  (set-face-attribute 'elfeed-search-title-face nil :font (face-attribute 'default :font))
+  (set-face-attribute 'elfeed-search-feed-face nil :font (face-attribute 'default :font))
+  (set-face-attribute 'elfeed-search-tag-face nil :font (face-attribute 'default :font)))
 
 (use-package elfeed-org
   :defer t
