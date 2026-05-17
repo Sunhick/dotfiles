@@ -266,6 +266,14 @@
   :config
   (elfeed-org))
 
+;; ── SHR / EWW ──────────────────────────────────────────────────
+;; Force shr (used by eww and elfeed) to respect the default Emacs font
+(setq shr-use-fonts nil)
+
+(add-hook 'eww-mode-hook
+          (lambda ()
+            (buffer-face-set 'default)))
+
 ;; ── Misc ────────────────────────────────────────────────────────
 
 (use-package restclient :defer t)
