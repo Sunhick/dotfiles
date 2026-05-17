@@ -192,6 +192,18 @@
   (ediff-split-window-function 'split-window-horizontally)
   (ediff-diff-options "-w"))
 
+;; ── PDF reading ──────────────────────────────────────────────────
+
+(use-package pdf-tools
+  :defer t
+  :mode ("\\.pdf\\'" . pdf-view-mode)
+  :custom
+  (pdf-view-display-size 'fit-page)
+  (pdf-view-use-scaling t)
+  (pdf-view-use-imagemagick nil)
+  :config
+  (pdf-tools-install :no-query))
+
 ;; ── RSS (elfeed) ─────────────────────────────────────────────────
 
 (use-package elfeed
