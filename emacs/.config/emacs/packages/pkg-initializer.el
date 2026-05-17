@@ -220,21 +220,22 @@
      ("https://emptysqua.re/blog/feed" tla python)
      ("https://www.microsoft.com/en-us/research/blog/tag/leslie-lamport/feed/" lamport formal)
      ;; Linux / Systems
-     ("https://lwn.net/headlines/rss" linux)
-     ("https://blog.cloudflare.com/rss/" systems networking)
-     ("https://jvns.ca/atom.xml" linux systems)
-     ("https://rachelbythebay.com/w/atom.xml" systems debugging)
+    ;;  ("https://lwn.net/headlines/rss" linux)
+    ;;  ("https://blog.cloudflare.com/rss/" systems networking)
+    ;;  ("https://jvns.ca/atom.xml" linux systems)
+    ;;  ("https://rachelbythebay.com/w/atom.xml" systems debugging)
      ;; Git
      ("https://github.blog/feed/" git github)
      ;; Rust / Go / Languages
-     ("https://blog.rust-lang.org/feed.xml" rust)
-     ("https://go.dev/blog/feed.atom" go)
-     ("https://without.boats/index.xml" rust async)
+    ;;  ("https://blog.rust-lang.org/feed.xml" rust)
+    ;;  ("https://go.dev/blog/feed.atom" go)
+    ;;  ("https://without.boats/index.xml" rust async)
      ;; Tech general
      ("https://news.ycombinator.com/rss" hn tech)
      ("https://lobste.rs/rss" lobsters tech)
      ("https://drewdevault.com/blog/index.xml" foss systems)
-     ;; Add your own feeds below
+     ;; Personal
+     ("https://sunhick.github.io/feed.xml" personal)
      ))
   :config
   ;; Use the default frame font (not variable-pitch)
