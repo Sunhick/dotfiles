@@ -192,6 +192,18 @@
   (ediff-split-window-function 'split-window-horizontally)
   (ediff-diff-options "-w"))
 
+;; ── Process manager (proced) ──────────────────────────────────────
+
+(use-package proced
+  :ensure nil ; built-in
+  :defer t
+  :bind ("C-c p" . proced)
+  :custom
+  (proced-auto-update-flag t)
+  (proced-auto-update-interval 3)
+  (proced-enable-color-flag t)
+  (proced-format 'medium))
+
 ;; ── PDF reading ──────────────────────────────────────────────────
 
 (use-package pdf-tools
