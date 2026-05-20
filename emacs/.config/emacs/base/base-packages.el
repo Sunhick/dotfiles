@@ -13,6 +13,13 @@
 
 ;;; Code:
 
+;; Ensure Emacs can find system tools (git, etc.) when running as daemon
+;; macOS GUI apps don't inherit shell PATH
+(dolist (dir '("/opt/homebrew/bin" "/usr/local/bin" "/usr/bin"))
+  (unless (member dir exec-path)
+    (push dir exec-path)))
+(setenv "PATH" (mapconcat #'identity exec-path ":"))
+
 (require 'package)
 
 (package-initialize)

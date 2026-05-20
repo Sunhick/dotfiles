@@ -192,6 +192,29 @@
   (ediff-split-window-function 'split-window-horizontally)
   (ediff-diff-options "-w"))
 
+;; ── AI Agent (Kiro via ACP) ──────────────────────────────────────
+;; Install: git clone https://github.com/xenodium/acp.el ~/.local/share/emacs/site-lisp/acp
+;;          git clone https://github.com/xenodium/agent-shell.el ~/.local/share/emacs/site-lisp/agent-shell
+
+(let* ((data-home (or (getenv "XDG_DATA_HOME") (expand-file-name "~/.local/share")))
+       (acp-dir (expand-file-name "emacs/site-lisp/acp" data-home))
+       (shell-maker-dir (expand-file-name "emacs/site-lisp/shell-maker" data-home))
+       (agent-dir (expand-file-name "emacs/site-lisp/agent-shell" data-home)))
+  (when (file-directory-p shell-maker-dir)
+    (add-to-list 'load-path shell-maker-dir))
+  (when (file-directory-p acp-dir)
+    (add-to-list 'load-path acp-dir)
+    (require 'acp)
+    (setq acp-logging-enabled nil))
+  (when (and (featurep 'acp) (file-directory-p agent-dir))
+    (add-to-list 'load-path agent-dir)
+    (require 'agent-shell)
+
+    (global-set-key (kbd "C-c k") #'agent-shell)
+    (setq agent-shell-default-client
+          (acp-make-client :command (expand-file-name "~/.toolbox/bin/kiro-cli")
+                           :command-params '("acp" "--trust-all-tools")))))
+
 ;; ── Process manager (proced) ──────────────────────────────────────
 
 (use-package proced
