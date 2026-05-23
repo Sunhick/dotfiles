@@ -124,6 +124,24 @@
 ;; ibuffer is a better choice
 (defalias 'list-buffers 'ibuffer)
 
+;; Winner mode — undo/redo window layout changes
+;; C-c <left> to undo, C-c <right> to redo
+(winner-mode 1)
+
+;; Tab-bar mode — workspaces without the visual tab bar
+;; C-x t 2: new tab, C-x t 0: close, C-x t o: next, C-x t O: prev
+;; M-1 through M-9: switch to tab by number
+(setq tab-bar-show nil)              ; never show the tab bar
+(setq tab-bar-new-tab-choice "*scratch*")
+(tab-bar-mode 1)
+
+;; Quick tab switching with M-number
+(global-set-key (kbd "M-1") (lambda () (interactive) (tab-bar-select-tab 1)))
+(global-set-key (kbd "M-2") (lambda () (interactive) (tab-bar-select-tab 2)))
+(global-set-key (kbd "M-3") (lambda () (interactive) (tab-bar-select-tab 3)))
+(global-set-key (kbd "M-4") (lambda () (interactive) (tab-bar-select-tab 4)))
+(global-set-key (kbd "M-5") (lambda () (interactive) (tab-bar-select-tab 5)))
+
 (provide 'base-ui)
 
 ;;; base-ui.el ends here
