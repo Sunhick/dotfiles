@@ -283,6 +283,13 @@
      ;;("https://rachelbythebay.com/w/atom.xml" systems debugging)
      ;; Git
      ("https://github.blog/feed/" git github)
+     ;; AWS / Amazon DEs
+     ("https://www.allthingsdistributed.com/atom.xml" aws distributed-systems)
+     ("https://www.tbray.org/ongoing/ongoing.atom" systems standards)
+     ("https://perspectives.mvdirona.com/feed/" aws infrastructure)
+     ("https://aws.amazon.com/blogs/architecture/feed/" aws architecture)
+     ("https://aws.amazon.com/blogs/compute/feed/" aws compute)
+     ("https://aws.amazon.com/blogs/security/feed/" aws security)
      ;; Tech general
      ("https://news.ycombinator.com/rss" hn tech)
      ("https://lobste.rs/rss" lobsters tech)
