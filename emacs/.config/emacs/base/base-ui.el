@@ -105,9 +105,10 @@
 (setq line-number-mode t)
 (setq column-number-mode t)
 
-(global-display-line-numbers-mode 1)
-(setq display-line-numbers-type 'relative)
-(setq-default display-line-numbers-current-absolute nil)
+;; No line numbers
+;; (global-display-line-numbers-mode 1)
+;; (setq display-line-numbers-type 'relative)
+;; (setq-default display-line-numbers-current-absolute nil)
 
 ;; use whitespaces instead of tabs
 (setq-default indent-tabs-mode nil)
