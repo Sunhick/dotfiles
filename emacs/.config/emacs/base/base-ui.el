@@ -97,6 +97,10 @@
 ;; No blinking cursor
 (blink-cursor-mode 0)
 
+;; Highlight current line — only in the active window
+(global-hl-line-mode 1)
+(setq hl-line-sticky-flag nil)
+
 ;; Display line & column numbers
 (setq line-number-mode t)
 (setq column-number-mode t)
