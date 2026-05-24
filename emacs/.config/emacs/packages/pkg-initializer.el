@@ -259,24 +259,30 @@
      ("https://blog.yubico.com/feed/" yubikey security)
      ("https://words.filippo.io/rss/" crypto go)
      ("https://soatok.blog/feed/" crypto)
-     ;; Formal methods / Correctness / Distributed systems
+     ("https://www.nitrokey.com/blog/feed" hardware-security)
+     ("https://blog.trailofbits.com/feed/" crypto audits)
+     ("https://blog.cryptographyengineering.com/feed/" crypto)
+     ("https://eprint.iacr.org/rss/rss.xml" crypto papers)
+     ;; Formal methods / TLA+
      ("https://www.hillelwayne.com/index.xml" formal-methods tla)
-     ("https://brooker.co.za/blog/rss.xml" distributed-systems formal)
-     ("https://martin.kleppmann.com/feed.xml" distributed-systems crdt)
      ("https://foundation.tlapl.us/blog/index.xml" tla formal-methods)
      ("https://emptysqua.re/blog/feed" tla python)
      ("https://www.microsoft.com/en-us/research/blog/tag/leslie-lamport/feed/" lamport formal)
+     ;; Distributed systems
+     ("https://brooker.co.za/blog/rss.xml" distributed-systems)
+     ("https://martin.kleppmann.com/feed.xml" distributed-systems crdt)
+     ("https://jepsen.io/blog/feed" distributed-systems testing)
+     ("https://muratbuffalo.blogspot.com/feeds/posts/default" distributed-systems papers)
+     ("https://decentralizedthoughts.github.io/feed.xml" distributed-systems consensus)
+     ("https://www.micahlerner.com/feed.xml" distributed-systems papers)
+     ("https://blog.acolyer.org/feed/" distributed-systems papers)
      ;; Linux / Systems
-    ;;  ("https://lwn.net/headlines/rss" linux)
-    ;;  ("https://blog.cloudflare.com/rss/" systems networking)
-    ;;  ("https://jvns.ca/atom.xml" linux systems)
-    ;;  ("https://rachelbythebay.com/w/atom.xml" systems debugging)
+     ;;("https://lwn.net/headlines/rss" linux)
+     ;;("https://blog.cloudflare.com/rss/" systems networking)
+     ;;("https://jvns.ca/atom.xml" linux systems)
+     ;;("https://rachelbythebay.com/w/atom.xml" systems debugging)
      ;; Git
      ("https://github.blog/feed/" git github)
-     ;; Rust / Go / Languages
-    ;;  ("https://blog.rust-lang.org/feed.xml" rust)
-    ;;  ("https://go.dev/blog/feed.atom" go)
-    ;;  ("https://without.boats/index.xml" rust async)
      ;; Tech general
      ("https://news.ycombinator.com/rss" hn tech)
      ("https://lobste.rs/rss" lobsters tech)
