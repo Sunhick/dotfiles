@@ -1,0 +1,36 @@
+alias .. cd ..
+alias ... cd ../..
+alias .... cd ../../..
+alias ..... cd ../../../..
+alias ~ cd ~
+
+alias ls ls $*
+alias l ls -lah $*
+alias la ls -lAh $*
+alias ll ls -lh $*
+alias lsa ls -lah $*
+
+alias grep grep --color=auto $*
+alias tree tree -C $*
+
+alias g git $*
+alias gs git status
+alias ga git add $*
+alias gc git commit $*
+alias gp git push $*
+alias gl git pull $*
+alias gd git diff $*
+alias gb git branch $*
+alias gco git checkout $*
+
+alias cat bat $*
+alias search rg $*
+
+alias c clear
+alias h history
+
+alias es emacs --daemon
+alias ec emacsclient -c $*
+alias e emacsclient -n $*
+alias et emacsclient -t $*
+alias ek emacsclient -e "(kill-emacs)"

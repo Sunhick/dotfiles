@@ -70,8 +70,8 @@
 ;; Bookmarks
 (setq bookmark-default-file (expand-file-name "emacs/bookmarks" xdg-data-home))
 
-;; Eshell
-(setq eshell-directory-name (expand-file-name "emacs/eshell" xdg-data-home))
+;; Eshell — config files (alias, profile) in XDG config, data in XDG data
+(setq eshell-directory-name (expand-file-name "emacs/eshell" xdg-config-home))
 
 ;; URL cache
 (setq url-cache-directory (expand-file-name "emacs/url" xdg-cache-home))
