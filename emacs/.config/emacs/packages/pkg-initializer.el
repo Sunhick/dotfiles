@@ -338,7 +338,10 @@
     (mapc #'disable-theme custom-enabled-themes)
     (if (and (>= hour 7) (< hour 19))
         (load-theme 'gruvbox-dark-hard t)
-      (load-theme 'modus-vivendi t))))
+      (load-theme 'modus-vivendi t)))
+  ;; Re-apply face customizations after theme load
+  (set-face-attribute 'line-number nil :height 0.8)
+  (set-face-attribute 'line-number-current-line nil :height 0.8))
 
 (my/load-theme-by-time)
 
