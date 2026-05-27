@@ -1,20 +1,20 @@
 {
-    // UI Layout - Emacs-like minimal interface
+    // UI — vanilla with standard controls
     "workbench.sideBar.location": "left",
     "workbench.activityBar.visible": true,
+    "workbench.statusBar.visible": true,
+    "workbench.editor.showTabs": "multiple",
+    "workbench.editor.tabCloseButton": "right",
     "editor.minimap.enabled": false,
     "breadcrumbs.enabled": true,
-    "editor.renderLineHighlight": "none",
-    "workbench.statusBar.visible": true,
-    "workbench.editor.showTabs": true,
-    "workbench.editor.tabCloseButton": "off",
+    "editor.renderLineHighlight": "line",
     // Cursor
     "editor.cursorStyle": "line",
     "editor.cursorBlinking": "blink",
-    // Line numbers - Emacs relative line numbers
-    "editor.lineNumbers": "relative",
+    // Line numbers
+    "editor.lineNumbers": "on",
     "editor.renderFinalNewline": "on",
-    // Indentation and whitespace - Emacs behavior
+    // Indentation and whitespace
     "editor.insertSpaces": true,
     "editor.detectIndentation": true,
     "editor.renderWhitespace": "trailing",
@@ -22,27 +22,27 @@
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
-    // Word wrap - Emacs visual line mode
+    // Word wrap
     "editor.wordWrap": "on",
     "editor.wordWrapColumn": 80,
     "editor.rulers": [
         80
     ],
-    // Search and navigation - Emacs-like behavior
+    // Search
     "search.useIgnoreFiles": true,
     "search.smartCase": true,
     "workbench.list.smoothScrolling": true,
     "editor.find.addExtraSpaceOnTop": false,
-    // File handling - Emacs-like behavior
+    // File handling
     "files.autoSave": "off",
-    "explorer.confirmDelete": false,
-    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": true,
+    "explorer.confirmDragAndDrop": true,
     "files.exclude": {
         "**/.DS_Store": true,
         "**/Thumbs.db": true
     },
     // Editor behavior
-    "editor.acceptSuggestionOnEnter": "off",
+    "editor.acceptSuggestionOnEnter": "on",
     "editor.quickSuggestions": {
         "other": "on",
         "comments": "off",
@@ -50,25 +50,17 @@
     },
     "editor.suggestOnTriggerCharacters": true,
     "editor.parameterHints.enabled": true,
-    "editor.hover.enabled": false,
+    "editor.hover.enabled": true,
     "editor.lightbulb.enabled": "on",
-    // Scrolling - Emacs-like smooth scrolling
+    // Scrolling
     "editor.smoothScrolling": true,
-    "editor.scrollBeyondLastLine": false,
+    "editor.scrollBeyondLastLine": true,
     "editor.scrollBeyondLastColumn": 5,
-    // Matching brackets - Emacs show-paren-mode
+    // Brackets
     "editor.matchBrackets": "always",
     "editor.guides.bracketPairs": "active",
     "editor.bracketPairColorization.enabled": true,
-    // Theme and colors
-    "workbench.colorCustomizations": {
-        "statusBar.background": "#1A1A1A",
-        "statusBar.noFolderBackground": "#212121",
-        "statusBar.debuggingBackground": "#263238",
-        "editorLineNumber.foreground": "#666666",
-        "editorLineNumber.activeForeground": "#ffffff"
-    },
-    // Font - Iosevka Comfy
+    // Font
     "editor.fontFamily": "Aporetic Sans Mono",
     "editor.fontSize": 14,
     "editor.fontWeight": "600",
@@ -76,19 +68,13 @@
     "editor.linkedEditing": true,
     "terminal.integrated.fontFamily": "Aporetic Sans Mono",
     "terminal.integrated.fontSize": 13,
-    // Theme and colors - Gruvbox Dark
+    // Theme
     "workbench.colorTheme": "Gruvbox Dark Hard",
-    // Terminal - Emacs-like
+    // Terminal
     "terminal.integrated.scrollback": 10000,
-    "terminal.integrated.cursorStyle": "block",
-    "terminal.integrated.cursorBlinking": false,
-    // Keybindings hint
+    "terminal.integrated.cursorStyle": "bar",
+    "terminal.integrated.cursorBlinking": true,
+    // Startup
     "workbench.tips.enabled": false,
-    "workbench.startupEditor": "none",
-    // Zen mode for distraction-free editing
-    "zenMode.hideLineNumbers": false,
-    "zenMode.hideTabs": true,
-    "zenMode.hideStatusBar": false,
-    "zenMode.centerLayout": false,
-    "zenMode.fullScreen": true
+    "workbench.startupEditor": "none"
 }
