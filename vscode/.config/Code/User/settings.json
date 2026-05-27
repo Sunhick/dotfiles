@@ -8,9 +8,9 @@
     "workbench.statusBar.visible": true,
     "workbench.editor.showTabs": true,
     "workbench.editor.tabCloseButton": "off",
-    // Cursor and selection - Emacs block cursor
-    "editor.cursorStyle": "block",
-    "editor.cursorBlinking": "solid",
+    // Cursor
+    "editor.cursorStyle": "line",
+    "editor.cursorBlinking": "blink",
     // Line numbers - Emacs relative line numbers
     "editor.lineNumbers": "relative",
     "editor.renderFinalNewline": "on",
@@ -85,12 +85,7 @@
     // Keybindings hint
     "workbench.tips.enabled": false,
     "workbench.startupEditor": "none",
-    // Emacs keybinding extension
-    // Install: ext install tuttieee.emacs-mcx
-    "emacs-mcx.killRingMax": 60,
-    "emacs-mcx.strictEmacsMove": true,
-    "emacs-mcx.useMetaPrefixMacCmd": false,
-    // Zen mode for distraction-free editing (like emacs fullscreen)
+    // Zen mode for distraction-free editing
     "zenMode.hideLineNumbers": false,
     "zenMode.hideTabs": true,
     "zenMode.hideStatusBar": false,
