@@ -100,7 +100,7 @@ include "${XDG_CONFIG_HOME}/work/bash/local" "optional"
 # Runs via PROMPT_COMMAND on first prompt to ensure it executes after
 # all completion sources (Homebrew, fzf) have finished registering
 _remove_fzf_completions() {
-    for _cmd in cd pushd rmdir ls cat less head tail; do
+    for _cmd in cd pushd rmdir; do
         complete -r "$_cmd" 2>/dev/null
     done
     unset _cmd
