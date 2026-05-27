@@ -96,7 +96,31 @@
 ;; ── Org mode ────────────────────────────────────────────────────
 
 (use-package org
-  :defer t)
+  :defer t
+  :bind (("C-c c" . org-capture)
+         ("C-c a" . org-agenda))
+  :custom
+  (org-directory (expand-file-name "~/org"))
+  (org-default-notes-file (expand-file-name "inbox.org" org-directory))
+  (org-agenda-files (list org-directory))
+  :config
+  ;; Create org directory if it doesn't exist
+  (make-directory org-directory t)
+
+  ;; Capture templates
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline "inbox.org" "Tasks")
+           "* TODO %?\n%U\n")
+          ("n" "Note" entry (file+headline "notes.org" "Notes")
+           "* %?\n%U\n")
+          ("r" "Reading" entry (file+headline "reading.org" "To Read")
+           "* %?\n:PROPERTIES:\n:URL: %^{URL}\n:END:\n%U\n")
+          ("p" "Paper" entry (file+headline "papers.org" "Papers")
+           "* %^{Title}\n:PROPERTIES:\n:AUTHOR: %^{Author}\n:URL: %^{URL}\n:END:\n** Summary\n%?\n%U\n")
+          ("i" "Idea" entry (file+headline "ideas.org" "Ideas")
+           "* %?\n%U\n")
+          ("j" "Journal" entry (file+olp+datetree "journal.org")
+           "* %?\n%U\n"))))
 
 (use-package org-bullets
   :defer t
