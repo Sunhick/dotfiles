@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Arrow glyph
-glyph_arrow='❯'
+# Prompt glyph
+glyph_arrow='ξ'
 
 # Git branch function
 git_branch() {
@@ -40,7 +40,7 @@ prompt_command() {
     # prompt+="$(git_branch)"
 
     # Final prompt character
-    prompt+=" ${bold_white}❯${reset_color} "
+    prompt+=" ${bold_white}ξ${reset_color} "
 
     # Set terminal title: user:dirname
     prompt="\[\e]0;\u:\W\a\]${prompt}"
