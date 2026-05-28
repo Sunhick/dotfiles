@@ -248,7 +248,9 @@
   :custom
   (proced-auto-update-flag nil)
   (proced-enable-color-flag t)
-  (proced-format 'medium))
+  (proced-format 'short)
+  (proced-filter 'user)
+  (proced-tree-flag t))
 
 ;; ── PDF reading ──────────────────────────────────────────────────
 
