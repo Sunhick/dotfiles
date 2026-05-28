@@ -246,8 +246,7 @@
   :defer t
   :bind ("C-c p" . proced)
   :custom
-  (proced-auto-update-flag t)
-  (proced-auto-update-interval 3)
+  (proced-auto-update-flag nil)
   (proced-enable-color-flag t)
   (proced-format 'medium))
 
