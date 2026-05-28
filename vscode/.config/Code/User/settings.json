@@ -66,8 +66,9 @@
     "editor.fontWeight": "600",
     "editor.formatOnSave": true,
     "editor.linkedEditing": true,
-    "terminal.integrated.fontFamily": "Aporetic Sans Mono",
+    "terminal.integrated.fontFamily": "Zenbones Brainy",
     "terminal.integrated.fontSize": 13,
+    "terminal.integrated.fontWeight": "bold",
     // Theme
     "workbench.colorTheme": "Gruvbox Dark Hard",
     // Terminal
