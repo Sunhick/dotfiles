@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Prompt glyph
-glyph_arrow='φ'
+start_glyph='β'
 end_glyph='❯'
 
 # Git branch function
@@ -29,9 +29,9 @@ prompt_command() {
 
     # Status indicator based on last exit code
     if [[ "$last_exit_code" -ne 0 ]]; then
-        prompt+="${bold_red}${glyph_arrow}${reset_color} "
+        prompt+="${bold_red}${start_glyph}${reset_color} "
     else
-        prompt+="${bold_green}${glyph_arrow}${reset_color} "
+        prompt+="${bold_green}${start_glyph}${reset_color} "
     fi
 
     # Current working directory
