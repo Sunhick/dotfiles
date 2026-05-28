@@ -1,5 +1,5 @@
 # PowerShell Prompt Configuration
-# Mirrors bash prompt: [AWS_PROFILE] ❯ dirname ❯
+# Mirrors bash prompt: [AWS_PROFILE] φ dirname ❯
 
 #region Colors — matching bash vibrant_colors theme
 $Colors = @{
@@ -34,9 +34,9 @@ function prompt {
 
     # Status indicator
     if ($exitCode -and $exitCode -ne 0) {
-        $p += "$($Colors.BoldRed)❯$($Colors.Reset) "
+        $p += "$($Colors.BoldRed)φ$($Colors.Reset) "
     } else {
-        $p += "$($Colors.BoldGreen)❯$($Colors.Reset) "
+        $p += "$($Colors.BoldGreen)φ$($Colors.Reset) "
     }
 
     # Current directory

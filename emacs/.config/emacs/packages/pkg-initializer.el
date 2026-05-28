@@ -391,7 +391,7 @@
   :defer t
   :config
   (defun my/eshell-prompt ()
-    "Custom eshell prompt: > dirname >"
+    "Custom eshell prompt: φ dirname ❯"
     (let* ((last-status eshell-last-command-status)
            (dir (abbreviate-file-name (eshell/pwd)))
            (basename (file-name-nondirectory (directory-file-name dir)))
@@ -401,15 +401,15 @@
            (cyan "#689d6a")
            (white "#ebdbb2"))
       (concat
-       (propertize ">" 'face `(:foreground ,(if (= last-status 0) green red)))
+       (propertize "φ" 'face `(:foreground ,(if (= last-status 0) green red)))
        " "
        (propertize basename 'face `(:foreground ,cyan))
        " "
-       (propertize ">" 'face `(:foreground ,white))
+       (propertize "❯" 'face `(:foreground ,white))
        " ")))
 
   (setq eshell-prompt-function #'my/eshell-prompt)
-  (setq eshell-prompt-regexp "^> .* > ")
+  (setq eshell-prompt-regexp "^φ .* ❯ ")
   (setq eshell-highlight-prompt nil))
 
 ;; ── Shell-mode (fix bash prompt rendering) ──────────────────────
@@ -425,7 +425,7 @@
   ;; Match our prompt pattern for dirtrack
   (add-hook 'shell-mode-hook
             (lambda ()
-              (setq dirtrack-list '("^> \\(.*?\\) > " 1)))))
+              (setq dirtrack-list '("^φ \\(.*?\\) ❯ " 1)))))
 
 (provide 'pkg-initializer)
 
