@@ -7,5 +7,3 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
-[core]
-	sshCommand = ssh -i ~/.ssh/id_ed25519_sk -o IdentitiesOnly=yes

@@ -59,17 +59,23 @@ case "$(uname -s)" in
         ;;
 esac
 
-# Load completions (after OS-specific config so Homebrew paths are set)
-# Skip inside Emacs where readline completion is unavailable
+# Load git completion only (skip bash-completion — _longopt breaks macOS)
 if [[ -z "$INSIDE_EMACS" && "$TERM" != "dumb" ]]; then
-    include "${BASH_CONFIG_DIR}/completion"
+    for _git_comp in \
+        "/opt/homebrew/opt/git/etc/bash_completion.d/git-completion.bash" \
+        "/opt/homebrew/etc/bash_completion.d/git-completion.bash" \
+        "/usr/share/bash-completion/completions/git"; do
+        if [[ -r "$_git_comp" ]]; then
+            source "$_git_comp"
+            break
+        fi
+    done
+    unset _git_comp
 fi
 
-# Load fuzzy finder if available (skip in Emacs — fzf bind calls fail without readline)
+# Load fzf keybindings only (Ctrl-R, Ctrl-T, Alt-C)
 if [[ -z "$INSIDE_EMACS" ]]; then
     include "${XDG_CONFIG_HOME}/fzf/fzf.bash" "optional"
-    # Note: ~/.fzf.bash is NOT loaded — it registers fzf completion that
-    # overrides normal prefix Tab completion. Our fzf.bash handles keybindings.
 fi
 
 # Load dir_colors for ls coloring (cached to avoid subprocess on every shell)
@@ -95,16 +101,3 @@ unset _dircolors_cache
 
 # Load local machine-specific overrides
 include "${XDG_CONFIG_HOME}/work/bash/local" "optional"
-
-# Remove fzf's fuzzy completion overrides for common commands
-# Runs via PROMPT_COMMAND on first prompt to ensure it executes after
-# all completion sources (Homebrew, fzf) have finished registering
-_remove_fzf_completions() {
-    for _cmd in cd pushd rmdir cp mv rm cat less head tail ls; do
-        complete -r "$_cmd" 2>/dev/null
-    done
-    unset _cmd
-    # Remove self from PROMPT_COMMAND after first run
-    PROMPT_COMMAND="${PROMPT_COMMAND/_remove_fzf_completions;/}"
-}
-PROMPT_COMMAND="_remove_fzf_completions;${PROMPT_COMMAND}"

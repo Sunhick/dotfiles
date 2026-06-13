@@ -90,7 +90,6 @@
 (use-package windmove
   :ensure nil ; built-in
   :config
-  (windmove-default-keybindings)
   (setq windmove-wrap-around t))
 
 ;; ── Org mode ────────────────────────────────────────────────────
@@ -98,29 +97,71 @@
 (use-package org
   :defer t
   :bind (("C-c c" . org-capture)
-         ("C-c a" . org-agenda))
+         ("C-c a" . org-agenda)
+         ("C-c l" . org-store-link))
   :custom
   (org-directory (expand-file-name "~/org"))
   (org-default-notes-file (expand-file-name "inbox.org" org-directory))
   (org-agenda-files (list org-directory))
+  ;; Todo workflow
+  (org-todo-keywords '((sequence "TODO(t)" "IN-PROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+  (org-todo-keyword-faces
+   '(("TODO" . (:foreground "#cc241d" :weight bold))
+     ("IN-PROGRESS" . (:foreground "#d79921" :weight bold))
+     ("WAITING" . (:foreground "#b16286" :weight bold))
+     ("DONE" . (:foreground "#98971a" :weight bold))
+     ("CANCELLED" . (:foreground "#928374" :weight bold))))
+  ;; Logging
+  (org-log-done 'time)
+  (org-log-into-drawer t)
+  ;; Visual
+  (org-startup-indented t)
+  (org-startup-folded 'content)
+  (org-hide-emphasis-markers t)
+  (org-ellipsis " ▾")
+  (org-pretty-entities t)
+  ;; Source blocks
+  (org-src-fontify-natively t)
+  (org-src-tab-acts-natively t)
+  (org-edit-src-content-indentation 0)
+  ;; Refile
+  (org-refile-targets '((org-agenda-files :maxlevel . 3)))
+  (org-refile-use-outline-path 'file)
+  (org-outline-path-complete-in-steps nil)
+  ;; Tags
+  (org-tag-alist '(("@work" . ?w) ("@personal" . ?p)
+                   ("crypto" . ?c) ("distributed" . ?d)
+                   ("tla" . ?t) ("emacs" . ?e)
+                   ("reading" . ?r) ("idea" . ?i)))
   :config
-  ;; Create org directory if it doesn't exist
   (make-directory org-directory t)
+
+  ;; Agenda views
+  (setq org-agenda-custom-commands
+        '(("d" "Dashboard"
+           ((agenda "" ((org-agenda-span 7)))
+            (todo "IN-PROGRESS" ((org-agenda-overriding-header "In Progress")))
+            (todo "WAITING" ((org-agenda-overriding-header "Waiting")))
+            (todo "TODO" ((org-agenda-overriding-header "Backlog")))))
+          ("r" "Reading List"
+           ((tags "reading" ((org-agenda-overriding-header "Reading List")))))))
 
   ;; Capture templates
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "inbox.org" "Tasks")
-           "* TODO %?\n%U\n")
+           "* TODO %?\n%U\n%a\n")
           ("n" "Note" entry (file+headline "notes.org" "Notes")
            "* %?\n%U\n")
           ("r" "Reading" entry (file+headline "reading.org" "To Read")
-           "* %?\n:PROPERTIES:\n:URL: %^{URL}\n:END:\n%U\n")
+           "* TODO %? :reading:\n:PROPERTIES:\n:URL: %^{URL}\n:END:\n%U\n")
           ("p" "Paper" entry (file+headline "papers.org" "Papers")
-           "* %^{Title}\n:PROPERTIES:\n:AUTHOR: %^{Author}\n:URL: %^{URL}\n:END:\n** Summary\n%?\n%U\n")
+           "* TODO %^{Title} :reading:\n:PROPERTIES:\n:AUTHOR: %^{Author}\n:URL: %^{URL}\n:END:\n** Summary\n%?\n%U\n")
           ("i" "Idea" entry (file+headline "ideas.org" "Ideas")
-           "* %?\n%U\n")
+           "* %? :idea:\n%U\n")
           ("j" "Journal" entry (file+olp+datetree "journal.org")
-           "* %?\n%U\n"))))
+           "* %?\n%U\n")
+          ("w" "Work" entry (file+headline "work.org" "Tasks")
+           "* TODO %? :@work:\n%U\n%a\n"))))
 
 (use-package org-bullets
   :defer t
