@@ -47,6 +47,38 @@ if (Get-Command rg -ErrorAction SilentlyContinue) {
 }
 #endregion
 
+#region Brazil shortcuts (Amazon build system)
+if (Get-Command brazil -ErrorAction SilentlyContinue) {
+    # Core
+    function b { brazil $args }
+    function bb { brazil-build $args }
+    function bbb { brazil-build build $args }
+    function bre { brazil-runtime-exec $args }
+
+    # Workspace
+    function bws { brazil ws $args }
+    function bwu { brazil ws use $args }
+    function bwc { brazil ws create $args }
+    function bwsy { brazil ws sync $args }
+    function bwr { brazil ws remove $args }
+    function bwsh { brazil ws show $args }
+
+    # Version sets
+    function bvs { brazil vs $args }
+
+    # Recursive command
+    function brc { brazil-recursive-cmd $args }
+
+    # Common build targets
+    function bbc { brazil-build clean $args }
+    function bbr { brazil-build release $args }
+    function bbt { brazil-build test $args }
+
+    # Setup tooling
+    function bst { brazil-setup-tool $args }
+}
+#endregion
+
 #region Emacs shortcuts (if using Emacs on Windows)
 if (Get-Command emacsclient -ErrorAction SilentlyContinue) {
     function kill-emacs { emacsclient -e "(kill-emacs)" }
