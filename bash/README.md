@@ -34,7 +34,7 @@ XDG-compliant bash configuration with modern enhancements.
 - **GNU coreutils** - Better ls colors (`brew install coreutils`)
 - **fzf** - Fuzzy finder for command history
 - **bat** - Better cat with syntax highlighting
-- **eza/exa** - Modern ls replacement
+- **eza** - Modern ls replacement (falls back to exa)
 - **fd** - Modern find replacement
 - **ripgrep** - Modern grep replacement
 

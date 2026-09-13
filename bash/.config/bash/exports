@@ -5,10 +5,14 @@ export EDITOR="emacs"
 export VISUAL="$EDITOR"
 export FCEDIT="$EDITOR"
 
-# Terminal and locale
-export TERM="${TERM:-xterm-256color}"
+# Locale — set LANG only; avoid LC_ALL, which overrides every LC_* category
+# and clobbers per-category locale settings inherited from the environment.
 export LANG="${LANG:-en_US.UTF-8}"
-export LC_ALL="${LC_ALL:-en_US.UTF-8}"
+# Only fall back to LC_CTYPE if nothing locale-related is already configured,
+# so UTF-8 still works when LANG is unset in a bare environment.
+if [[ -z "${LANG:-}" && -z "${LC_ALL:-}" && -z "${LC_CTYPE:-}" ]]; then
+    export LC_CTYPE="en_US.UTF-8"
+fi
 
 # GPG configuration — must be set fresh each shell (not cached)
 export GPG_TTY=$(tty 2>/dev/null || echo "")

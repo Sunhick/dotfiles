@@ -8,6 +8,6 @@ bash
 git
 fzf
 bat
-exa
+eza
 fd
 ripgrep

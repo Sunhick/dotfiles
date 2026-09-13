@@ -82,8 +82,9 @@ dotfiles/
 **Key files:**
 - `dir_colors` - Gruvbox theme for GNU ls
 - `darwin` - macOS-specific config (prefers gls, LSCOLORS fallback)
+- `linux` - Linux-specific config
 - `aliases` - Smart aliases that adapt to available tools
-- `bash_logout` - Cleanup on shell exit
+- `prompt` - Git-aware prompt
 
 ## Installation
 
@@ -114,17 +115,21 @@ stow --target=$HOME .
 
 ## Commands
 
-| Command            | Description                                    |
-| ------------------ | ---------------------------------------------- |
-| `make install`     | Install all packages                           |
-| `make install-safe`| Backup existing configs then install            |
-| `make uninstall`   | Remove all packages                            |
-| `make dryrun`      | Preview changes (dry run)                      |
-| `make restow`      | Re-link all packages                           |
-| `make list`        | List available packages                        |
-| `make doctor`      | Verify tools, symlinks, and config health      |
-| `make backup`      | Backup existing configuration files            |
-| `make restore`     | Restore from latest backup                     |
+| Command              | Description                               |
+| -------------------- | ----------------------------------------- |
+| `make install`       | Install all packages                      |
+| `make safe-install`  | Backup existing configs then install      |
+| `make adopt`         | Install all, adopting existing files      |
+| `make rm-<package>`  | Remove a package (e.g. `make rm-tmux`)    |
+| `make plan`          | Preview changes (dry run)                 |
+| `make sync`          | Re-link all packages                      |
+| `make ls`            | List available packages                   |
+| `make doctor`        | Verify tools, symlinks, and config health |
+| `make prune`         | Remove broken symlinks                    |
+| `make backup`        | Backup existing configuration files       |
+| `make restore`       | Restore from latest backup                |
+| `make list-backups`  | List available backups                    |
+| `make prune-backups` | Remove old backups (keeps last 5)         |
 
 ## Adding Packages
 
@@ -166,7 +171,7 @@ The dotfiles use a **Gruvbox Dark Hard** color scheme throughout:
 ### Color Priority
 1. **gls --color=auto** (GNU coreutils) - Full gruvbox dir_colors
 2. **ls -G** (BSD) - Gruvbox LSCOLORS on macOS
-3. **exa/eza** - Modern ls with built-in colors
+3. **eza** - Modern ls with built-in colors
 
 Install GNU coreutils for the best color experience:
 ```bash
