@@ -16,24 +16,30 @@ For the best experience, especially with the bash shell configuration, install t
 
 **macOS (Homebrew):**
 ```bash
-# Core enhancements
-brew install coreutils fzf git
+# Install everything from the bundled Brewfile
+brew bundle --file=homebrew/Brewfile
 
-# Modern CLI tools
-brew install bat eza fd ripgrep
-
-# Terminal & Editor
-brew install --cask iterm2
-brew install emacs
+# ...or install the essentials manually
+brew install coreutils fzf git      # core enhancements
+brew install bat eza fd ripgrep     # modern CLI tools
+brew install --cask iterm2          # terminal
+brew install emacs                  # editor
 ```
 
 **Linux (Ubuntu/Debian):**
 ```bash
-# Core tools
-sudo apt install git fzf coreutils
+# Install from the bundled package list
+xargs sudo apt install -y < apt/package-list.txt
 
-# Modern CLI tools
-sudo apt install bat fd-find ripgrep
+# ...or install the essentials manually
+sudo apt install git fzf coreutils  # core tools
+sudo apt install bat fd-find ripgrep # modern CLI tools
+```
+
+**Windows (PowerShell):**
+```powershell
+# Bootstrap PowerShell profile + tools
+./powershell/Setup.ps1
 ```
 
 ## XDG Base Directory Specification
@@ -53,22 +59,46 @@ This dotfiles setup follows the XDG Base Directory Specification:
 
 ## Structure
 
+The repo has two kinds of top-level directories: **Stow packages** (symlinked
+into your home directory by `make`) and **helper directories** (package lists,
+keyboard layouts, and shared Makefile logic that are *not* stowed).
+
 ```
 dotfiles/
-├── bash/               # bash shell (.config/bash/)
-├── powershell/         # PowerShell (Windows)
-├── git/                # git (.config/git/)
-├── emacs/              # emacs (.config/emacs/)
-├── nano/               # nano (.config/nano/)
-├── vscode/             # vscode (.config/Code/)
-├── tmux/               # tmux (.config/tmux/)
-├── fzf/                # fzf (.config/fzf/)
-├── ripgrep/            # ripgrep (.config/ripgrep/)
-├── ...                 # and more
-├── make/               # shared Makefile helpers (log.mk)
-├── management/stow/    # stow configuration
-└── Makefile            # one Makefile for everything
+│
+├── Stow packages (linked by `make`) ──────────────
+│   ├── bash/            # bash shell        → ~/.config/bash/ (+ ~/.bashrc, ~/.bash_profile)
+│   ├── git/             # git               → ~/.config/git/
+│   ├── emacs/           # emacs             → ~/.config/emacs/
+│   ├── nano/            # nano              → ~/.config/nano/
+│   ├── vscode/          # VS Code           → ~/.config/Code/ (+ ~/Library/… on macOS)
+│   ├── tmux/            # tmux              → ~/.config/tmux/
+│   ├── fzf/             # fzf               → ~/.config/fzf/
+│   ├── ripgrep/         # ripgrep           → ~/.config/ripgrep/
+│   ├── inputrc/         # readline          → ~/.config/readline/
+│   ├── curlrc/          # curl              → ~/.config/curl/
+│   ├── editorconfig/    # editorconfig      → ~/.editorconfig
+│   ├── gnupg/           # GnuPG             → ~/.config/gnupg/
+│   ├── htop/            # htop              → ~/.config/htop/
+│   ├── i3/              # i3 wm (Linux)     → ~/.config/i3/
+│   └── terminal/        # terminal / iterm2 config
+│
+├── Windows (not stowed; use Setup.ps1) ───────────
+│   ├── powershell/      # PowerShell profile + Setup.ps1
+│   └── windows-terminal/# Windows Terminal settings.json
+│
+└── Helper directories (not stowed) ───────────────
+    ├── apt/             # Debian/Ubuntu package lists (package-list.txt, apt-packages)
+    ├── homebrew/        # macOS Brewfile
+    ├── keyboard/        # QMK/Vial homerow-miryoku keyboard layouts
+    ├── make/            # shared Makefile helpers (log.mk)
+    ├── management/stow/ # stow configuration
+    └── Makefile         # one Makefile for everything
 ```
+
+> **Note:** `powershell/` and `windows-terminal/` are managed on Windows via
+> `powershell/Setup.ps1`, not through the `make` targets below (which target
+> macOS/Linux and GNU Stow).
 
 ## Featured Packages
 
@@ -97,8 +127,8 @@ make install
 ```bash
 make shell              # bash
 make editors            # emacs, nano, vscode
-make tools              # tmux, htop, gnupg, etc.
-make desktop            # i3, iterm2
+make tools              # tmux, fzf, ripgrep, inputrc, curlrc, editorconfig, gnupg, htop
+make desktop            # i3, terminal
 make development        # git
 ```
 
@@ -125,7 +155,7 @@ stow --target=$HOME .
 | `make sync`          | Re-link all packages                      |
 | `make ls`            | List available packages                   |
 | `make doctor`        | Verify tools, symlinks, and config health |
-| `make prune`         | Remove broken symlinks                    |
+| `make prune`         | Remove broken symlinks (under ~/.config)  |
 | `make backup`        | Backup existing configuration files       |
 | `make restore`       | Restore from latest backup                |
 | `make list-backups`  | List available backups                    |
@@ -158,6 +188,15 @@ stow --target=$HOME .
 - Data files → `.local/share/appname/`
 - Cache files → `.cache/appname/`
 - State files → `.local/state/appname/`
+
+## Package Management Bundles
+
+Beyond the stowed configs, the repo bundles reproducible package lists so a
+fresh machine can be provisioned quickly:
+
+- **`homebrew/Brewfile`** — macOS packages/casks. Install with `brew bundle --file=homebrew/Brewfile`.
+- **`apt/package-list.txt`** — Debian/Ubuntu packages. Install with `xargs sudo apt install -y < apt/package-list.txt`.
+- **`keyboard/`** — QMK/Vial homerow Miryoku layouts (`.vil`), including a Colemak variant.
 
 ## Color Theming
 
