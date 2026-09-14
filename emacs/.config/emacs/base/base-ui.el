@@ -131,17 +131,16 @@
 
 ;; Tab-bar mode — workspaces without the visual tab bar
 ;; C-x t 2: new tab, C-x t 0: close, C-x t o: next, C-x t O: prev
-;; M-1 through M-9: switch to tab by number
 (setq tab-bar-show nil)              ; never show the tab bar
 (setq tab-bar-new-tab-choice "*scratch*")
 (tab-bar-mode 1)
 
-;; Quick tab switching with M-number
-(global-set-key (kbd "M-1") (lambda () (interactive) (tab-bar-select-tab 1)))
-(global-set-key (kbd "M-2") (lambda () (interactive) (tab-bar-select-tab 2)))
-(global-set-key (kbd "M-3") (lambda () (interactive) (tab-bar-select-tab 3)))
-(global-set-key (kbd "M-4") (lambda () (interactive) (tab-bar-select-tab 4)))
-(global-set-key (kbd "M-5") (lambda () (interactive) (tab-bar-select-tab 5)))
+;; Quick tab switching — Miryoku-friendly: leader then a single NUM-layer
+;; tap (C-c t 1 .. C-c t 5), instead of holding Meta while on the NUM layer.
+(dotimes (i 5)
+  (global-set-key (kbd (format "C-c t %d" (1+ i)))
+                  (let ((n (1+ i)))
+                    (lambda () (interactive) (tab-bar-select-tab n)))))
 
 (provide 'base-ui)
 

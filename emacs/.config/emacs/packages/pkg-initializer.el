@@ -62,11 +62,14 @@
 
 ;; ── Editing ─────────────────────────────────────────────────────
 
+;; Miryoku-friendly: leader + plain letters (no shifted modifiers,
+;; no two home-row mods held at once).
 (use-package multiple-cursors
   :defer t
-  :bind (("C->" . mc/mark-next-like-this)
-         ("C-<" . mc/mark-previous-like-this)
-         ("C-c C-<" . mc/mark-all-like-this)))
+  :bind (("C-c m n" . mc/mark-next-like-this)
+         ("C-c m p" . mc/mark-previous-like-this)
+         ("C-c m a" . mc/mark-all-like-this)
+         ("C-c m l" . mc/edit-lines)))
 
 (use-package smartparens
   :defer 1
