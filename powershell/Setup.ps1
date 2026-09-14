@@ -1,67 +1,100 @@
 # PowerShell Profile Setup Script
-# This script will install and configure your modular PowerShell profile with bash-like settings
+# Installs and configures the modular PowerShell profile with bash-like settings.
+#
+# Output mirrors the repo's Makefile / make/log.mk style:
+#   OK   <msg>   (green)   WARN <msg> (yellow)   FAIL <msg> (red)
+#   Section headers in cyan, plus a pass/warn/fail summary at the end.
 
 param(
     [switch]$Force,
-    [switch]$InstallModules
+    [switch]$InstallModules,
+    [switch]$InstallTools
 )
 
-Write-Host "Setting up modular PowerShell profile with bash-like configuration..." -ForegroundColor Green
+# ── Logging helpers (match make/log.mk) ────────────────────────────
+$script:Pass = 0
+$script:Warn = 0
+$script:Fail = 0
 
-# Check PowerShell version
-if ($PSVersionTable.PSVersion.Major -lt 5) {
-    Write-Error "PowerShell 5.0 or higher is required"
-    exit 1
+function Log-Ok     { param([string]$Msg) $script:Pass++; Write-Host ("  OK   {0}" -f $Msg) -ForegroundColor Green }
+function Log-Warn   { param([string]$Msg) $script:Warn++; Write-Host ("  WARN {0}" -f $Msg) -ForegroundColor Yellow }
+function Log-Fail   { param([string]$Msg) $script:Fail++; Write-Host ("  FAIL {0}" -f $Msg) -ForegroundColor Red }
+function Log-Info   { param([string]$Msg) Write-Host $Msg -ForegroundColor Cyan }
+function Log-Header { param([string]$Msg) Write-Host ""; Write-Host $Msg -ForegroundColor Cyan }
+
+function Show-Summary {
+    Log-Header "Summary"
+    Write-Host ("  {0} passed, {1} warnings, {2} errors" -f $script:Pass, $script:Warn, $script:Fail)
+    if ($script:Fail -gt 0) {
+        Write-Host ""
+        Write-Host "  Some steps failed. Review the errors above." -ForegroundColor Red
+        exit 1
+    } elseif ($script:Warn -gt 0) {
+        Write-Host ""
+        Write-Host "  All done, but some optional steps were skipped." -ForegroundColor Yellow
+    } else {
+        Write-Host ""
+        Write-Host "  Everything looks great!" -ForegroundColor Green
+    }
 }
+
+Log-Info "PowerShell Profile Setup"
+Log-Info "========================"
+
+# ── Preconditions ──────────────────────────────────────────────────
+Log-Header "Requirements"
+if ($PSVersionTable.PSVersion.Major -lt 5) {
+    Log-Fail "PowerShell 5.0 or higher is required (found $($PSVersionTable.PSVersion))"
+    Show-Summary
+}
+Log-Ok "PowerShell $($PSVersionTable.PSVersion)"
 
 # Get profile path
 $ProfilePath = $PROFILE.CurrentUserCurrentHost
-$ProfileDir = Split-Path $ProfilePath
+$ProfileDir  = Split-Path $ProfilePath
 
-Write-Host "Profile will be installed to: $ProfilePath" -ForegroundColor Cyan
+# ── Profile directory ──────────────────────────────────────────────
+Log-Header "Profile"
+Log-Info "  Target: $ProfilePath"
 
-# Create profile directory if it doesn't exist
 if (!(Test-Path $ProfileDir)) {
-    Write-Host "Creating profile directory..." -ForegroundColor Yellow
     New-Item -ItemType Directory -Path $ProfileDir -Force | Out-Null
+    Log-Ok "MKDIR profile directory"
 }
 
 # Backup existing profile if it exists
 if (Test-Path $ProfilePath) {
     if (!$Force) {
-        $response = Read-Host "Profile already exists. Backup and replace? (y/N)"
+        $response = Read-Host "  Profile already exists. Backup and replace? (y/N)"
         if ($response -ne 'y' -and $response -ne 'Y') {
-            Write-Host "Setup cancelled." -ForegroundColor Yellow
-            exit 0
+            Log-Warn "Setup cancelled by user"
+            Show-Summary
         }
     }
 
     $BackupPath = "$ProfilePath.backup.$(Get-Date -Format 'yyyyMMdd-HHmmss')"
-    Write-Host "Backing up existing profile to: $BackupPath" -ForegroundColor Yellow
     Copy-Item $ProfilePath $BackupPath
+    Log-Ok "BACKUP $BackupPath"
 }
 
-# Setup modular configuration
-Write-Host "Installing modular PowerShell configuration..." -ForegroundColor Green
+# ── Link main profile ──────────────────────────────────────────────
+Log-Header "Linking profile"
 
 # Create .config directory structure in profile directory
 $ConfigDir = Join-Path $ProfileDir ".config\powershell"
 if (!(Test-Path $ConfigDir)) {
-    Write-Host "Creating configuration directory: $ConfigDir" -ForegroundColor Yellow
     New-Item -ItemType Directory -Path $ConfigDir -Force | Out-Null
+    Log-Ok "MKDIR $ConfigDir"
 }
 
 # Copy or link the main profile
 $SourcePath = Resolve-Path "Microsoft.PowerShell_profile.ps1"
 try {
-    # Try to create a symbolic link
-    New-Item -ItemType SymbolicLink -Path $ProfilePath -Target $SourcePath -Force
-    Write-Host "Created symbolic link to main profile" -ForegroundColor Green
+    New-Item -ItemType SymbolicLink -Path $ProfilePath -Target $SourcePath -Force | Out-Null
+    Log-Ok "LINK Microsoft.PowerShell_profile.ps1"
 } catch {
-    # Fall back to copying if symlink creation fails
-    Write-Warning "Could not create symbolic link (may need admin rights). Copying file instead."
     Copy-Item "Microsoft.PowerShell_profile.ps1" $ProfilePath -Force
-    Write-Host "Copied main profile file" -ForegroundColor Yellow
+    Log-Warn "COPY Microsoft.PowerShell_profile.ps1 (symlink failed; may need admin rights)"
 }
 
 # Copy or link modular configuration files
@@ -74,77 +107,79 @@ $ConfigFiles = @(
     "work.ps1"
 )
 
-Write-Host "Installing modular configuration files..." -ForegroundColor Green
 foreach ($ConfigFile in $ConfigFiles) {
     $SourceConfigPath = Join-Path ".config\powershell" $ConfigFile
     $TargetConfigPath = Join-Path $ConfigDir $ConfigFile
 
     if (Test-Path $SourceConfigPath) {
         try {
-            # Try to create symbolic links for config files
             $ResolvedSource = Resolve-Path $SourceConfigPath
             New-Item -ItemType SymbolicLink -Path $TargetConfigPath -Target $ResolvedSource -Force | Out-Null
-            Write-Host "  Linked $ConfigFile" -ForegroundColor Green
+            Log-Ok "LINK $ConfigFile"
         } catch {
-            # Fall back to copying
             Copy-Item $SourceConfigPath $TargetConfigPath -Force
-            Write-Host "  Copied $ConfigFile" -ForegroundColor Yellow
+            Log-Warn "COPY $ConfigFile (symlink failed)"
         }
     } else {
-        Write-Warning "  Config file not found: $SourceConfigPath"
+        Log-Warn "SKIP $ConfigFile (not found)"
     }
 }
 
-# Install recommended modules
+# ── PowerShell modules (PSGallery) ─────────────────────────────────
 if ($InstallModules) {
-    Write-Host "Installing recommended PowerShell modules..." -ForegroundColor Green
-
-    $ModulesToInstall = @(
-        'PSReadLine',
-        'posh-git',
-        'Terminal-Icons'
-    )
+    Log-Header "PowerShell modules"
+    $ModulesToInstall = @('PSReadLine', 'posh-git', 'Terminal-Icons')
     foreach ($Module in $ModulesToInstall) {
-        Write-Host "Installing $Module..." -ForegroundColor Cyan
         try {
             Install-Module -Name $Module -Scope CurrentUser -Force -AllowClobber
-            Write-Host "$Module installed successfully" -ForegroundColor Green
+            Log-Ok "MODULE $Module"
         } catch {
-            Write-Warning "Failed to install ${Module}: $($_.Exception.Message)"
+            Log-Fail "MODULE $Module ($($_.Exception.Message))"
         }
     }
 }
 
-Write-Host "`nModular PowerShell profile setup complete!" -ForegroundColor Green
-
-Write-Host "`nConfiguration structure:" -ForegroundColor Cyan
-Write-Host "  Main profile: $ProfilePath" -ForegroundColor White
-Write-Host "  Config files: $ConfigDir" -ForegroundColor White
-Write-Host "    - environment.ps1 - Environment variables and PATH" -ForegroundColor Gray
-Write-Host "    - prompt.ps1 - Custom prompt with git integration" -ForegroundColor Gray
-Write-Host "    - aliases.ps1 - Command aliases and functions" -ForegroundColor Gray
-Write-Host "    - history.ps1 - History and PSReadLine settings" -ForegroundColor Gray
-Write-Host "    - fzf.ps1 - Fuzzy finder integration" -ForegroundColor Gray
-
-Write-Host "`nTo apply the changes:" -ForegroundColor Cyan
-Write-Host "1. Restart PowerShell, or" -ForegroundColor White
-Write-Host "2. Run: . `$PROFILE" -ForegroundColor White
-
-Write-Host "`nCustomization:" -ForegroundColor Cyan
-Write-Host "- Edit individual config files in: $ConfigDir" -ForegroundColor White
-Write-Host "- Disable features by removing/renaming config files" -ForegroundColor White
-Write-Host "- Add new modules by creating .ps1 files and updating the main profile" -ForegroundColor White
-
-Write-Host "`nRecommended next steps:" -ForegroundColor Cyan
-Write-Host "- Install modern CLI tools:" -ForegroundColor White
-Write-Host "  - bat (better cat): winget install sharkdp.bat" -ForegroundColor Gray
-Write-Host "  - fd (better find): winget install sharkdp.fd" -ForegroundColor Gray
-Write-Host "  - ripgrep (better grep): winget install BurntSushi.ripgrep.MSVC" -ForegroundColor Gray
-Write-Host "  - fzf (fuzzy finder): winget install junegunn.fzf" -ForegroundColor Gray
-Write-Host "- Install a Nerd Font for better terminal icons" -ForegroundColor White
-Write-Host "- Consider Windows Terminal for the best experience" -ForegroundColor White
-
-if (!$InstallModules) {
-    Write-Host "`nTo install recommended PowerShell modules, run:" -ForegroundColor Yellow
-    Write-Host ".\Setup-PowerShellProfile.ps1 -InstallModules" -ForegroundColor White
+# ── CLI tools (winget, declarative manifest) ───────────────────────
+if ($InstallTools) {
+    Log-Header "CLI tools (winget)"
+    if (Get-Command winget -ErrorAction SilentlyContinue) {
+        $Manifest = Join-Path $PSScriptRoot "winget-packages.json"
+        if (Test-Path $Manifest) {
+            # winget import is idempotent: already-installed packages are skipped
+            winget import --import-file $Manifest --accept-package-agreements --accept-source-agreements --ignore-versions
+            if ($LASTEXITCODE -eq 0) {
+                Log-Ok "IMPORT winget-packages.json"
+            } else {
+                Log-Fail "IMPORT winget-packages.json (exit code $LASTEXITCODE)"
+            }
+        } else {
+            Log-Fail "IMPORT winget-packages.json (manifest not found)"
+        }
+    } else {
+        Log-Warn "winget not found (install 'App Installer' from the Microsoft Store)"
+    }
 }
+
+# ── Post-install guidance ──────────────────────────────────────────
+Log-Header "Configuration structure"
+Write-Host "  Main profile: $ProfilePath"
+Write-Host "  Config files: $ConfigDir"
+Write-Host "    - environment.ps1  Environment variables and PATH"
+Write-Host "    - prompt.ps1       Custom prompt with git integration"
+Write-Host "    - aliases.ps1      Command aliases and functions"
+Write-Host "    - history.ps1      History and PSReadLine settings"
+Write-Host "    - fzf.ps1          Fuzzy finder integration"
+
+Log-Header "Apply changes"
+Write-Host "  Restart PowerShell, or run:  . `$PROFILE"
+
+Log-Header "Next steps"
+if (!$InstallModules) {
+    Write-Host "  PowerShell modules:  .\Setup.ps1 -InstallModules"
+}
+if (!$InstallTools) {
+    Write-Host "  CLI tools:           .\Setup.ps1 -InstallTools"
+}
+Write-Host "  Install a Nerd Font for terminal icons; Windows Terminal recommended."
+
+Show-Summary

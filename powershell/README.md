@@ -34,15 +34,29 @@ The configuration is split into focused modules:
 Run the PowerShell setup script for interactive installation:
 
 ```powershell
-# Basic installation
+# Basic installation (links the profile only)
 .\Setup.ps1
 
-# Install with recommended modules
+# Install with recommended PowerShell modules (from PSGallery)
 .\Setup.ps1 -InstallModules
+
+# Install recommended CLI tools (from winget-packages.json)
+.\Setup.ps1 -InstallTools
+
+# Everything at once
+.\Setup.ps1 -InstallModules -InstallTools
 
 # Force overwrite existing profile
 .\Setup.ps1 -Force
 ```
+
+The setup handles three distinct jobs, mirroring the macOS side of this repo:
+
+| Job                              | Mechanism                                | macOS equivalent           |
+| -------------------------------- | ---------------------------------------- | -------------------------- |
+| Link the profile into `$PROFILE` | `Setup.ps1` (symlink/copy)               | `stow`                     |
+| Install CLI tools                | `winget import` (`winget-packages.json`) | `brew bundle` (`Brewfile`) |
+| Install PowerShell modules       | `Install-Module` (PSGallery)             | n/a                        |
 
 ### Manual Installation
 
@@ -71,15 +85,28 @@ Install-Module PSReadLine, posh-git, Terminal-Icons -Scope CurrentUser
 
 ## Recommended CLI Tools
 
-For the best experience, install these modern CLI tools:
+CLI tools are declared in `winget-packages.json` (the Windows analog of the
+repo's `Brewfile`) and installed as a set:
 
 ```powershell
-# Using winget
-winget install sharkdp.bat          # Better cat
-winget install sharkdp.fd           # Better find
-winget install BurntSushi.ripgrep.MSVC  # Better grep
-winget install junegunn.fzf         # Fuzzy finder
+# Via the setup script
+.\Setup.ps1 -InstallTools
+
+# Or directly with winget (idempotent — skips already-installed packages)
+winget import --import-file winget-packages.json --accept-package-agreements --accept-source-agreements
 ```
+
+Included: `Git.Git`, `Microsoft.PowerShell`, `sharkdp.bat`, `sharkdp.fd`,
+`BurntSushi.ripgrep.MSVC`, `junegunn.fzf`, `eza-community.eza`, `jqlang.jq`,
+`GnuWin32.Tree`.
+
+To add a tool, find its id with `winget search <name>` and add a
+`{ "PackageIdentifier": "..." }` entry to `winget-packages.json`. To capture
+your current machine's set, run `winget export -o winget-packages.json`.
+
+> Note: the manifest omits the optional `$schema` field. For editor
+> autocompletion you can add `"$schema": "https://aka.ms/winget-packages.schema.2.0.json"`
+> at the top — winget does not require it.
 
 ## Aliases and Functions
 
