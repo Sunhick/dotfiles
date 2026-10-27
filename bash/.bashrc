@@ -15,3 +15,6 @@ if [[ -f "${XDG_CONFIG_HOME}/bash/bashrc" ]]; then
 else
     echo "Warning: XDG-compliant bashrc not found at ${XDG_CONFIG_HOME}/bash/bashrc" >&2
 fi
+
+# Added by AIM CLI
+export PATH="$HOME/.aim/mcp-servers:$PATH"

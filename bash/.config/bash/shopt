@@ -28,5 +28,9 @@ shopt -s expand_aliases # Expand aliases in non-interactive shells
 shopt -s checkjobs     # Warn before exiting with running background jobs
 shopt -s no_empty_cmd_completion  # Don't tab-complete on empty line (avoids PATH scan)
 
+# Free C-s / C-q from XON/XOFF flow control so C-s reaches readline's
+# forward-search-history (see inputrc). Only when stdin is a terminal.
+[[ -t 0 ]] && stty -ixon 2>/dev/null
+
 # Safety
 shopt -s shift_verbose # Warn when shift count exceeds positional params

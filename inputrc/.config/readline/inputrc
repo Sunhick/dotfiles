@@ -84,11 +84,20 @@ set convert-meta off
 "\e[1;5D": backward-word
 
 # Home and End keys
+# \e[H/\e[F: xterm, iTerm2; \eOH/\eOF: application cursor mode;
+# \e[1~/\e[4~: tmux-256color. Miryoku NAV layer puts Home/End on M and /.
 "\e[H": beginning-of-line
 "\e[F": end-of-line
+"\eOH": beginning-of-line
+"\eOF": end-of-line
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
 
 # Delete key
 "\e[3~": delete-char
+
+# Ctrl+Delete deletes the next word (Miryoku: left Ctrl + Delete thumb)
+"\e[3;5~": kill-word
 
 # Page Up/Down for history navigation
 "\e[5~": history-search-backward
