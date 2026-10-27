@@ -1,3 +1,0 @@
-[gpg]
-	# Distro gpg from PATH (/usr/bin/gpg on Amazon Linux and most distros).
-	program = gpg
