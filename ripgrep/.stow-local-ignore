@@ -1,0 +1,3 @@
+# Ripgrep package specific ignores
+README.md
+.stow-dependencies

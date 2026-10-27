@@ -281,7 +281,7 @@ doctor:
 		pass "gpg found at $$(command -v gpg)"; \
 		GIT_GPG="$$(git config --get gpg.program 2>/dev/null || true)"; \
 		if [ -n "$$GIT_GPG" ]; then \
-			if [ -x "$$GIT_GPG" ]; then \
+			if [ -x "$$GIT_GPG" ] || command -v "$$GIT_GPG" >/dev/null 2>&1; then \
 				pass "git gpg.program=$$GIT_GPG (exists)"; \
 			else \
 				fail "git gpg.program=$$GIT_GPG (not found)"; \

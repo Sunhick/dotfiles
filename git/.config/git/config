@@ -23,9 +23,15 @@
 [include]
     path = ~/.config/git/local
 
-# OS-specific
-[include]
+# OS-specific. Git has no OS condition, so key off where repos live: macOS
+# homes are under /Users, Linux homes under /home (or /local/home on cloud
+# desktops). Repos elsewhere get neither file and use `gpg` from PATH.
+[includeIf "gitdir:/Users/"]
     path = ~/.config/git/macOS.gitconfig
+[includeIf "gitdir:/home/"]
+    path = ~/.config/git/linux.gitconfig
+[includeIf "gitdir:/local/home/"]
+    path = ~/.config/git/linux.gitconfig
 
 # ---------------------------------------------------------------------------
 # Core
