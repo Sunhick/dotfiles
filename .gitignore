@@ -43,3 +43,9 @@ emacs/.config/emacs/init.elc
 emacs/.config/emacs/settings.el
 emacs/.config/emacs/ac-comphist.dat
 emacs/.config/emacs/ido.last
+
+# VS Code runtime state
+vscode/.config/Code/User/History/
+vscode/.config/Code/User/globalStorage/
+vscode/.config/Code/User/workspaceStorage/
+vscode/.config/Code/User/chatLanguageModels.json
