@@ -51,14 +51,12 @@
 
 # ---------------------------------------------------------------------------
 # Commit signing
+# Whether to sign (commit.gpgSign / tag.gpgSign / user.signingkey) is decided
+# per profile in ~/.gitconfig-personal and ~/.gitconfig-work, not here.
 # ---------------------------------------------------------------------------
 
 [commit]
-    gpgSign = true
     verbose = true
-
-[tag]
-    gpgSign = true
 
 # ---------------------------------------------------------------------------
 # Merge / Diff
