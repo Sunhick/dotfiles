@@ -31,7 +31,7 @@
 
 ;; Set preferred font (with fallback)
 ;; Uses after-make-frame-functions for daemon mode compatibility
-(defvar my/preferred-font "Aporetic Sans Mono")
+(defvar my/preferred-font "AporeticSansMonoNerdFont")
 (defvar my/font-size 15)
 
 (defun my/set-font (&optional frame)

@@ -1,7 +1,6 @@
 {
     // UI — vanilla with standard controls
     "workbench.sideBar.location": "left",
-    "workbench.activityBar.visible": true,
     "workbench.statusBar.visible": true,
     "workbench.editor.showTabs": "multiple",
     "workbench.editor.tabCloseButton": "right",
@@ -50,7 +49,7 @@
     },
     "editor.suggestOnTriggerCharacters": true,
     "editor.parameterHints.enabled": true,
-    "editor.hover.enabled": true,
+    "editor.hover.enabled": "on",
     "editor.lightbulb.enabled": "on",
     // Scrolling
     "editor.smoothScrolling": true,
@@ -75,7 +74,16 @@
     "terminal.integrated.scrollback": 10000,
     "terminal.integrated.cursorStyle": "bar",
     "terminal.integrated.cursorBlinking": true,
+    // Vertical terminal tabs — always show the tab list on the side
+    "terminal.integrated.tabs.enabled": true,
+    "terminal.integrated.tabs.location": "right",
+    "terminal.integrated.tabs.hideCondition": "never",
     // Startup
     "workbench.tips.enabled": false,
-    "workbench.startupEditor": "none"
+    "workbench.startupEditor": "none",
+    "workbench.editor.tabActionLocation": "right",
+    "claudeCode.preferredLocation": "panel",
+    "remote.SSH.remotePlatform": {
+        "dev-dsk-sunilmur-2b-2db5053c.us-west-2.amazon.com": "linux"
+    }
 }

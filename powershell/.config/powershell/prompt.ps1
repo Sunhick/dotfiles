@@ -21,11 +21,12 @@ function prompt {
     $currentDir = Split-Path -Leaf (Get-Location)
     $userName = $env:USERNAME
 
-    # Terminal title: user:dirname
-    $ESC = [char]27
-    Write-Host "$ESC]0;${userName}:${currentDir}$ESC\" -NoNewline
-
     $p = ""
+
+    # Terminal title: user:dirname (OSC 0). Emitted as part of the returned
+    # prompt string with a BEL terminator; writing it via Write-Host inside the
+    # prompt function throws off PSReadLine's render math and smears long lines.
+    $p += "`e]0;${userName}:${currentDir}`a"
 
     # AWS profile
     if ($env:AWS_PROFILE) {

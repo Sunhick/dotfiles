@@ -17,7 +17,7 @@ Set-PSReadLineOption -HistorySearchCursorMovesToEnd
 Set-PSReadLineOption -MaximumHistoryCount $MaximumHistoryCount
 Set-PSReadLineOption -HistorySavePath $HistoryPath
 
-# History search
-Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
-Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+# Up/Down history-search keybindings live in work/Modules.ps1 because they
+# must be set AFTER `Set-PSReadLineOption -EditMode Emacs` (which resets
+# keybindings to Emacs defaults). Binding them here would be overwritten.
 #endregion
