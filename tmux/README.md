@@ -31,3 +31,22 @@ Tmux supports XDG configuration when using `~/.config/tmux/tmux.conf`.
 
 Alt+number and Alt+N/P are intentionally not bound in the root table: they
 would shadow Emacs `digit-argument` and M-n/M-p history in readline and Emacs.
+
+## Version support (Amazon Linux 2)
+
+`tmux.conf` holds version-agnostic settings and then sources one of:
+
+- `tmux-modern.conf` — tmux >= 2.4 (hex Gruvbox colours, `*-style` options, TPM)
+- `tmux-legacy.conf` — tmux < 2.4, e.g. tmux 1.8 on AL2 (256-colour Gruvbox,
+  `emacs-copy` table, no TPM). Same keys and behaviour as modern.
+
+`tmux-version-ge X.Y` picks between them (it checks the `tmux` on `$PATH`).
+Keep the two files in step when changing bindings or the theme.
+
+tmux < 3.1 does not read `~/.config/tmux/tmux.conf`. On AL2 either start
+tmux with `tmux -f ~/.config/tmux/tmux.conf`, or create a host-local
+`~/.tmux.conf` containing:
+
+    source-file ~/.config/tmux/tmux.conf
+
+Don't stow that shim on modern hosts: tmux 3.1+ would load both files.

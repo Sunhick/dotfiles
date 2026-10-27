@@ -1,0 +1,35 @@
+#!/bin/sh
+# Exit 0 if the running tmux is at least MAJOR.MINOR, else exit 1.
+#
+#   sh ~/.config/tmux/tmux-version-ge 2.4
+#
+# Used by tmux.conf through if-shell. tmux 1.8 (Amazon Linux 2) has no
+# #{version} format and does not pass server-set variables to if-shell, so
+# the version has to be asked for from a shell. A helper script also avoids
+# the quoting problems of inline awk/sed in tmux's config parser.
+#
+# `tmux -V` prints "tmux 3.3a", "tmux next-3.4" or "tmux master". Letters
+# are dropped; an unparsable (development) build counts as new enough.
+
+want=$1
+case $want in
+*.*) ;;
+*) want=$want.0 ;;
+esac
+
+have=$(tmux -V 2>/dev/null | tr -cd '0-9.')
+[ -n "$have" ] || exit 0
+case $have in
+*.*) ;;
+*) have=$have.0 ;;
+esac
+
+want_major=${want%%.*}
+want_minor=${want#*.}
+have_major=${have%%.*}
+have_minor=${have#*.}
+have_minor=${have_minor%%.*}
+
+[ "$have_major" -gt "$want_major" ] && exit 0
+[ "$have_major" -lt "$want_major" ] && exit 1
+[ "$have_minor" -ge "$want_minor" ]
