@@ -21,7 +21,13 @@ if command -v fzf >/dev/null 2>&1; then
         "/usr/local/share/fzf/shell/key-bindings.bash" \
         "/usr/share/fzf/key-bindings.bash"; do
         if [[ -f "$keybind_file" ]]; then
-            source "$keybind_file"
+            if [[ ${BLE_VERSION-} ]]; then
+                # ble.sh replaces readline, so use its fzf adapter
+                _ble_contrib_fzf_base="${keybind_file%/key-bindings.bash}"
+                ble-import -d integration/fzf-key-bindings
+            else
+                source "$keybind_file"
+            fi
             break
         fi
     done

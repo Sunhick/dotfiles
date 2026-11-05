@@ -76,6 +76,7 @@ dotfiles/
 │   ├── fzf/             # fzf               → ~/.config/fzf/
 │   ├── ripgrep/         # ripgrep           → ~/.config/ripgrep/
 │   ├── inputrc/         # readline          → ~/.config/readline/
+│   ├── blesh/           # ble.sh (optional) → ~/.config/blesh/
 │   ├── curlrc/          # curl              → ~/.config/curl/
 │   ├── editorconfig/    # editorconfig      → ~/.editorconfig
 │   ├── gnupg/           # GnuPG             → ~/.config/gnupg/
@@ -116,6 +117,11 @@ dotfiles/
 - `aliases` - Smart aliases that adapt to available tools
 - `prompt` - Git-aware prompt
 
+ble.sh (`blesh/`) is used when installed at `~/.local/share/blesh`: bashrc
+loads it before the readline/fzf bindings and attaches it last. Its rc
+keeps those bindings, LS_COLORS and the prompt, greys out suggestions and
+drops underlines.
+
 ## Installation
 
 ### Install Everything
@@ -127,7 +133,7 @@ make install
 ```bash
 make shell              # bash
 make editors            # emacs, nano, vscode
-make tools              # tmux, fzf, ripgrep, inputrc, curlrc, editorconfig, gnupg, htop
+make tools              # tmux, fzf, ripgrep, inputrc, blesh, curlrc, editorconfig, gnupg, htop
 make desktop            # i3, terminal
 make development        # git
 ```

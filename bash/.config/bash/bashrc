@@ -28,6 +28,14 @@ fi
 # Load shell options first
 include "${BASH_CONFIG_DIR}/shopt"
 
+# ble.sh line editor (highlighting, autosuggestions), if installed. Loaded
+# detached before any `bind` so it picks up readline/inputrc and the fzf
+# bindings below; attached at the end of this file. Settings: blesh package.
+if [[ $- == *i* && -z "$INSIDE_EMACS" && "$TERM" != "dumb" &&
+      -f "${XDG_DATA_HOME}/blesh/ble.sh" ]]; then
+    source "${XDG_DATA_HOME}/blesh/ble.sh" --attach=none
+fi
+
 # Load readline configuration (XDG compliant)
 # Skip inside Emacs where line editing is unavailable
 if [[ -z "$INSIDE_EMACS" && "$TERM" != "dumb" ]]; then
@@ -101,3 +109,6 @@ unset _dircolors_cache
 
 # Load local machine-specific overrides
 include "${XDG_CONFIG_HOME}/work/bash/local" "optional"
+
+# Attach ble.sh last, after every config above has run
+[[ ! ${BLE_VERSION-} ]] || ble-attach

@@ -5,14 +5,14 @@ include make/log.mk
 
 # All packages (flat structure)
 ALL_PKGS := bash emacs nano vscode git tmux fzf ripgrep inputrc \
-            curlrc editorconfig gnupg htop i3 terminal
+            curlrc editorconfig gnupg htop i3 terminal blesh
 
 # Groups for convenience installs
 SHELL_PKGS   := bash
 EDITOR_PKGS  := emacs nano vscode
 DEV_PKGS     := git
 DESKTOP_PKGS := i3 terminal
-TOOL_PKGS    := tmux fzf ripgrep inputrc curlrc editorconfig gnupg htop
+TOOL_PKGS    := tmux fzf ripgrep inputrc blesh curlrc editorconfig gnupg htop
 
 # Stow flags: --no-folding ensures file-level symlinks (not directory-level)
 STOW_FLAGS := --no-folding --target=$(HOME)
