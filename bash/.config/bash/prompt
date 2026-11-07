@@ -3,9 +3,11 @@
 # which bashrc sources before this one.
 # shellcheck disable=SC2154
 
-# Prompt glyph
-start_glyph='β'
-end_glyph='❯'
+# Prompt glyph, coloured by the last command's exit status. Single-width
+# (Greek letters like β are East Asian "ambiguous" width and can throw off
+# cursor placement in some terminals/fonts).
+prompt_glyph='❯'
+unset start_glyph end_glyph 2>/dev/null
 
 # No git branch in the prompt (deliberate). Drop any helper left over from
 # an older version of this file when it's re-sourced in a running shell.
@@ -47,18 +49,15 @@ prompt_command() {
         prompt+="${bold_orange}[${AWS_PROFILE}]${reset_color} "
     fi
 
-    # Status indicator based on last exit code
-    if [[ "$last_exit_code" -ne 0 ]]; then
-        prompt+="${bold_red}${start_glyph}${reset_color} "
-    else
-        prompt+="${bold_green}${start_glyph}${reset_color} "
-    fi
-
     # Current working directory
-    prompt+="${bold_cyan}\W${reset_color}"
+    prompt+="${bold_cyan}\W${reset_color} "
 
-    # Final prompt character
-    prompt+=" ${bold_white}${end_glyph}${reset_color} "
+    # Prompt glyph: green after success, red after a failed command
+    if [[ "$last_exit_code" -ne 0 ]]; then
+        prompt+="${bold_red}${prompt_glyph}${reset_color} "
+    else
+        prompt+="${bold_green}${prompt_glyph}${reset_color} "
+    fi
 
     # Set terminal title: user:dirname
     prompt="\[\e]0;\u:\W\a\]${prompt}"
