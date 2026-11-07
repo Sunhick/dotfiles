@@ -1,5 +1,5 @@
 # ~/.config/git/config — single source of truth
-# Loaded via ~/.gitconfig -> [include] path = ~/.config/git/config
+# Git reads this XDG file natively, alongside ~/.gitconfig.
 
 # ---------------------------------------------------------------------------
 # Identity includes (conditional on directory)
@@ -19,9 +19,13 @@
 [includeIf "gitdir:~/company/**"]
     path = ~/.gitconfig-work
 
-# Local overrides (untracked, per-machine)
-[include]
-    path = ~/.config/git/local
+# This repo is personal wherever it is checked out, even under ~/work (e.g. as
+# a submodule of a work repo). Listed after the work rules so it wins.
+# hasconfig needs git >= 2.36; older git ignores it.
+[includeIf "hasconfig:remote.*.url:https://github.com/Sunhick/**"]
+    path = ~/.gitconfig-personal
+[includeIf "hasconfig:remote.*.url:git@github.com:Sunhick/**"]
+    path = ~/.gitconfig-personal
 
 # OS-specific. Git has no OS condition, so key off where repos live: macOS
 # homes are under /Users, Linux homes under /home (or /local/home on cloud
@@ -42,7 +46,6 @@
     editor = emacs
     untrackedCache = true
     pager = less -FMRiX
-    excludesfile = ~/.config/git/gitignore
     # Prevent commits with mixed line endings
     autocrlf = input
 
@@ -162,3 +165,10 @@
         git config --local user.email \"$(git config --file ~/.gitconfig-work user.email)\" && \
         echo 'Switched to work configuration'; \
     }; f"
+
+# ---------------------------------------------------------------------------
+# Local overrides (untracked, per-machine). Last, so they override the above.
+# ---------------------------------------------------------------------------
+
+[include]
+    path = ~/.config/git/local

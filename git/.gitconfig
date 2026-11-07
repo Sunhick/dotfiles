@@ -1,6 +1,5 @@
-# Thin loader — all real config lives in ~/.config/git/config
-[include]
-    path = ~/.config/git/config
+# Real config lives in ~/.config/git/config, which git reads on its own.
+# Keep this file minimal: `git config --global` and installers write here.
 
 [filter "lfs"]
     clean = git-lfs clean -- %f

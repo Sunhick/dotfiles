@@ -49,3 +49,6 @@ vscode/.config/Code/User/History/
 vscode/.config/Code/User/globalStorage/
 vscode/.config/Code/User/workspaceStorage/
 vscode/.config/Code/User/chatLanguageModels.json
+
+# Per-machine git overrides (included by git/.config/git/config)
+git/.config/git/local
