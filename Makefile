@@ -24,7 +24,7 @@ LATEST_BACKUP := $(HOME)/.dotfiles-backup/latest
 .PHONY: help install adopt safe-install sync plan ls doctor \
 	check-stow backup restore list-backups prune-backups \
 	shell editors development desktop tools prune \
-	$(ALL_PKGS) $(addprefix rm-,$(ALL_PKGS))
+	$(ALL_PKGS) $(addprefix rm-,$(ALL_PKGS)) $(addsuffix .restow,$(ALL_PKGS))
 
 help:
 	@echo "Dotfiles Management"
@@ -57,13 +57,24 @@ check-stow:
 install: check-stow $(ALL_PKGS)
 safe-install: backup install
 
+# --adopt moves existing files from $HOME into the repo, replacing tracked
+# content. Require a clean tree so the result can be reviewed and reverted.
 adopt: check-stow
+	@if ! git diff --quiet HEAD -- .; then \
+		$(call log,fail,Uncommitted changes: commit or stash before adopt); \
+		exit 1; \
+	fi
 	@for pkg in $(ALL_PKGS); do \
 		if [ -d "$$pkg" ]; then \
-			(cd $$pkg && stow $(STOW_FLAGS) --adopt . 2>/dev/null; \
+			(cd $$pkg && stow $(STOW_FLAGS) --adopt . && \
 			 stow $(STOW_FLAGS) --restow . && printf "  $(_GREEN)OK$(_NC)   %s\n" "LINK $$pkg (adopted)"); \
 		fi; \
 	done
+	@if ! git diff --quiet HEAD -- .; then \
+		$(call log,warn,Adopted files changed the repo. Review before committing:); \
+		git -P diff --stat HEAD -- .; \
+		echo "  Discard with: git checkout -- <file>"; \
+	fi
 
 sync: check-stow $(addsuffix .restow,$(ALL_PKGS))
 
@@ -124,49 +135,61 @@ ls:
 	@$(call log,info,Tools:)
 	@for p in $(TOOL_PKGS); do echo "  $$p"; done
 
+# Only broken links under ~/.config that point into this repo.
 prune:
-	@$(call log,info,Removing broken symlinks...)
-	@find $(HOME)/.config -type l -exec test ! -e {} \; -print -delete 2>/dev/null || true
+	@$(call log,info,Removing broken symlinks into this repo...)
+	@find "$(HOME)/.config" -type l ! -exec test -e {} \; -print 2>/dev/null | \
+	while IFS= read -r l; do \
+		case "$$(readlink "$$l")" in \
+			*"$(patsubst $(HOME)/%,%,$(CURDIR))/"*) rm -f "$$l" && echo "  removed $$l" ;; \
+		esac; \
+	done
 	@$(call log,ok,Prune complete)
 
 # ── Backup / Restore ──────────────────────────────────────────────
+# Paths (relative to $HOME) that the packages manage. Backups copy what the
+# links point to (cp -L), so a backup holds real files, not links into the repo.
+BACKUP_PATHS := .bashrc .bash_profile .gitconfig .editorconfig .gnupg/gpg.conf \
+	$(addprefix .config/,bash git emacs nano terminal tmux htop ripgrep fzf \
+	                     readline blesh curl Code)
+
 backup:
 	@$(call log,info,Creating backup at $(BACKUP_DIR)...)
 	@mkdir -p "$(BACKUP_DIR)"
-	@for config in bash git emacs nano terminal tmux htop ripgrep fd curl gnupg Code; do \
-		if [ -d "$(HOME)/.config/$$config" ]; then \
-			cp -r "$(HOME)/.config/$$config" "$(BACKUP_DIR)/"; \
-			printf "  $(_GREEN)OK$(_NC)   %s\n" "BACKUP .config/$$config/"; \
+	@for p in $(BACKUP_PATHS); do \
+		if [ -e "$(HOME)/$$p" ]; then \
+			mkdir -p "$(BACKUP_DIR)/$$(dirname "$$p")"; \
+			if cp -RL "$(HOME)/$$p" "$(BACKUP_DIR)/$$p" 2>/dev/null; then \
+				printf "  $(_GREEN)OK$(_NC)   %s\n" "BACKUP $$p"; \
+			else \
+				printf "  $(_YELLOW)WARN$(_NC) %s\n" "BACKUP $$p (partial: broken links skipped)"; \
+			fi; \
 		fi; \
 	done
-	@for file in .bashrc .gitconfig .inputrc; do \
-		if [ -f "$(HOME)/$$file" ]; then \
-			cp "$(HOME)/$$file" "$(BACKUP_DIR)/"; \
-			printf "  $(_GREEN)OK$(_NC)   %s\n" "BACKUP $$file"; \
-		fi; \
-	done
+	@touch "$(BACKUP_DIR)/.layout-home"
 	@rm -f "$(LATEST_BACKUP)"
 	@ln -sf "$(BACKUP_DIR)" "$(LATEST_BACKUP)"
 	@$(call log,ok,Backup completed at $(BACKUP_DIR))
 
+# Restores each backed-up file to its $HOME path. A stow link there is removed
+# first, so the copy never writes through it into the repo. Run `make install`
+# afterwards to link the packages again.
 restore:
-	@if [ ! -d "$(LATEST_BACKUP)" ]; then \
-		printf "  $(_RED)FAIL$(_NC) %s\n" "No backup found at $(LATEST_BACKUP)"; \
+	@if [ ! -f "$(LATEST_BACKUP)/.layout-home" ]; then \
+		printf "  $(_RED)FAIL$(_NC) %s\n" "No backup in the current layout at $(LATEST_BACKUP)"; \
 		exit 1; \
 	fi
 	@$(call log,warn,This will overwrite current configurations)
 	@read -p "Continue? (y/N): " confirm && [ "$$confirm" = "y" ] || exit 1
-	@for file in .bashrc .gitconfig .inputrc; do \
-		if [ -f "$(LATEST_BACKUP)/$$file" ]; then \
-			cp "$(LATEST_BACKUP)/$$file" "$(HOME)/"; \
-			printf "  $(_GREEN)OK$(_NC)   %s\n" "RESTORE $$file"; \
-		fi; \
-	done
-	@for config in bash git emacs nano terminal tmux htop ripgrep fd curl gnupg Code; do \
-		if [ -d "$(LATEST_BACKUP)/$$config" ]; then \
-			cp -r "$(LATEST_BACKUP)/$$config" "$(HOME)/.config/"; \
-			printf "  $(_GREEN)OK$(_NC)   %s\n" "RESTORE .config/$$config/"; \
-		fi; \
+	@cd "$(LATEST_BACKUP)/" && find . -type f ! -name .layout-home -print0 | \
+	while IFS= read -r -d '' f; do \
+		f="$${f#./}"; dst="$(HOME)/$$f"; \
+		mkdir -p "$$(dirname "$$dst")"; \
+		case "$$(cd "$$(dirname "$$dst")" && pwd -P)/" in \
+			"$(CURDIR)"/*) printf "  $(_YELLOW)WARN$(_NC) %s\n" "SKIP $$f (directory is inside the repo)"; continue ;; \
+		esac; \
+		[ -L "$$dst" ] && rm -f "$$dst"; \
+		cp -p "$$f" "$$dst" && printf "  $(_GREEN)OK$(_NC)   %s\n" "RESTORE $$f"; \
 	done
 	@$(call log,ok,Restore completed from $(LATEST_BACKUP))
 
