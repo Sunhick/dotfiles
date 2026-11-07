@@ -411,7 +411,7 @@
 (use-package zenburn-theme :defer t)
 
 ;; ── Time-based theme switching ──────────────────────────────────
-;; Day (7am–7pm): gruvbox-dark-hard
+;; Day (7am–7pm): zenburn
 ;; Night (7pm–7am): modus-vivendi
 
 (defun my/load-theme-by-time ()
@@ -419,10 +419,8 @@
   (let ((hour (string-to-number (format-time-string "%H"))))
     (mapc #'disable-theme custom-enabled-themes)
     (if (and (>= hour 7) (< hour 19))
-        (load-theme 'gruvbox-dark-hard t)
-      (load-theme 'modus-vivendi t)))
-  ;; Re-apply face customizations after theme load
-  )
+        (load-theme 'zenburn t)
+      (load-theme 'modus-vivendi t))))
 
 (my/load-theme-by-time)
 
