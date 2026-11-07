@@ -13,7 +13,7 @@ jobs:
     name: Lint shell, elisp and tmux
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Install tools
         run: |
@@ -62,7 +62,7 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       # macOS runners: /bin/bash is 3.2, so install bash 5 like the Brewfile does
       - name: Install stow (and bash on macOS)
