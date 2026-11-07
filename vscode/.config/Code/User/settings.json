@@ -82,8 +82,5 @@
     "workbench.tips.enabled": false,
     "workbench.startupEditor": "none",
     "workbench.editor.tabActionLocation": "right",
-    "claudeCode.preferredLocation": "panel",
-    "remote.SSH.remotePlatform": {
-        "dev-dsk-sunilmur-2b-2db5053c.us-west-2.amazon.com": "linux"
-    }
+    "claudeCode.preferredLocation": "panel"
 }
