@@ -19,6 +19,11 @@ ble-bind -f M-C-h kill-backward-cword
 # Suggestions: plain grey text, no background, so they read as "not typed yet"
 ble-face auto_complete='fg=242'
 
+# No red highlight for unknown commands. ble.sh draws them with the
+# syntax_error face, so this also drops the red on real syntax errors
+# (unclosed quotes, stray `fi`, ...).
+ble-face syntax_error=none
+
 # Quiet: no "[ble: exit N]" / "[ble: elapsed ...]" lines after commands
 bleopt exec_errexit_mark=
 bleopt exec_elapsed_mark=
