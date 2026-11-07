@@ -1,0 +1,9 @@
+# shellcheck settings for the bash dotfiles (used by CI and editors)
+# Files like .bash_profile have no shebang; they are all bash.
+shell=bash
+
+# Checks that don't fit sourced config files:
+# SC1090/SC1091  `source` of paths built at runtime ($XDG_CONFIG_HOME/...)
+# SC2034         variables (colors, prompt glyphs) set here, used by other files
+# SC2139         aliases that intentionally expand when defined (eza/exa loop)
+disable=SC1090,SC1091,SC2034,SC2139

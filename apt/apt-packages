@@ -1,16 +1,56 @@
 #!/usr/bin/env bash
+# Install the packages in package-list.txt on Debian/Ubuntu. Packages the
+# configured apt sources don't provide are skipped (one unknown name would
+# otherwise make `apt install` fail for all of them).
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACKAGE_LIST="$SCRIPT_DIR/package-list.txt"
 
+GREEN='\033[0;32m'; YELLOW='\033[0;33m'; RED='\033[0;31m'; CYAN='\033[0;36m'; NC='\033[0m'
+ok()   { printf "  ${GREEN}OK${NC}   %s\n" "$1"; }
+warn() { printf "  ${YELLOW}WARN${NC} %s\n" "$1"; }
+fail() { printf "  ${RED}FAIL${NC} %s\n" "$1"; }
+info() { printf "${CYAN}%s${NC}\n" "$1"; }
+
 if [[ ! -f "$PACKAGE_LIST" ]]; then
-    echo "Error: Package list file not found at $PACKAGE_LIST"
+    fail "Package list not found at $PACKAGE_LIST"
+    exit 1
+fi
+if ! command -v apt-get >/dev/null 2>&1; then
+    fail "apt-get not found (not a Debian/Ubuntu system)"
     exit 1
 fi
 
-sudo apt update
+info "Updating package index..."
+sudo apt-get update -qq
 
-packages=$(grep -v '^#' "$PACKAGE_LIST" | grep -v '^$' | tr '\n' ' ')
-sudo apt install -y $packages
+available=()
+skipped=()
+while IFS= read -r line; do
+    pkg="${line%%#*}"
+    pkg="${pkg//[[:space:]]/}"
+    [[ -z "$pkg" ]] && continue
+    # A real candidate, not just a name another package mentions
+    if apt-cache policy "$pkg" 2>/dev/null | grep -q 'Candidate: [^(]'; then
+        available+=("$pkg")
+    else
+        skipped+=("$pkg")
+    fi
+done < "$PACKAGE_LIST"
+
+for pkg in "${skipped[@]}"; do
+    warn "SKIP $pkg (not available from the configured apt sources)"
+done
+
+info "Installing ${#available[@]} packages..."
+if sudo apt-get install -y "${available[@]}"; then
+    ok "Installed: ${available[*]}"
+else
+    fail "apt-get install failed"
+    exit 1
+fi
+
+info "Summary"
+printf "  ${GREEN}%d installed${NC}, ${YELLOW}%d skipped${NC}\n" "${#available[@]}" "${#skipped[@]}"

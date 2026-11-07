@@ -1,22 +1,39 @@
+# Debian/Ubuntu packages. Install with: apt/apt-packages  (or: make deps)
+# Packages this release doesn't have are skipped with a warning (e.g. eza
+# needs Ubuntu 24.04+ / Debian 13+). Rust: use https://rustup.rs instead of
+# the distro's old cargo/rustc.
+
+# Essentials
 build-essential
-cargo
 curl
-fzf
 git
 gnupg
-golang
-htop
-jq
 make
-nodejs
 openssh-client
-python3-pip
-ripgrep
 rsync
-rustc
 software-properties-common
 stow
 tmux
 tree
 wget
+
+# Editor
+emacs
+
+# Search and modern CLI tools (bat and fd install as batcat and fdfind;
+# bash/aliases maps them back)
+bat
+eza
+fd-find
+fzf
+ripgrep
+zoxide
+
+# Data and dev tools
+golang
+htop
+jq
+nodejs
+python3-pip
+shellcheck
 yq

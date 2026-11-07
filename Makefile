@@ -3,19 +3,38 @@
 SHELL := /bin/bash
 include make/log.mk
 
-# All packages (flat structure)
-ALL_PKGS := bash emacs nano vscode git tmux fzf ripgrep inputrc \
-            curlrc editorconfig gnupg htop i3 terminal blesh
+UNAME_S := $(shell uname -s)
 
-# Groups for convenience installs
+# Packages by group (flat structure). Add a new package to one group only.
 SHELL_PKGS   := bash
 EDITOR_PKGS  := emacs nano vscode
 DEV_PKGS     := git
 DESKTOP_PKGS := i3 terminal
 TOOL_PKGS    := tmux fzf ripgrep inputrc blesh curlrc editorconfig gnupg htop
 
+# Every package (each gets `make <pkg>` / `make rm-<pkg>` targets)
+ALL_PKGS := $(SHELL_PKGS) $(EDITOR_PKGS) $(DEV_PKGS) $(DESKTOP_PKGS) $(TOOL_PKGS)
+
+# Packages that only make sense on Linux; skipped by install/sync/adopt/plan
+# and the desktop group on macOS (still installable with `make i3`).
+LINUX_ONLY_PKGS := i3
+ifeq ($(UNAME_S),Darwin)
+OS_PKGS := $(filter-out $(LINUX_ONLY_PKGS),$(ALL_PKGS))
+else
+OS_PKGS := $(ALL_PKGS)
+endif
+
 # Stow flags: --no-folding ensures file-level symlinks (not directory-level)
 STOW_FLAGS := --no-folding --target=$(HOME)
+
+# XDG base directories
+XDG_CONFIG := $(or $(XDG_CONFIG_HOME),$(HOME)/.config)
+XDG_DATA   := $(or $(XDG_DATA_HOME),$(HOME)/.local/share)
+XDG_CACHE  := $(or $(XDG_CACHE_HOME),$(HOME)/.cache)
+XDG_STATE  := $(or $(XDG_STATE_HOME),$(HOME)/.local/state)
+
+# tmux plugin manager (tmux-modern.conf loads it from here)
+TPM_DIR := $(XDG_DATA)/tmux/plugins/tpm
 
 # Backup
 BACKUP_DIR    := $(HOME)/.dotfiles-backup/$(shell date +%Y%m%d_%H%M%S)
@@ -23,7 +42,7 @@ LATEST_BACKUP := $(HOME)/.dotfiles-backup/latest
 
 .PHONY: help install adopt safe-install sync plan ls doctor \
 	check-stow backup restore list-backups prune-backups \
-	shell editors development desktop tools prune \
+	shell editors development desktop tools prune deps tpm bootstrap \
 	$(ALL_PKGS) $(addprefix rm-,$(ALL_PKGS)) $(addsuffix .restow,$(ALL_PKGS))
 
 help:
@@ -31,6 +50,8 @@ help:
 	@echo "==================="
 	@echo ""
 	@echo "Targets:"
+	@echo "  bootstrap     - New machine: deps, install, tpm"
+	@echo "  deps          - Install packages (Brewfile / apt list)"
 	@echo "  install       - Install all packages"
 	@echo "  adopt         - Install all (adopt existing files)"
 	@echo "  safe-install  - Backup then install"
@@ -39,12 +60,13 @@ help:
 	@echo "  ls            - List available packages"
 	@echo "  doctor        - Health check"
 	@echo "  prune         - Remove broken symlinks"
+	@echo "  tpm           - Install the tmux plugin manager"
 	@echo ""
 	@echo "Groups:"
 	@echo "  shell         - $(SHELL_PKGS)"
 	@echo "  editors       - $(EDITOR_PKGS)"
 	@echo "  development   - $(DEV_PKGS)"
-	@echo "  desktop       - $(DESKTOP_PKGS)"
+	@echo "  desktop       - $(filter $(OS_PKGS),$(DESKTOP_PKGS))"
 	@echo "  tools         - $(TOOL_PKGS)"
 	@echo ""
 	@echo "Individual: make <package>  (e.g. make git, make tmux)"
@@ -54,8 +76,41 @@ check-stow:
 	@which stow > /dev/null || ($(call log,fail,GNU Stow is not installed) && exit 1)
 
 # ── Core targets ──────────────────────────────────────────────────
-install: check-stow $(ALL_PKGS)
+install: check-stow $(OS_PKGS)
 safe-install: backup install
+
+# New machine: install tools first (that brings stow), then link and add TPM.
+# Sub-makes keep the order even under `make -j`.
+bootstrap:
+	@$(MAKE) --no-print-directory deps
+	@$(MAKE) --no-print-directory install
+	@$(MAKE) --no-print-directory tpm
+
+deps:
+	@case "$(UNAME_S)" in \
+		Darwin) \
+			if ! command -v brew >/dev/null 2>&1; then \
+				$(call log,fail,Homebrew not installed: see https://brew.sh); exit 1; \
+			fi; \
+			$(call log,info,Installing from homebrew/Brewfile...); \
+			brew bundle --file=homebrew/Brewfile ;; \
+		Linux) \
+			if command -v apt-get >/dev/null 2>&1; then \
+				bash apt/apt-packages; \
+			else \
+				$(call log,warn,No apt-get: install the tools in apt/package-list.txt by hand); \
+			fi ;; \
+		*) $(call log,warn,Unsupported OS $(UNAME_S): install tools by hand) ;; \
+	esac
+
+tpm:
+	@if [ -x "$(TPM_DIR)/tpm" ]; then \
+		$(call log,ok,TPM already installed at $(TPM_DIR)); \
+	else \
+		git clone --depth 1 https://github.com/tmux-plugins/tpm "$(TPM_DIR)" && \
+		$(call log,ok,TPM installed at $(TPM_DIR)) && \
+		echo "  In tmux, press prefix + I to install the plugins"; \
+	fi
 
 # --adopt moves existing files from $HOME into the repo, replacing tracked
 # content. Require a clean tree so the result can be reviewed and reverted.
@@ -64,7 +119,7 @@ adopt: check-stow
 		$(call log,fail,Uncommitted changes: commit or stash before adopt); \
 		exit 1; \
 	fi
-	@for pkg in $(ALL_PKGS); do \
+	@for pkg in $(OS_PKGS); do \
 		if [ -d "$$pkg" ]; then \
 			(cd $$pkg && stow $(STOW_FLAGS) --adopt . && \
 			 stow $(STOW_FLAGS) --restow . && printf "  $(_GREEN)OK$(_NC)   %s\n" "LINK $$pkg (adopted)"); \
@@ -76,13 +131,13 @@ adopt: check-stow
 		echo "  Discard with: git checkout -- <file>"; \
 	fi
 
-sync: check-stow $(addsuffix .restow,$(ALL_PKGS))
+sync: check-stow $(addsuffix .restow,$(OS_PKGS))
 
 # ── Group targets ─────────────────────────────────────────────────
 shell: check-stow $(SHELL_PKGS)
 editors: check-stow $(EDITOR_PKGS)
 development: check-stow $(DEV_PKGS)
-desktop: check-stow $(DESKTOP_PKGS)
+desktop: check-stow $(filter $(OS_PKGS),$(DESKTOP_PKGS))
 tools: check-stow $(TOOL_PKGS)
 
 # ── Per-package targets ───────────────────────────────────────────
@@ -113,7 +168,7 @@ $(addsuffix .restow,$(ALL_PKGS)): check-stow
 
 # ── Plan (dry run) ────────────────────────────────────────────────
 plan: check-stow
-	@for pkg in $(ALL_PKGS); do \
+	@for pkg in $(OS_PKGS); do \
 		if [ -d "$$pkg" ]; then \
 			if (cd "$$pkg" && stow $(STOW_FLAGS) --simulate . >/dev/null 2>&1); then \
 				printf "  $(_GREEN)OK$(_NC)   %s\n" "WOULD LINK $$pkg"; \
@@ -131,7 +186,9 @@ ls:
 	@$(call log,info,Development:)
 	@for p in $(DEV_PKGS); do echo "  $$p"; done
 	@$(call log,info,Desktop:)
-	@for p in $(DESKTOP_PKGS); do echo "  $$p"; done
+	@for p in $(DESKTOP_PKGS); do \
+		case " $(LINUX_ONLY_PKGS) " in *" $$p "*) echo "  $$p (Linux only)" ;; *) echo "  $$p" ;; esac; \
+	done
 	@$(call log,info,Tools:)
 	@for p in $(TOOL_PKGS); do echo "  $$p"; done
 
@@ -209,11 +266,6 @@ prune-backups:
 	fi
 
 # ── Health check ──────────────────────────────────────────────────
-XDG_CONFIG := $(or $(XDG_CONFIG_HOME),$(HOME)/.config)
-XDG_DATA   := $(or $(XDG_DATA_HOME),$(HOME)/.local/share)
-XDG_CACHE  := $(or $(XDG_CACHE_HOME),$(HOME)/.cache)
-XDG_STATE  := $(or $(XDG_STATE_HOME),$(HOME)/.local/state)
-
 doctor:
 	@PASS=0; WARN=0; FAIL=0; \
 	pass()  { PASS=$$((PASS + 1)); printf "  $(_GREEN)OK$(_NC)   %s\n" "$$1"; }; \
@@ -231,7 +283,7 @@ doctor:
 	done; \
 	\
 	header "Optional tools"; \
-	for cmd in emacs fzf bat eza fd rg tmux gpg curl jq htop; do \
+	for cmd in emacs fzf bat eza fd rg tmux gpg curl jq htop zoxide mise shellcheck; do \
 		if command -v "$$cmd" >/dev/null 2>&1; then \
 			pass "$$cmd"; \
 		else \
@@ -290,7 +342,7 @@ doctor:
 	\
 	header "Shell environment"; \
 	if [ -n "$${EDITOR:-}" ]; then \
-		if command -v "$$EDITOR" >/dev/null 2>&1; then \
+		if command -v "$${EDITOR%% *}" >/dev/null 2>&1; then \
 			pass "EDITOR=$$EDITOR"; \
 		else \
 			warn "EDITOR=$$EDITOR (not found in PATH)"; \

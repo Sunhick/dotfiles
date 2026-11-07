@@ -12,10 +12,11 @@ This package provides an XDG-compliant Emacs configuration that follows modern s
 
 ## Installation
 
-Use GNU Stow to install this package:
+Use GNU Stow to install this package, from the repo root:
 
 ```bash
-stow -t ~ packages/editors/emacs
+make emacs
+# or: cd emacs && stow --no-folding --target=$HOME .
 ```
 
 ## XDG Compliance

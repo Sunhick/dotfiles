@@ -1,15 +1,67 @@
 #!/usr/bin/env bash
+# Colors (bold_blue, reset_color, ...) are defined in the colors file,
+# which bashrc sources before this one.
+# shellcheck disable=SC2154
 
 # Prompt glyph
 start_glyph='β'
 end_glyph='❯'
 
-# Git branch function
+# git's own prompt helper (__git_ps1), shipped with git. It handles detached
+# HEAD, rebase/merge/bisect states and is cheaper than a hand-rolled
+# `git rev-parse` call. Dirty/untracked markers stay off: they run
+# `git diff`/`git ls-files` on every prompt, which is slow in big repos.
+if ! declare -F __git_ps1 >/dev/null; then
+    for _git_prompt in \
+        "/opt/homebrew/opt/git/etc/bash_completion.d/git-prompt.sh" \
+        "/opt/homebrew/etc/bash_completion.d/git-prompt.sh" \
+        "/usr/local/etc/bash_completion.d/git-prompt.sh" \
+        "/usr/lib/git-core/git-sh-prompt" \
+        "/usr/share/git-core/contrib/completion/git-prompt.sh" \
+        "/usr/share/git/completion/git-prompt.sh"; do
+        if [[ -r "$_git_prompt" ]]; then
+            source "$_git_prompt"
+            break
+        fi
+    done
+    unset _git_prompt
+fi
+
+# Git branch for the prompt: " (branch)" in a repo, empty elsewhere
 git_branch() {
     local branch
-    branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    if declare -F __git_ps1 >/dev/null; then
+        branch=$(__git_ps1 '%s')
+    else
+        branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    fi
     if [[ -n "$branch" ]]; then
-        echo " ${bold_blue}(${branch})${reset_color}"
+        # PS1 is expanded again when shown (promptvars), so a branch named
+        # e.g. `$(cmd)` in a cloned repo would run cmd. Escape \ $ and `.
+        branch=${branch//\\/\\\\}
+        branch=${branch//\$/\\\$}
+        branch=${branch//\`/\\\`}
+        printf ' %s(%s)%s' "${bold_blue}" "${branch}" "${reset_color}"
+    fi
+}
+
+# Run a function from PROMPT_COMMAND without dropping hooks other tools
+# (iTerm2, zoxide, mise, direnv) put there. Prepended, so it sees the last
+# command's exit status first. Safe to call again on `reload`.
+_prompt_command_add() {
+    local fn=$1 entry
+    if (( BASH_VERSINFO[0] > 5 || (BASH_VERSINFO[0] == 5 && BASH_VERSINFO[1] >= 1) )); then
+        # bash 5.1+: PROMPT_COMMAND may be an array, one command per element
+        for entry in "${PROMPT_COMMAND[@]}"; do
+            [[ "$entry" == "$fn" ]] && return 0
+        done
+        PROMPT_COMMAND=("$fn" "${PROMPT_COMMAND[@]}")
+    else
+        # Older bash (Amazon Linux 2 ships 4.2): a single ;-separated string
+        # shellcheck disable=SC2128,SC2178
+        [[ ";${PROMPT_COMMAND//[[:space:]]/};" == *";$fn;"* ]] && return 0
+        # shellcheck disable=SC2128,SC2178
+        PROMPT_COMMAND="$fn${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
     fi
 }
 
@@ -17,8 +69,10 @@ git_branch() {
 prompt_command() {
     local last_exit_code=$?
 
-    # Flush history so other terminals can see it
+    # Share history across terminals: append this shell's new lines to the
+    # history file, then read lines other shells have appended since.
     history -a
+    history -n
 
     local prompt=""
 
@@ -38,7 +92,7 @@ prompt_command() {
     prompt+="${bold_cyan}\W${reset_color}"
 
     # Git branch if in a git repository
-    # prompt+="$(git_branch)"
+    prompt+="$(git_branch)"
 
     # Final prompt character
     prompt+=" ${bold_white}${end_glyph}${reset_color} "
@@ -48,6 +102,7 @@ prompt_command() {
 
     PS1="$prompt"
     PS2="${bold_yellow}>${reset_color} "
+    return "$last_exit_code"
 }
 
 # Set up prompt based on terminal capability
@@ -63,10 +118,11 @@ if [[ -n "$INSIDE_EMACS" ]]; then
             indicator="φ"
         fi
         PS1="${indicator} \W ❯ "
+        return "$last_exit"
     }
-    PROMPT_COMMAND="_emacs_prompt_command"
+    _prompt_command_add _emacs_prompt_command
 elif [[ "$TERM" == "dumb" || "$TERM" == "unknown" ]]; then
     PS1="> "
 else
-    PROMPT_COMMAND="prompt_command"
+    _prompt_command_add prompt_command
 fi

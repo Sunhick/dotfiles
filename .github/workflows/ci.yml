@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint shell, elisp and tmux
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq shellcheck emacs-nox tmux
+
+      - name: Bash syntax and shellcheck
+        run: |
+          files=(bash/.bashrc bash/.bash_profile blesh/.config/blesh/init.sh
+                 fzf/.config/fzf/fzf.bash apt/apt-packages
+                 tmux/.config/tmux/tmux-version-ge)
+          for f in bash/.config/bash/*; do
+            [ "$f" = bash/.config/bash/dir_colors ] || files+=("$f")
+          done
+          for f in "${files[@]}"; do bash -n "$f"; done
+          shellcheck -S warning "${files[@]}"
+
+      - name: Emacs Lisp parens
+        run: |
+          emacs -Q --batch --eval '
+            (dolist (f (directory-files-recursively "emacs/.config/emacs" "[.]el$"))
+              (unless (string-match-p "/vendor/" f)
+                (with-temp-buffer
+                  (insert-file-contents f)
+                  (emacs-lisp-mode)
+                  (condition-case err (check-parens)
+                    (error (message "%s: %S" f err) (kill-emacs 1))))))'
+
+      # A real source-file (not -n, which only checks syntax) so unknown
+      # options and bad key names fail the step too.
+      - name: tmux config loads
+        run: |
+          mkdir -p "$HOME/.config"
+          ln -s "$PWD/tmux/.config/tmux" "$HOME/.config/tmux"
+          tmux -L ci -f /dev/null new-session -d
+          for f in tmux.conf tmux-modern.conf; do
+            tmux -L ci source-file "$HOME/.config/tmux/$f"
+          done
+          tmux -L ci kill-server
+
+  install:
+    name: Stow install (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+
+      # macOS runners: /bin/bash is 3.2, so install bash 5 like the Brewfile does
+      - name: Install stow (and bash on macOS)
+        run: |
+          if [ "$RUNNER_OS" = macOS ]; then brew install stow bash; else sudo apt-get install -y -qq stow; fi
+
+      - name: make install into a scratch HOME
+        run: |
+          export HOME="$RUNNER_TEMP/home"
+          mkdir -p "$HOME"
+          unset XDG_CONFIG_HOME XDG_DATA_HOME XDG_CACHE_HOME XDG_STATE_HOME
+          make install
+          # A second run must also succeed (restow is idempotent)
+          make sync
+
+      - name: Interactive bash starts without errors
+        run: |
+          export HOME="$RUNNER_TEMP/home"
+          unset XDG_CONFIG_HOME XDG_DATA_HOME XDG_CACHE_HOME XDG_STATE_HOME
+          out=$(bash -i -c 'prompt_command; echo READY' 2>&1 \
+                | grep -v -e 'no job control' -e 'cannot set terminal process group')
+          echo "$out"
+          [ "$(printf '%s\n' "$out" | tail -n 1)" = READY ]
+          [ "$(printf '%s\n' "$out" | wc -l)" -eq 1 ]

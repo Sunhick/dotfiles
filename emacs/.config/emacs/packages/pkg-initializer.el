@@ -166,9 +166,10 @@
           ("w" "Work" entry (file+headline "work.org" "Tasks")
            "* TODO %? :@work:\n%U\n%a\n"))))
 
-(use-package org-bullets
+;; org-superstar: maintained successor to org-bullets (same look)
+(use-package org-superstar
   :defer t
-  :hook (org-mode . org-bullets-mode))
+  :hook (org-mode . org-superstar-mode))
 
 ;; ── LSP (eglot — built into Emacs 29+) ─────────────────────────
 
@@ -215,6 +216,20 @@
                typescript-ts-mode-hook))
   (add-hook hook #'eglot-ensure))
 
+;; The remap above means go-mode/rust-mode (and their gofmt and
+;; rust-format-on-save hooks below) never run when a grammar is installed.
+;; Format on save through the language server instead. Errors are demoted
+;; to messages so a missing server or a syntax error never blocks a save.
+(defun my/eglot-format-before-save ()
+  "Format the buffer with eglot if a server manages it."
+  (when (and (fboundp 'eglot-managed-p) (eglot-managed-p))
+    (with-demoted-errors "Format on save: %S"
+      (eglot-format-buffer))))
+
+(dolist (hook '(go-ts-mode-hook rust-ts-mode-hook))
+  (add-hook hook (lambda ()
+                   (add-hook 'before-save-hook #'my/eglot-format-before-save nil t))))
+
 ;; Fallback non-treesit packages (used when grammar not available)
 (use-package go-mode
   :defer t
@@ -232,9 +247,8 @@
                         (setq indent-tabs-mode nil)
                         (setq rust-format-on-save t)))))
 
-(use-package typescript-mode
-  :defer t
-  :custom (typescript-indent-level 2))
+;; No typescript-mode package: it is archived upstream, and the built-in
+;; typescript-ts-mode (via treesit-auto) handles .ts/.tsx.
 
 (use-package yaml-mode :defer t)
 (use-package protobuf-mode :defer t)

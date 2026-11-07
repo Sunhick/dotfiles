@@ -8,9 +8,11 @@ XDG-compliant bash configuration with modern enhancements.
 - **Gruvbox color scheme** - Beautiful dark theme throughout
 - **Smart tool detection** - Automatically uses modern CLI tools when available
 - **Cross-platform support** - Works on macOS and Linux
-- **Git integration** - Branch display in prompt, useful aliases
-- **Enhanced history** - Better history management with timestamps
+- **Git integration** - Branch in the prompt (git's `__git_ps1`), useful aliases
+- **Enhanced history** - Timestamps, shared live across terminals
 - **Modern shell options** - Improved navigation and completion
+- **Emacs as editor** - `EDITOR`/`VISUAL` are `emacsclient -t` (starts the daemon if needed)
+- **zoxide / mise** - Set up automatically when installed (`z foo` to jump; per-project tool versions)
 
 ## Files
 
@@ -28,7 +30,7 @@ XDG-compliant bash configuration with modern enhancements.
 ## Dependencies
 
 ### Required
-- bash 4.0+
+- bash 4.0+ (macOS: `brew install bash`; `/bin/bash` is 3.2)
 
 ### Optional (Enhanced Experience)
 - **GNU coreutils** - Better ls colors (`brew install coreutils`)
@@ -37,16 +39,22 @@ XDG-compliant bash configuration with modern enhancements.
 - **eza** - Modern ls replacement (falls back to exa)
 - **fd** - Modern find replacement
 - **ripgrep** - Modern grep replacement
+- **zoxide** - Frecency-based `cd` (`z`, `zi`)
+- **mise** - Per-project tool versions (`.mise.toml`, `.tool-versions`)
+
+The zoxide and mise init scripts are cached in `~/.cache/bash/` and
+regenerated when the tool is upgraded.
 
 ## Installation
 
+From the repo root:
+
 ```bash
-cd packages/shell
-make install-bash
+make bash
 ```
 
 Or directly with stow:
 ```bash
-cd packages/shell/bash
-stow --target=$HOME .
+cd bash
+stow --no-folding --target=$HOME .
 ```

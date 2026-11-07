@@ -1,2 +1,7 @@
 [gpg]
 	program = /opt/homebrew/bin/gpg
+
+# Built-in filesystem monitor daemon (macOS/Windows only, git >= 2.37):
+# faster `git status` in large repos. Linux git has no built-in fsmonitor.
+[core]
+	fsmonitor = true

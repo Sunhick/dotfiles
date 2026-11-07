@@ -1,5 +1,5 @@
-# -*- mode: shell-script -*-
 #!/usr/bin/env bash
+# -*- mode: shell-script -*-
 
 # Vibrant dark-terminal theme — high contrast, easy on the eyes
 red="\[\e[38;5;196m\]"            # vivid red

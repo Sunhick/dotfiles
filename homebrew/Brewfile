@@ -1,6 +1,10 @@
 # Homebrew Bundle file
-# Install with: brew bundle
-# Update with: brew bundle --force
+# Install with: brew bundle --file=homebrew/Brewfile   (or: make deps)
+# Check with:   brew bundle check --file=homebrew/Brewfile
+
+# Shell: macOS ships bash 3.2 at /bin/bash; the config expects bash 5.
+# After install, add $(brew --prefix)/bin/bash to /etc/shells and chsh to it.
+brew "bash"
 
 # Essential CLI tools
 brew "git"
@@ -10,12 +14,20 @@ brew "tree"
 brew "htop"
 brew "tmux"
 brew "stow"
+# GNU ls/dircolors (gls, gdircolors) for the gruvbox dir_colors theme
+brew "coreutils"
 
 # Development tools
 brew "node"
-brew "python@3.11"
+brew "python@3.13"
+brew "uv"
 brew "go"
-brew "rust"
+# Rust: install the toolchain with rustup from https://rustup.rs (lands in
+# ~/.cargo, whose env bash/darwin sources). Neither the "rust" formula (a
+# second, unmanaged cargo/rustc) nor the keg-only "rustup" formula is used.
+# Per-project tool versions (.mise.toml / .tool-versions)
+brew "mise"
+brew "shellcheck"
 
 # Text processing and search
 brew "ripgrep"
@@ -28,10 +40,6 @@ brew "zoxide"
 brew "bat"
 brew "eza"
 brew "fd"
-brew "emacs"
-
-# Shell enhancements
-brew "bash-completion@2"
 
 # System utilities
 brew "gnupg"
@@ -39,6 +47,10 @@ brew "openssh"
 brew "rsync"
 
 # GUI applications
+# Emacs.app: bash/darwin and the Emacs aliases expect /Applications/Emacs.app.
+# Uncomment on a fresh Mac; brew refuses to install over an Emacs.app that
+# was installed by hand.
+# cask "emacs-app"
 cask "visual-studio-code"
 cask "iterm2"
 cask "google-chrome"

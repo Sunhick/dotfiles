@@ -84,6 +84,30 @@ esac
 _modern_tool_aliases
 unset -f _modern_tool_aliases
 
+# Source a tool's generated shell init, cached under ~/.cache/bash and
+# regenerated only when the tool's binary is newer than the cache (same
+# approach as brew shellenv in darwin). Usage: _cached_init NAME CMD [ARGS...]
+_cached_init() {
+    local name=$1 bin cache
+    shift
+    bin=$(command -v "$1") || return 0
+    cache="${XDG_CACHE_HOME:-$HOME/.cache}/bash/${name}_init.bash"
+    if [[ ! -s "$cache" || "$bin" -nt "$cache" ]]; then
+        [[ -d "${cache%/*}" ]] || mkdir -p "${cache%/*}"
+        "$@" > "$cache" 2>/dev/null || { rm -f "$cache"; return 0; }
+    fi
+    source "$cache"
+}
+
+# zoxide: `z foo` jumps to the most used directory matching foo, `zi` picks
+# interactively with fzf. Plain `cd` is unchanged.
+_cached_init zoxide zoxide init bash
+
+# mise: per-project tool versions (node, python, go, ...) from .mise.toml or
+# .tool-versions. Before the work overrides, so their PATH choices win.
+_cached_init mise mise activate bash
+unset -f _cached_init
+
 # Load git completion only (skip bash-completion — _longopt breaks macOS)
 if [[ -z "$INSIDE_EMACS" && "$TERM" != "dumb" ]]; then
     for _git_comp in \

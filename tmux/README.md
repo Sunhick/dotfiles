@@ -24,7 +24,7 @@ Tmux supports XDG configuration when using `~/.config/tmux/tmux.conf`.
 
 - **Prefix**: ` (backtick)
 - **Reload config**: `prefix + r`
-- **Window**: `prefix + 1-9`; `prefix + n / p` (repeatable); `prefix + Tab` last window
+- **Window**: `prefix + 1-9`; `prefix + n / p` (repeatable) or `C-n / C-p`; `prefix + Tab` last window
 - **Pane**: `prefix + arrows` (repeatable) or `h j k l`; `prefix + ;` last pane
 - **Split**: `prefix + \` or `|` (side by side), `prefix + -` (stacked)
 - **Copy mode**: `prefix + [` or `Enter`; `Shift + PgUp` without prefix
@@ -50,3 +50,10 @@ tmux with `tmux -f ~/.config/tmux/tmux.conf`, or create a host-local
     source-file ~/.config/tmux/tmux.conf
 
 Don't stow that shim on modern hosts: tmux 3.1+ would load both files.
+
+## Plugins (TPM)
+
+`tmux-modern.conf` loads TPM from `~/.local/share/tmux/plugins/tpm` when it
+is installed (`make tpm` clones it), with tmux-resurrect and
+tmux-continuum. Press `prefix + I` once to install the plugins.
+tmux-sensible is not used; its useful settings are set in `tmux.conf`.

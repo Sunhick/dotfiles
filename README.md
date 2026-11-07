@@ -7,12 +7,15 @@ Personal dotfiles managed with GNU Stow, following the XDG Base Directory Specif
 ```bash
 git clone https://github.com/sunhick/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-make install
+make bootstrap   # deps (Brewfile / apt list) + install + tmux plugin manager
 ```
+
+Already have the tools? `make install` just links the packages.
 
 ### Enhanced Experience (Optional Dependencies)
 
-For the best experience, especially with the bash shell configuration, install these tools:
+For the best experience, especially with the bash shell configuration, install these tools
+(`make deps` does this for your OS):
 
 **macOS (Homebrew):**
 ```bash
@@ -20,16 +23,19 @@ For the best experience, especially with the bash shell configuration, install t
 brew bundle --file=homebrew/Brewfile
 
 # ...or install the essentials manually
-brew install coreutils fzf git      # core enhancements
+brew install bash coreutils fzf git # core enhancements
 brew install bat eza fd ripgrep     # modern CLI tools
 brew install --cask iterm2          # terminal
-brew install emacs                  # editor
+brew install --cask emacs-app       # editor (Emacs.app)
 ```
+
+macOS ships bash 3.2; after installing Homebrew bash, add it to
+`/etc/shells` and make it your login shell (`chsh -s "$(brew --prefix)/bin/bash"`).
 
 **Linux (Ubuntu/Debian):**
 ```bash
-# Install from the bundled package list
-xargs sudo apt install -y < apt/package-list.txt
+# Install from the bundled package list (skips packages your release lacks)
+apt/apt-packages
 
 # ...or install the essentials manually
 sudo apt install git fzf coreutils  # core tools
@@ -61,7 +67,7 @@ This dotfiles setup follows the XDG Base Directory Specification:
 
 The repo has two kinds of top-level directories: **Stow packages** (symlinked
 into your home directory by `make`) and **helper directories** (package lists,
-keyboard layouts, and shared Makefile logic that are *not* stowed).
+CI, and shared Makefile logic that are *not* stowed).
 
 ```
 dotfiles/
@@ -79,9 +85,9 @@ dotfiles/
 │   ├── blesh/           # ble.sh (optional) → ~/.config/blesh/
 │   ├── curlrc/          # curl              → ~/.config/curl/
 │   ├── editorconfig/    # editorconfig      → ~/.editorconfig
-│   ├── gnupg/           # GnuPG             → ~/.config/gnupg/
+│   ├── gnupg/           # GnuPG             → ~/.gnupg/gpg.conf
 │   ├── htop/            # htop              → ~/.config/htop/
-│   ├── i3/              # i3 wm (Linux)     → ~/.config/i3/
+│   ├── i3/              # i3 wm (Linux; skipped on macOS) → ~/.config/i3/
 │   └── terminal/        # terminal / iterm2 config
 │
 ├── Windows (not stowed; use Setup.ps1) ───────────
@@ -89,11 +95,11 @@ dotfiles/
 │   └── windows-terminal/# Windows Terminal settings.json
 │
 └── Helper directories (not stowed) ───────────────
-    ├── apt/             # Debian/Ubuntu package lists (package-list.txt, apt-packages)
+    ├── .github/         # CI (shellcheck, elisp, tmux, stow install) + dependabot
+    ├── apt/             # Debian/Ubuntu package list + installer (apt-packages)
     ├── homebrew/        # macOS Brewfile
-    ├── keyboard/        # QMK/Vial homerow-miryoku keyboard layouts
     ├── make/            # shared Makefile helpers (log.mk)
-    ├── management/stow/ # stow configuration
+    ├── .shellcheckrc    # shellcheck settings for the bash files
     └── Makefile         # one Makefile for everything
 ```
 
@@ -108,7 +114,8 @@ dotfiles/
 - **Smart tool detection** - Automatically uses modern CLI tools when available
 - **Cross-platform** - Works on macOS and Linux with platform-specific optimizations
 - **XDG compliant** - Clean organization in `~/.config/bash/`
-- **Git integration** - Branch display in prompt, useful aliases
+- **Git integration** - Branch in the prompt (git's `__git_ps1`), useful aliases
+- **Emacs everywhere** - `EDITOR`/`VISUAL` (and so git) use `emacsclient -t`
 
 **Key files:**
 - `dir_colors` - Gruvbox theme for GNU ls
@@ -134,7 +141,7 @@ make install
 make shell              # bash
 make editors            # emacs, nano, vscode
 make tools              # tmux, fzf, ripgrep, inputrc, blesh, curlrc, editorconfig, gnupg, htop
-make desktop            # i3, terminal
+make desktop            # terminal (+ i3 on Linux)
 make development        # git
 ```
 
@@ -146,13 +153,15 @@ make bash
 
 # or directly with stow
 cd tmux
-stow --target=$HOME .
+stow --no-folding --target=$HOME .
 ```
 
 ## Commands
 
 | Command              | Description                               |
 | -------------------- | ----------------------------------------- |
+| `make bootstrap`     | New machine: `deps` + `install` + `tpm`   |
+| `make deps`          | Install tools (Brewfile or apt list)      |
 | `make install`       | Install all packages                      |
 | `make safe-install`  | Backup existing configs then install      |
 | `make adopt`         | Install all, adopting existing files      |
@@ -166,6 +175,7 @@ stow --target=$HOME .
 | `make restore`       | Restore from latest backup                |
 | `make list-backups`  | List available backups                    |
 | `make prune-backups` | Remove old backups (keeps last 5)         |
+| `make tpm`           | Install the tmux plugin manager           |
 
 ## Adding Packages
 
@@ -182,7 +192,8 @@ stow --target=$HOME .
            └── config.yml
    ```
 
-3. Add it to `ALL_PKGS` in the Makefile and the appropriate group variable.
+3. Add it to the appropriate group variable in the Makefile (`ALL_PKGS` is
+   built from the groups).
 
 4. Install:
    ```bash
@@ -201,8 +212,7 @@ Beyond the stowed configs, the repo bundles reproducible package lists so a
 fresh machine can be provisioned quickly:
 
 - **`homebrew/Brewfile`** — macOS packages/casks. Install with `brew bundle --file=homebrew/Brewfile`.
-- **`apt/package-list.txt`** — Debian/Ubuntu packages. Install with `xargs sudo apt install -y < apt/package-list.txt`.
-- **`keyboard/`** — QMK/Vial homerow Miryoku layouts (`.vil`), including a Colemak variant.
+- **`apt/package-list.txt`** — Debian/Ubuntu packages. Install with `apt/apt-packages`.
 
 ## Color Theming
 

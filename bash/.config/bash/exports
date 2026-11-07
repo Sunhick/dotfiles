@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 
-# Editor preferences
-export EDITOR="emacs"
+# Editor preferences: open files in the running Emacs daemon. An empty
+# ALTERNATE_EDITOR makes emacsclient start the daemon if none is running.
+# Inside Emacs (M-x shell, vterm) open a buffer in that Emacs, not a nested
+# terminal frame.
+export ALTERNATE_EDITOR=""
+if [[ -n "${INSIDE_EMACS:-}" ]]; then
+    export EDITOR="emacsclient"
+else
+    export EDITOR="emacsclient -t"
+fi
 export VISUAL="$EDITOR"
 export FCEDIT="$EDITOR"
 
@@ -12,7 +20,8 @@ export LANG="${LANG:-en_US.UTF-8}"
 # GPG configuration — must be set fresh each shell (not cached). Only on a
 # terminal: without one, tty prints "not a tty" into the variable.
 if [[ -t 0 ]]; then
-    export GPG_TTY=$(tty)
+    GPG_TTY=$(tty)
+    export GPG_TTY
 fi
 
 # Less configuration

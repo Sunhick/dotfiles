@@ -43,7 +43,8 @@
 
 [core]
     precomposeUnicode = true
-    editor = emacs
+    # No core.editor: git falls back to $VISUAL/$EDITOR (emacsclient, set in
+    # bash/exports), so commit messages open in the running Emacs daemon.
     untrackedCache = true
     pager = less -FMRiX
     # Prevent commits with mixed line endings
@@ -81,6 +82,7 @@
     colorMoved = zebra
     wsErrorHighlight = all
     algorithm = histogram
+    renames = copies
 
 [difftool "ediff"]
     cmd = emacs --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
@@ -94,6 +96,16 @@
 
 [color]
     ui = auto
+
+# List output (branch, tag, status untracked) in columns when on a terminal
+[column]
+    ui = auto
+
+# Most recently committed branches first; tags in version order (v1.10 > v1.9)
+[branch]
+    sort = -committerdate
+[tag]
+    sort = version:refname
 
 [grep]
     lineNumber = true
@@ -111,6 +123,10 @@
 
 [rebase]
     autoStash = true
+    # Apply fixup!/squash! commits automatically in `rebase -i`
+    autoSquash = true
+    # Move branches stacked on the rebased one along with it (git >= 2.38)
+    updateRefs = true
 
 [rerere]
     enabled = true
@@ -143,8 +159,19 @@
     commit-message = log --format=%B -n 1
     dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
 
-    # Branch management — delete merged branches (excluding protected ones)
-    cleanup = "!git branch --merged | grep -v '\\*\\|main\\|develop' | xargs -r -n 1 git branch -d"
+    # Delete local branches merged into HEAD. Never touches the current
+    # branch, origin's default branch, or main/master/mainline/develop.
+    # Whole-name matches only, so feature/main-menu is not protected.
+    cleanup = "!f() { \
+        cur=$(git branch --show-current); \
+        def=$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null); \
+        def=${def#origin/}; \
+        git for-each-ref --merged HEAD --format='%(refname:short)' refs/heads/ | \
+        while IFS= read -r b; do \
+            case \"$b\" in \"$cur\"|\"$def\"|main|master|mainline|develop) continue ;; esac; \
+            git branch -d \"$b\"; \
+        done; \
+    }; f"
 
     # Show files ignored by git
     ignored = ls-files -o -i --exclude-standard
