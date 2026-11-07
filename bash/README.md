@@ -8,7 +8,7 @@ XDG-compliant bash configuration with modern enhancements.
 - **Gruvbox color scheme** - Beautiful dark theme throughout
 - **Smart tool detection** - Automatically uses modern CLI tools when available
 - **Cross-platform support** - Works on macOS and Linux
-- **Git integration** - Branch in the prompt (git's `__git_ps1`), useful aliases
+- **Git integration** - Useful git aliases and completion
 - **Enhanced history** - Timestamps, shared live across terminals
 - **Modern shell options** - Improved navigation and completion
 - **Emacs as editor** - `EDITOR`/`VISUAL` are `emacsclient -t` (starts the daemon if needed)

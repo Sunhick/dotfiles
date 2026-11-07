@@ -44,8 +44,12 @@ include "${BASH_CONFIG_DIR}/shopt"
 # ble.sh line editor (highlighting, autosuggestions), if installed. Loaded
 # detached before any `bind` so it picks up readline/inputrc and the fzf
 # bindings below; attached at the end of this file. Settings: blesh package.
+# Not re-sourced when already loaded (`. ~/.bashrc`): a reload re-sends
+# ble.sh's terminal queries (DA2 `ESC[>c`, cursor-position `ESC[6n`) and the
+# replies, e.g. `^[[>84;0;0c^[[2;1R`, land on the command line as typed
+# text. Use `ble-reload` to pick up blesh/init.sh changes.
 if [[ $- == *i* && -z "$INSIDE_EMACS" && "$TERM" != "dumb" &&
-      -f "${XDG_DATA_HOME}/blesh/ble.sh" ]]; then
+      -z "${BLE_VERSION-}" && -f "${XDG_DATA_HOME}/blesh/ble.sh" ]]; then
     source "${XDG_DATA_HOME}/blesh/ble.sh" --attach=none
 fi
 

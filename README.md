@@ -114,7 +114,7 @@ dotfiles/
 - **Smart tool detection** - Automatically uses modern CLI tools when available
 - **Cross-platform** - Works on macOS and Linux with platform-specific optimizations
 - **XDG compliant** - Clean organization in `~/.config/bash/`
-- **Git integration** - Branch in the prompt (git's `__git_ps1`), useful aliases
+- **Git integration** - Useful git aliases and completion
 - **Emacs everywhere** - `EDITOR`/`VISUAL` (and so git) use `emacsclient -t`
 
 **Key files:**

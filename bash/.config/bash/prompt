@@ -7,43 +7,9 @@
 start_glyph='β'
 end_glyph='❯'
 
-# git's own prompt helper (__git_ps1), shipped with git. It handles detached
-# HEAD, rebase/merge/bisect states and is cheaper than a hand-rolled
-# `git rev-parse` call. Dirty/untracked markers stay off: they run
-# `git diff`/`git ls-files` on every prompt, which is slow in big repos.
-if ! declare -F __git_ps1 >/dev/null; then
-    for _git_prompt in \
-        "/opt/homebrew/opt/git/etc/bash_completion.d/git-prompt.sh" \
-        "/opt/homebrew/etc/bash_completion.d/git-prompt.sh" \
-        "/usr/local/etc/bash_completion.d/git-prompt.sh" \
-        "/usr/lib/git-core/git-sh-prompt" \
-        "/usr/share/git-core/contrib/completion/git-prompt.sh" \
-        "/usr/share/git/completion/git-prompt.sh"; do
-        if [[ -r "$_git_prompt" ]]; then
-            source "$_git_prompt"
-            break
-        fi
-    done
-    unset _git_prompt
-fi
-
-# Git branch for the prompt: " (branch)" in a repo, empty elsewhere
-git_branch() {
-    local branch
-    if declare -F __git_ps1 >/dev/null; then
-        branch=$(__git_ps1 '%s')
-    else
-        branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-    fi
-    if [[ -n "$branch" ]]; then
-        # PS1 is expanded again when shown (promptvars), so a branch named
-        # e.g. `$(cmd)` in a cloned repo would run cmd. Escape \ $ and `.
-        branch=${branch//\\/\\\\}
-        branch=${branch//\$/\\\$}
-        branch=${branch//\`/\\\`}
-        printf ' %s(%s)%s' "${bold_blue}" "${branch}" "${reset_color}"
-    fi
-}
+# No git branch in the prompt (deliberate). Drop any helper left over from
+# an older version of this file when it's re-sourced in a running shell.
+unset -f git_branch 2>/dev/null
 
 # Run a function from PROMPT_COMMAND without dropping hooks other tools
 # (iTerm2, zoxide, mise, direnv) put there. Prepended, so it sees the last
@@ -90,9 +56,6 @@ prompt_command() {
 
     # Current working directory
     prompt+="${bold_cyan}\W${reset_color}"
-
-    # Git branch if in a git repository
-    prompt+="$(git_branch)"
 
     # Final prompt character
     prompt+=" ${bold_white}${end_glyph}${reset_color} "
