@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 
-# Colorize the ls output
-alias ls="ls --color=auto"
-alias ll="ls -la"
+# Linux-specific settings. The generic ls aliases in aliases already use
+# GNU ls --color=auto.

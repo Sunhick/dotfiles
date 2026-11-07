@@ -9,4 +9,3 @@ features/
 \.bashrc\.local
 \.bash_profile\.local
 .config/bash/local
-.config/bash/history

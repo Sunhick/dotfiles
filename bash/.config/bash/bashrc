@@ -25,6 +25,19 @@ if [[ -f "/.dockerenv" ]]; then
     return
 fi
 
+# Non-interactive shells (`ssh host cmd` and scp, which sshd runs through
+# ~/.bashrc, or `bash -lc` from IDEs): set up the environment and PATH only;
+# skip the prompt, key bindings, completion and ble.sh.
+if [[ $- != *i* ]]; then
+    include "${BASH_CONFIG_DIR}/exports"
+    case "$OSTYPE" in
+        darwin*) include "${BASH_CONFIG_DIR}/darwin" ;;
+        linux*)  include "${BASH_CONFIG_DIR}/linux" ;;
+    esac
+    include "${XDG_CONFIG_HOME}/work/bash/local" "optional"
+    return
+fi
+
 # Load shell options first
 include "${BASH_CONFIG_DIR}/shopt"
 
@@ -58,14 +71,18 @@ include "${BASH_CONFIG_DIR}/prompt"
 include "${BASH_CONFIG_DIR}/aliases"
 
 # Load OS-specific configuration
-case "$(uname -s)" in
-    Darwin)
+case "$OSTYPE" in
+    darwin*)
         include "${BASH_CONFIG_DIR}/darwin"
         ;;
-    Linux)
+    linux*)
         include "${BASH_CONFIG_DIR}/linux"
         ;;
 esac
+
+# Tool aliases need the OS file's PATH and must override its ls aliases
+_modern_tool_aliases
+unset -f _modern_tool_aliases
 
 # Load git completion only (skip bash-completion — _longopt breaks macOS)
 if [[ -z "$INSIDE_EMACS" && "$TERM" != "dumb" ]]; then
@@ -89,7 +106,7 @@ fi
 # Load dir_colors for ls coloring (cached to avoid subprocess on every shell)
 _dircolors_cache="${XDG_CACHE_HOME:-$HOME/.cache}/bash/dir_colors.sh"
 if [[ ! -f "$_dircolors_cache" || "${BASH_CONFIG_DIR}/dir_colors" -nt "$_dircolors_cache" ]]; then
-    mkdir -p "$(dirname "$_dircolors_cache")"
+    [[ -d "${_dircolors_cache%/*}" ]] || mkdir -p "${_dircolors_cache%/*}"
     if command -v gdircolors >/dev/null 2>&1; then
         if [[ -f "${BASH_CONFIG_DIR}/dir_colors" ]]; then
             gdircolors -b "${BASH_CONFIG_DIR}/dir_colors" > "$_dircolors_cache"

@@ -19,7 +19,8 @@ if command -v fzf >/dev/null 2>&1; then
         "/opt/homebrew/share/fzf/shell/key-bindings.bash" \
         "/usr/local/opt/fzf/shell/key-bindings.bash" \
         "/usr/local/share/fzf/shell/key-bindings.bash" \
-        "/usr/share/fzf/key-bindings.bash"; do
+        "/usr/share/fzf/key-bindings.bash" \
+        "/usr/share/doc/fzf/examples/key-bindings.bash"; do
         if [[ -f "$keybind_file" ]]; then
             if [[ ${BLE_VERSION-} ]]; then
                 # ble.sh replaces readline, so use its fzf adapter

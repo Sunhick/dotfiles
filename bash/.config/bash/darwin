@@ -1,21 +1,29 @@
 #!/usr/bin/env bash
 
-# Java configuration (if available)
+# Java configuration (if available). java_home is slow, so cache its answer;
+# it is refreshed when a JDK is added to or removed from JavaVirtualMachines.
+_java_cache="${XDG_CACHE_HOME:-$HOME/.cache}/bash/java_home"
 if [[ -x /usr/libexec/java_home ]]; then
-    export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null)
+    if [[ ! -f "$_java_cache" || /Library/Java/JavaVirtualMachines -nt "$_java_cache" ]]; then
+        [[ -d "${_java_cache%/*}" ]] || mkdir -p "${_java_cache%/*}"
+        /usr/libexec/java_home 2>/dev/null > "$_java_cache"
+    fi
+    read -r _java_home < "$_java_cache"
+    [[ -n "$_java_home" ]] && export JAVA_HOME="$_java_home"
 fi
+unset _java_cache _java_home
 
 # Homebrew configuration (cached to avoid subprocess on every shell)
 _brew_cache="${XDG_CACHE_HOME:-$HOME/.cache}/bash/brew_shellenv"
 if [[ -x /opt/homebrew/bin/brew ]]; then
     if [[ ! -f "$_brew_cache" || "$_brew_cache" -ot /opt/homebrew/bin/brew ]]; then
-        mkdir -p "$(dirname "$_brew_cache")"
+        [[ -d "${_brew_cache%/*}" ]] || mkdir -p "${_brew_cache%/*}"
         /opt/homebrew/bin/brew shellenv > "$_brew_cache"
     fi
     source "$_brew_cache"
 elif [[ -x /usr/local/bin/brew ]]; then
     if [[ ! -f "$_brew_cache" || "$_brew_cache" -ot /usr/local/bin/brew ]]; then
-        mkdir -p "$(dirname "$_brew_cache")"
+        [[ -d "${_brew_cache%/*}" ]] || mkdir -p "${_brew_cache%/*}"
         /usr/local/bin/brew shellenv > "$_brew_cache"
     fi
     source "$_brew_cache"

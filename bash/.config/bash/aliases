@@ -43,25 +43,34 @@ alias j="jobs"
 alias c="clear"
 alias reload='source "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc"'
 
-# Modern tool replacements (separate names to avoid flag confusion)
-command -v bat >/dev/null && alias cat="bat"
-command -v fd >/dev/null && alias fdfind="fd"
-command -v rg >/dev/null && alias search="rg"
+# Modern tool aliases (bat, fd, rg, eza). Defined as a function that bashrc
+# calls after the OS file: that file sets the ls aliases eza must override
+# and, on macOS, puts Homebrew (where these tools live) on PATH.
+_modern_tool_aliases() {
+    # Debian/Ubuntu install bat and fd as batcat and fdfind.
+    if command -v bat >/dev/null 2>&1; then
+        alias cat="bat"
+    elif command -v batcat >/dev/null 2>&1; then
+        alias bat="batcat"
+        alias cat="batcat"
+    fi
+    if ! command -v fd >/dev/null 2>&1 && command -v fdfind >/dev/null 2>&1; then
+        alias fd="fdfind"
+    fi
+    command -v rg >/dev/null 2>&1 && alias search="rg"
 
-# eza/exa override for ls (last wins, intentional)
-if command -v eza >/dev/null 2>&1; then
-    alias ls="eza --color=auto"
-    alias l="eza -lah"
-    alias la="eza -lAh"
-    alias ll="eza -lh"
-    alias lsa="eza -lah"
-elif command -v exa >/dev/null 2>&1; then
-    alias ls="exa --color=auto"
-    alias l="exa -lah"
-    alias la="exa -lAh"
-    alias ll="exa -lh"
-    alias lsa="exa -lah"
-fi
+    local ls_cmd
+    for ls_cmd in eza exa; do
+        if command -v "$ls_cmd" >/dev/null 2>&1; then
+            alias ls="$ls_cmd --color=auto"
+            alias l="$ls_cmd -lah"
+            alias la="$ls_cmd -lAh"
+            alias ll="$ls_cmd -lh"
+            alias lsa="$ls_cmd -lah"
+            break
+        fi
+    done
+}
 
 # Emacs shortcuts
 alias es="emacs --daemon"                      # start server

@@ -8,14 +8,12 @@ export FCEDIT="$EDITOR"
 # Locale — set LANG only; avoid LC_ALL, which overrides every LC_* category
 # and clobbers per-category locale settings inherited from the environment.
 export LANG="${LANG:-en_US.UTF-8}"
-# Only fall back to LC_CTYPE if nothing locale-related is already configured,
-# so UTF-8 still works when LANG is unset in a bare environment.
-if [[ -z "${LANG:-}" && -z "${LC_ALL:-}" && -z "${LC_CTYPE:-}" ]]; then
-    export LC_CTYPE="en_US.UTF-8"
-fi
 
-# GPG configuration — must be set fresh each shell (not cached)
-export GPG_TTY=$(tty 2>/dev/null || echo "")
+# GPG configuration — must be set fresh each shell (not cached). Only on a
+# terminal: without one, tty prints "not a tty" into the variable.
+if [[ -t 0 ]]; then
+    export GPG_TTY=$(tty)
+fi
 
 # Less configuration
 export LESS="-R -F -X"
@@ -24,14 +22,19 @@ export LESSHISTFILE="-"
 # Development tools
 # Note: GREP_OPTIONS is deprecated and removed in newer grep versions.
 # Color is handled via aliases in ~/.config/bash/aliases instead.
+# GREP_COLORS for GNU grep; GREP_COLOR for macOS BSD grep (GNU grep >= 3.8
+# only warns about GREP_COLOR when GREP_COLORS doesn't set mt).
+export GREP_COLORS="mt=1;32"
 export GREP_COLOR="1;32"
 
 # Ripgrep configuration (XDG compliant)
 export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/ripgrep/config"
 
-# Path additions (will be prepended if directories exist)
-for dir in "$HOME/.local/bin" "$HOME/bin" "/usr/local/bin"; do
+# Path additions, prepended if they exist. Listed lowest priority first, so
+# ~/.local/bin ends up first on PATH.
+for dir in "/usr/local/bin" "$HOME/bin" "$HOME/.local/bin"; do
     if [[ -d "$dir" && ":$PATH:" != *":$dir:"* ]]; then
         export PATH="$dir:$PATH"
     fi
 done
+unset dir

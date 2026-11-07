@@ -13,15 +13,20 @@ export FZF_DEFAULT_OPTS="
 # Only trigger fzf completion on ** (not on every Tab)
 export FZF_COMPLETION_TRIGGER='**'
 
+# fzf runs these commands itself, so aliases don't apply: use the real binary
+# name (Debian/Ubuntu ship fd and bat as fdfind and batcat).
+_fzf_fd=$(command -v fd || command -v fdfind)
+_fzf_bat=$(command -v bat || command -v batcat)
+
 # Use fd if available, otherwise find
-if command -v fd >/dev/null 2>&1; then
-    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+if [[ -n "$_fzf_fd" ]]; then
+    export FZF_DEFAULT_COMMAND="${_fzf_fd##*/} --type f --hidden --follow --exclude .git"
+    export FZF_ALT_C_COMMAND="${_fzf_fd##*/} --type d --hidden --follow --exclude .git"
 fi
 
 # Enhanced file preview with bat if available
-if command -v bat >/dev/null 2>&1; then
-    export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:100 {}'"
+if [[ -n "$_fzf_bat" ]]; then
+    export FZF_CTRL_T_OPTS="--preview '${_fzf_bat##*/} --color=always --style=numbers --line-range=:100 {}'"
 elif command -v cat >/dev/null 2>&1; then
     export FZF_CTRL_T_OPTS="--preview 'head -100 {}'"
 fi
@@ -32,6 +37,7 @@ if command -v tree >/dev/null 2>&1; then
 elif command -v ls >/dev/null 2>&1; then
     export FZF_ALT_C_OPTS="--preview 'ls -la {} | head -100'"
 fi
+unset _fzf_fd _fzf_bat
 
 # History search with preview
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
