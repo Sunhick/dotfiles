@@ -17,5 +17,5 @@ VSCode naturally follows XDG specification on Linux/macOS by storing settings in
 - Minimap disabled
 - Breadcrumbs disabled
 - Block cursor style
-- Gruvbox Dark (Medium) theme
+- Gruvbox Material Dark theme (`sainnhe.gruvbox-material` extension)
 - Auto-trim whitespace on save

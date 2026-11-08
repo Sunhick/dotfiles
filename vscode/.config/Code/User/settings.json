@@ -68,8 +68,9 @@
     "terminal.integrated.fontFamily": "Zenbones Brainy",
     "terminal.integrated.fontSize": 13,
     "terminal.integrated.fontWeight": "bold",
-    // Theme
-    "workbench.colorTheme": "Gruvbox Dark Hard",
+    // Theme: matches Ghostty and tmux. Needs the sainnhe.gruvbox-material
+    // extension (code --install-extension sainnhe.gruvbox-material).
+    "workbench.colorTheme": "Gruvbox Material Dark",
     // Terminal
     "terminal.integrated.scrollback": 10000,
     "terminal.integrated.cursorStyle": "bar",
