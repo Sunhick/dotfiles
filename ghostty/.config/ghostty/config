@@ -62,6 +62,12 @@ confirm-close-surface = false
 # Linux (GTK) only: macOS ignores this and keeps its native tab bar.
 window-show-tab-bar = never
 
+# macOS: hide the titlebar (and with it the tab bar), keeping the rounded
+# frame. This disables native tabs, so Cmd+T opens a new window; switch with
+# Cmd+`. Drag the window with Option+click on the frame. Applies to new
+# windows only (restart Ghostty).
+macos-titlebar-style = hidden
+
 # --- Terminal ---------------------------------------------------------------
 # iTerm: clipboard access allowed for terminal apps (OSC 52)
 clipboard-read = allow
