@@ -1,6 +1,6 @@
 # Emacs Configuration
 
-Personal Emacs config — XDG compliant, managed with use-package, Gruvbox Dark Hard theme.
+Personal Emacs config — XDG compliant, managed with use-package, Gruvbox Dark Medium theme.
 
 ## Structure
 
@@ -45,7 +45,9 @@ Iosevka Comfy at 15px (`base-host.el`). Falls back to default if not installed.
 
 ## Theme
 
-Gruvbox Dark Hard — loaded via use-package in `pkg-initializer.el`.
+Gruvbox Dark Medium (`gruvbox-dark-medium`) — loaded via use-package in
+`pkg-initializer.el`. Closest MELPA match to the Gruvbox Material Dark used by
+Ghostty, tmux and VS Code (same `#282828` background).
 
 ## References
 
