@@ -16,7 +16,7 @@ font-feature = -dlig
 # --- Colors -----------------------------------------------------------------
 # Built-in theme (preview others: ghostty +list-themes). tmux's theme in
 # tmux-modern.conf / tmux-legacy.conf uses the same palette; keep them in step.
-theme = Gruvbox Material
+theme = Gruvbox Material Dark
 # iTerm: "Brighten bold text"
 bold-color = bright
 
