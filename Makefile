@@ -9,7 +9,7 @@ UNAME_S := $(shell uname -s)
 SHELL_PKGS   := bash
 EDITOR_PKGS  := emacs nano vscode
 DEV_PKGS     := git
-DESKTOP_PKGS := i3 terminal
+DESKTOP_PKGS := i3 terminal ghostty
 TOOL_PKGS    := tmux fzf ripgrep inputrc blesh curlrc editorconfig gnupg htop
 
 # Every package (each gets `make <pkg>` / `make rm-<pkg>` targets)

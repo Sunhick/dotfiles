@@ -1,0 +1,89 @@
+# Ghostty config, ported from the iTerm2 "Default" profile
+# (terminal/.config/terminal/com.googlecode.iterm2.plist).
+# Docs: https://ghostty.org/docs/config/reference
+# List all options with: ghostty +show-config --default --docs
+
+# --- Font -------------------------------------------------------------------
+# iTerm: "Zenbones-Brainy-Bold 15" (Bold face used as the normal weight)
+font-family = "Zenbones Brainy"
+font-style = Bold
+font-size = 15
+# iTerm: ASCII ligatures off
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
+
+# --- Colors -----------------------------------------------------------------
+background = #404040
+foreground = #f0e4cf
+cursor-color = #f3eadb
+cursor-text = #404040
+selection-background = #746956
+selection-foreground = #f0e4cf
+# iTerm: "Brighten bold text"
+bold-color = bright
+
+palette = 0=#404040
+palette = 1=#e3716e
+palette = 2=#819b69
+palette = 3=#b77e64
+palette = 4=#6099c0
+palette = 5=#b279a7
+palette = 6=#66a5ad
+palette = 7=#f0e4cf
+palette = 8=#625a5b
+palette = 9=#ec8685
+palette = 10=#8bae68
+palette = 11=#d68c67
+palette = 12=#61abda
+palette = 13=#cf86c1
+palette = 14=#65b8c1
+palette = 15=#c0ab86
+
+# --- Cursor -----------------------------------------------------------------
+# iTerm: box cursor, not blinking. Shell integration would otherwise switch
+# the cursor to a bar at the prompt.
+cursor-style = block
+cursor-style-blink = false
+
+# --- Shell integration ------------------------------------------------------
+# no-cursor: keep the block cursor (integration would use a bar at the prompt)
+# ssh-env/ssh-terminfo: install xterm-ghostty terminfo on remote hosts (dev
+# desktops), falling back to TERM=xterm-256color when that's not possible.
+shell-integration-features = no-cursor,ssh-env,ssh-terminfo
+
+# --- Window -----------------------------------------------------------------
+window-width = 80
+window-height = 25
+working-directory = home
+confirm-close-surface = false
+
+# Hide the tab bar; switch tabs from the keyboard (see Tabs keybinds below).
+# Linux (GTK) only: macOS ignores this and keeps its native tab bar.
+window-show-tab-bar = never
+
+# --- Terminal ---------------------------------------------------------------
+# iTerm: clipboard access allowed for terminal apps (OSC 52)
+clipboard-read = allow
+clipboard-write = allow
+
+# --- Keyboard ---------------------------------------------------------------
+# iTerm: left Option = Esc+, right Option = normal (for typing special chars)
+macos-option-as-alt = left
+
+# iTerm key map (readline-style navigation)
+keybind = cmd+left=text:\x01
+keybind = cmd+right=text:\x05
+keybind = alt+left=esc:b
+keybind = alt+right=esc:f
+keybind = cmd+backspace=text:\x15
+keybind = alt+backspace=text:\x1b\x7f
+keybind = alt+delete=esc:d
+# iTerm also mapped fn+Delete to ^D; left at Ghostty's default (\e[3~) so it
+# can't exit the shell on an empty prompt.
+
+# --- Tabs -------------------------------------------------------------------
+# Vim-style prev/next on top of the defaults (Cmd+Shift+[ / ], Ctrl+Tab,
+# Cmd+1..9). Cmd is Super on Linux.
+keybind = cmd+shift+h=previous_tab
+keybind = cmd+shift+l=next_tab
