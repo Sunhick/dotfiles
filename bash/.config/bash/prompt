@@ -6,7 +6,7 @@
 # Prompt glyph, coloured by the last command's exit status. Single-width
 # (Greek letters like β are East Asian "ambiguous" width and can throw off
 # cursor placement in some terminals/fonts).
-prompt_glyph='❯'
+prompt_glyph='»'
 unset start_glyph end_glyph 2>/dev/null
 
 # No git branch in the prompt (deliberate). Drop any helper left over from
@@ -79,7 +79,7 @@ if [[ -n "$INSIDE_EMACS" ]]; then
         else
             indicator="φ"
         fi
-        PS1="${indicator} \W ❯ "
+        PS1="${indicator} \W » "
         return "$last_exit"
     }
     _prompt_command_add _emacs_prompt_command
