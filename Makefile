@@ -36,13 +36,20 @@ XDG_STATE  := $(or $(XDG_STATE_HOME),$(HOME)/.local/state)
 # tmux plugin manager (tmux-modern.conf loads it from here)
 TPM_DIR := $(XDG_DATA)/tmux/plugins/tpm
 
+# ble.sh: source clone (re-fetchable, so it lives in the cache) and install
+# dir (bashrc sources $(BLESH_DIR)/ble.sh). At runtime ble.sh itself keeps its
+# cache in $XDG_CACHE_HOME/blesh and state in $XDG_STATE_HOME/blesh.
+BLESH_REPO := https://github.com/akinomyoga/ble.sh
+BLESH_SRC  := $(XDG_CACHE)/blesh-src
+BLESH_DIR  := $(XDG_DATA)/blesh
+
 # Backup
 BACKUP_DIR    := $(HOME)/.dotfiles-backup/$(shell date +%Y%m%d_%H%M%S)
 LATEST_BACKUP := $(HOME)/.dotfiles-backup/latest
 
 .PHONY: help install adopt safe-install sync plan ls doctor \
 	check-stow backup restore list-backups prune-backups \
-	shell editors development desktop tools prune deps tpm bootstrap \
+	shell editors development desktop tools prune deps tpm blesh-install bootstrap \
 	$(ALL_PKGS) $(addprefix rm-,$(ALL_PKGS)) $(addsuffix .restow,$(ALL_PKGS))
 
 help:
@@ -61,6 +68,7 @@ help:
 	@echo "  doctor        - Health check"
 	@echo "  prune         - Remove broken symlinks"
 	@echo "  tpm           - Install the tmux plugin manager"
+	@echo "  blesh-install - Build/update ble.sh into $(BLESH_DIR)"
 	@echo ""
 	@echo "Groups:"
 	@echo "  shell         - $(SHELL_PKGS)"
@@ -111,6 +119,25 @@ tpm:
 		$(call log,ok,TPM installed at $(TPM_DIR)) && \
 		echo "  In tmux, press prefix + I to install the plugins"; \
 	fi
+
+# Clone (or fast-forward) ble.sh and install it. INSDIR/INSDIR_DOC are passed
+# explicitly (same layout as ble.sh's XDG_DATA_HOME default), so PREFIX or
+# DESTDIR in the environment can't redirect the install. Needs gawk.
+blesh-install:
+	@command -v gawk >/dev/null 2>&1 || { $(call log,fail,gawk is required to build ble.sh); exit 1; }
+	@if [ -d "$(BLESH_SRC)/.git" ]; then \
+		$(call log,info,Updating ble.sh in $(BLESH_SRC)...); \
+		git -C "$(BLESH_SRC)" pull --ff-only -q && \
+		git -C "$(BLESH_SRC)" submodule update --init --recursive -q; \
+	else \
+		$(call log,info,Cloning ble.sh into $(BLESH_SRC)...); \
+		mkdir -p "$(dir $(BLESH_SRC))" && \
+		git clone -q --recursive --depth 1 --shallow-submodules "$(BLESH_REPO)" "$(BLESH_SRC)"; \
+	fi
+	@$(MAKE) --no-print-directory -C "$(BLESH_SRC)" install \
+		INSDIR="$(BLESH_DIR)" INSDIR_DOC="$(XDG_DATA)/doc/blesh" >/dev/null
+	@$(call log,ok,ble.sh installed at $(BLESH_DIR)) && \
+		echo "  Open a new shell (or run ble-reload) to use it"
 
 # --adopt moves existing files from $HOME into the repo, replacing tracked
 # content. Require a clean tree so the result can be reviewed and reverted.

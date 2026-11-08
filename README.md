@@ -124,7 +124,9 @@ dotfiles/
 - `aliases` - Smart aliases that adapt to available tools
 - `prompt` - Git-aware prompt
 
-ble.sh (`blesh/`) is used when installed at `~/.local/share/blesh`: bashrc
+ble.sh (`blesh/`) is used when installed at `$XDG_DATA_HOME/blesh`
+(`~/.local/share/blesh`); `make blesh-install` clones it into
+`$XDG_CACHE_HOME/blesh-src` and builds/updates it there (needs gawk). bashrc
 loads it before the readline/fzf bindings and attaches it last. Its rc
 keeps those bindings, LS_COLORS and the prompt, greys out suggestions and
 drops underlines.
