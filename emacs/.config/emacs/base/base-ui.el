@@ -38,17 +38,15 @@
 ;;           (height . 67))))
 (require 'base-window)
 
-;; Open frames maximized (fills screen, stays in current workspace)
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;; Frames open at the default size (not maximized or fullscreen).
+;; Toggle with M-F10 (maximize) or F11 (fullscreen) when needed.
 
-;; For daemon mode: apply to each new client frame
+;; For daemon mode: bring each new client frame to the foreground
 (defun my/setup-frame (&optional frame)
-  "Configure FRAME as maximized and bring to foreground."
+  "Bring FRAME to the foreground."
   (with-selected-frame (or frame (selected-frame))
-    (when (display-graphic-p)
-      (set-frame-parameter nil 'fullscreen 'maximized)
-      (when (eq system-type 'darwin)
-        (ns-do-applescript "tell application \"Emacs\" to activate")))))
+    (when (and (display-graphic-p) (eq system-type 'darwin))
+      (ns-do-applescript "tell application \"Emacs\" to activate"))))
 
 (add-hook 'after-make-frame-functions #'my/setup-frame)
 
