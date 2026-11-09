@@ -29,6 +29,26 @@
 
 ;;; Code:
 
+;; macOS 27+: libgccjit's gcc driver derives the deployment target from
+;; the Darwin kernel version (darwin 27 -> "18.0"), which Apple clang
+;; rejects ("invalid version number in '-mmacosx-version-min=18.0'"), so
+;; every native compile fails -- including the subr trampoline for
+;; yes-or-no-p in base-ui.el, which aborts init. An explicit minimum
+;; overrides the bad guess. The value only sets the oldest macOS the .eln
+;; files may run on; any version Apple clang accepts works. Must run before
+;; base-ui.el; async compile workers inherit this variable.
+;;
+;; The variable is a defcustom in comp.el, which isn't loaded yet, and
+;; async workers copy the parent's value even if comp.el never loads. So
+;; bind it here with comp.el's darwin default ("-Wl,-w" silences linker
+;; warnings); the later defcustom keeps an already-bound value.
+(when (and (eq system-type 'darwin)
+           (featurep 'native-compile))
+  (defvar native-comp-driver-options '("-Wl,-w"))
+  (unless (seq-some (lambda (opt) (string-prefix-p "-mmacosx-version-min" opt))
+                    native-comp-driver-options)
+    (add-to-list 'native-comp-driver-options "-mmacosx-version-min=15.0" t)))
+
 ;; Enable deferred native compilation (Emacs 29+ renamed this)
 (if (boundp 'native-comp-jit-compilation)
     (setq native-comp-jit-compilation t)
