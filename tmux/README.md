@@ -28,6 +28,7 @@ Tmux supports XDG configuration when using `~/.config/tmux/tmux.conf`.
 - **Pane**: `prefix + arrows` (repeatable) or `h j k l`; `prefix + ;` last pane
 - **Split**: `prefix + \` or `|` (side by side), `prefix + -` (stacked)
 - **Copy mode**: `prefix + [` or `Enter`; `Shift + PgUp` without prefix
+- **Pick pane by number**: `prefix + q` (numbers stay for 20s or until you press a key)
 
 Alt+number and Alt+N/P are intentionally not bound in the root table: they
 would shadow Emacs `digit-argument` and M-n/M-p history in readline and Emacs.
@@ -36,9 +37,9 @@ would shadow Emacs `digit-argument` and M-n/M-p history in readline and Emacs.
 
 `tmux.conf` holds version-agnostic settings and then sources one of:
 
-- `tmux-modern.conf` — tmux >= 2.4 (hex Gruvbox Material Dark colours, `*-style` options, TPM)
+- `tmux-modern.conf` — tmux >= 2.4 (hex Gruvbox Material Dark colours, `*-style` options)
 - `tmux-legacy.conf` — tmux < 2.4, e.g. tmux 1.8 on AL2 (256-colour Gruvbox Material Dark,
-  `emacs-copy` table, no TPM). Same keys and behaviour as modern.
+  `emacs-copy` table). Same keys and behaviour as modern.
 
 `tmux-version-ge X.Y` picks between them (it checks the `tmux` on `$PATH`).
 Keep the two files in step when changing bindings or the theme.
@@ -51,9 +52,7 @@ tmux with `tmux -f ~/.config/tmux/tmux.conf`, or create a host-local
 
 Don't stow that shim on modern hosts: tmux 3.1+ would load both files.
 
-## Plugins (TPM)
+## Plugins
 
-`tmux-modern.conf` loads TPM from `~/.local/share/tmux/plugins/tpm` when it
-is installed (`make tpm` clones it), with tmux-resurrect and
-tmux-continuum. Press `prefix + I` once to install the plugins.
-tmux-sensible is not used; its useful settings are set in `tmux.conf`.
+None: no TPM or plugins are used. tmux-sensible's useful settings are set
+directly in `tmux.conf`.

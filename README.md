@@ -162,7 +162,7 @@ stow --no-folding --target=$HOME .
 
 | Command              | Description                               |
 | -------------------- | ----------------------------------------- |
-| `make bootstrap`     | New machine: `deps` + `install` + `tpm`   |
+| `make bootstrap`     | New machine: `deps` + `install`           |
 | `make deps`          | Install tools (Brewfile or apt list)      |
 | `make install`       | Install all packages                      |
 | `make safe-install`  | Backup existing configs then install      |
@@ -177,7 +177,6 @@ stow --no-folding --target=$HOME .
 | `make restore`       | Restore from latest backup                |
 | `make list-backups`  | List available backups                    |
 | `make prune-backups` | Remove old backups (keeps last 5)         |
-| `make tpm`           | Install the tmux plugin manager           |
 
 ## Adding Packages
 

@@ -22,9 +22,6 @@ notes/
 config/.config/configstore/
 .kiro
 
-# Tmux plugins (managed by TPM)
-tmux/.config/tmux/plugins/
-
 # Emacs packages (managed by package managers)
 emacs/.config/emacs/elpa/
 emacs/.config/emacs/straight/

@@ -33,9 +33,6 @@ XDG_DATA   := $(or $(XDG_DATA_HOME),$(HOME)/.local/share)
 XDG_CACHE  := $(or $(XDG_CACHE_HOME),$(HOME)/.cache)
 XDG_STATE  := $(or $(XDG_STATE_HOME),$(HOME)/.local/state)
 
-# tmux plugin manager (tmux-modern.conf loads it from here)
-TPM_DIR := $(XDG_DATA)/tmux/plugins/tpm
-
 # ble.sh: source clone (re-fetchable, so it lives in the cache) and install
 # dir (bashrc sources $(BLESH_DIR)/ble.sh). At runtime ble.sh itself keeps its
 # cache in $XDG_CACHE_HOME/blesh and state in $XDG_STATE_HOME/blesh.
@@ -49,7 +46,7 @@ LATEST_BACKUP := $(HOME)/.dotfiles-backup/latest
 
 .PHONY: help install adopt safe-install sync plan ls doctor \
 	check-stow backup restore list-backups prune-backups \
-	shell editors development desktop tools prune deps tpm blesh-install bootstrap \
+	shell editors development desktop tools prune deps blesh-install bootstrap \
 	$(ALL_PKGS) $(addprefix rm-,$(ALL_PKGS)) $(addsuffix .restow,$(ALL_PKGS))
 
 help:
@@ -57,7 +54,7 @@ help:
 	@echo "==================="
 	@echo ""
 	@echo "Targets:"
-	@echo "  bootstrap     - New machine: deps, install, tpm"
+	@echo "  bootstrap     - New machine: deps, install"
 	@echo "  deps          - Install packages (Brewfile / apt list)"
 	@echo "  install       - Install all packages"
 	@echo "  adopt         - Install all (adopt existing files)"
@@ -67,7 +64,6 @@ help:
 	@echo "  ls            - List available packages"
 	@echo "  doctor        - Health check"
 	@echo "  prune         - Remove broken symlinks"
-	@echo "  tpm           - Install the tmux plugin manager"
 	@echo "  blesh-install - Build/update ble.sh into $(BLESH_DIR)"
 	@echo ""
 	@echo "Groups:"
@@ -87,12 +83,11 @@ check-stow:
 install: check-stow $(OS_PKGS)
 safe-install: backup install
 
-# New machine: install tools first (that brings stow), then link and add TPM.
+# New machine: install tools first (that brings stow), then link.
 # Sub-makes keep the order even under `make -j`.
 bootstrap:
 	@$(MAKE) --no-print-directory deps
 	@$(MAKE) --no-print-directory install
-	@$(MAKE) --no-print-directory tpm
 
 deps:
 	@case "$(UNAME_S)" in \
@@ -110,15 +105,6 @@ deps:
 			fi ;; \
 		*) $(call log,warn,Unsupported OS $(UNAME_S): install tools by hand) ;; \
 	esac
-
-tpm:
-	@if [ -x "$(TPM_DIR)/tpm" ]; then \
-		$(call log,ok,TPM already installed at $(TPM_DIR)); \
-	else \
-		git clone --depth 1 https://github.com/tmux-plugins/tpm "$(TPM_DIR)" && \
-		$(call log,ok,TPM installed at $(TPM_DIR)) && \
-		echo "  In tmux, press prefix + I to install the plugins"; \
-	fi
 
 # Clone (or fast-forward) ble.sh and install it. INSDIR/INSDIR_DOC are passed
 # explicitly (same layout as ble.sh's XDG_DATA_HOME default), so PREFIX or
