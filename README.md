@@ -87,6 +87,7 @@ dotfiles/
 │   ├── editorconfig/    # editorconfig      → ~/.editorconfig
 │   ├── gnupg/           # GnuPG             → ~/.gnupg/gpg.conf
 │   ├── htop/            # htop              → ~/.config/htop/
+│   ├── zmk-battery/     # ZMK split keyboard battery (`totem`) → ~/.config/zmk-battery/
 │   ├── i3/              # i3 wm (Linux; skipped on macOS) → ~/.config/i3/
 │   └── terminal/        # terminal / iterm2 config
 │
@@ -142,7 +143,7 @@ make install
 ```bash
 make shell              # bash
 make editors            # emacs, nano, vscode
-make tools              # tmux, fzf, ripgrep, inputrc, blesh, curlrc, editorconfig, gnupg, htop
+make tools              # tmux, fzf, ripgrep, inputrc, blesh, curlrc, editorconfig, gnupg, htop, zmk-battery
 make desktop            # terminal (+ i3 on Linux)
 make development        # git
 ```

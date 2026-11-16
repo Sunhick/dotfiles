@@ -67,6 +67,23 @@ if (Get-Command emacsclient -ErrorAction SilentlyContinue) {
 }
 #endregion
 
+#region ZMK split keyboard (TOTEM) battery levels
+function Get-TotemBattery {
+    # This file is a symlink into the repo; the script lives in the
+    # zmk-battery package next to the powershell one.
+    $self = Get-Item $PSCommandPath -Force
+    $source = if ($self.LinkTarget) { $self.LinkTarget } else { $self.FullName }
+    $repo = Split-Path (Split-Path (Split-Path (Split-Path $source)))
+    $script = Join-Path $repo "zmk-battery\.config\zmk-battery\totem-battery.py"
+    if (-not (Test-Path $script)) {
+        Write-Error "totem-battery.py not found at '$script'."
+        return
+    }
+    python $script @args
+}
+Set-Alias -Name totem -Value Get-TotemBattery
+#endregion
+
 # Note: `code`/`kiro` no-sandbox aliases live in the work profile
 # (work/.config/work/powershell/Aliases.ps1) since they depend on
 # work-only functions.

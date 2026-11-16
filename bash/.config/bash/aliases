@@ -72,6 +72,22 @@ _modern_tool_aliases() {
     done
 }
 
+# ZMK split keyboard (TOTEM) battery levels (zmk-battery package). Runs from
+# a dedicated venv (outside the repo) that is created with bleak on first use.
+if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zmk-battery/totem-battery.py" ]]; then
+    unalias totem 2>/dev/null   # older config defined it as an alias
+    totem() {
+        local venv="${XDG_DATA_HOME:-$HOME/.local/share}/totem-battery/venv"
+        if [[ ! -x "$venv/bin/python" ]]; then
+            echo "totem: creating venv at $venv (one-time)..." >&2
+            python3 -m venv "$venv" &&
+                "$venv/bin/python" -m pip install --quiet --upgrade pip bleak ||
+                { echo "totem: venv setup failed" >&2; rm -rf "$venv"; return 1; }
+        fi
+        "$venv/bin/python" "${XDG_CONFIG_HOME:-$HOME/.config}/zmk-battery/totem-battery.py" "$@"
+    }
+fi
+
 # Emacs shortcuts
 alias es="emacs --daemon"                      # start server
 alias ec="emacsclient -c"                      # new frame (client)

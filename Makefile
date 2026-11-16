@@ -10,7 +10,7 @@ SHELL_PKGS   := bash
 EDITOR_PKGS  := emacs nano vscode
 DEV_PKGS     := git
 DESKTOP_PKGS := i3 terminal ghostty
-TOOL_PKGS    := tmux fzf ripgrep inputrc blesh curlrc editorconfig gnupg htop
+TOOL_PKGS    := tmux fzf ripgrep inputrc blesh curlrc editorconfig gnupg htop zmk-battery
 
 # Every package (each gets `make <pkg>` / `make rm-<pkg>` targets)
 ALL_PKGS := $(SHELL_PKGS) $(EDITOR_PKGS) $(DEV_PKGS) $(DESKTOP_PKGS) $(TOOL_PKGS)
