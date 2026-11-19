@@ -9,9 +9,14 @@ bindkey -e   # set editing-mode emacs
 WORDCHARS=''
 
 # Up/Down and PgUp/PgDn search history for the text before the cursor
-# (readline history-search-backward/forward)
-for _key in '^[[A' '^[OA' '^[[5~'; do bindkey "$_key" history-beginning-search-backward; done
-for _key in '^[[B' '^[OB' '^[[6~'; do bindkey "$_key" history-beginning-search-forward; done
+# (readline history-search-backward/forward). The -end variants put the
+# cursor at the end of the recalled line; the plain zsh widgets leave it
+# where it was, which is the start of the line when you had typed nothing.
+autoload -Uz history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+for _key in '^[[A' '^[OA' '^[[5~'; do bindkey "$_key" history-beginning-search-backward-end; done
+for _key in '^[[B' '^[OB' '^[[6~'; do bindkey "$_key" history-beginning-search-forward-end; done
 
 # Incremental search (fzf replaces C-r when it is installed)
 bindkey '^R' history-incremental-search-backward
