@@ -137,19 +137,33 @@ unset _dircolors_cache
 # Load local machine-specific overrides
 include "${XDG_CONFIG_HOME}/work/zsh/local" "optional"
 
-# Highlighting and autosuggestions (bash: ble.sh), if installed. Loaded
-# last: zsh-syntax-highlighting must come after every widget is defined.
+# Plugins that replace ble.sh (bash only): fzf-tab, autosuggestions and
+# syntax highlighting. Each is loaded from the first location that has it.
+# Order matters:
+#   fzf-tab        after compinit, replaces the completion menu with fzf
+#   autosuggest    any time after widgets are defined
+#   highlighting   last: it must wrap every widget defined above
 if [[ -z "$INSIDE_EMACS" && "$TERM" != "dumb" ]]; then
-    for _zplug in zsh-autosuggestions zsh-syntax-highlighting; do
+    _zplug_source() {
+        local _zdir _zfile
         for _zdir in "${HOMEBREW_PREFIX:-/opt/homebrew}/share" /usr/local/share \
                      /home/linuxbrew/.linuxbrew/share /usr/share /usr/share/zsh/plugins; do
-            if [[ -f "$_zdir/$_zplug/$_zplug.zsh" ]]; then
-                source "$_zdir/$_zplug/$_zplug.zsh"
-                break
-            fi
+            for _zfile in "$_zdir/$1/$1.zsh" "$_zdir/$1/$2"; do
+                if [[ -f "$_zfile" ]]; then
+                    source "$_zfile"
+                    return 0
+                fi
+            done
         done
-    done
-    unset _zplug _zdir
+        return 1
+    }
+
+    # fzf-tab: its Homebrew path is share/fzf-tab/fzf-tab.zsh
+    _zplug_source fzf-tab fzf-tab.zsh
     # Same grey as ble.sh's auto_complete face
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
+    _zplug_source zsh-autosuggestions zsh-autosuggestions.zsh
+    _zplug_source zsh-syntax-highlighting zsh-syntax-highlighting.zsh
+
+    unfunction _zplug_source
 fi
