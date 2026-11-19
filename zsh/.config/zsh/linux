@@ -1,0 +1,17 @@
+# Linux settings. bash/linux is empty; zsh also puts Linuxbrew on PATH
+# here, before zshrc looks for fzf, bat, eza and zoxide. (The work config
+# adds it too, but only after those checks have run.)
+
+# Linuxbrew (cached to avoid a subprocess on every shell)
+_brew_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/brew_shellenv"
+for _brew in /home/linuxbrew/.linuxbrew/bin/brew "$HOME/.linuxbrew/bin/brew"; do
+    if [[ -x "$_brew" ]]; then
+        if [[ ! -f "$_brew_cache" || "$_brew_cache" -ot "$_brew" ]]; then
+            [[ -d "${_brew_cache:h}" ]] || mkdir -p "${_brew_cache:h}"
+            "$_brew" shellenv zsh > "$_brew_cache"
+        fi
+        source "$_brew_cache"
+        break
+    fi
+done
+unset _brew _brew_cache

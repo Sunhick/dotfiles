@@ -14,5 +14,6 @@ include() {
 include "${XDG_CONFIG_HOME}/bash/exports"
 case "$OSTYPE" in
     darwin*) include "${XDG_CONFIG_HOME}/zsh/darwin" ;;
+    linux*)  include "${XDG_CONFIG_HOME}/zsh/linux" ;;
 esac
 include "${XDG_CONFIG_HOME}/work/zsh/local" "optional"

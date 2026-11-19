@@ -17,6 +17,7 @@ Install it together with the bash package: `exports`, `aliases` and
 - `history` - History settings from `bash/history`
 - `prompt` - `[AWS profile] dir »` prompt from `bash/prompt`
 - `darwin` - macOS settings from `bash/darwin`
+- `linux` - Puts Linuxbrew on PATH before fzf, bat, eza and zoxide are looked up
 
 ## Differences from bash
 

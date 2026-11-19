@@ -51,9 +51,10 @@ include "${BASH_CONFIG_DIR}/aliases"
 alias history='fc -il 1'
 alias reload='source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/zshrc"'
 
-# Load OS-specific configuration (bash/linux is empty, so no zsh/linux)
+# Load OS-specific configuration
 case "$OSTYPE" in
     darwin*) include "${ZSH_CONFIG_DIR}/darwin" ;;
+    linux*)  include "${ZSH_CONFIG_DIR}/linux" ;;
 esac
 
 # Tool aliases need the OS file's PATH and must override its ls aliases
