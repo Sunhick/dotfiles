@@ -1,0 +1,155 @@
+# Interactive zsh configuration. Mirrors bash/bashrc section by section;
+# files that are plain portable shell (exports, aliases) are shared with
+# the bash package instead of copied.
+
+# XDG Base Directory Specification
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+
+ZSH_CONFIG_DIR="${XDG_CONFIG_HOME}/zsh"
+BASH_CONFIG_DIR="${XDG_CONFIG_HOME}/bash"   # shared portable files
+
+# Safe source function
+include() {
+    if [[ -f "$1" ]]; then
+        source "$1"
+    elif [[ "${2:-}" != "optional" ]]; then
+        echo "Warning: Could not source $1" >&2
+    fi
+}
+
+# Detect Docker environment
+if [[ -f "/.dockerenv" ]]; then
+    include "${ZSH_CONFIG_DIR}/dockerrc" "optional"
+    return
+fi
+
+# Load shell options first (bash: shopt)
+include "${ZSH_CONFIG_DIR}/options"
+
+# Key bindings (bash: readline/inputrc). Skip inside Emacs, where line
+# editing is unavailable.
+if [[ -z "$INSIDE_EMACS" && "$TERM" != "dumb" ]]; then
+    include "${ZSH_CONFIG_DIR}/keys"
+fi
+
+# Load environment variables
+include "${BASH_CONFIG_DIR}/exports"
+
+# Load history configuration
+include "${ZSH_CONFIG_DIR}/history" "optional"
+
+# Load prompt (colors are inline %F{N} codes, so no colors file)
+include "${ZSH_CONFIG_DIR}/prompt"
+
+# Load aliases
+include "${BASH_CONFIG_DIR}/aliases"
+# zsh's `history` lists only the last 16 lines; show all, with timestamps
+# (bash: HISTTIMEFORMAT). `h` expands through this alias.
+alias history='fc -il 1'
+alias reload='source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/zshrc"'
+
+# Load OS-specific configuration (bash/linux is empty, so no zsh/linux)
+case "$OSTYPE" in
+    darwin*) include "${ZSH_CONFIG_DIR}/darwin" ;;
+esac
+
+# Tool aliases need the OS file's PATH and must override its ls aliases
+_modern_tool_aliases
+unset -f _modern_tool_aliases
+
+# Completion. bash loads only git's completion; zsh's own completion
+# covers git and much more. The dump is cached under XDG_CACHE_HOME and
+# its security check runs at most once a day. bashcompinit lets the
+# `complete` calls in the shared work files (aws, mechanic, nvm) work.
+if [[ -z "$INSIDE_EMACS" && "$TERM" != "dumb" ]]; then
+    autoload -Uz compinit bashcompinit
+    _zcompdump="${XDG_CACHE_HOME}/zsh/zcompdump-${ZSH_VERSION}"
+    [[ -d "${_zcompdump:h}" ]] || mkdir -p "${_zcompdump:h}"
+    if [[ -n ${_zcompdump}(#qN.mh+24) || ! -s "$_zcompdump" ]]; then
+        compinit -d "$_zcompdump"
+    else
+        compinit -C -d "$_zcompdump"
+    fi
+    bashcompinit
+    unset _zcompdump
+
+    # Match readline's inputrc: case-insensitive, up to 200 matches before
+    # asking. zsh's default auto_list already lists on the first ambiguous
+    # Tab (show-all-if-ambiguous).
+    zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+    zstyle ':completion:*' cache-path "${XDG_CACHE_HOME}/zsh/compcache"
+    LISTMAX=200
+fi
+
+# Source a tool's generated shell init, cached under ~/.cache/zsh and
+# regenerated only when the tool's binary is newer than the cache.
+# Usage: _cached_init NAME CMD [ARGS...]
+_cached_init() {
+    local name=$1 bin cache
+    shift
+    bin=$(command -v "$1") || return 0
+    cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/${name}_init.zsh"
+    if [[ ! -s "$cache" || "$bin" -nt "$cache" ]]; then
+        [[ -d "${cache:h}" ]] || mkdir -p "${cache:h}"
+        "$@" > "$cache" 2>/dev/null || { rm -f "$cache"; return 0; }
+    fi
+    source "$cache"
+}
+
+# zoxide: `z foo` jumps to the most used directory matching foo, `zi` picks
+# interactively with fzf. Plain `cd` is unchanged.
+_cached_init zoxide zoxide init zsh
+
+# mise: per-project tool versions (node, python, go, ...) from .mise.toml or
+# .tool-versions. Before the work overrides, so their PATH choices win.
+_cached_init mise mise activate zsh
+unset -f _cached_init
+
+# Load fzf keybindings (Ctrl-R, Ctrl-T, Alt-C)
+if [[ -z "$INSIDE_EMACS" ]]; then
+    include "${XDG_CONFIG_HOME}/fzf/fzf.zsh" "optional"
+fi
+
+# Load dir_colors for ls coloring (cached to avoid subprocess on every shell)
+_dircolors_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/dir_colors.sh"
+if [[ ! -f "$_dircolors_cache" || "${BASH_CONFIG_DIR}/dir_colors" -nt "$_dircolors_cache" ]]; then
+    [[ -d "${_dircolors_cache:h}" ]] || mkdir -p "${_dircolors_cache:h}"
+    for _dircolors in gdircolors dircolors; do
+        if command -v "$_dircolors" >/dev/null 2>&1; then
+            if [[ -f "${BASH_CONFIG_DIR}/dir_colors" ]]; then
+                "$_dircolors" -b "${BASH_CONFIG_DIR}/dir_colors" > "$_dircolors_cache"
+            else
+                "$_dircolors" -b > "$_dircolors_cache"
+            fi
+            break
+        fi
+    done
+    unset _dircolors
+fi
+[[ -f "$_dircolors_cache" ]] && source "$_dircolors_cache"
+unset _dircolors_cache
+# Colour completion lists like ls (readline: colored-stats)
+[[ -n "$LS_COLORS" ]] && zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# Load local machine-specific overrides
+include "${XDG_CONFIG_HOME}/work/zsh/local" "optional"
+
+# Highlighting and autosuggestions (bash: ble.sh), if installed. Loaded
+# last: zsh-syntax-highlighting must come after every widget is defined.
+if [[ -z "$INSIDE_EMACS" && "$TERM" != "dumb" ]]; then
+    for _zplug in zsh-autosuggestions zsh-syntax-highlighting; do
+        for _zdir in "${HOMEBREW_PREFIX:-/opt/homebrew}/share" /usr/local/share \
+                     /home/linuxbrew/.linuxbrew/share /usr/share /usr/share/zsh/plugins; do
+            if [[ -f "$_zdir/$_zplug/$_zplug.zsh" ]]; then
+                source "$_zdir/$_zplug/$_zplug.zsh"
+                break
+            fi
+        done
+    done
+    unset _zplug _zdir
+    # Same grey as ble.sh's auto_complete face
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
+fi

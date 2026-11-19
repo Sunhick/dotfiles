@@ -1,0 +1,30 @@
+# Shell options. Mirrors bash/shopt; each line names the shopt it stands in for.
+
+# Navigation
+setopt auto_cd          # autocd: change to directory by typing its name
+setopt cdable_vars      # cdable_vars: cd into variable values
+# cdspell / dirspell: no zsh equivalent (setopt correct asks y/n on every
+# command, which is a different behaviour)
+
+# Globbing
+setopt no_case_glob     # nocaseglob: case-insensitive globbing
+                        # globstar: ** is always recursive in zsh
+setopt glob_dots        # dotglob: include hidden files in globs
+setopt ksh_glob         # extglob: !(x), ?(x), +(x), @(x), *(x)
+setopt null_glob        # nullglob: non-matching globs expand to nothing
+
+# History (the rest is in history)
+setopt hist_verify      # histverify: edit recalled history lines first
+                        # cmdhist / lithist: zsh keeps multi-line commands whole
+
+# Terminal behavior
+                        # checkwinsize: zsh always tracks LINES/COLUMNS
+setopt check_jobs       # checkjobs: warn before exiting with jobs
+setopt check_running_jobs
+setopt interactive_comments  # bash default: allow # comments at the prompt
+setopt no_beep          # inputrc: bell-style none
+
+# Free C-s / C-q from XON/XOFF flow control so C-s reaches
+# history-incremental-search-forward (see keys)
+setopt no_flow_control
+[[ -t 0 ]] && stty -ixon 2>/dev/null

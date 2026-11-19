@@ -6,7 +6,7 @@ include make/log.mk
 UNAME_S := $(shell uname -s)
 
 # Packages by group (flat structure). Add a new package to one group only.
-SHELL_PKGS   := bash
+SHELL_PKGS   := bash zsh
 EDITOR_PKGS  := emacs nano vscode
 DEV_PKGS     := git
 DESKTOP_PKGS := i3 terminal ghostty
@@ -219,8 +219,8 @@ prune:
 # ── Backup / Restore ──────────────────────────────────────────────
 # Paths (relative to $HOME) that the packages manage. Backups copy what the
 # links point to (cp -L), so a backup holds real files, not links into the repo.
-BACKUP_PATHS := .bashrc .bash_profile .gitconfig .editorconfig .gnupg/gpg.conf \
-	$(addprefix .config/,bash git emacs nano terminal tmux htop ripgrep fzf \
+BACKUP_PATHS := .bashrc .bash_profile .zshrc .zshenv .gitconfig .editorconfig .gnupg/gpg.conf \
+	$(addprefix .config/,bash zsh git emacs nano terminal tmux htop ripgrep fzf \
 	                     readline blesh curl Code)
 
 backup:

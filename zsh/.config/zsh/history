@@ -1,0 +1,26 @@
+# History configuration. Mirrors bash/history.
+
+# zsh saves the file from the in-memory list, so the file cannot hold more
+# than HISTSIZE lines; both use bash's HISTFILESIZE.
+HISTSIZE=100000
+SAVEHIST=100000
+HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
+
+# Create history directory if it doesn't exist
+[[ -d "${HISTFILE:h}" ]] || mkdir -p "${HISTFILE:h}"
+
+# Share history across terminals (bash prompt: history -a; history -n)
+setopt share_history
+
+# HISTCONTROL=ignoreboth:erasedups
+setopt hist_ignore_space hist_ignore_all_dups hist_save_no_dups
+
+# Add timestamp to history (HISTTIMEFORMAT; shown by `history`)
+setopt extended_history
+
+# HISTIGNORE: don't record common commands
+HISTORY_IGNORE='(ls|cd|cd -|pwd|exit|date|* --help|history|clear)'
+zshaddhistory() {
+    emulate -L zsh
+    [[ ${1%%$'\n'} != ${~HISTORY_IGNORE} ]]
+}

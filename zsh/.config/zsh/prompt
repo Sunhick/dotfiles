@@ -1,0 +1,58 @@
+# Prompt. Mirrors bash/prompt: [AWS profile] dir », the glyph green after
+# success and red after a failure, and the terminal title user:dir. The
+# 256-colour numbers are the ones in bash/colors.
+
+# Single-width glyph (see bash/prompt)
+prompt_glyph='»'
+
+autoload -Uz add-zsh-hook
+
+# Basename of the current directory, ~ for home and / for root: bash's \W.
+# (zsh's %1~ shows /tmp where \W shows tmp.) Sets REPLY, %-escaped.
+_prompt_dir() {
+    REPLY=${PWD/#$HOME/\~}
+    [[ $REPLY == / ]] || REPLY=${REPLY:t}
+    REPLY=${REPLY//\%/%%}
+}
+
+# Rebuilt before each prompt (bash: prompt_command via PROMPT_COMMAND).
+# add-zsh-hook keeps hooks other tools (zoxide, mise, direnv) installed.
+# %? in the prompt is the last command's status (precmd does not change it).
+# No variable named `prompt` here: in zsh it is the same as PROMPT.
+_prompt_precmd() {
+    local p="" REPLY
+    _prompt_dir
+
+    # Show AWS profile if set (bold_orange)
+    if [[ -n "$AWS_PROFILE" ]]; then
+        p+="%F{209}[${AWS_PROFILE//\%/%%}]%f "
+    fi
+
+    # Current working directory (bold_cyan)
+    p+="%F{80}${REPLY}%f "
+
+    # Prompt glyph: green (bold_green) after success, red (bold_red) after
+    # a failed command
+    p+="%(?.%F{114}.%F{204})${prompt_glyph}%f "
+
+    PROMPT="$p"
+    PROMPT2="%F{221}>%f "
+
+    # Set terminal title: user:dirname
+    print -Pn "\e]0;%n:${REPLY}\a"
+}
+
+# Inside Emacs shell-mode: plain prompt, no escapes
+_emacs_prompt_precmd() {
+    local REPLY
+    _prompt_dir
+    PROMPT="%(?.φ.x) ${REPLY} » "
+}
+
+if [[ -n "$INSIDE_EMACS" ]]; then
+    add-zsh-hook precmd _emacs_prompt_precmd
+elif [[ "$TERM" == "dumb" || "$TERM" == "unknown" ]]; then
+    PROMPT='> '
+else
+    add-zsh-hook precmd _prompt_precmd
+fi

@@ -1,0 +1,57 @@
+# Key bindings. zsh's line editor does not read readline's inputrc, so this
+# mirrors inputrc/.config/readline/inputrc. Bindings zsh's emacs keymap
+# already has (C-a, C-e, C-f, C-b, C-k, C-y, C-t, M-f, M-b, M-d, M-u, M-l,
+# M-c, C-l, C-g, C-x C-u, C-x C-x) are not repeated.
+
+bindkey -e   # set editing-mode emacs
+
+# Words stop at punctuation, like readline's forward-word / kill-word
+WORDCHARS=''
+
+# Up/Down and PgUp/PgDn search history for the text before the cursor
+# (readline history-search-backward/forward)
+for _key in '^[[A' '^[OA' '^[[5~'; do bindkey "$_key" history-beginning-search-backward; done
+for _key in '^[[B' '^[OB' '^[[6~'; do bindkey "$_key" history-beginning-search-forward; done
+
+# Incremental search (fzf replaces C-r when it is installed)
+bindkey '^R' history-incremental-search-backward
+bindkey '^S' history-incremental-search-forward
+
+# C-u kills to the start of the line (unix-line-discard), not the whole line
+bindkey '^U' backward-kill-line
+
+# C-w kills back to whitespace (unix-word-rubout); M-DEL / M-C-h stop at
+# punctuation (backward-kill-word)
+autoload -Uz backward-kill-word-match
+zle -N unix-word-rubout backward-kill-word-match
+zstyle ':zle:unix-word-rubout' word-style whitespace
+bindkey '^W' unix-word-rubout
+bindkey '^[^?' backward-kill-word
+bindkey '^[^H' backward-kill-word
+
+# M-p / M-n step through history (zsh's default searches by first word)
+bindkey '^[p' up-line-or-history
+bindkey '^[n' down-line-or-history
+
+# Alt/Ctrl + Left/Right move by word
+for _key in '^[[1;3C' '^[[1;5C'; do bindkey "$_key" forward-word; done
+for _key in '^[[1;3D' '^[[1;5D'; do bindkey "$_key" backward-word; done
+
+# Home / End in their different terminal encodings
+for _key in '^[[H' '^[OH' '^[[1~'; do bindkey "$_key" beginning-of-line; done
+for _key in '^[[F' '^[OF' '^[[4~'; do bindkey "$_key" end-of-line; done
+
+# Delete, and Ctrl/Alt+Delete kill the next word
+bindkey '^[[3~' delete-char
+bindkey '^[[3;5~' kill-word
+bindkey '^[[3;3~' kill-word
+bindkey '^D' delete-char-or-list
+
+# C-o runs the line and brings up the next one (operate-and-get-next)
+bindkey '^O' accept-line-and-down-history
+
+# Completion helpers (readline M-?, M-*)
+bindkey '^[?' list-choices
+bindkey '^[*' expand-word
+
+unset _key

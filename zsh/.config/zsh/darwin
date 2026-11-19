@@ -1,0 +1,74 @@
+# macOS settings. Mirrors bash/darwin. Its own copy because `brew shellenv`
+# prints shell-specific output, so the cache must not be shared with bash.
+
+# Java configuration (if available). java_home is slow, so cache its answer;
+# it is refreshed when a JDK is added to or removed from JavaVirtualMachines.
+_java_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/java_home"
+if [[ -x /usr/libexec/java_home ]]; then
+    if [[ ! -f "$_java_cache" || /Library/Java/JavaVirtualMachines -nt "$_java_cache" ]]; then
+        [[ -d "${_java_cache:h}" ]] || mkdir -p "${_java_cache:h}"
+        /usr/libexec/java_home 2>/dev/null > "$_java_cache"
+    fi
+    read -r _java_home < "$_java_cache"
+    [[ -n "$_java_home" ]] && export JAVA_HOME="$_java_home"
+fi
+unset _java_cache _java_home
+
+# Homebrew configuration (cached to avoid subprocess on every shell)
+_brew_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/brew_shellenv"
+for _brew in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+    if [[ -x "$_brew" ]]; then
+        if [[ ! -f "$_brew_cache" || "$_brew_cache" -ot "$_brew" ]]; then
+            [[ -d "${_brew_cache:h}" ]] || mkdir -p "${_brew_cache:h}"
+            "$_brew" shellenv zsh > "$_brew_cache"
+        fi
+        source "$_brew_cache"
+        break
+    fi
+done
+unset _brew _brew_cache
+
+# Application paths
+app_paths=(
+    "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+    "/Applications/Emacs.app/Contents/MacOS"
+    "/Applications/Emacs.app/Contents/MacOS/bin"
+)
+for app_path in "${app_paths[@]}"; do
+    if [[ -d "$app_path" && ":$PATH:" != *":$app_path:"* ]]; then
+        export PATH="$app_path:$PATH"
+    fi
+done
+unset app_paths app_path
+
+# Rust/Cargo environment
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+
+# macOS-specific ls behavior: prefer GNU ls for dir_colors support
+if command -v gls >/dev/null 2>&1; then
+    alias ls="gls --color=auto"
+    alias l="gls -lah --color=auto"
+    alias la="gls -lAh --color=auto"
+    alias ll="gls -lh --color=auto"
+    alias lsa="gls -lah --color=auto"
+else
+    # Fallback to BSD ls with LSCOLORS
+    export LSCOLORS="Dxfxcxdxbxegedabagacad"
+    alias ls="ls -G"
+    alias l="ls -lahG"
+    alias la="ls -lAhG"
+    alias ll="ls -lhG"
+    alias lsa="ls -lahG"
+fi
+
+# Emacs GUI (macOS-specific)
+if [[ -x "/Applications/Emacs.app/Contents/MacOS/Emacs" ]]; then
+    alias emacs-gui='open -a Emacs'
+    alias emacs-file='/Applications/Emacs.app/Contents/MacOS/Emacs'
+fi
+
+# macOS-specific functions
+if command -v pbcopy >/dev/null; then
+    alias copy="pbcopy"
+    alias paste="pbpaste"
+fi

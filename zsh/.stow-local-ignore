@@ -1,0 +1,8 @@
+# Zsh package specific ignores
+README.md
+.stow-dependencies
+.*\.bak$
+.*\.backup$
+\.zsh_history.*
+\.zshrc\.local
+\.zcompdump.*

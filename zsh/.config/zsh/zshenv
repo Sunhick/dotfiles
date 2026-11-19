@@ -1,0 +1,18 @@
+# Environment for non-interactive zsh (`ssh host cmd`, scp, `zsh -c`).
+# Sourced from ~/.zshenv. Mirrors the non-interactive branch of
+# bash/bashrc: environment and PATH, no prompt, keys or completion.
+
+include() {
+    if [[ -f "$1" ]]; then
+        source "$1"
+    elif [[ "${2:-}" != "optional" ]]; then
+        echo "Warning: Could not source $1" >&2
+    fi
+}
+
+# exports is plain POSIX-style shell, shared with the bash package
+include "${XDG_CONFIG_HOME}/bash/exports"
+case "$OSTYPE" in
+    darwin*) include "${XDG_CONFIG_HOME}/zsh/darwin" ;;
+esac
+include "${XDG_CONFIG_HOME}/work/zsh/local" "optional"
