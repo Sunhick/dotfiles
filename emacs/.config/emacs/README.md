@@ -41,7 +41,7 @@ See [emacs-keybindings.md](emacs-keybindings.md) for a comprehensive reference.
 
 ## Font
 
-Iosevka Comfy at 15px (`base-host.el`). Falls back to default if not installed.
+Aporetic Sans Mono Nerd Font at 15px (`base-host.el`). Falls back to default if not installed.
 
 ## Theme
 

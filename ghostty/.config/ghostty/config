@@ -4,8 +4,8 @@
 # List all options with: ghostty +show-config --default --docs
 
 # --- Font -------------------------------------------------------------------
-# iTerm: "Zenbones-Brainy-Bold 15" (Bold face used as the normal weight)
-font-family = "Zenbones Brainy"
+# Aporetic Sans Mono (Regular + Bold only); Bold matches VS Code editor weight 600
+font-family = "Aporetic Sans Mono"
 font-style = Bold
 font-size = 15
 # iTerm: ASCII ligatures off
