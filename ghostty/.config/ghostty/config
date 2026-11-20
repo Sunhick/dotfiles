@@ -12,11 +12,13 @@ font-size = 15
 font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
+# Draw glyphs heavier (macOS only)
+font-thicken = true
 
 # --- Colors -----------------------------------------------------------------
 # Built-in theme (preview others: ghostty +list-themes). tmux's theme in
-# tmux-modern.conf / tmux-legacy.conf is still Gruvbox Material Dark.
-theme = Everforest Dark Med
+# tmux-modern.conf / tmux-legacy.conf uses the same palette; keep them in step.
+theme = Gruvbox Material Dark
 # iTerm: "Brighten bold text"
 bold-color = bright
 # Nudge colour pairs that would be unreadable (e.g. a tool printing dark grey
