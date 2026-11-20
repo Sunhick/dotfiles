@@ -40,6 +40,11 @@ _prompt_precmd() {
 
     # Set terminal title: user:dirname
     print -Pn "\e]0;%n:${REPLY}\a"
+
+    # Steady block cursor (DECSCUSR 2), in case a program left it a bar.
+    # Done here rather than by Ghostty's shell integration so it also
+    # happens in shells on ssh hosts.
+    [[ "$TERM" == linux ]] || print -n "\e[2 q"
 }
 
 # Inside Emacs shell-mode: plain prompt, no escapes

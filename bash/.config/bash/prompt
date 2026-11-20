@@ -62,6 +62,11 @@ prompt_command() {
     # Set terminal title: user:dirname
     prompt="\[\e]0;\u:\W\a\]${prompt}"
 
+    # Steady block cursor (DECSCUSR 2), in case a program left it a bar.
+    # Done here rather than by Ghostty's shell integration so it also
+    # happens in shells on ssh hosts.
+    [[ "$TERM" == linux ]] || prompt="\[\e[2 q\]${prompt}"
+
     PS1="$prompt"
     PS2="${bold_yellow}>${reset_color} "
     return "$last_exit_code"

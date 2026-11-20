@@ -21,15 +21,18 @@ theme = Gruvbox Material Dark
 bold-color = bright
 
 # --- Cursor -----------------------------------------------------------------
-# iTerm: box cursor, not blinking. Shell integration switches it to a
-# blinking bar at the prompt.
+# iTerm: box cursor, not blinking. The shell prompt (bash/zsh prompt files)
+# also resets it to a steady block before each prompt, so it recovers after
+# vim etc. leave a bar behind, over ssh too.
 cursor-style = block
 cursor-style-blink = false
 
 # --- Shell integration ------------------------------------------------------
+# no-cursor: keep the block cursor (the `cursor` feature forces a bar at the
+# prompt, and only in local shells: it isn't installed on ssh hosts)
 # ssh-env/ssh-terminfo: install xterm-ghostty terminfo on remote hosts (dev
 # desktops), falling back to TERM=xterm-256color when that's not possible.
-shell-integration-features = ssh-env,ssh-terminfo
+shell-integration-features = no-cursor,ssh-env,ssh-terminfo
 
 # --- Window -----------------------------------------------------------------
 window-width = 80
