@@ -12,6 +12,8 @@ font-size = 15
 font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
+# Draw glyphs heavier (macOS only)
+font-thicken = true
 
 # --- Colors -----------------------------------------------------------------
 # Built-in theme (preview others: ghostty +list-themes). tmux's theme in
@@ -19,6 +21,9 @@ font-feature = -dlig
 theme = Gruvbox Material Dark
 # iTerm: "Brighten bold text"
 bold-color = bright
+# Nudge colour pairs that would be unreadable (e.g. a tool printing dark grey
+# on the dark background). 1 = off, 21 = always black/white.
+minimum-contrast = 1.1
 
 # --- Cursor -----------------------------------------------------------------
 # iTerm: box cursor, not blinking. The shell prompt (bash/zsh prompt files)
@@ -32,13 +37,27 @@ cursor-style-blink = false
 # prompt, and only in local shells: it isn't installed on ssh hosts)
 # ssh-env/ssh-terminfo: install xterm-ghostty terminfo on remote hosts (dev
 # desktops), falling back to TERM=xterm-256color when that's not possible.
-shell-integration-features = no-cursor,ssh-env,ssh-terminfo
+# sudo: keep TERMINFO under sudo so xterm-ghostty still resolves
+shell-integration-features = no-cursor,ssh-env,ssh-terminfo,sudo
+
+# Desktop notification + bell when a command running 10s+ finishes while the
+# window is unfocused. Needs shell integration: local shells only, not ssh.
+notify-on-command-finish = unfocused
+notify-on-command-finish-after = 10s
+notify-on-command-finish-action = bell,notify
 
 # --- Window -----------------------------------------------------------------
 window-width = 80
 window-height = 25
 working-directory = home
 confirm-close-surface = false
+# Reopen windows (size, position, working directory) after a restart
+window-save-state = always
+
+# Space between the text and the window edge; balance centres the grid
+window-padding-x = 6
+window-padding-y = 4
+window-padding-balance = true
 
 # Hide the tab bar; switch tabs from the keyboard (see Tabs keybinds below).
 # Linux (GTK) only: macOS ignores this and keeps its native tab bar.
@@ -55,6 +74,11 @@ macos-titlebar-style = transparent
 # iTerm: clipboard access allowed for terminal apps (OSC 52)
 clipboard-read = allow
 clipboard-write = allow
+# Copy selected text straight to the system clipboard
+copy-on-select = clipboard
+
+# --- Mouse ------------------------------------------------------------------
+mouse-hide-while-typing = true
 
 # --- Keyboard ---------------------------------------------------------------
 # iTerm: left Option = Esc+, right Option = normal (for typing special chars)
@@ -76,3 +100,13 @@ keybind = alt+delete=esc:d
 # Cmd+1..9). Cmd is Super on Linux.
 keybind = cmd+shift+h=previous_tab
 keybind = cmd+shift+l=next_tab
+
+# --- Quick terminal ---------------------------------------------------------
+# Drop-down terminal. Not `global:` (that needs macOS Accessibility
+# permission), so it toggles only while Ghostty is the focused app.
+keybind = ctrl+grave_accent=toggle_quick_terminal
+
+# Already bound by default, not repeated here:
+#   Cmd+Shift+P         command palette
+#   Cmd+Up / Cmd+Down   jump to previous/next prompt (shell integration)
+#   Cmd+Alt+Shift+J     write the screen to a file and open it
