@@ -4,11 +4,11 @@
 # List all options with: ghostty +show-config --default --docs
 
 # --- Font -------------------------------------------------------------------
-# Iosevka Comfy Medium (iTerm profile originally used Zenbones Brainy Bold)
-font-family = "Iosevka Comfy"
+# Maple Mono Medium (brew install --cask font-maple-mono)
+font-family = "Maple Mono"
 font-style = Medium
 font-size = 15
-# iTerm: ASCII ligatures off
+# Ligatures off (Maple Mono ligatures are in calt)
 font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
