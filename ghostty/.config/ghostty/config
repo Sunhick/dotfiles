@@ -4,13 +4,11 @@
 # List all options with: ghostty +show-config --default --docs
 
 # --- Font -------------------------------------------------------------------
-# Iosvmata, PragmataPro-style Iosevka build (Regular + Bold only)
-# Install: github.com/N-R-K/Iosvmata releases -> ~/Library/Fonts
-font-family = "Iosvmata"
+# Commit Mono (Regular + Bold only): brew install --cask font-commit-mono
+font-family = "CommitMono"
 font-style = Regular
 font-size = 15
-# Ligatures off
-font-feature = -calt
+# Ligatures off; calt left on for Commit Mono smart kerning
 font-feature = -liga
 font-feature = -dlig
 # Draw glyphs heavier (macOS only)

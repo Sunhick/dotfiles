@@ -60,12 +60,13 @@
     "editor.guides.bracketPairs": "active",
     "editor.bracketPairColorization.enabled": true,
     // Font
-    "editor.fontFamily": "Iosvmata",
+    "editor.fontFamily": "CommitMono",
     "editor.fontSize": 15,
     "editor.fontWeight": "normal",
+    "editor.fontLigatures": "'calt'", // Commit Mono smart kerning; ligatures stay off
     "editor.formatOnSave": true,
     "editor.linkedEditing": true,
-    "terminal.integrated.fontFamily": "Iosvmata",
+    "terminal.integrated.fontFamily": "CommitMono",
     "terminal.integrated.fontSize": 15,
     "terminal.integrated.fontWeight": "normal",
     // Theme: matches Ghostty and tmux. Needs the sainnhe.gruvbox-material
