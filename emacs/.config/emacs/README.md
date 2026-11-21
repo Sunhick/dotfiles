@@ -41,7 +41,7 @@ See [emacs-keybindings.md](emacs-keybindings.md) for a comprehensive reference.
 
 ## Font
 
-Maple Mono at 15px (`base-host.el`). Falls back to default if not installed.
+Iosvmata at 15px (`base-host.el`). Falls back to default if not installed.
 
 ## Theme
 

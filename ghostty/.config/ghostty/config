@@ -4,11 +4,12 @@
 # List all options with: ghostty +show-config --default --docs
 
 # --- Font -------------------------------------------------------------------
-# Maple Mono Medium (brew install --cask font-maple-mono)
-font-family = "Maple Mono"
-font-style = Medium
+# Iosvmata, PragmataPro-style Iosevka build (Regular + Bold only)
+# Install: github.com/N-R-K/Iosvmata releases -> ~/Library/Fonts
+font-family = "Iosvmata"
+font-style = Regular
 font-size = 15
-# Ligatures off (Maple Mono ligatures are in calt)
+# Ligatures off
 font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
