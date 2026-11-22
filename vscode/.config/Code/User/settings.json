@@ -60,12 +60,12 @@
     "editor.guides.bracketPairs": "active",
     "editor.bracketPairColorization.enabled": true,
     // Font
-    "editor.fontFamily": "Iosevka Comfy Wide",
+    "editor.fontFamily": "Zenbones Brainy",
     "editor.fontSize": 15,
     "editor.fontWeight": "500",
     "editor.formatOnSave": true,
     "editor.linkedEditing": true,
-    "terminal.integrated.fontFamily": "Iosevka Comfy Wide",
+    "terminal.integrated.fontFamily": "Zenbones Brainy",
     "terminal.integrated.fontSize": 15,
     "terminal.integrated.fontWeight": "500",
     // Theme: matches Ghostty and tmux. Needs the sainnhe.gruvbox-material

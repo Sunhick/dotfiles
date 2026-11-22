@@ -4,9 +4,9 @@
 # List all options with: ghostty +show-config --default --docs
 
 # --- Font -------------------------------------------------------------------
-# Iosevka Comfy Wide Medium (brew install --cask font-iosevka-comfy)
-font-family = "Iosevka Comfy Wide"
-font-style = "Medium Extended"
+# Zenbones Brainy Medium (Iosevka-based, from the zenbones theme fonts)
+font-family = "Zenbones Brainy"
+font-style = Medium
 font-size = 15
 # Ligatures off
 font-feature = -calt

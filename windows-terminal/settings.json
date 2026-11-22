@@ -37,7 +37,7 @@
       "colorScheme": "Gruvbox Dark",
       "cursorShape": "filledBox",
       "font": {
-        "face": "Iosevka Comfy",
+        "face": "Zenbones Brainy",
         "features": {
           "calt": 0,
           "clig": 0,
@@ -62,7 +62,7 @@
       },
       {
         "font": {
-          "face": "Iosevka Comfy",
+          "face": "Zenbones Brainy",
           "features": {
             "calt": 0,
             "clig": 0,
@@ -80,7 +80,7 @@
         "cursorShape": "filledBox",
         "font": {
           "cellHeight": "1.2",
-          "face": "Iosevka Comfy",
+          "face": "Zenbones Brainy",
           "features": {
             "calt": 0,
             "clig": 0,
