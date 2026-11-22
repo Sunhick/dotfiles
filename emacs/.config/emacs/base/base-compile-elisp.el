@@ -54,6 +54,11 @@
     (setq native-comp-jit-compilation t)
   (setq native-comp-deferred-compilation t))
 
+;; Don't pop up *Warnings* for async native-comp of third-party packages
+;; (e.g. "function not known to be defined" for optional deps). They are
+;; still logged in the *Async-native-compile-log* buffer.
+(setq native-comp-async-report-warnings-errors 'silent)
+
 ;; Use default compilation speed (level 2); level 3 disables safety checks
 (setq native-comp-speed 2)
 
