@@ -83,6 +83,22 @@
   (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
   (global-set-key (kbd "<mouse-5>") 'scroll-up-line))
 
+;; Terminal frames (emacs -nw / emacsclient -t in Ghostty or tmux):
+;; - setSelection/getSelection: kill and yank go through the system
+;;   clipboard via OSC 52 (also over SSH).  Ghostty allows both
+;;   (clipboard-read/write = allow); tmux needs `set-clipboard on`.
+;; - modifyOtherKeys: lets C-<punct> and C-S-<key> chords reach Emacs.
+;; Read by term/xterm.el, which also loads for TERM=xterm-ghostty.
+(defvar xterm-extra-capabilities)
+(setq xterm-extra-capabilities '(getSelection setSelection modifyOtherKeys))
+
+;; Run a server from the GUI so `emacsclient -t' (the `et' alias and
+;; $EDITOR) opens in this session instead of starting a second daemon.
+(when (display-graphic-p)
+  (require 'server)
+  (unless (server-running-p)
+    (server-start)))
+
 ;; setup tramp (deferred — tramp is heavy)
 (with-eval-after-load 'tramp
   (setq tramp-default-method "ssh"))
