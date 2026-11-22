@@ -92,6 +92,15 @@
 (defvar xterm-extra-capabilities)
 (setq xterm-extra-capabilities '(getSelection setSelection modifyOtherKeys))
 
+;; Terminal frames draw the side-by-side window divider with ASCII `|',
+;; which shows as a dashed line.  Use the box-drawing `│' (U+2502) so it
+;; joins into a solid line.  GUI frames ignore this slot.  Stacked
+;; windows have no divider in a terminal; the mode line separates them.
+(unless standard-display-table
+  (setq standard-display-table (make-display-table)))
+(set-display-table-slot standard-display-table 'vertical-border
+                        (make-glyph-code ?│ 'vertical-border))
+
 ;; Run a server from the GUI so `emacsclient -t' (the `et' alias and
 ;; $EDITOR) opens in this session instead of starting a second daemon.
 (when (display-graphic-p)
