@@ -60,15 +60,14 @@
     "editor.guides.bracketPairs": "active",
     "editor.bracketPairColorization.enabled": true,
     // Font
-    "editor.fontFamily": "CommitMono",
+    "editor.fontFamily": "Iosevka Comfy Wide",
     "editor.fontSize": 15,
-    "editor.fontWeight": "normal",
-    "editor.fontLigatures": "'calt'", // Commit Mono smart kerning; ligatures stay off
+    "editor.fontWeight": "500",
     "editor.formatOnSave": true,
     "editor.linkedEditing": true,
-    "terminal.integrated.fontFamily": "CommitMono",
+    "terminal.integrated.fontFamily": "Iosevka Comfy Wide",
     "terminal.integrated.fontSize": 15,
-    "terminal.integrated.fontWeight": "normal",
+    "terminal.integrated.fontWeight": "500",
     // Theme: matches Ghostty and tmux. Needs the sainnhe.gruvbox-material
     // extension (code --install-extension sainnhe.gruvbox-material).
     "workbench.colorTheme": "Gruvbox Material Dark",

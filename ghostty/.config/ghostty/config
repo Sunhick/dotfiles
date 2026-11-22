@@ -4,11 +4,12 @@
 # List all options with: ghostty +show-config --default --docs
 
 # --- Font -------------------------------------------------------------------
-# Commit Mono (Regular + Bold only): brew install --cask font-commit-mono
-font-family = "CommitMono"
-font-style = Regular
+# Iosevka Comfy Wide Medium (brew install --cask font-iosevka-comfy)
+font-family = "Iosevka Comfy Wide"
+font-style = "Medium Extended"
 font-size = 15
-# Ligatures off; calt left on for Commit Mono smart kerning
+# Ligatures off
+font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
 # Draw glyphs heavier (macOS only)

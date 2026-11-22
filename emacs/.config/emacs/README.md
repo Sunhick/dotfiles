@@ -41,7 +41,7 @@ See [emacs-keybindings.md](emacs-keybindings.md) for a comprehensive reference.
 
 ## Font
 
-Commit Mono at 15px (`base-host.el`). Falls back to default if not installed.
+Iosevka Comfy Wide at 15px (`base-host.el`). Falls back to default if not installed.
 
 ## Theme
 
