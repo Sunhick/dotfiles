@@ -41,7 +41,7 @@ See [emacs-keybindings.md](emacs-keybindings.md) for a comprehensive reference.
 
 ## Font
 
-Zenbones Brainy at 15px (`base-host.el`). Falls back to default if not installed.
+Aporetic Sans Mono at 15px, Aporetic Serif for variable-pitch (`base-host.el`). Falls back to default if not installed.
 
 ## Theme
 

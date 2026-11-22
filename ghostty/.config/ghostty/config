@@ -4,9 +4,9 @@
 # List all options with: ghostty +show-config --default --docs
 
 # --- Font -------------------------------------------------------------------
-# Zenbones Brainy Medium (Iosevka-based, from the zenbones theme fonts)
-font-family = "Zenbones Brainy"
-font-style = Medium
+# Aporetic Sans Mono (Regular + Bold only), as in Protesilaos's Emacs setup
+font-family = "Aporetic Sans Mono"
+font-style = Regular
 font-size = 15
 # Ligatures off
 font-feature = -calt

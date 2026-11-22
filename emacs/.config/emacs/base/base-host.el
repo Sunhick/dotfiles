@@ -29,18 +29,25 @@
 
 ;;; Code:
 
-;; Set preferred font (with fallback)
+;; Set preferred fonts (with fallback)
+;; Mirrors Protesilaos's fontaine default: Aporetic Sans Mono for code
+;; (default + fixed-pitch), Aporetic Serif for prose (variable-pitch).
 ;; Uses after-make-frame-functions for daemon mode compatibility
-(defvar my/preferred-font "Zenbones Brainy")
+(defvar my/preferred-font "Aporetic Sans Mono")
+(defvar my/variable-pitch-font "Aporetic Serif")
 (defvar my/font-size 15)
 
 (defun my/set-font (&optional frame)
-  "Set preferred font on FRAME, or current frame if nil."
+  "Set preferred fonts on FRAME, or current frame if nil."
   (when (display-graphic-p (or frame (selected-frame)))
     (with-selected-frame (or frame (selected-frame))
       (if (find-font (font-spec :name my/preferred-font))
-          (set-frame-font (format "%s:pixelsize=%d" my/preferred-font my/font-size) t t)
-        (message "Font '%s' not found, using default" my/preferred-font)))))
+          (progn
+            (set-frame-font (format "%s:pixelsize=%d" my/preferred-font my/font-size) t t)
+            (set-face-attribute 'fixed-pitch nil :family my/preferred-font :height 1.0))
+        (message "Font '%s' not found, using default" my/preferred-font))
+      (when (find-font (font-spec :name my/variable-pitch-font))
+        (set-face-attribute 'variable-pitch nil :family my/variable-pitch-font :height 1.0)))))
 
 ;; Apply font now (works for non-daemon startup)
 (my/set-font)

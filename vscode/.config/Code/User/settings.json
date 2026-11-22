@@ -60,14 +60,14 @@
     "editor.guides.bracketPairs": "active",
     "editor.bracketPairColorization.enabled": true,
     // Font
-    "editor.fontFamily": "Zenbones Brainy",
+    "editor.fontFamily": "Aporetic Sans Mono",
     "editor.fontSize": 15,
-    "editor.fontWeight": "500",
+    "editor.fontWeight": "normal",
     "editor.formatOnSave": true,
     "editor.linkedEditing": true,
-    "terminal.integrated.fontFamily": "Zenbones Brainy",
+    "terminal.integrated.fontFamily": "Aporetic Sans Mono",
     "terminal.integrated.fontSize": 15,
-    "terminal.integrated.fontWeight": "500",
+    "terminal.integrated.fontWeight": "normal",
     // Theme: matches Ghostty and tmux. Needs the sainnhe.gruvbox-material
     // extension (code --install-extension sainnhe.gruvbox-material).
     "workbench.colorTheme": "Gruvbox Material Dark",
