@@ -41,6 +41,58 @@
 ;; Frames open at the default size (not maximized or fullscreen).
 ;; Toggle with M-F10 (maximize) or F11 (fullscreen) when needed.
 
+;; ── Remember frame size and position ───────────────────────────
+;; The last GUI frame's geometry is saved to
+;; $XDG_DATA_HOME/emacs/frame-geometry.eld when it is closed or Emacs
+;; exits, and restored on the next start: size and position for the
+;; first frame, size only for later frames (e.g. `emacsclient -c'), so
+;; they don't stack exactly on top of each other.
+(defvar my/frame-geometry-file
+  (expand-file-name "emacs/frame-geometry.eld" xdg-data-home)
+  "File holding the last saved GUI frame geometry.")
+
+(defun my/frame-geometry-save (&optional frame)
+  "Save FRAME's (or the selected frame's) geometry, if it is graphical."
+  (let ((frame (or frame (selected-frame))))
+    (when (and (frame-live-p frame) (display-graphic-p frame))
+      (let* ((fullscreen (frame-parameter frame 'fullscreen))
+             (pos (frame-position frame))
+             (geometry
+              (if fullscreen
+                  `((fullscreen . ,fullscreen))
+                `((left . ,(car pos))
+                  (top . ,(cdr pos))
+                  (width . (text-pixels . ,(frame-text-width frame)))
+                  (height . (text-pixels . ,(frame-text-height frame)))))))
+        (with-temp-file my/frame-geometry-file
+          (prin1 geometry (current-buffer)))))))
+
+(defun my/frame-geometry-load ()
+  "Return the saved frame geometry alist, or nil."
+  (when (file-readable-p my/frame-geometry-file)
+    (ignore-errors
+      (with-temp-buffer
+        (insert-file-contents my/frame-geometry-file)
+        (read (current-buffer))))))
+
+(defun my/frame-geometry-save-on-delete (frame)
+  "Save FRAME's geometry when it is the last GUI frame being closed."
+  (when (and (display-graphic-p frame)
+             (not (seq-some (lambda (f) (and (not (eq f frame))
+                                             (display-graphic-p f)))
+                            (frame-list))))
+    (my/frame-geometry-save frame)))
+
+(let ((geometry (my/frame-geometry-load)))
+  (when geometry
+    (setq initial-frame-alist (append geometry initial-frame-alist))
+    (dolist (key '(width height fullscreen))
+      (when-let* ((param (assq key geometry)))
+        (add-to-list 'default-frame-alist param)))))
+
+(add-hook 'kill-emacs-hook #'my/frame-geometry-save)
+(add-hook 'delete-frame-functions #'my/frame-geometry-save-on-delete)
+
 ;; For daemon mode: bring each new client frame to the foreground
 (defun my/setup-frame (&optional frame)
   "Bring FRAME to the foreground."
