@@ -67,6 +67,13 @@ prompt_command() {
     # happens in shells on ssh hosts.
     [[ "$TERM" == linux ]] || prompt="\[\e[2 q\]${prompt}"
 
+    # Turn off mouse reporting, focus events and modifyOtherKeys. A program
+    # that died without resetting them (remote tmux when ssh drops after
+    # sleep, a killed `emacs -nw`) leaves clicks typed as `0;102;32M` and
+    # Ctrl keys as `27;5;97~`. Bracketed paste (2004) is left on;
+    # readline uses it.
+    [[ "$TERM" == linux ]] || prompt="\[\e[?1000l\e[?1002l\e[?1003l\e[?1006l\e[?1015l\e[?1004l\e[>4m\]${prompt}"
+
     PS1="$prompt"
     PS2="${bold_yellow}>${reset_color} "
     return "$last_exit_code"

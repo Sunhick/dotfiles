@@ -45,6 +45,13 @@ _prompt_precmd() {
     # Done here rather than by Ghostty's shell integration so it also
     # happens in shells on ssh hosts.
     [[ "$TERM" == linux ]] || print -n "\e[2 q"
+
+    # Turn off mouse reporting, focus events and modifyOtherKeys. A program
+    # that died without resetting them (remote tmux when ssh drops after
+    # sleep, a killed `emacs -nw`) leaves clicks typed as `0;102;32M` and
+    # Ctrl keys as `27;5;97~`. Bracketed paste (2004) is left on; zle
+    # uses it.
+    [[ "$TERM" == linux ]] || print -n "\e[?1000l\e[?1002l\e[?1003l\e[?1006l\e[?1015l\e[?1004l\e[>4m"
 }
 
 # Inside Emacs shell-mode: plain prompt, no escapes
